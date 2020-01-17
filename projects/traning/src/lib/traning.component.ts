@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, FormC
 import { Router, ActivatedRoute } from "@angular/router";
 import { DomSanitizer} from '@angular/platform-browser';
 import { CookieService } from "ngx-cookie-service";
-// import * as moment from 'moment';
 import { ApiService } from './api.service';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
@@ -38,6 +37,7 @@ export class TraningComponent implements OnInit {
   @Input()
     set formdata(formdata: string) {
         this.formdataval = (formdata) || '<no name set>';
+        console.log("total form data",this.formdataval);
     }
 
   @Input()
@@ -62,13 +62,11 @@ export class TraningComponent implements OnInit {
         this.route.params.subscribe(params => {
             this.recid = params['id'];
             if (this.recid !=null && this.recid !='' && this.recid !=undefined) {
-              this.geteditdata()
+              this.geteditdata();
             }
         });
-        console.log(this.recid)
+        console.log(this.recid);
     
-
-
     let formgrp: any = [];
     for (let c in this.formdataval) {
       if ( (this.formdataval[c].isaddonly == null && this.formdataval[c].isaddonly != true)) {
@@ -128,8 +126,7 @@ export class TraningComponent implements OnInit {
   }
   formsubmit() {
     this.issubmit = 1;
-    let y: any;
-    for (y in this.dataForm.controls) {
+    for (let y in this.dataForm.controls) {
         this.dataForm.controls[y].markAsTouched();
     }
     console.log(this.dataForm.value)
@@ -139,9 +136,10 @@ export class TraningComponent implements OnInit {
       const link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
         let data: any ={
           source: this.formSourceVal.source,
-          data: this.dataForm.value
+          data: this.dataForm.value,
+          token:this.serverDetailsVal.jwttoken
         }
-      this.apiService.postDatawithoutToken(link,data).subscribe((res: any)=>{
+      this.apiService.postData(link,data).subscribe((res: any)=>{
         console.log(res);
       })
     }
@@ -174,7 +172,7 @@ export class TraningComponent implements OnInit {
                 let result;
                 result = res;
                 if (result.status == 'error') {
-                    this.router.navigate(['/']);
+                    // this.router.navigate(['/']);
                 } else {
                     this.formdataval[c].sourceval = result.res;
                 }
@@ -205,7 +203,7 @@ geteditdata() {
 
   this.apiService.getData(link, data).subscribe((res: any)=>{
     if (res.status == 'error') {
-      this.router.navigate(['/']);
+      // this.router.navigate(['/']);
   } else {
 
     let folder: any = '';

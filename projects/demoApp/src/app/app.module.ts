@@ -10,10 +10,18 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DemoMaterialModule } from './material-module';
 import { routing } from './route';
+import { AddEditTrainingComponent } from './manage-training/add-edit-training/add-edit-training.component';
+import { AddEditLessionsComponent } from './manage-lessions/add-edit-lessions/add-edit-lessions.component';
+import { AddEditCenterComponent } from './training-center/add-edit-center/add-edit-center.component';
+import { ListingTrainingComponent } from './manage-training/listing-training/listing-training.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    AddEditTrainingComponent,
+    AddEditLessionsComponent,
+    AddEditCenterComponent,
+    ListingTrainingComponent,
   ],
   imports: [
     routing,
