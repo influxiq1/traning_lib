@@ -10,36 +10,62 @@ export class AddEditLessionsComponent implements OnInit {
   title = 'demoApp';
   public formdataval: any;
   public recid: any;
+  public listingPageRoute : any="/manage-lession/list";
+  public pageName : any="Manage Lesson";
+
   public serverDetails: any = {
     "serverUrl": "https://9ozbyvv5v0.execute-api.us-east-1.amazonaws.com/production/api/",
-    "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1NzkzNTA3NzIsImlhdCI6MTU3OTI2NDM3Mn0.ml1jsqncUN6t6Ln10NQuv0dZ730AnIFZeimrTsIOCAk"
+    "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1Nzk1OTA1NjEsImlhdCI6MTU3OTUwNDE2MX0.T_DqFA8TZdcybdaBAHHI4KsT8K52KU1CK_DzUtn0Jdc"
   };
   public formSource: any = {
-    "source":'users',
+    "source": 'manage_lession',
     "endpoint": "addorupdatedata",
-    "showEndpoint":"datalist",
-    "formTitleName": 'Catagory'
+    "showEndpoint": "datalist",
+    "AddheaderText": "Add Lesson",
+    "EditheaderText": "Edit Lesson"
   }
-  constructor( public route: ActivatedRoute) { }
+  public additionalData: any = {
+    "objectId": "associated_training"
+  };
+  public configFileUpload:any={
+    baseUrl: "https://fileupload.influxhostserver.com/",
+    endpoint: "uploads",
+    size: "51200", // kb
+    format:["jpg", "jpeg", "png", "bmp", "zip", 'html'],  // use all small font
+    type: "imageGallery-picture",
+    path: "imageGallery",
+    prefix: "imageGallery-picture_",
+    formSubmit: false,
+    conversionNeeded: 0,
+    bucketName: "image-gallery-bucket"
+  }
+  
+  constructor(public route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.recid = params['id'];
       console.log(params['id'])
-      if (this.recid !=null && this.recid !='' && this.recid !=undefined) {
+      if (this.recid != null && this.recid != '' && this.recid != undefined) {
         // this.geteditdata()
       }
-  });
+    });
 
     this.formdataval = [
-      { inputtype: 'text', name: 'catagoryname', label: 'Catagory Name ', placeholder: 'Enter Catagory Name', validationrule: { required: true }, validationerrormsg: 'is required' },
+      { inputtype: 'text', name: 'lession_title', label: 'Title', placeholder: 'Enter Lession Title', validationrule: { required: true }, validationerrormsg: 'is required' },
 
-      { inputtype: 'textarea', name: 'description', label: 'description', placeholder: 'Enter Description'},
+      { inputtype: 'textarea', name: 'description', label: 'Description', placeholder: 'Enter Description' },
 
-      {inputtype:'radio',name:'timespan',value:["User","Rep","Admin", "All"],valuelabel:'',label:"Roll Access",placeholder:"",validationrule:{required:true},validationerrormsg:'', class:'radioclass'},
+      { inputtype: 'radio', name: 'test_associate_training', value: ["Yes", "No"], valuelabel: '', label: "Is there a test associated with training ", placeholder: "", validationrule: { required: true }, validationerrormsg: '', class: 'radioclass' },
 
-      {inputtype:'select',name:'parentcategory',label:'Parent Category',defaultchoice:'Select a Parent Category',sourceview:'users',endpoint:'datalist',selectvalue:'type',selectid:'_id'},
-      {inputtype:'select',name:'state',label:'State/Region',defaultchoice:'Select a State/region',sourceview:'assets/states.json',multiple:true, sourcetype:'static',selectvalue:'name',selectid:'abbreviation',validationrule:{required:true},validationerrormsg:'is required'},
+
+      { inputtype: 'select', name: 'associated_training', label: 'Associated Training', defaultchoice: 'Select a Training', sourceview: 'training_category_management', endpoint: 'datalist', selectvalue: 'catagory_name', selectid: '_id' },
+
+      { inputtype: 'select', name: 'prerequisite_lession', label: 'Prerequisite Lesson', defaultchoice: 'Select a Prerequisite Lession', sourceview: 'manage_lession', endpoint: 'datalist', selectvalue: 'lession_title', selectid: '_id' },
+
+      { inputtype: 'checkbox', name: 'status', label: 'Status', placeholder: 'Enter Status', validationrule: { required: true }, validationerrormsg: 'is required' },
+      { inputtype: 'select', name: 'mediaType', label: 'Media Type', defaultchoice: 'Select a Media Type', sourceview: 'assets/mediaType.json', sourcetype:'static', selectvalue: 'name', selectid: 'selectname' ,validationrule:{required:true},validationerrormsg:'is required'},
+
     ];
 
 

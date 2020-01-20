@@ -1,69 +1,99 @@
 <mat-card class="main-mat-card admingeneralcls">
     <h1 class="header">{{ headerText }}</h1>
-    <form  novalidate (ngSubmit)="formsubmit()" class="formclass">
+    <form novalidate (ngSubmit)="formsubmit()" class="formclass">
         <ng-container [formGroup]="dataForm" *ngFor="let item of formdataval; let i=index;">
-                <div>
-                    <!-- <mat-label *ngIf="item.inputtype!='radio'">{{item.label}}: </mat-label> -->
+            <div>
+                <mat-label *ngIf="item.inputtype!='radio'">{{item.label}}: </mat-label>
 
-                    <mat-form-field *ngIf="item.inputtype == 'text' || item.inputtype == 'password'">
-                        <input matInput [type]="item.inputtype" [placeholder]="item.placeholder" [formControlName]="[item.name]" (keyup)="issubmit=0">
+                <mat-form-field *ngIf="item.inputtype == 'text' || item.inputtype == 'password'">
+                    <input matInput [type]="item.inputtype" [placeholder]="item.placeholder"
+                        [formControlName]="[item.name]" (keyup)="issubmit=0">
 
-                        <mat-error *ngIf="dataForm.controls[item.name]!=null &&  item.validationrule!=null && !dataForm.controls[item.name].valid && dataForm.controls[item.name].touched && issubmit==1">{{item.label}}
-                                {{item.validationerrormsg}}</mat-error>
-                    </mat-form-field>
-                </div>
-                <div>
-                <mat-form-field *ngIf="item.inputtype == 'textarea'">   
-                    <textarea matInput [placeholder]="item.placeholder" [formControlName]="[item.name]" (keyup)="issubmit=0"></textarea>
+                    <mat-error
+                        *ngIf="dataForm.controls[item.name]!=null &&  item.validationrule!=null && !dataForm.controls[item.name].valid && dataForm.controls[item.name].touched && issubmit==1">
+                        {{item.label}}
+                        {{item.validationerrormsg}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field *ngIf="item.inputtype == 'textarea'">
+                    <textarea matInput [placeholder]="item.placeholder" [formControlName]="[item.name]"
+                        (keyup)="issubmit=0"></textarea>
 
-                    <mat-error *ngIf="dataForm.controls[item.name]!=null &&  item.validationrule!=null && !dataForm.controls[item.name].valid && dataForm.controls[item.name].touched && issubmit==1">{{item.label}}
-                            {{item.validationerrormsg}}</mat-error>
+                    <mat-error
+                        *ngIf="dataForm.controls[item.name]!=null &&  item.validationrule!=null && !dataForm.controls[item.name].valid && dataForm.controls[item.name].touched && issubmit==1">
+                        {{item.label}}
+                        {{item.validationerrormsg}}</mat-error>
                 </mat-form-field>
             </div>
             <div>
                 <mat-form-field *ngIf="item.inputtype == 'email'">
-                    <input matInput pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-                    [name]="item.name" [type]="item.inputtype" [placeholder]="item.placeholder" [formControlName]="[item.name]" (keyup)="issubmit=0">
+                    <input matInput pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [name]="item.name"
+                        [type]="item.inputtype" [placeholder]="item.placeholder" [formControlName]="[item.name]"
+                        (keyup)="issubmit=0">
 
 
-                    <mat-error *ngIf="dataForm.controls[item.name]!=null &&  item.validationrule!=null && !dataForm.controls[item.name].valid && dataForm.controls[item.name].touched && issubmit==1">{{item.label}}
-                            {{item.validationerrormsg}}</mat-error>
+                    <mat-error
+                        *ngIf="dataForm.controls[item.name]!=null &&  item.validationrule!=null && !dataForm.controls[item.name].valid && dataForm.controls[item.name].touched && issubmit==1">
+                        {{item.label}}
+                        {{item.validationerrormsg}}</mat-error>
                 </mat-form-field>
             </div>
             <div>
                 <mat-form-field *ngIf="item.inputtype == 'url'">
-                    <input matInput pattern="^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?|^((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
-                    [name]="item.name" [type]="item.inputtype" [placeholder]="item.placeholder" [formControlName]="[item.name]" (keyup)="issubmit=0">
+                    <input matInput
+                        pattern="^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?|^((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
+                        [name]="item.name" [type]="item.inputtype" [placeholder]="item.placeholder"
+                        [formControlName]="[item.name]" (keyup)="issubmit=0">
 
-                    <mat-error *ngIf="dataForm.controls[item.name]!=null &&  item.validationrule!=null && !dataForm.controls[item.name].valid && dataForm.controls[item.name].touched && issubmit==1">{{item.label}}
-                            {{item.validationerrormsg}}</mat-error>
+                    <mat-error
+                        *ngIf="dataForm.controls[item.name]!=null &&  item.validationrule!=null && !dataForm.controls[item.name].valid && dataForm.controls[item.name].touched && issubmit==1">
+                        {{item.label}}
+                        {{item.validationerrormsg}}</mat-error>
                 </mat-form-field>
             </div>
             <div>
                 <!-- <mat-label>Status</mat-label> -->
-                <mat-checkbox *ngIf="item.inputtype == 'checkbox'" [ngClass]="item.class" [formControlName]="[item.name]" (keyup)="issubmit=0"></mat-checkbox>
+                <mat-checkbox *ngIf="item.inputtype == 'checkbox'" [ngClass]="item.class"
+                    [formControlName]="[item.name]" (keyup)="issubmit=0"></mat-checkbox>
             </div>
+
+
+
             <div>
-                <mat-form-field *ngIf="item.inputtype == 'select'" >
-                    <mat-select placeholder="Select" [formControlName]="[item.name]">
-                        <mat-option value="" selected>{{item.defaultchoice}}</mat-option>
-                        <mat-option *ngFor="let selectval of item.sourceval" value="{{selectval[item.selectid]}}" (keyup)="issubmit=0">
-                                {{selectval[item.selectvalue]}}</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="dataForm.controls[item.name]!=null &&  item.validationrule!=null && !dataForm.controls[item.name].valid && dataForm.controls[item.name].touched && issubmit==1">{{item.label}}
-                            {{item.validationerrormsg}}</mat-error>
-                </mat-form-field>
-            </div>
-            <div>
-                <span  *ngIf="item.inputtype=='radio'">
+                <span *ngIf="item.inputtype=='radio'">
                     <label>{{item.label}}: </label>
-                        <mat-radio-group [formControlName]="[item.name]">
-                                <mat-radio-button type="radio" *ngFor="let val of item.value" [name]="item.name" [value]="val" (keyup)="issubmit=0" [ngClass]="item.class">{{val}} {{item.valuelabel}}</mat-radio-button>
-                        </mat-radio-group>
+                    <mat-radio-group [formControlName]="[item.name]">
+                        <mat-radio-button type="radio" *ngFor="let val of item.value" [name]="item.name" [value]="val"
+                            (keyup)="issubmit=0" [ngClass]="item.class">{{val}} {{item.valuelabel}}</mat-radio-button>
+                    </mat-radio-group>
                 </span>
             </div>
-                
+            <div>
+                <mat-form-field *ngIf="item.inputtype == 'select'">
+                    <mat-select placeholder="Select" [formControlName]="[item.name]"
+                        (selectionChange)="getMediaTypeVal($event.value);">
+                        <mat-option value="" selected>{{item.defaultchoice}}</mat-option>
+                        <mat-option *ngFor="let selectval of item.sourceval" value="{{selectval[item.selectid]}}"
+                            (keyup)="issubmit=0">
+                            {{selectval[item.selectvalue]}}</mat-option>
+                    </mat-select>
+                    <mat-error
+                        *ngIf="dataForm.controls[item.name]!=null &&  item.validationrule!=null && !dataForm.controls[item.name].valid && dataForm.controls[item.name].touched && issubmit==1">
+                        {{item.label}}
+                        {{item.validationerrormsg}}</mat-error>
+                </mat-form-field>
+            </div>
+
         </ng-container>
-        <button class="submitbtn" type="submit" color="primary">{{ buttonText }}</button>
+        <div *ngIf="mediaTypeValue == 'image' || mediaTypeValue == 'video' || mediaTypeValue == 'audio' || mediaTypeValue == 'video' || mediaTypeValue == 'file' ">
+            <lib-file-upload [config]="uploadConfigData"></lib-file-upload>
+        </div>
+
+        <div *ngIf="mediaTypeValue == 'html'">
+            <ck-editor [config]="editorconfig">
+            </ck-editor>
+        </div>
+        <button class="submitbtn" mat-raised-button color="primary" type="submit">{{ buttonText }}</button>
     </form>
 </mat-card>

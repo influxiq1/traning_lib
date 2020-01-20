@@ -14,6 +14,7 @@ import { AddEditTrainingComponent } from './manage-training/add-edit-training/ad
 import { AddEditLessionsComponent } from './manage-lessions/add-edit-lessions/add-edit-lessions.component';
 import { AddEditCenterComponent } from './training-center/add-edit-center/add-edit-center.component';
 import { ListingTrainingComponent } from './manage-training/listing-training/listing-training.component';
+import { ListLessionComponent } from './manage-lessions/list-lession/list-lession.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ListingTrainingComponent } from './manage-training/listing-training/lis
     AddEditLessionsComponent,
     AddEditCenterComponent,
     ListingTrainingComponent,
+    ListLessionComponent,
   ],
   imports: [
     routing,

@@ -35,43 +35,64 @@ export class TraningComponent implements OnInit {
   public recid: any;
   public listingPageRoute:any;
   public buttonText : any="Submit";
-  public headerText : any="Add Training";
-
+  public headerText : any;
+  public objectId : any;
+  public pageFlag : any;
+  public mediaTypeValue:any;
+  public editorconfig:any={};
+  public uploadConfigData:any='';
   @Input()
     set formdata(formdata: string) {
         this.formdataval = (formdata) || '<no name set>';
         console.log("total form data",this.formdataval);
     }
+    @Input()
+    set PageName(val: {}) {
+      this.pageFlag = (val) || '<no name set>';
+      console.log("pagee nameeee",this.pageFlag);
+    } 
 
   @Input()
   set serverDetails(serverDetails: {}) {
     this.serverDetailsVal = (serverDetails) || '<no name set>';
-    console.log(this.serverDetailsVal);
+    
   }
 
   @Input()
   set formSource(formSource: any) {
     this.formSourceVal = (formSource) || '<no name set>';
-    this.menuval = this.formSourceVal.formTitleName;
+    console.log("fffffffffffffff",this.formSourceVal);
+  
   }
   @Input()
   set ListingPageRoute(val: any) {
     this.listingPageRoute = (val) || '<no name set>';
     console.log("listing page ",this.listingPageRoute);
+  }
+  @Input()
+  set ObjectId(val: any) {
+    this.objectId = (val) || '<no name set>';
+    console.log("objecttttttt",this.objectId);
     
+  }
+  @Input()
+  set FileUpload(getConfig: any) {
+    this.uploadConfigData = getConfig;
   }
    
 
   constructor( formgroup: FormBuilder, public cookeiservice: CookieService, public sanitizer: DomSanitizer, public route: ActivatedRoute, public router: Router, public apiService: ApiService, public _http: HttpClient) {
     this.formgroup = formgroup;
+    this.editorconfig.extraAllowedContent = '*[class](*),span;ul;li;table;td;style;*[id];*(*);*{*}';
+
    }
 
   ngOnInit() {
-
+    this.headerText = this.formSourceVal.AddheaderText;
         this.route.params.subscribe(params => {
             this.recid = params['id'];
             if (this.recid !=null && this.recid !='' && this.recid !=undefined) {
-              this.headerText="Edit Training";
+              this.headerText = this.formSourceVal.EditheaderText;
               this.buttonText="Update";
               this.geteditdata();
             }
@@ -151,7 +172,7 @@ export class TraningComponent implements OnInit {
         let data: any ={
           source: this.formSourceVal.source,
           data: this.dataForm.value,
-          sourceobj: ["parent_category"],
+          sourceobj: [this.objectId.objectId],
           token:this.serverDetailsVal.jwttoken
         }
       this.apiService.postData(link,data).subscribe((res: any)=>{
@@ -181,9 +202,7 @@ export class TraningComponent implements OnInit {
           source: source ,
           token:this.serverDetailsVal.jwttoken,
         }
-        
         this.apiService.getData(link, data)
-        
             .subscribe(res => {
                 let result;
                 result = res;
@@ -204,6 +223,11 @@ export class TraningComponent implements OnInit {
                 this.formdataval[c].sourceval = [];
             });
     }
+
+}
+getMediaTypeVal(value:any){
+  console.log("selection val",value);
+  this.mediaTypeValue = value;
 
 }
 

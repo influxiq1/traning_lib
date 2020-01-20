@@ -8,26 +8,26 @@ import { ApiService } from '../../api.service';
 import { DialogBoxComponent } from '../../common/dialog-box/dialog-box.component';
 import { Router } from '@angular/router';
 export interface PeriodicElement {
-  catagory_name: string;
+  lession_title: string;
   description: string;
-  priority: string;
-  parent_catagory: string;
-  status: string;
+  test_associate_training: string;
+  mediaType: string;
+  associated_training: string;
+  prerequisite_lession:string;
+  status:string;
   deleteRecord:any;
 }
 
 export interface DialogData {
   message: string;
 }
-
 @Component({
-  selector: 'lib-listing-training',
-  templateUrl: './listing-training.component.html',
-  styleUrls: ['./listing-training.component.css']
+  selector: 'lib-list-lession',
+  templateUrl: './list-lession.component.html',
+  styleUrls: ['./list-lession.component.css']
 })
-
-export class ListingTrainingComponent implements OnInit {
-  displayedColumns: string[] = ['catagory_name', 'description', 'priority', 'parent_catagory','status','deleteRecord'];
+export class ListLessionComponent implements OnInit {
+  displayedColumns: string[] = ['lession_title', 'description', 'test_associate_training', 'mediaType','associated_training','prerequisite_lession','status','deleteRecord'];
   dataSource: MatTableDataSource<PeriodicElement>;
   public listingData :any=[];
   public dialogRef: any;
@@ -47,13 +47,10 @@ export class ListingTrainingComponent implements OnInit {
     this.listingData = val;
     this.dataSource = this.listingData;
     this.dataSource.paginator = this.paginator;
-
-    console.log("ggggggggggg",this.listingData);
   }
   @Input()
   set serverDetails(serverDetails: {}) {
     this.serverDetailsVal = (serverDetails) || '<no name set>';
-    console.log(this.serverDetailsVal);
   }
   @Input()
   set formSource(formSource: any) {
@@ -71,66 +68,59 @@ export class ListingTrainingComponent implements OnInit {
     this.addPageRoute = (val) || '<no name set>';
     console.log("form source",this.addPageRoute);
   }
-
-  constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router) { 
-
-  }
+  constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router) { }
 
   ngOnInit() {
-    this.dataSource.sort = this.sort;
   }
- 
   deleteRecord(id:any,index:any){
-  this.deleteId = id;
-  this.deleteIndex = index;
-  let modalData: any = {
-    panelClass: 'delete-dialog',
-    data: {
-      header: "Message",
-      message: "Are you want to delete these record ?",
-      button1: { text: "No" },
-      button2: { text: "Yes" },
+    this.deleteId = id;
+    this.deleteIndex = index;
+    let modalData: any = {
+      panelClass: 'delete-dialog',
+      data: {
+        header: "Message",
+        message: "Are you want to delete these record ?",
+        button1: { text: "No" },
+        button2: { text: "Yes" },
+      }
     }
-  }
-  this.dialogRef = this.dialog.open(DialogBoxComponent, modalData);
-    this.dialogRef.afterClosed().subscribe(result => {
+    this.dialogRef = this.dialog.open(DialogBoxComponent, modalData);
+      this.dialogRef.afterClosed().subscribe(result => {
+      
+        switch (result) {
+          case "No":
+            break;
+          case "Yes":
+            this.deleteFunction(id,index);
+            break;
+        }
+      });
     
-      switch (result) {
-        case "No":
-          break;
-        case "Yes":
-          this.deleteFunction(id,index);
-          break;
-      }
-    });
-  
-  }
-  deleteFunction(recordId:any,index:number){
-
-    let link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
-    let data:any = {
-      "source" : this.formSourceVal.source,
-      "id" : recordId,
-      "token": this.serverDetailsVal.jwttoken
     }
-    this.apiService.postData(link,data).subscribe((res: any)=>{
-      if(res.status="success"){
-        this.listingData.splice(index, 1);
-        let allData: PeriodicElement[] = this.listingData;
-        this.dataSource = new MatTableDataSource(allData);
+    deleteFunction(recordId:any,index:number){
+  
+      let link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
+      let data:any = {
+        "source" : this.formSourceVal.source,
+        "id" : recordId,
+        "token": this.serverDetailsVal.jwttoken
       }
-     
-    })
-
-  }
-  routerFunction(paramId:any){
-    this.router.navigateByUrl(this.editPageRoute + paramId);
-  }
-  addButton(){
-    this.router.navigateByUrl(this.addPageRoute);
-
-  }
-
+      this.apiService.postData(link,data).subscribe((res: any)=>{
+        if(res.status="success"){
+          this.listingData.splice(index, 1);
+          let allData: PeriodicElement[] = this.listingData;
+          this.dataSource = new MatTableDataSource(allData);
+        }
+       
+      })
+  
+    }
+    routerFunction(paramId:any){
+      this.router.navigateByUrl(this.editPageRoute + paramId);
+    }
+    addButton(){
+      this.router.navigateByUrl(this.addPageRoute);
+  
+    }
 
 }
-

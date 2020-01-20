@@ -20,6 +20,9 @@ export class AddEditTrainingComponent implements OnInit {
     "showEndpoint":"datalist",
     "formTitleName": 'Training'
   }
+  public additionalData: any = {
+    "objectId": "associated_training"
+  };
   constructor(public route: ActivatedRoute) { }
 
   ngOnInit() {

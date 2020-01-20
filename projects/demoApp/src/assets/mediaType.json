@@ -1,0 +1,24 @@
+[
+    
+    {
+        "name": "Video",
+        "selectname": "video"
+      },
+      {
+        "name": "Audio",
+        "selectname": "audio"
+      },
+      {
+        "name": "Image",
+        "selectname": "image"
+      },
+      {
+        "name": "Html",
+        "selectname": "html"
+      },
+      {
+        "name": "File",
+        "selectname": "file"
+      }
+      
+]
