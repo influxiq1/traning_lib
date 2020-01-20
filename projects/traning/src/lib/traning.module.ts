@@ -8,7 +8,6 @@ import { ApiService } from './api.service';
 import { CommonModule } from '@angular/common';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { DemoMaterialModule } from './material-module';
-import { AddEditTrainingComponent } from './manage-training/add-edit-training/add-edit-training.component';
 import { AddEditLessionsComponent } from './manage-lessions/add-edit-lessions/add-edit-lessions.component';
 import { AddEditCenterComponent } from './training-center/add-edit-center/add-edit-center.component';
 import { ListingTrainingComponent } from './manage-training/listing-training/listing-training.component';
@@ -18,7 +17,6 @@ import { DialogBoxComponent } from './common/dialog-box/dialog-box.component';
 @NgModule({
   declarations: [
     TraningComponent,
-    AddEditTrainingComponent,
     AddEditLessionsComponent,
     AddEditCenterComponent,
     ListingTrainingComponent,
@@ -35,7 +33,7 @@ import { DialogBoxComponent } from './common/dialog-box/dialog-box.component';
     BrowserAnimationsModule,
     DemoMaterialModule,
   ],
-  exports: [TraningComponent,AddEditTrainingComponent,ListingTrainingComponent,AddEditLessionsComponent
+  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent
     ,AddEditCenterComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [CookieService, ApiService],

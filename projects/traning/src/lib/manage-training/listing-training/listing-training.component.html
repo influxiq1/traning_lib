@@ -5,7 +5,9 @@
     <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
         <h2 class="headerSpan">List Training Management</h2>
       </mat-toolbar>
-    
+      <mat-toolbar class="buttonsetToolbar">
+        <button class="singleButton" mat-raised-button color="primary" (click)="addButton()" > Add Training</button>
+    </mat-toolbar>
 
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>

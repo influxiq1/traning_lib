@@ -1,5 +1,5 @@
 <mat-card class="main-mat-card admingeneralcls">
-    <h1 class="header">Add/Edit {{menuval}}</h1>
+    <h1 class="header">{{ headerText }}</h1>
     <form  novalidate (ngSubmit)="formsubmit()" class="formclass">
         <ng-container [formGroup]="dataForm" *ngFor="let item of formdataval; let i=index;">
                 <div>
@@ -64,6 +64,6 @@
             </div>
                 
         </ng-container>
-        <button class="submitbtn" type="submit" color="primary"> Submit</button>
+        <button class="submitbtn" type="submit" color="primary">{{ buttonText }}</button>
     </form>
 </mat-card>

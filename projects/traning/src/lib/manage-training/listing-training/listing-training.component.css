@@ -15,3 +15,13 @@ table {
     display: block;
     margin: auto;
   }
+  .buttonsetToolbar{
+    background-color: #f4f3f8;
+    text-align: center;
+    display: block;
+    padding-top: 10px;
+  }
+  .singleButton{
+    margin: 5px; 
+    float: right;
+  }

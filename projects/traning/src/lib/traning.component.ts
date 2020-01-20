@@ -33,6 +33,9 @@ export class TraningComponent implements OnInit {
   public formSourceVal: any;
   public menuval: string = '';
   public recid: any;
+  public listingPageRoute:any;
+  public buttonText : any="Submit";
+  public headerText : any="Add Training";
 
   @Input()
     set formdata(formdata: string) {
@@ -51,6 +54,12 @@ export class TraningComponent implements OnInit {
     this.formSourceVal = (formSource) || '<no name set>';
     this.menuval = this.formSourceVal.formTitleName;
   }
+  @Input()
+  set ListingPageRoute(val: any) {
+    this.listingPageRoute = (val) || '<no name set>';
+    console.log("listing page ",this.listingPageRoute);
+    
+  }
    
 
   constructor( formgroup: FormBuilder, public cookeiservice: CookieService, public sanitizer: DomSanitizer, public route: ActivatedRoute, public router: Router, public apiService: ApiService, public _http: HttpClient) {
@@ -62,10 +71,12 @@ export class TraningComponent implements OnInit {
         this.route.params.subscribe(params => {
             this.recid = params['id'];
             if (this.recid !=null && this.recid !='' && this.recid !=undefined) {
+              this.headerText="Edit Training";
+              this.buttonText="Update";
               this.geteditdata();
             }
         });
-        console.log(this.recid);
+        
     
     let formgrp: any = [];
     for (let c in this.formdataval) {
@@ -129,18 +140,24 @@ export class TraningComponent implements OnInit {
     for (let y in this.dataForm.controls) {
         this.dataForm.controls[y].markAsTouched();
     }
-    console.log(this.dataForm.value)
     if (this.dataForm.valid && this.submitval == 1) {
       console.log(this.dataForm.value);
+      if (this.dataForm.value.status)
+          this.dataForm.value.status = parseInt("1");
+        else
+          this.dataForm.value.status = parseInt("0");
       
       const link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
         let data: any ={
           source: this.formSourceVal.source,
           data: this.dataForm.value,
+          sourceobj: ["parent_category"],
           token:this.serverDetailsVal.jwttoken
         }
       this.apiService.postData(link,data).subscribe((res: any)=>{
-        console.log(res);
+        if(res.status = "success"){
+          this.router.navigateByUrl(this.listingPageRoute);
+        }
       })
     }
   }
@@ -161,13 +178,12 @@ export class TraningComponent implements OnInit {
     if (this.formdataval[c].sourcetype == null || this.formdataval[c].sourcetype != 'static') {
         const link = this.serverDetailsVal.serverUrl + endpoint;
         let data: any ={
-          source: source 
+          source: source ,
+          token:this.serverDetailsVal.jwttoken,
         }
-        // this.apiService.getData(link, data ).subscribe((res: any)=>{
-        //   console.log(res);
-        // })
-
-        this._http.post(link, { source: source })
+        
+        this.apiService.getData(link, data)
+        
             .subscribe(res => {
                 let result;
                 result = res;
@@ -180,7 +196,7 @@ export class TraningComponent implements OnInit {
                 this.formdataval[c].sourceval = [];
             });
     } else {
-      console.log('select is workiing11', source, c);
+      
         this.apiService.localJsonSate(source)
             .subscribe((res:any) => {
                 this.formdataval[c].sourceval =  res;
@@ -196,6 +212,7 @@ geteditdata() {
   const link = this.serverDetailsVal.serverUrl + this.formSourceVal.showEndpoint;
         let data: any ={
           source: this.formSourceVal.source,
+          token:this.serverDetailsVal.jwttoken,
           condition:{
             _id: this.recid
           }

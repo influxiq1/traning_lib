@@ -36,7 +36,7 @@ export class ListingTrainingComponent implements OnInit {
   public serverDetailsVal : any;
   public formSourceVal : any;
   public editPageRoute : any;
-
+  public addPageRoute : any;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -64,6 +64,12 @@ export class ListingTrainingComponent implements OnInit {
   set EditPageRoute(val: any) {
     this.editPageRoute = (val) || '<no name set>';
     console.log("form source",this.editPageRoute);
+  }
+
+  @Input()
+  set AddPageRoute(val: any) {
+    this.addPageRoute = (val) || '<no name set>';
+    console.log("form source",this.addPageRoute);
   }
 
   constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router) { 
@@ -120,6 +126,10 @@ export class ListingTrainingComponent implements OnInit {
   }
   routerFunction(paramId:any){
     this.router.navigateByUrl(this.editPageRoute + paramId);
+  }
+  addButton(){
+    this.router.navigateByUrl(this.addPageRoute);
+
   }
 
 

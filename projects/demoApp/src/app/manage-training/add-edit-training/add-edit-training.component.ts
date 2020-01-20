@@ -9,9 +9,10 @@ export class AddEditTrainingComponent implements OnInit {
   title = 'demoApp';
   public formdataval: any;
   public recid: any;
+  public listingPageRoute : any="/manage-training/list";
   public serverDetails: any = {
     "serverUrl": "https://9ozbyvv5v0.execute-api.us-east-1.amazonaws.com/production/api/",
-    "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1NzkzNTA3NzIsImlhdCI6MTU3OTI2NDM3Mn0.ml1jsqncUN6t6Ln10NQuv0dZ730AnIFZeimrTsIOCAk"
+    "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1Nzk1ODI1MzEsImlhdCI6MTU3OTQ5NjEzMX0.KqgDVvDh0Z8pMOIfuN_dTpBvrYe_KfEOC6kCrH6eZT4"
   };
   public formSource: any = {
     "source":'training_category_management',
