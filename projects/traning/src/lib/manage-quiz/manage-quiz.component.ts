@@ -4,43 +4,35 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { HttpClient } from '@angular/common/http';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from "@angular/material";
-import { ApiService } from '../../api.service';
-import { DialogBoxComponent } from '../../common/dialog-box/dialog-box.component';
+import { ApiService } from '../api.service';
+import { DialogBoxComponent } from '../common/dialog-box/dialog-box.component';
 import { Router } from '@angular/router';
 export interface PeriodicElement {
-  lession_title: string;
-  description: string;
-  test_associate_training: string;
-  mediaType: string;
-  associated_training: string;
-  prerequisite_lession:string;
-  status:string;
+  question: string;
+  priority: string;
+  status: string;
   deleteRecord:any;
 }
-
-export interface DialogData {
-  message: string;
-}
 @Component({
-  selector: 'lib-list-lession',
-  templateUrl: './list-lession.component.html',
-  styleUrls: ['./list-lession.component.css']
+  selector: 'lib-manage-quiz',
+  templateUrl: './manage-quiz.component.html',
+  styleUrls: ['./manage-quiz.component.css']
 })
-export class ListLessionComponent implements OnInit {
-  displayedColumns: string[] = ['lession_title', 'description', 'test_associate_training', 'mediaType','associated_training','prerequisite_lession','status','deleteRecord'];
-  dataSource: MatTableDataSource<PeriodicElement>;
-  public listingData :any=[];
-  public dialogRef: any;
-  public deleteId : any;
-  public deleteIndex : any;
-  public serverDetailsVal : any;
-  public formSourceVal : any;
-  public editPageRoute : any;
+export class ManageQuizComponent implements OnInit {
   public addPageRoute : any;
-  public searchSourceName:any;
-  public manageQuizRoute:any;
+  public lessonPageRoute : any;
+  public serverDetailsVal:any;
+  public formSourceVal:any;
+  public editPageRoute:any;
+  public deleteId:any;
+  public deleteIndex:any;
+  public dialogRef: any;
+  public addUpdateAnswerRoute:any;
 
 
+  public listingData:any=[];
+  displayedColumns: string[] = ['question', 'priority', 'status', 'deleteRecord'];
+  dataSource: MatTableDataSource<PeriodicElement>;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
@@ -48,8 +40,17 @@ export class ListLessionComponent implements OnInit {
   set allDataList(val: any) {
     this.listingData = (val) || 'no name set';
     this.listingData = val;
+    console.log("listinggggg",this.listingData);
     this.dataSource = this.listingData;
-    // this.dataSource.paginator = this.paginator;
+    this.dataSource.paginator = this.paginator;
+    }
+  @Input()
+  set AddPageRoute(val: any) {
+    this.addPageRoute = (val) || '<no name set>';
+  }
+  @Input()
+  set LessonPageRoute(val: any) {
+    this.lessonPageRoute = (val) || '<no name set>';
   }
   @Input()
   set serverDetails(serverDetails: {}) {
@@ -58,28 +59,26 @@ export class ListLessionComponent implements OnInit {
   @Input()
   set formSource(formSource: any) {
     this.formSourceVal = (formSource) || '<no name set>';
-    console.log("form source",this.formSourceVal);
   }
   @Input()
   set EditPageRoute(val: any) {
     this.editPageRoute = (val) || '<no name set>';
   }
+  @Input()
+  set AddUpdateAnswerRoute(formSource: any) {
+    this.addUpdateAnswerRoute = (formSource) || '<no name set>';
+  }
 
-  @Input()
-  set AddPageRoute(val: any) {
-    this.addPageRoute = (val) || '<no name set>';
-  }
-  @Input()
-  set SearchSourceName(val: any) {
-    this.searchSourceName = (val) || '<no name set>';
-  }
-  @Input()
-  set ManageQuizRoute(val: any) {
-    this.manageQuizRoute = (val) || '<no name set>';
-  }
   constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router) { }
 
   ngOnInit() {
+  }
+  addButton(){
+    this.router.navigateByUrl(this.addPageRoute);
+  }
+  lessonList(){
+    this.router.navigateByUrl(this.lessonPageRoute);
+
   }
   deleteRecord(id:any,index:any){
     this.deleteId = id;
@@ -124,32 +123,11 @@ export class ListLessionComponent implements OnInit {
       })
   
     }
-    routerFunction(paramId:any){
-      this.router.navigateByUrl(this.editPageRoute + paramId);
-    }
-    addButton(){
-      this.router.navigateByUrl(this.addPageRoute);
-  
-    }
-    filterByTrainingName(key: string, value: string){
-    
-      let searchJson: any = {};
-      searchJson[key] = value.toLowerCase();
-      let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
-      var data = {
-        "source": this.searchSourceName,
-        "condition": searchJson,
-        "token": this.serverDetailsVal.jwttoken
-      }
-      this.apiService.postData(link,data).subscribe(response => {
-        let result : any=response;
-        this.dataSource = result.res;
-        });
-    
-  }
-  manageQuiz(){
-    console.log("dsdddddddddddddddd");
-    this.router.navigateByUrl(this.manageQuizRoute);
-  }
+    routerFunction(id:any){
 
+    }
+    goToAnswerPage(id:any){
+      let paramsId:any=id;
+      this.router.navigateByUrl(this.addUpdateAnswerRoute+paramsId);
+    }
 }

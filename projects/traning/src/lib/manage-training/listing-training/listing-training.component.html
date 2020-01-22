@@ -1,48 +1,57 @@
 <!-- <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
   </mat-form-field> -->
-  
-  <mat-card>
 
-    <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
-        <h2 class="headerSpan">List Training Management</h2>
-      </mat-toolbar>
-      <mat-toolbar class="buttonsetToolbar">
-        <button class="singleButton" mat-raised-button color="primary" (click)="addButton()" > Add Training</button>
-    </mat-toolbar>
+<mat-card>
 
-    <input matInput placeholder="Search by Doctor" (keyup)="filterByTrainingName('catagory_name_search_regex', $event.target.value)">
+  <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
+    <h2 class="headerSpan">List Training Management</h2>
+  </mat-toolbar>
+  <mat-toolbar class="buttonsetToolbar">
+    <button class="singleButton" mat-raised-button color="primary" (click)="addButton()"> Add Training</button>
+  </mat-toolbar>
 
+  <mat-form-field>
+    <input matInput placeholder="Search by Training Title"
+      (keyup)="filterByTrainingName('catagory_name_search', $event.target.value)">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Search By Status" (selectionChange)="filterByTrainingName('status_search', $event.value)">
+      <mat-option value=0>Select a status</mat-option>
+      <mat-option value=1>Active</mat-option>
+      <mat-option value=0>Inactive</mat-option>
+    </mat-select>
+  </mat-form-field>
   <div class="mat-elevation-z8">
 
     <table mat-table [dataSource]="dataSource" matSort>
-  
+
       <!-- ID Column -->
       <ng-container matColumnDef="catagory_name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Training Title </th>
         <td mat-cell *matCellDef="let row"> {{row.catagory_name}} </td>
       </ng-container>
-  
+
       <!-- Progress Column -->
       <ng-container matColumnDef="description">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
         <td mat-cell *matCellDef="let row"> {{row.description}} </td>
       </ng-container>
-  
+
       <!-- Name Column -->
       <ng-container matColumnDef="priority">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Priority </th>
         <td mat-cell *matCellDef="let row"> {{row.priority}} </td>
       </ng-container>
-  
+
       <!-- Color Column -->
       <ng-container matColumnDef="parent_catagory">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Parent Catagory </th>
-        <td mat-cell *matCellDef="let row" > {{row.parent_catagory}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.parent_catagory}} </td>
       </ng-container>
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-        <td mat-cell *matCellDef="let row" > {{row.status}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.status}} </td>
       </ng-container>
       <ng-container matColumnDef="deleteRecord">
         <th mat-header-cell *matHeaderCellDef> Action </th>
@@ -51,16 +60,16 @@
             <span class="cursor" (click)="deleteRecord(element._id, i);">
               <i class="material-icons">
                 delete_outline
-                </i>
+              </i>
             </span>
-          <!-- <button mat-button type="button" color="primary" (click)="deleteRecord(element._id, i);">Delete</button> -->
-          <!-- <button mat-button type="button" color="primary" (click)="routerFunction(element._id)">Edit</button> -->
-          <span (click)="routerFunction(element._id)"> 
-            <i class="material-icons">
-             edit
-           </i>
+            <!-- <button mat-button type="button" color="primary" (click)="deleteRecord(element._id, i);">Delete</button> -->
+            <!-- <button mat-button type="button" color="primary" (click)="routerFunction(element._id)">Edit</button> -->
+            <span (click)="routerFunction(element._id)">
+              <i class="material-icons">
+                edit
+              </i>
+            </span>
           </span>
-        </span>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -68,7 +77,7 @@
       </tr>
 
     </table>
-  
+
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </div>
 </mat-card>

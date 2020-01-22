@@ -50,7 +50,6 @@ export class TraningComponent implements OnInit {
     @Input()
     set PageName(val: {}) {
       this.pageFlag = (val) || '<no name set>';
-      console.log("pagee nameeee",this.pageFlag);
     } 
 
   @Input()
@@ -62,18 +61,15 @@ export class TraningComponent implements OnInit {
   @Input()
   set formSource(formSource: any) {
     this.formSourceVal = (formSource) || '<no name set>';
-    console.log("fffffffffffffff",this.formSourceVal);
   
   }
   @Input()
   set ListingPageRoute(val: any) {
     this.listingPageRoute = (val) || '<no name set>';
-    console.log("listing page ",this.listingPageRoute);
   }
   @Input()
   set ObjectId(val: any) {
     this.objectId = (val) || '<no name set>';
-    console.log("scscscsd",this.objectId);
   }
   
   @Input()
@@ -163,7 +159,6 @@ export class TraningComponent implements OnInit {
         this.dataForm.controls[y].markAsTouched();
     }
     if (this.dataForm.valid && this.submitval == 1) {
-      console.log(this.dataForm.value);
       if (this.dataForm.value.status)
           this.dataForm.value.status = parseInt("1");
         else

@@ -38,6 +38,7 @@ export class ListingTrainingComponent implements OnInit {
   public editPageRoute : any;
   public addPageRoute : any;
   public searchSourceName:any;
+  public searchResults:any=[];
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
@@ -47,35 +48,28 @@ export class ListingTrainingComponent implements OnInit {
     this.listingData = val;
     this.dataSource = this.listingData;
     this.dataSource.paginator = this.paginator;
-
-    console.log("ggggggggggg",this.listingData);
-  }
+    }
   @Input()
   set serverDetails(serverDetails: {}) {
     this.serverDetailsVal = (serverDetails) || '<no name set>';
-    console.log(this.serverDetailsVal);
   }
   @Input()
   set formSource(formSource: any) {
     this.formSourceVal = (formSource) || '<no name set>';
-    console.log("form source",this.formSourceVal);
   }
   @Input()
   set EditPageRoute(val: any) {
     this.editPageRoute = (val) || '<no name set>';
-    console.log("form source",this.editPageRoute);
   }
 
   @Input()
   set AddPageRoute(val: any) {
     this.addPageRoute = (val) || '<no name set>';
-    console.log("form source",this.addPageRoute);
   }
 
   @Input()
   set SearchSourceName(val: any) {
     this.searchSourceName = (val) || '<no name set>';
-    console.log("form source",this.searchSourceName);
   }
 
   constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router) { 
@@ -147,9 +141,9 @@ export class ListingTrainingComponent implements OnInit {
         "condition": searchJson,
         "token": this.serverDetailsVal.jwttoken
       }
-      this.apiService.postData(link,data).subscribe(Response => {
-        console.log("resulr searchhh",Response);
-          // this.dataSource = Response.res;
+      this.apiService.postData(link,data).subscribe(response => {
+        let result : any=response;
+        this.dataSource = result.res;
         });
     
   }

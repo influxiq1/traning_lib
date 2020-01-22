@@ -9,6 +9,9 @@ import { ListingTrainingComponent } from './manage-training/listing-training/lis
 import { ResolveService } from './service/resolve.service';
 import { ListLessionComponent } from './manage-lessions/list-lession/list-lession.component';
 import { ListComponent } from './training-center/list/list.component';
+import { ManageQuizComponent } from './manage-quiz/manage-quiz.component';
+import { AddEditComponent } from './manage-quiz/add-edit/add-edit.component';
+import { AddUpdateAnswerComponent } from './manage-quiz/add-update-answer/add-update-answer.component';
 const appRoutes: Routes = [
     { path: 'home', component: AppComponent },
     { path: 'home/:id', component: AppComponent },
@@ -30,9 +33,26 @@ const appRoutes: Routes = [
     },
     { path: 'manage-training/edit/:id', component: AddEditTrainingComponent },
     /**Training center**/
-    { path : 'training-center/list' , component : ListComponent},
+    { 
+        path : 'training-center/list' , component : ListComponent,
+        resolve: { trainingdata: ResolveService }, 
+        data: { requestcondition: { source: 'training_category_management_view', condition: {} }, endpoint: 'datalist' }
+    },
     { path: 'manage-center/add', component: AddEditCenterComponent },
-    { path: 'manage-center/edit/:id', component: AddEditCenterComponent }
+    { path: 'manage-center/edit/:id', component: AddEditCenterComponent },
+    /**Quiz Management**/
+    {
+      path : 'manage-quiz/list' , component : ManageQuizComponent,
+      resolve: { trainingdata: ResolveService }, 
+        data: { requestcondition: { source: 'quiz_question', condition: {} }, endpoint: 'datalist' }
+    },
+    {
+        path : 'manage-quiz/add', component : AddEditComponent
+    },
+    {
+      path : 'manage-quiz/add-answer/:id' , component : AddUpdateAnswerComponent
+    }
+
 ]
 
 export const appRoutingProviders: any[] = [

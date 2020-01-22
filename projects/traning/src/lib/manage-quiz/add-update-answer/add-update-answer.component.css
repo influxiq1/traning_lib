@@ -1,0 +1,34 @@
+table {
+    width: 100%;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  td, th {
+    width: 25%;
+  }
+  .headerSpan{
+    text-align: center;
+    display: block;
+    margin: auto;
+  }
+  .buttonsetToolbar{
+    background-color: #f4f3f8;
+    text-align: center;
+    display: block;
+    padding-top: 10px;
+  }
+  .singleButton{
+    margin: 5px; 
+    float: right;
+  }
+  .submitbtn{
+    display: block;
+    width: 170px;
+    margin: 10px auto;
+    background: #3f50b5 !important;
+    color: #fff;
+  }

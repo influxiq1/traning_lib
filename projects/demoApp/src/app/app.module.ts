@@ -16,6 +16,9 @@ import { AddEditCenterComponent } from './training-center/add-edit-center/add-ed
 import { ListingTrainingComponent } from './manage-training/listing-training/listing-training.component';
 import { ListLessionComponent } from './manage-lessions/list-lession/list-lession.component';
 import { ListComponent } from './training-center/list/list.component';
+import { ManageQuizComponent } from './manage-quiz/manage-quiz.component';
+import { AddEditComponent } from './manage-quiz/add-edit/add-edit.component';
+import { AddUpdateAnswerComponent } from './manage-quiz/add-update-answer/add-update-answer.component';
 
 
 @NgModule({
@@ -27,6 +30,9 @@ import { ListComponent } from './training-center/list/list.component';
     ListingTrainingComponent,
     ListLessionComponent,
     ListComponent,
+    ManageQuizComponent,
+    AddEditComponent,
+    AddUpdateAnswerComponent,
   ],
   imports: [
     routing,

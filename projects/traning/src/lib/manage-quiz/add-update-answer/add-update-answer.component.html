@@ -1,0 +1,25 @@
+<mat-card>
+
+    <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
+        <h2 class="headerSpan">Add Answer</h2>
+    </mat-toolbar>
+    <mat-card-content>
+        <form class="example-form" novalidate [formGroup]="addUpdateAnswerForm" name="addUpdateAnswerForm"
+            (ngSubmit)="AddUpdateAnswerFormSubmit()" autocomplete="off">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Answer" [formControl]="addUpdateAnswerForm.controls['answer']"
+                    (blur)="inputUntouch(addUpdateAnswerForm,'answer')">
+                <mat-error *ngIf="addUpdateAnswerForm.controls['answer'].touched && !addUpdateAnswerForm.controls['answer'].valid
+                           && addUpdateAnswerForm.controls['answer'].errors.required">
+                           Answer field can not be blank</mat-error>
+            </mat-form-field>
+        
+
+            <mat-checkbox [formControl]="addUpdateAnswerForm.controls['isCorrect']">Is it correct?</mat-checkbox>
+           
+            <button mat-raised-button color="primary" mat-button class="submitbtn" type="submit">Submit</button>
+
+        </form>
+    </mat-card-content>
+
+</mat-card>

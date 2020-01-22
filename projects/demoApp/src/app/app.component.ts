@@ -20,6 +20,7 @@ export class AppComponent implements OnInit{
   //   "showEndpoint":"datalist",
   //   "formTitleName": 'Catagory'
   // }
+  // public loader = 0;
   constructor( public route: ActivatedRoute) {
 
   }
