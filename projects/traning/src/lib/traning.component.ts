@@ -41,6 +41,7 @@ export class TraningComponent implements OnInit {
   public mediaTypeValue:any;
   public editorconfig:any={};
   public uploadConfigData:any='';
+  public cancelBtnRoute:any;
   @Input()
     set formdata(formdata: string) {
         this.formdataval = (formdata) || '<no name set>';
@@ -72,9 +73,9 @@ export class TraningComponent implements OnInit {
   @Input()
   set ObjectId(val: any) {
     this.objectId = (val) || '<no name set>';
-    console.log("objecttttttt",this.objectId);
-    
+    console.log("scscscsd",this.objectId);
   }
+  
   @Input()
   set FileUpload(getConfig: any) {
     this.uploadConfigData = getConfig;
@@ -172,7 +173,7 @@ export class TraningComponent implements OnInit {
         let data: any ={
           source: this.formSourceVal.source,
           data: this.dataForm.value,
-          sourceobj: [this.objectId.objectId],
+          sourceobj: [this.objectId.objectId,this.objectId.objectId2],
           token:this.serverDetailsVal.jwttoken
         }
       this.apiService.postData(link,data).subscribe((res: any)=>{
@@ -229,6 +230,9 @@ getMediaTypeVal(value:any){
   console.log("selection val",value);
   this.mediaTypeValue = value;
 
+}
+cancelButton(){
+  this.router.navigateByUrl(this.listingPageRoute);
 }
 
 geteditdata() {

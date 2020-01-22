@@ -5,7 +5,8 @@
     "entryFile": "src/public-api.ts",
     "umdModuleIds": {
       "ngx-cookie-service": "ngxCookieService",
-      "ngx-ckeditor" : "ngxCkeditor"
+      "ngx-ckeditor" : "ngxCkeditor",
+      "file-upload-lib-influxiq":"fileUploadLibInfluxiq"
     }
   }
 }

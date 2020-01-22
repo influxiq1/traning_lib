@@ -8,6 +8,7 @@ import { AddEditCenterComponent } from './training-center/add-edit-center/add-ed
 import { ListingTrainingComponent } from './manage-training/listing-training/listing-training.component';
 import { ResolveService } from './service/resolve.service';
 import { ListLessionComponent } from './manage-lessions/list-lession/list-lession.component';
+import { ListComponent } from './training-center/list/list.component';
 const appRoutes: Routes = [
     { path: 'home', component: AppComponent },
     { path: 'home/:id', component: AppComponent },
@@ -16,7 +17,7 @@ const appRoutes: Routes = [
 
     { path: 'manage-lession/list', component : ListLessionComponent,
     resolve: { lessionData: ResolveService }, 
-    data: { requestcondition: { source: 'manage_lession', condition: {} }, endpoint: 'datalist' }},
+    data: { requestcondition: { source: 'manage_lession_view', condition: {} }, endpoint: 'datalist' }},
     { path: 'manage-lession/edit/:id', component: AddEditLessionsComponent },
 
    /**Training Management**/
@@ -25,10 +26,11 @@ const appRoutes: Routes = [
     {
         path: 'manage-training/list', component: ListingTrainingComponent,
         resolve: { trainingdata: ResolveService }, 
-        data: { requestcondition: { source: 'training_category_management', condition: {} }, endpoint: 'datalist' }
+        data: { requestcondition: { source: 'training_category_management_view', condition: {} }, endpoint: 'datalist' }
     },
     { path: 'manage-training/edit/:id', component: AddEditTrainingComponent },
     /**Training center**/
+    { path : 'training-center/list' , component : ListComponent},
     { path: 'manage-center/add', component: AddEditCenterComponent },
     { path: 'manage-center/edit/:id', component: AddEditCenterComponent }
 ]

@@ -14,7 +14,8 @@ import { ListingTrainingComponent } from './manage-training/listing-training/lis
 import { DialogBoxComponent } from './common/dialog-box/dialog-box.component';
 import { ListLessionComponent } from './manage-lessions/list-lession/list-lession.component';
 import { CKEditorModule } from 'ngx-ckeditor';
-// import { FileUploadModule} from 'file-upload-lib-influxiq';
+import { FileUploadModule} from 'file-upload-lib-influxiq';
+import { ListComponent } from './training-center/list/list.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { CKEditorModule } from 'ngx-ckeditor';
     AddEditCenterComponent,
     ListingTrainingComponent,
     DialogBoxComponent,
-    ListLessionComponent
+    ListLessionComponent,
+    ListComponent
     
   ],
   imports: [
@@ -35,10 +37,10 @@ import { CKEditorModule } from 'ngx-ckeditor';
     BrowserAnimationsModule,
     DemoMaterialModule,
     CKEditorModule,
-    // FileUploadModule
+    FileUploadModule
     
   ],
-  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,AddEditCenterComponent],
+  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,AddEditCenterComponent,ListComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [CookieService, ApiService],
   entryComponents:[DialogBoxComponent]

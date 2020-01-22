@@ -14,7 +14,7 @@
   
       <!-- ID Column -->
       <ng-container matColumnDef="lession_title">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Lession Title </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Lesson Title </th>
         <td mat-cell *matCellDef="let row"> {{row.lession_title}} </td>
       </ng-container>
   
@@ -26,13 +26,13 @@
   
       <!-- Name Column -->
       <ng-container matColumnDef="test_associate_training">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Test associate Training </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Has Test</th>
         <td mat-cell *matCellDef="let row"> {{row.test_associate_training}} </td>
       </ng-container>
   
       <!-- Color Column -->
       <ng-container matColumnDef="mediaType">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Media Type </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Training Type </th>
         <td mat-cell *matCellDef="let row" > {{row.mediaType}} </td>
       </ng-container>
 
@@ -42,7 +42,7 @@
       </ng-container>
 
       <ng-container matColumnDef="prerequisite_lession">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Prerequisite Lession </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Prerequisite Lesson </th>
         <td mat-cell *matCellDef="let row" > {{row.prerequisite_lession}} </td>
       </ng-container>
 
@@ -55,8 +55,20 @@
         <td mat-cell *matCellDef="let element; let i = index;">
           <span class="buttons_ro">
           
-          <button mat-button type="button" color="primary" (click)="deleteRecord(element._id, i);">Delete</button>
-          <button mat-button type="button" color="primary" (click)="routerFunction(element._id)">Edit</button>
+          <!-- <button mat-button type="button" color="primary" (click)="deleteRecord(element._id, i);">Delete</button> -->
+          <span class="cursor" (click)="deleteRecord(element._id, i);">
+            <i class="material-icons">
+              delete_outline
+              </i>
+          </span>
+         
+          <!-- <button mat-button type="button" color="primary" (click)="routerFunction(element._id)">Edit</button> -->
+         
+         <span (click)="routerFunction(element._id)"> 
+           <i class="material-icons">
+            edit
+          </i>
+         </span>
         </span>
         </td>
       </ng-container>

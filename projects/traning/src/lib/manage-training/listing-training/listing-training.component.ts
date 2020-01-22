@@ -37,7 +37,7 @@ export class ListingTrainingComponent implements OnInit {
   public formSourceVal : any;
   public editPageRoute : any;
   public addPageRoute : any;
-
+  public searchSourceName:any;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
@@ -70,6 +70,12 @@ export class ListingTrainingComponent implements OnInit {
   set AddPageRoute(val: any) {
     this.addPageRoute = (val) || '<no name set>';
     console.log("form source",this.addPageRoute);
+  }
+
+  @Input()
+  set SearchSourceName(val: any) {
+    this.searchSourceName = (val) || '<no name set>';
+    console.log("form source",this.searchSourceName);
   }
 
   constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router) { 
@@ -131,6 +137,21 @@ export class ListingTrainingComponent implements OnInit {
 
   }
 
-
+  filterByTrainingName(key: string, value: string){
+    
+      let searchJson: any = {};
+      searchJson[key] = value.toLowerCase();
+      let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
+      var data = {
+        "source": this.searchSourceName,
+        "condition": searchJson,
+        "token": this.serverDetailsVal.jwttoken
+      }
+      this.apiService.postData(link,data).subscribe(Response => {
+        console.log("resulr searchhh",Response);
+          // this.dataSource = Response.res;
+        });
+    
+  }
 }
 

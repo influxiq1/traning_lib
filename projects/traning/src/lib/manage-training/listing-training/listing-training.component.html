@@ -1,7 +1,9 @@
-<!-- <mat-form-field> -->
-    <!-- <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter"> -->
-  <!-- </mat-form-field> -->
+<!-- <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field> -->
+  
   <mat-card>
+
     <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
         <h2 class="headerSpan">List Training Management</h2>
       </mat-toolbar>
@@ -9,7 +11,10 @@
         <button class="singleButton" mat-raised-button color="primary" (click)="addButton()" > Add Training</button>
     </mat-toolbar>
 
+    <input matInput placeholder="Search by Doctor" (keyup)="filterByTrainingName('catagory_name_search_regex', $event.target.value)">
+
   <div class="mat-elevation-z8">
+
     <table mat-table [dataSource]="dataSource" matSort>
   
       <!-- ID Column -->
@@ -43,9 +48,18 @@
         <th mat-header-cell *matHeaderCellDef> Action </th>
         <td mat-cell *matCellDef="let element; let i = index;">
           <span class="buttons_ro">
-          
-          <button mat-button type="button" color="primary" (click)="deleteRecord(element._id, i);">Delete</button>
-          <button mat-button type="button" color="primary" (click)="routerFunction(element._id)">Edit</button>
+            <span class="cursor" (click)="deleteRecord(element._id, i);">
+              <i class="material-icons">
+                delete_outline
+                </i>
+            </span>
+          <!-- <button mat-button type="button" color="primary" (click)="deleteRecord(element._id, i);">Delete</button> -->
+          <!-- <button mat-button type="button" color="primary" (click)="routerFunction(element._id)">Edit</button> -->
+          <span (click)="routerFunction(element._id)"> 
+            <i class="material-icons">
+             edit
+           </i>
+          </span>
         </span>
         </td>
       </ng-container>

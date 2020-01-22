@@ -1,0 +1,11 @@
+
+.leftRightPortion{
+    display: flex;
+    justify-content: space-between;
+}
+
+.mat-card-content{flex-direction: row; box-sizing: border-box; display: flex;}
+
+.row{    flex-direction: row;box-sizing: border-box;display: flex;place-content: center space-around; align-items: center;flex: 1 1 100%; max-width: 100%;}
+
+.column{    flex-direction: column; box-sizing: border-box;  display: flex;}
