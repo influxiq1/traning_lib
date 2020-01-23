@@ -148,7 +148,6 @@ export class ListLessionComponent implements OnInit {
     
   }
   manageQuiz(){
-    console.log("dsdddddddddddddddd");
     this.router.navigateByUrl(this.manageQuizRoute);
   }
 

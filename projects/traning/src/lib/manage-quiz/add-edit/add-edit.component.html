@@ -1,7 +1,7 @@
 <mat-card>
 
     <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
-        <h2 class="headerSpan">Add Question</h2>
+        <h2 class="headerSpan">{{ headerText }}</h2>
     </mat-toolbar>
     <mat-card-content>
         <form class="example-form" novalidate [formGroup]="manageQuizForm" name="manageQuizForm"
@@ -24,7 +24,7 @@
         
             <mat-checkbox [formControl]="manageQuizForm.controls['status']">Active</mat-checkbox>
            
-            <button mat-raised-button color="primary" mat-button class="submitbtn" type="submit">Submit</button>
+            <button mat-raised-button color="primary" mat-button class="submitbtn" type="submit">{{ buttonText }}</button>
 
         </form>
     </mat-card-content>

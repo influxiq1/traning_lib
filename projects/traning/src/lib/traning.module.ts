@@ -19,6 +19,7 @@ import { ListComponent } from './training-center/list/list.component';
 import { ManageQuizComponent } from './manage-quiz/manage-quiz.component';
 import { AddEditComponent } from './manage-quiz/add-edit/add-edit.component';
 import { AddUpdateAnswerComponent } from './manage-quiz/add-update-answer/add-update-answer.component';
+import { UpdateAnswerComponent } from './manage-quiz/update-answer/update-answer.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AddUpdateAnswerComponent } from './manage-quiz/add-update-answer/add-up
     ListComponent,
     ManageQuizComponent,
     AddEditComponent,
-    AddUpdateAnswerComponent
+    AddUpdateAnswerComponent,
+    UpdateAnswerComponent
     
   ],
   imports: [
@@ -46,7 +48,7 @@ import { AddUpdateAnswerComponent } from './manage-quiz/add-update-answer/add-up
     FileUploadModule
     
   ],
-  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent],
+  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [CookieService, ApiService],
   entryComponents:[DialogBoxComponent]

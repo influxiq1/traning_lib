@@ -31,7 +31,6 @@ export class AddUpdateAnswerComponent implements OnInit {
   @Input()
   set ParamsId(val: any) {
     this.paramsId = (val) || '<no name set>';
-    console.log("idddddddddd",this.paramsId);
   }
   constructor(public apiService : ApiService,public fb: FormBuilder,public router:Router) { 
     this.addUpdateAnswerForm = this.fb.group({
@@ -50,29 +49,26 @@ export class AddUpdateAnswerComponent implements OnInit {
     for (let x in this.addUpdateAnswerForm.controls) {
       this.addUpdateAnswerForm.controls[x].markAsTouched();
     }
+    this.addUpdateAnswerForm.controls['questionId'].patchValue(this.paramsId);
 
     if(this.addUpdateAnswerForm.valid){
       if (this.addUpdateAnswerForm.value.isCorrect)
       this.addUpdateAnswerForm.value.isCorrect = parseInt("1");
     else
       this.addUpdateAnswerForm.value.isCorrect = parseInt("0");
-    }
-    // this.addUpdateAnswerForm.value.questionId.
-    this.addUpdateAnswerForm.controls['questionId'].patchValue(this.paramsId);
-    console.log("scs",this.addUpdateAnswerForm.value.questionId);
- 
-     
     const link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
       let data: any ={
         source: this.formSourceVal.source,
         data: this.addUpdateAnswerForm.value,
+        sourceobj: ["questionId"],
         token:this.serverDetailsVal.jwttoken
       }
     this.apiService.postData(link,data).subscribe((res: any)=>{
       if(res.status = "success"){
-        // this.router.navigateByUrl(this.listingPageRoute);
+        this.router.navigateByUrl(this.listingPageRoute);
       }
     })
   }
+}
 
 }

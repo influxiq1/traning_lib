@@ -68,6 +68,7 @@ export class ManageQuizComponent implements OnInit {
   set AddUpdateAnswerRoute(formSource: any) {
     this.addUpdateAnswerRoute = (formSource) || '<no name set>';
   }
+  
 
   constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router) { }
 
@@ -124,10 +125,15 @@ export class ManageQuizComponent implements OnInit {
   
     }
     routerFunction(id:any){
+      this.router.navigateByUrl(this.editPageRoute + id);
 
     }
     goToAnswerPage(id:any){
       let paramsId:any=id;
-      this.router.navigateByUrl(this.addUpdateAnswerRoute+paramsId);
+      this.router.navigateByUrl(this.addUpdateAnswerRoute.addAnswerRoute+paramsId);
+    }
+    goToUpdateAnswerPage(id:any){
+      let paramsId:any=id;
+      this.router.navigateByUrl(this.addUpdateAnswerRoute.updateAnswerRoute+paramsId);
     }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add-edit',
@@ -6,23 +7,32 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-edit.component.css']
 })
 export class AddEditComponent implements OnInit {
+  public quizQuestionSingleDataList:any=[];
   public serverDetails: any = {
     "serverUrl": "https://9ozbyvv5v0.execute-api.us-east-1.amazonaws.com/production/api/",
-    "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1Nzk3NTYwNzUsImlhdCI6MTU3OTY2OTY3NX0.OPyRtcCe-VGJcDu6YEWmTyM74CtgBFoy-YtdisSy7SA"
+    "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1Nzk4NDIxNDAsImlhdCI6MTU3OTc1NTc0MH0.9gzREv5uiI4Bp2PMRS2F2fELmmBpztUl8VSFGyoiu-k"
   };
   public formSource: any = {
-    "source":'quiz_answer',
+    "source":"quiz_question",
     "endpoint": "addorupdatedata",
     "showEndpoint":"datalist",
-    "AddheaderText": "Add Training",
-    "EditheaderText": "Edit Training",
     "formTitleName": 'Training'
   }
   public listingPageRoute : any="/manage-quiz/list";
 
-  constructor() { }
+  constructor(public activatedRoute : ActivatedRoute) { }
 
   ngOnInit() {
+    if(this.activatedRoute.snapshot.params._id){
+      this.activatedRoute.data.forEach(data => {
+        let result: any;
+        result = data.quizQuestionData.res;
+        this.quizQuestionSingleDataList = result;
+        console.log("kjjihsiuhdata",this.quizQuestionSingleDataList);
+  
+      })
+    }
+  
   }
 
 }

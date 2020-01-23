@@ -12,6 +12,7 @@ import { ListComponent } from './training-center/list/list.component';
 import { ManageQuizComponent } from './manage-quiz/manage-quiz.component';
 import { AddEditComponent } from './manage-quiz/add-edit/add-edit.component';
 import { AddUpdateAnswerComponent } from './manage-quiz/add-update-answer/add-update-answer.component';
+import { UpdateAnswerComponent } from './manage-quiz/update-answer/update-answer.component';
 const appRoutes: Routes = [
     { path: 'home', component: AppComponent },
     { path: 'home/:id', component: AppComponent },
@@ -44,13 +45,23 @@ const appRoutes: Routes = [
     {
       path : 'manage-quiz/list' , component : ManageQuizComponent,
       resolve: { trainingdata: ResolveService }, 
-        data: { requestcondition: { source: 'quiz_question', condition: {} }, endpoint: 'datalist' }
+        data: { requestcondition: { source: 'quiz_question_view', condition: {} }, endpoint: 'datalist' }
     },
     {
         path : 'manage-quiz/add', component : AddEditComponent
     },
     {
+        path : 'manage-quiz/edit/:_id', component : AddEditComponent,
+        resolve: { quizQuestionData: ResolveService }, 
+        data: { requestcondition: { source: 'quiz_question', condition: {} }, endpoint: 'datalist' }
+    },
+    {
       path : 'manage-quiz/add-answer/:id' , component : AddUpdateAnswerComponent
+    },
+    {
+        path : 'manage-quiz/update-answer/:questionId_object',component : UpdateAnswerComponent,
+        resolve: { quizQuestionData: ResolveService }, 
+        data: { requestcondition: { source: 'quiz_answer', condition: {} }, endpoint: 'datalist' }
     }
 
 ]
