@@ -16,6 +16,9 @@ export class ListComponent implements OnInit {
   public trainingCategoryList:any=[];
   public serverDetailsVal:any;
   public formSourceVal:any;
+  public lessonData:any=[];
+  panelOpenState = false;
+
 
   @Input()
   set TrainingCategoryList(val: any) {
@@ -40,7 +43,6 @@ export class ListComponent implements OnInit {
 
   }
   onClickCategoryName(val:any){
-    console.log("worksssss",val);
     const link = this.serverDetailsVal.serverUrl + this.formSourceVal.showEndpoint;
     let data: any ={
       source: this.formSourceVal.source ,
@@ -51,7 +53,9 @@ export class ListComponent implements OnInit {
     }
     this.apiService.getData(link, data)
     .subscribe(response=>{
-      console.log("resultttt on click",response);
+      let result :any=response;
+      this.lessonData = result.res;
+      console.log("resultttt on click",this.lessonData);
     })
   }
 

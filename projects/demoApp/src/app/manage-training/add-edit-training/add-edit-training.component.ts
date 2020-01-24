@@ -12,7 +12,7 @@ export class AddEditTrainingComponent implements OnInit {
   public listingPageRoute : any="/manage-training/list";
   public serverDetails: any = {
     "serverUrl": "https://9ozbyvv5v0.execute-api.us-east-1.amazonaws.com/production/api/",
-    "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1Nzk4NDIxNDAsImlhdCI6MTU3OTc1NTc0MH0.9gzREv5uiI4Bp2PMRS2F2fELmmBpztUl8VSFGyoiu-k"
+    "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1Nzk5NTE2NjksImlhdCI6MTU3OTg2NTI2OX0.1MNS3HhaWRJ-yL63GGdziMDgwTpCuOGiYc9-VRrIGBI"
   };
   public formSource: any = {
     "source":'training_category_management',
@@ -42,7 +42,8 @@ export class AddEditTrainingComponent implements OnInit {
       { inputtype: 'textarea', name: 'description', label: 'Description', placeholder: 'Enter Description'},
 
       { inputtype: 'text', name: 'priority', label: 'Priority', placeholder: 'Enter Priority', validationrule: { required: true }, validationerrormsg: 'is required' }, 
-    
+      {inputtype:'radio',name:'type',value:["User","Salesrep","All"],valuelabel:'',label:"Type",placeholder:"",validationrule:{required:true},validationerrormsg:'', class:'radioclass'},
+
       // { inputtype: 'text', name: 'catagoryname', label: 'Catagory Name ', placeholder: 'Enter Catagory Name', validationrule: { required: true }, validationerrormsg: 'is required' },
 
       {inputtype:'select',name:'parent_catagory',label:'Parent Category',defaultchoice:'Select a Parent Category',sourceview:'training_category_management',endpoint:'datalist',selectvalue:'catagory_name',selectid:'_id'},

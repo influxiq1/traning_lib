@@ -9,7 +9,7 @@ export class ListComponent implements OnInit {
 public manageTrainingList : any=[];
 public serverDetails: any = {
   "serverUrl": "https://9ozbyvv5v0.execute-api.us-east-1.amazonaws.com/production/api/",
-  "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1Nzk3NTYwNzUsImlhdCI6MTU3OTY2OTY3NX0.OPyRtcCe-VGJcDu6YEWmTyM74CtgBFoy-YtdisSy7SA"
+  "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1Nzk5NTE2NjksImlhdCI6MTU3OTg2NTI2OX0.1MNS3HhaWRJ-yL63GGdziMDgwTpCuOGiYc9-VRrIGBI"
 };
 public formSource: any = {
   "source":'manage_lession_view',

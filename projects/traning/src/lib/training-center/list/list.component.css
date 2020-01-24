@@ -6,6 +6,22 @@
 
 .mat-card-content{flex-direction: row; box-sizing: border-box; display: flex;}
 
-.row{    flex-direction: row;box-sizing: border-box;display: flex;place-content: center space-around; align-items: center;flex: 1 1 100%; max-width: 100%;}
+.row{    flex-direction: row;box-sizing: border-box;display: flex;place-content: top space-around; align-items: flex-start;
+    -webkit-box-flex: 1;
+    flex: 1 1 100%;
+    max-width: 100%;
+    margin-top: 20px !important;}
 
 .column{    flex-direction: column; box-sizing: border-box;  display: flex;}
+
+.column .rowinner{    flex-direction: row; box-sizing: border-box;  display: flex; flex: 1 1 100%; margin-bottom: 10px;}
+.column .rowinner:last-child{margin-bottom: 0;}
+.column .rowinner .mat-accordion{width: 100%;}
+.columnleft{width: 70%;}
+.submitbtn{
+    display: block;
+    width: 170px;
+    margin: 10px auto;
+    background: #3f50b5 !important;
+    color: #fff;
+  }
