@@ -15,7 +15,7 @@ import { DialogBoxComponent } from './common/dialog-box/dialog-box.component';
 import { ListLessionComponent } from './manage-lessions/list-lession/list-lession.component';
 import { CKEditorModule } from 'ngx-ckeditor';
 import { FileUploadModule} from 'file-upload-lib-influxiq';
-import { ListComponent } from './training-center/list/list.component';
+import { ListComponent,Dialogtest } from './training-center/list/list.component';
 import { ManageQuizComponent } from './manage-quiz/manage-quiz.component';
 import { AddEditComponent } from './manage-quiz/add-edit/add-edit.component';
 import { AddUpdateAnswerComponent } from './manage-quiz/add-update-answer/add-update-answer.component';
@@ -30,6 +30,7 @@ import { UpdateAnswerComponent } from './manage-quiz/update-answer/update-answer
     DialogBoxComponent,
     ListLessionComponent,
     ListComponent,
+    Dialogtest,
     ManageQuizComponent,
     AddEditComponent,
     AddUpdateAnswerComponent,
@@ -51,6 +52,6 @@ import { UpdateAnswerComponent } from './manage-quiz/update-answer/update-answer
   exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [CookieService, ApiService],
-  entryComponents:[DialogBoxComponent]
+  entryComponents:[DialogBoxComponent,Dialogtest]
 })
 export class TraningModule { }

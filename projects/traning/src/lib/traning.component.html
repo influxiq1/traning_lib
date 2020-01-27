@@ -91,7 +91,7 @@
         </div>
 
         <div *ngIf="mediaTypeValue == 'html'">
-            <ck-editor [config]="editorconfig">
+            <ck-editor [config]="editorconfig"  [(ngModel)]="htmType" [ngModelOptions]="{standalone: true}">
             </ck-editor>
         </div>
         <button class="submitbtn" mat-raised-button color="primary" type="submit">{{ buttonText }}</button>

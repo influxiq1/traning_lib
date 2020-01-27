@@ -42,6 +42,7 @@ export class TraningComponent implements OnInit {
   public editorconfig:any={};
   public uploadConfigData:any='';
   public cancelBtnRoute:any;
+  public htmType:any;
   @Input()
     set formdata(formdata: string) {
         this.formdataval = (formdata) || '<no name set>';
@@ -154,6 +155,7 @@ export class TraningComponent implements OnInit {
 
   }
   formsubmit() {
+    console.log("html typeeee",this.uploadConfigData);
     this.issubmit = 1;
     for (let y in this.dataForm.controls) {
         this.dataForm.controls[y].markAsTouched();
@@ -222,7 +224,6 @@ export class TraningComponent implements OnInit {
 
 }
 getMediaTypeVal(value:any){
-  console.log("selection val",value);
   this.mediaTypeValue = value;
 
 }

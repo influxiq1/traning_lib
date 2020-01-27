@@ -16,6 +16,7 @@ export class AddEditComponent implements OnInit {
   public listingData:any=[];
   public headerText : any="Add Question";
   public buttonText :any="Submit"
+  public lessonId:any;
   @Input()
   set serverDetails(serverDetails: {}) {
     this.serverDetailsVal = (serverDetails) || '<no name set>';
@@ -33,14 +34,20 @@ export class AddEditComponent implements OnInit {
   @Input()
   set formSource(formSource: any) {
     this.formSourceVal = (formSource) || '<no name set>';
+    console.log("dddd",this.formSourceVal);                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
   }
   @Input()
   set ListingPageRoute(val: any) {
     this.listingPageRoute = (val) || '<no name set>';
   }
+  @Input()
+  set LessonId(id: any) {
+    this.lessonId = (id) || '<no name set>';
+  }
 
   constructor(public apiService : ApiService,public fb: FormBuilder,public router:Router,public activatedRoute:ActivatedRoute) { 
-    this.manageQuizForm = this.fb.group({
+    this.manageQuizForm = this.fb.group({                                                                                                                                                                       
+      lesson_id:[''],
       question: ["", Validators.required],
       priority: ["", Validators.required],
       status  :[""]
@@ -64,12 +71,15 @@ export class AddEditComponent implements OnInit {
         this.manageQuizForm.controls[x].markAsTouched();
       }
       if(this.manageQuizForm.valid){
+        this.manageQuizForm.controls['lesson_id'].patchValue(this.lessonId);
+
         if (this.manageQuizForm.value.status)
         this.manageQuizForm.value.status = parseInt("1");
       else
         this.manageQuizForm.value.status = parseInt("0");
-      }       
+           
       const link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
+      console.log("add",link);
       var data;
       if(this.paramId){
         data = {
@@ -81,20 +91,24 @@ export class AddEditComponent implements OnInit {
             'priority': this.manageQuizForm.value.priority,
             'status': this.manageQuizForm.value.status,
           },
+          "sourceobj": ["lesson_id"],
         }
       }else{
         data = {
           "source":this.formSourceVal.source,
           "token":this.serverDetailsVal.jwttoken,
           "data": this.manageQuizForm.value,
+          "sourceobj": ["lesson_id"],
         }
       }
+      
        
       this.apiService.postData(link,data).subscribe((res: any)=>{
         if(res.status = "success"){
-          this.router.navigateByUrl(this.listingPageRoute);
+          this.router.navigateByUrl(this.listingPageRoute + this.lessonId);
         }
       })
+    }
       
   
   }

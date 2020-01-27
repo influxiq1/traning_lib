@@ -43,12 +43,12 @@ const appRoutes: Routes = [
     { path: 'manage-center/edit/:id', component: AddEditCenterComponent },
     /**Quiz Management**/
     {
-      path : 'manage-quiz/list' , component : ManageQuizComponent,
+      path : 'manage-quiz/list/:lesson_id_object' , component : ManageQuizComponent,
       resolve: { trainingdata: ResolveService }, 
         data: { requestcondition: { source: 'quiz_question_view', condition: {} }, endpoint: 'datalist' }
     },
     {
-        path : 'manage-quiz/add', component : AddEditComponent
+        path : 'manage-quiz/add/:id', component : AddEditComponent
     },
     {
         path : 'manage-quiz/edit/:_id', component : AddEditComponent,

@@ -147,8 +147,8 @@ export class ListLessionComponent implements OnInit {
         });
     
   }
-  manageQuiz(){
-    this.router.navigateByUrl(this.manageQuizRoute);
+  manageQuiz(id:any){
+    this.router.navigateByUrl(this.manageQuizRoute + id);
   }
 
 }

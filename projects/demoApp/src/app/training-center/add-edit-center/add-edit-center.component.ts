@@ -11,7 +11,7 @@ export class AddEditCenterComponent implements OnInit {
   public recid: any;
   public serverDetails: any = {
     "serverUrl": "https://9ozbyvv5v0.execute-api.us-east-1.amazonaws.com/production/api/",
-    "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1NzkzNTA3NzIsImlhdCI6MTU3OTI2NDM3Mn0.ml1jsqncUN6t6Ln10NQuv0dZ730AnIFZeimrTsIOCAk"
+    "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1ODAxODgzNjIsImlhdCI6MTU4MDEwMTk2Mn0.MMZBG-CG9YQkS4nEQY8_wXBFNBawDMj38qv_DJ4IVk8"
   };
   public formSource: any = {
     "source":'users',

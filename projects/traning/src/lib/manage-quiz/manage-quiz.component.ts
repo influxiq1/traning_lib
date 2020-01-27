@@ -28,7 +28,7 @@ export class ManageQuizComponent implements OnInit {
   public deleteIndex:any;
   public dialogRef: any;
   public addUpdateAnswerRoute:any;
-
+  public lessonId:any;
 
   public listingData:any=[];
   displayedColumns: string[] = ['question', 'priority', 'status', 'deleteRecord'];
@@ -69,13 +69,18 @@ export class ManageQuizComponent implements OnInit {
     this.addUpdateAnswerRoute = (formSource) || '<no name set>';
   }
   
+  @Input()
+  set ParamsId(id: any) {
+    this.lessonId = (id) || '<no name set>';
+  }
+  
 
   constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router) { }
 
   ngOnInit() {
   }
   addButton(){
-    this.router.navigateByUrl(this.addPageRoute);
+    this.router.navigateByUrl(this.addPageRoute + this.lessonId);
   }
   lessonList(){
     this.router.navigateByUrl(this.lessonPageRoute);
