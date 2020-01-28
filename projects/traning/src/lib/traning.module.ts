@@ -49,7 +49,7 @@ import { UpdateAnswerComponent } from './manage-quiz/update-answer/update-answer
     FileUploadModule
     
   ],
-  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent],
+  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest],
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [CookieService, ApiService],
   entryComponents:[DialogBoxComponent,Dialogtest]
