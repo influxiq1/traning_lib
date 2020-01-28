@@ -1,8 +1,13 @@
 <mat-card>
-
+    <span class="searchblock">
+        <span class="searchblockwrapper">
+            <span>
     <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
         <h2 class="headerSpan">{{ headerText }}</h2>
     </mat-toolbar>
+            </span>
+        </span>
+    </span>
     <mat-card-content>
         <form class="example-form" novalidate [formGroup]="manageQuizForm" name="manageQuizForm"
             (ngSubmit)="ManageQuizFormSubmit()" autocomplete="off">

@@ -3,25 +3,36 @@
   </mat-form-field> -->
 
 <mat-card>
-
-  <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
+  <span class="searchblock">
+    <span class="searchblockwrapper">
+      <span>
+          <mat-toolbar color="primary" style="justify-content: center; align-items: center;" >
     <h2 class="headerSpan">List Training Management</h2>
   </mat-toolbar>
-  <mat-toolbar class="buttonsetToolbar">
+</span>
+<span>
+  <mat-toolbar class="buttonsetToolbar" >
     <button class="singleButton" mat-raised-button color="primary" (click)="addButton()"> Add Training</button>
   </mat-toolbar>
+</span>
+    </span>
+  </span>
+<span class="searchbar">
+<mat-form-field   class="searchdiv">
 
-  <mat-form-field>
     <input matInput placeholder="Search by Training Title"
       (keyup)="filterByTrainingName('catagory_name_search', $event.target.value)">
   </mat-form-field>
-  <mat-form-field>
+
+  <mat-form-field class="searchdiv">
     <mat-select placeholder="Search By Status" (selectionChange)="filterByTrainingName('status_search', $event.value)">
       <mat-option value=0>Select a status</mat-option>
       <mat-option value=1>Active</mat-option>
       <mat-option value=0>Inactive</mat-option>
     </mat-select>
   </mat-form-field>
+</span>
+
   <div class="mat-elevation-z8">
 
     <table mat-table [dataSource]="dataSource" matSort>
@@ -77,7 +88,6 @@
       </tr>
 
     </table>
-
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
   </div>
 </mat-card>

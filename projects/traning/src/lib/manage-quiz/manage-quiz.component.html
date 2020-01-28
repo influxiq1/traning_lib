@@ -1,14 +1,22 @@
 <mat-card>
-
+    <span class="searchblock">
+        <span class="searchblockwrapper">
+          <span>
     <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
         <h2 class="headerSpan">MANAGE QUIZ SECTION</h2>
     </mat-toolbar>
+          </span>
+          <span>
     <mat-toolbar class="buttonsetToolbar">
         <button class="singleButton" mat-raised-button color="primary" type="button" (click)="addButton()"> Add
             Question</button>
         <button class="singleButton" mat-raised-button color="primary" type="button" (click)="lessonList()">Back To
             Lesson List</button>
     </mat-toolbar>
+          </span>
+        </span>
+    </span>
+    
     <div class="mat-elevation-z8">
 
         <table mat-table [dataSource]="dataSource" matSort>

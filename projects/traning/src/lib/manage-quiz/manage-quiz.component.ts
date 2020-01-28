@@ -29,20 +29,17 @@ export class ManageQuizComponent implements OnInit {
   public dialogRef: any;
   public addUpdateAnswerRoute:any;
   public lessonId:any;
-
+  public dataSource:any;
   public listingData:any=[];
   displayedColumns: string[] = ['question', 'priority', 'status', 'deleteRecord'];
-  dataSource: MatTableDataSource<PeriodicElement>;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
 
   @Input()           //getting all data from application
   set allDataList(val: any) {
     this.listingData = (val) || 'no name set';
     this.listingData = val;
-    console.log("listinggggg",this.listingData);
-    this.dataSource = this.listingData;
-    this.dataSource.paginator = this.paginator;
+    this.dataSource = new MatTableDataSource(this.listingData);
     }
   @Input()
   set AddPageRoute(val: any) {
@@ -78,6 +75,11 @@ export class ManageQuizComponent implements OnInit {
   constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router) { }
 
   ngOnInit() {
+    setTimeout(() => {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+
+    }, 100);
   }
   addButton(){
     this.router.navigateByUrl(this.addPageRoute + this.lessonId);

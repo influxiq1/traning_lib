@@ -12,7 +12,7 @@ export class AddEditTrainingComponent implements OnInit {
   public listingPageRoute : any="/manage-training/list";
   public serverDetails: any = {
     "serverUrl": "https://9ozbyvv5v0.execute-api.us-east-1.amazonaws.com/production/api/",
-    "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1ODAyMDE1MzcsImlhdCI6MTU4MDExNTEzN30.EfP5ru45maD0LM9NDkGy7xgUUslVcV3ls-k8-Bid9qU"
+    "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1ODAyNzUwMDAsImlhdCI6MTU4MDE4ODYwMH0.kMLXQQsET1aR-b-XPbvoMam3HKxD0n56FFwMGW1_fBA"
   };
   public formSource: any = {
     "source":'training_category_management',

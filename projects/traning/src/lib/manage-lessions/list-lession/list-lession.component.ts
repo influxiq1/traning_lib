@@ -28,7 +28,8 @@ export interface DialogData {
 })
 export class ListLessionComponent implements OnInit {
   displayedColumns: string[] = ['lession_title', 'description', 'test_associate_training', 'mediaType','associated_training','prerequisite_lession','status','deleteRecord'];
-  dataSource: MatTableDataSource<PeriodicElement>;
+  // dataSource: MatTableDataSource<PeriodicElement>;
+  public dataSource: any;
   public listingData :any=[];
   public dialogRef: any;
   public deleteId : any;
@@ -41,15 +42,15 @@ export class ListLessionComponent implements OnInit {
   public manageQuizRoute:any;
 
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
 
   @Input()           //getting all data from application
   set allDataList(val: any) {
     this.listingData = (val) || 'no name set';
     this.listingData = val;
-    this.dataSource = this.listingData;
-    // this.dataSource.paginator = this.paginator;
+    this.dataSource = new MatTableDataSource(this.listingData);
+
   }
   @Input()
   set serverDetails(serverDetails: {}) {
@@ -80,6 +81,11 @@ export class ListLessionComponent implements OnInit {
   constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router) { }
 
   ngOnInit() {
+    setTimeout(() => {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+
+    }, 100);
   }
   deleteRecord(id:any,index:any){
     this.deleteId = id;

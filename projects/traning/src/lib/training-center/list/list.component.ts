@@ -25,30 +25,26 @@ export class ListComponent implements OnInit {
   public dialogRef: any;
   public quizQuestionSource:any;
   public quizQuestion:any;
+  public questionId:any;
   public questionArray:any=[];
 
   @Input()
   set TrainingCategoryList(val: any) {
     this.trainingCategoryList= (val) || '<no name set>';
-    console.log("listinggggg",this.trainingCategoryList);
   }
   @Input()
   set serverDetails(serverDetails: {}) {
     this.serverDetailsVal = (serverDetails) || '<no name set>';
-    console.log("server detailsssssss",this.serverDetailsVal);
   }
   @Input()
   set formSource(formSource: any) {
     this.formSourceVal = (formSource) || '<no name set>';
-  console.log("form sourceeeee",this.formSourceVal);
   }
   @Input()
   set QuizQuestionSource(val: any) {
     this.quizQuestionSource = (val) || '<no name set>';
-  console.log("form sourceeeee",this.quizQuestionSource);
   }
   constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router) {
-
    }
 
   ngOnInit() {
@@ -71,9 +67,10 @@ export class ListComponent implements OnInit {
     })
   }
   questionDetails(id:any){
+    this.questionId = id;
     const link = this.serverDetailsVal.serverUrl + this.formSourceVal.showEndpoint;
     let data: any ={
-      source: this.quizQuestionSource,
+      source:  this.quizQuestionSource.questionSourceName,
       token:this.serverDetailsVal.jwttoken,
       condition:{
         lesson_id_object: id
@@ -87,6 +84,8 @@ export class ListComponent implements OnInit {
         this.quizQuestion = this.questionArray[i].question;
         this.openDialog(this.quizQuestion);
       }
+      this.answerDetails();
+
     
     })
 
@@ -98,6 +97,27 @@ export class ListComponent implements OnInit {
     });
     this.dialogRef.afterClosed().subscribe(result => {
     });
+  }
+  answerDetails(){
+    const link = this.serverDetailsVal.serverUrl + this.formSourceVal.showEndpoint;
+    let data: any ={
+      source: this.quizQuestionSource.answerSourceName,
+      token:this.serverDetailsVal.jwttoken,
+      condition:{
+        questionId_object: this.questionId
+      }
+    }
+    this.apiService.getData(link, data)
+    .subscribe(response=>{
+      console.log("soureshhhhhhhh",response);
+      // let result :any=response;
+      // this.questionArray = result.res;
+      // for (const i in this.questionArray) {
+      //   this.quizQuestion = this.questionArray[i].question;
+      //   this.openDialog(this.quizQuestion);
+      // }
+    
+    })
   }
 
 }

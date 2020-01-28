@@ -1,5 +1,11 @@
 <mat-card class="main-mat-card admingeneralcls">
+    <span class="searchblock">
+        <span class="searchblockwrapper">
+            <span>
     <h1 class="header">{{ headerText }}</h1>
+            </span>
+        </span>
+    </span>
     <form novalidate (ngSubmit)="formsubmit()" class="formclass">
         <ng-container [formGroup]="dataForm" *ngFor="let item of formdataval; let i=index;">
             <div>
