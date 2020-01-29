@@ -21,17 +21,28 @@
     <span class="searchbar">
 
     <mat-form-field class="searchdiv">
-      <input matInput placeholder="Search by Training Name "
-        (keyup)="filterByTrainingName('associated_training_search', $event.target.value)">
+      <input matInput placeholder="Search by Lesson Name "
+        [(ngModel)]="lessonName" >
+    </mat-form-field>
+    <button class="submitbtn" mat-raised-button color="primary" type="button" (click)="filterByTrainingName('lession_title_search_regex', lessonName)">Search</button>
+
+   
+    <mat-form-field class="searchdiv">
+      <mat-select placeholder="Search by Associate Training" [(ngModel)]="training" (selectionChange)="filterByTrainingName('associated_training_search_regex', $event.value)">
+        <mat-option [value]=0>Select a Lesson</mat-option>
+        <mat-option *ngFor="let val of allLessonData;" value="{{ val.catagory_name }}">{{ val.catagory_name }}</mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field class="searchdiv">
-      <mat-select placeholder="Search By Test associated" (selectionChange)="filterByTrainingName('test_associate_training_search', $event.value)">
-        <mat-option value=0>Select a status</mat-option>
+      <mat-select placeholder="Sort by Test availability" [(ngModel)]="testAvailability" (selectionChange)="filterByTrainingName('test_associate_training_search_regex', $event.value)">
+        <mat-option value=0>Select a Test availability</mat-option>
         <mat-option value="yes">Yes</mat-option>
         <mat-option value="no">No</mat-option>
       </mat-select>
     </mat-form-field>
+    <button class="submitbtn" mat-raised-button color="primary" type="button" (click)="resetSearch()">Reset</button>
+
     </span>
 
   <div class="mat-elevation-z8">

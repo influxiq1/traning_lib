@@ -7,6 +7,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from "@angular/material";
 import { ApiService } from '../../api.service';
 import { DialogBoxComponent } from '../../common/dialog-box/dialog-box.component';
 import { Router } from '@angular/router';
+
 export interface PeriodicElement {
   catagory_name: string;
   description: string;
@@ -41,6 +42,8 @@ export class ListingTrainingComponent implements OnInit {
   public searchSourceName: any;
   public additionalinfo: any;
   public searchResults: any = [];
+  public trainingTitle:any;
+  public status:any
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
@@ -139,7 +142,11 @@ export class ListingTrainingComponent implements OnInit {
   }
 
   filterByTrainingName(key: string, value: string) {
+  if(value == "Select a status"){
+    this.dataSource = new MatTableDataSource(this.listingData);
 
+  }
+  else{
     let searchJson: any = {};
     searchJson[key] = value.toLowerCase();
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
@@ -152,6 +159,14 @@ export class ListingTrainingComponent implements OnInit {
       let result: any = response;
       this.dataSource = result.res;
     });
+  }
+ 
+
+  }
+  resetSearch(){
+    this.trainingTitle = "";
+    this.status = "";
+    this.dataSource = new MatTableDataSource(this.listingData);
 
   }
 }

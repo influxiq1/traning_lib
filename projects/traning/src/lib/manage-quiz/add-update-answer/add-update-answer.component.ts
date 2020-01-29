@@ -13,11 +13,10 @@ export class AddUpdateAnswerComponent implements OnInit {
   public formSourceVal :any;
   public listingPageRoute:any;
   public paramsId:any;
+  public lessonId:any;
   @Input()
   set serverDetails(serverDetails: {}) {
-    this.serverDetailsVal = (serverDetails) || '<no name set>';
-    console.log(this.serverDetailsVal);
-    
+    this.serverDetailsVal = (serverDetails) || '<no name set>';    
   }
 
   @Input()
@@ -31,6 +30,10 @@ export class AddUpdateAnswerComponent implements OnInit {
   @Input()
   set ParamsId(val: any) {
     this.paramsId = (val) || '<no name set>';
+  }
+  @Input()
+  set LessonId(val: any) {
+    this.lessonId = (val) || '<no name set>';
   }
   constructor(public apiService : ApiService,public fb: FormBuilder,public router:Router) { 
     this.addUpdateAnswerForm = this.fb.group({
@@ -65,7 +68,7 @@ export class AddUpdateAnswerComponent implements OnInit {
       }
     this.apiService.postData(link,data).subscribe((res: any)=>{
       if(res.status = "success"){
-        this.router.navigateByUrl(this.listingPageRoute);
+        this.router.navigateByUrl(this.listingPageRoute + this.lessonId);
       }
     })
   }

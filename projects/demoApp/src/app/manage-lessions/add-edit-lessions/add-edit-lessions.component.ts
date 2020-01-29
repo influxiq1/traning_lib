@@ -15,7 +15,7 @@ export class AddEditLessionsComponent implements OnInit {
 
   public serverDetails: any = {
     "serverUrl": "https://9ozbyvv5v0.execute-api.us-east-1.amazonaws.com/production/api/",
-    "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1ODAyNzUwMDAsImlhdCI6MTU4MDE4ODYwMH0.kMLXQQsET1aR-b-XPbvoMam3HKxD0n56FFwMGW1_fBA"
+    "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1ODAzNzA2MjYsImlhdCI6MTU4MDI4NDIyNn0.XvqHVBr35oS0afZVKKq_vPEhEI3P4X_hDaOJTei-4JM"
   };
   public formSource: any = {
     "source": 'manage_lession',
@@ -64,7 +64,7 @@ export class AddEditLessionsComponent implements OnInit {
 
       { inputtype: 'select', name: 'prerequisite_lession', label: 'Prerequisite Lesson', defaultchoice: 'Select a Prerequisite Lession', sourceview: 'manage_lession', endpoint: 'datalist', selectvalue: 'lession_title', selectid: '_id' },
 
-      { inputtype: 'checkbox', name: 'status', label: 'Status', placeholder: 'Enter Status', validationrule: { required: true }, validationerrormsg: 'is required' },
+      { inputtype: 'checkbox', name: 'status', label: 'Active', placeholder: 'Enter Status', validationrule: { required: true }, validationerrormsg: 'is required' },
       { inputtype: 'select', name: 'mediaType', label: 'Training Type', defaultchoice: 'Select a Training Type', sourceview: 'assets/mediaType.json', sourcetype:'static', selectvalue: 'name', selectid: 'selectname' ,validationrule:{required:true},validationerrormsg:'is required'},
 
     ];

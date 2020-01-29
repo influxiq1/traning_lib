@@ -40,8 +40,10 @@ export class ListLessionComponent implements OnInit {
   public addPageRoute : any;
   public searchSourceName:any;
   public manageQuizRoute:any;
-
-
+  public allLessonData : any = [];
+  public lessonName:any;
+  public training:any;
+  public testAvailability:any;
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
 
@@ -78,7 +80,8 @@ export class ListLessionComponent implements OnInit {
   set ManageQuizRoute(val: any) {
     this.manageQuizRoute = (val) || '<no name set>';
   }
-  constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router) { }
+  constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router) {
+   }
 
   ngOnInit() {
     setTimeout(() => {
@@ -86,6 +89,8 @@ export class ListLessionComponent implements OnInit {
       this.dataSource.sort = this.sort;
 
     }, 100);
+    this.getAllLessonData();
+
   }
   deleteRecord(id:any,index:any){
     this.deleteId = id;
@@ -138,23 +143,51 @@ export class ListLessionComponent implements OnInit {
   
     }
     filterByTrainingName(key: string, value: string){
-    
-      let searchJson: any = {};
-      searchJson[key] = value.toLowerCase();
-      let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
-      var data = {
-        "source": this.searchSourceName,
-        "condition": searchJson,
-        "token": this.serverDetailsVal.jwttoken
+      if(value == "0"){
+        this.dataSource = new MatTableDataSource(this.listingData);
       }
-      this.apiService.postData(link,data).subscribe(response => {
-        let result : any=response;
-        this.dataSource = result.res;
-        });
+      else{
+        let searchJson: any = {};
+        searchJson[key] = value.toLowerCase();
+        let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
+        var data = {
+          "source": this.searchSourceName,
+          "condition": searchJson,
+          "token": this.serverDetailsVal.jwttoken
+        }
+        this.apiService.postData(link,data).subscribe(response => {
+          let result : any=response;
+          this.dataSource = result.res;
+          });
+      }
+  
     
   }
   manageQuiz(id:any){
     this.router.navigateByUrl(this.manageQuizRoute + id);
+  }
+  getAllLessonData(){
+    let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
+    let data:any = {
+      "source" :   this.formSourceVal.associatedTrainingSourceName,
+      "token": this.serverDetailsVal.jwttoken
+    }
+    this.apiService.postData(link,data).subscribe((response: any)=>{
+      let result :any;
+      if(response.status="success"){
+       result = response.res;
+       this.allLessonData = result;
+      console.log("all leson data",result);
+      }
+     
+    })
+  }
+  resetSearch(){
+  this.lessonName = "";
+  this.training = "";
+  this.testAvailability = "";
+  this.dataSource = new MatTableDataSource(this.listingData);
+
   }
 
 }

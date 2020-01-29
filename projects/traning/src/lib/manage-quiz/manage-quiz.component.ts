@@ -69,6 +69,7 @@ export class ManageQuizComponent implements OnInit {
   @Input()
   set ParamsId(id: any) {
     this.lessonId = (id) || '<no name set>';
+    console.log("+++",this.lessonId);
   }
   
 
@@ -137,7 +138,8 @@ export class ManageQuizComponent implements OnInit {
     }
     goToAnswerPage(id:any){
       let paramsId:any=id;
-      this.router.navigateByUrl(this.addUpdateAnswerRoute.addAnswerRoute+paramsId);
+      console.log("idddddddddd==",paramsId);
+      this.router.navigateByUrl(this.addUpdateAnswerRoute.addAnswerRoute+paramsId+'/'+ this.lessonId);
     }
     goToUpdateAnswerPage(id:any){
       let paramsId:any=id;

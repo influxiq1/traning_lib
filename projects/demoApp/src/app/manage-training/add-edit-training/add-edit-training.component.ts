@@ -12,7 +12,7 @@ export class AddEditTrainingComponent implements OnInit {
   public listingPageRoute : any="/manage-training/list";
   public serverDetails: any = {
     "serverUrl": "https://9ozbyvv5v0.execute-api.us-east-1.amazonaws.com/production/api/",
-    "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1ODAyNzUwMDAsImlhdCI6MTU4MDE4ODYwMH0.kMLXQQsET1aR-b-XPbvoMam3HKxD0n56FFwMGW1_fBA"
+    "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1ODAzNzA2MjYsImlhdCI6MTU4MDI4NDIyNn0.XvqHVBr35oS0afZVKKq_vPEhEI3P4X_hDaOJTei-4JM"
   };
   public formSource: any = {
     "source":'training_category_management',
@@ -42,14 +42,14 @@ export class AddEditTrainingComponent implements OnInit {
       { inputtype: 'textarea', name: 'description', label: 'Description', placeholder: 'Enter Description'},
 
       { inputtype: 'text', name: 'priority', label: 'Priority', placeholder: 'Enter Priority', validationrule: { required: true }, validationerrormsg: 'is required' }, 
-      {inputtype:'radio',name:'type',value:["User","Salesrep","All"],valuelabel:'',label:"Type",placeholder:"",validationrule:{required:true},validationerrormsg:'', class:'radioclass'},
+      {inputtype:'radio',name:'type',value:["User","Salesrep","All"],valuelabel:'',label:"Training accessible to",placeholder:"",validationrule:{required:true},validationerrormsg:'', class:'radioclass'},
 
       // { inputtype: 'text', name: 'catagoryname', label: 'Catagory Name ', placeholder: 'Enter Catagory Name', validationrule: { required: true }, validationerrormsg: 'is required' },
 
       {inputtype:'select',name:'parent_catagory',label:'Parent Category',defaultchoice:'Select a Parent Category',sourceview:'training_category_management',endpoint:'datalist',selectvalue:'catagory_name',selectid:'_id'},
       
       // {inputtype:'select',name:'state',label:'State/Region',defaultchoice:'Select a State/region',sourceview:'assets/states.json',multiple:true, sourcetype:'static',selectvalue:'name',selectid:'abbreviation',validationrule:{required:true},validationerrormsg:'is required'},
-        { inputtype: 'checkbox', name: 'status', label: 'Status', placeholder: 'Enter Status', validationrule: { required: true }, validationerrormsg: 'is required' },
+        { inputtype: 'checkbox', name: 'status', label: 'Active', placeholder: 'Enter Status', validationrule: { required: true }, validationerrormsg: 'is required' },
     ];
 
 

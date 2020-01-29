@@ -56,7 +56,7 @@ const appRoutes: Routes = [
         data: { requestcondition: { source: 'quiz_question', condition: {} }, endpoint: 'datalist' }
     },
     {
-      path : 'manage-quiz/add-answer/:id' , component : AddUpdateAnswerComponent
+      path : 'manage-quiz/add-answer/:id/:lessonid' , component : AddUpdateAnswerComponent
     },
     {
         path : 'manage-quiz/update-answer/:questionId_object',component : UpdateAnswerComponent,
