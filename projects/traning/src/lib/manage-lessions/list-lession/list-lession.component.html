@@ -24,7 +24,6 @@
       <input matInput placeholder="Search by Lesson Name "
         [(ngModel)]="lessonName" >
     </mat-form-field>
-    <button class="submitbtn" mat-raised-button color="primary" type="button" (click)="filterByTrainingName('lession_title_search_regex', lessonName)">Search</button>
 
    
     <mat-form-field class="searchdiv">
@@ -41,6 +40,8 @@
         <mat-option value="no">No</mat-option>
       </mat-select>
     </mat-form-field>
+    <button class="submitbtn" mat-raised-button color="primary" type="button" (click)="filterByTrainingName('lession_title_search_regex', lessonName)">Search</button>
+
     <button class="submitbtn" mat-raised-button color="primary" type="button" (click)="resetSearch()">Reset</button>
 
     </span>
@@ -105,6 +106,13 @@
             link
             </i>
          </span>
+
+         <span (click)="statusUpdateModal(element._id,i)">
+          <i class="material-icons">
+            toggle_on
+            </i>
+         </span>
+         
         </span>
         </td>
       </ng-container>
