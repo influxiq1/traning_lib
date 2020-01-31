@@ -1,8 +1,4 @@
 import { Component, OnInit ,ViewChild,Input,Inject} from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
-import { HttpClient } from '@angular/common/http';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from "@angular/material";
 import { ApiService } from '../../api.service';
 import { Router } from '@angular/router';
@@ -85,8 +81,6 @@ export class ListComponent implements OnInit {
         this.openDialog(this.quizQuestion);
       }
       this.answerDetails();
-
-    
     })
 
   }

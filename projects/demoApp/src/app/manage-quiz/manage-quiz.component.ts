@@ -15,12 +15,14 @@ export class ManageQuizComponent implements OnInit {
   // public updateAnswerRoute:any="/manage-quiz/update-answer/";
   public serverDetails: any = {
     "serverUrl": "https://9ozbyvv5v0.execute-api.us-east-1.amazonaws.com/production/api/",
-    "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1ODA0NDcxMDksImlhdCI6MTU4MDM2MDcwOX0.dFCmf0DRNvQ1RFrHClEG8gr8UKB8FgzTPc235yR5KtM"
+    "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1ODA1MzQ5MTQsImlhdCI6MTU4MDQ0ODUxNH0.VBsQ4fE_K-v8dP5y5VAV30rPBxbF3qyh4IjN0tbOeS8"
   };
   public formSource: any = {
     "source":'quiz_question',
     "endpoint": "deletesingledata",
-    "searchEndpoint":"datalist"
+    "searchEndpoint":"datalist",
+    "statusUpdateEndpoint":"statusChange",
+    "statusUpdateSourceName":"quiz_question",
   }
   public addUpdateAnswerRoute:any={
     "addAnswerRoute":"/manage-quiz/add-answer/",
@@ -28,9 +30,7 @@ export class ManageQuizComponent implements OnInit {
   }
 
   constructor(public activatedRoute: ActivatedRoute) { 
-    console.log("idddd",this.activatedRoute.snapshot.params);
     this.paramsId = this.activatedRoute.snapshot.params.lesson_id_object;
-    console.log("idd++++",this.paramsId);
   }
 
   ngOnInit() {

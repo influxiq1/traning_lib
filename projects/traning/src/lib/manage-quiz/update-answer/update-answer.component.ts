@@ -4,6 +4,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { DialogBoxComponent } from '../../common/dialog-box/dialog-box.component';
 import { MatDialog } from '@angular/material';
 import { ApiService } from '../../api.service';
+import { Router } from '@angular/router';
 
 export interface PeriodicElement {
   position: string;
@@ -18,12 +19,14 @@ export interface PeriodicElement {
 
 export class UpdateAnswerComponent implements OnInit {
   public quizAnswerData:any=[];
-  checked: boolean;
+  myModel: boolean=true;
   public deleteId:any;
   public deleteIndex:any;
   public dialogRef: any;
   public serverDetailsVal:any;
   public formSourceVal:any;
+  public listingPageRoute : any;
+  public lessonId:any;
 
   displayedColumns: string[] = ['position','checked','deleteAction'];
   dataSource: MatTableDataSource<PeriodicElement>;
@@ -31,9 +34,7 @@ export class UpdateAnswerComponent implements OnInit {
 
   @Input()
   set serverDetails(serverDetails: {}) {
-    this.serverDetailsVal = (serverDetails) || '<no name set>';
-    console.log(this.serverDetailsVal);
-    
+    this.serverDetailsVal = (serverDetails) || '<no name set>';    
   }
 
   @Input()
@@ -44,19 +45,22 @@ export class UpdateAnswerComponent implements OnInit {
   set DataList(val: any) {
     this.quizAnswerData = (val) || '<no name set>';
     this.dataSource = this.quizAnswerData;
-
-    console.log("all data",this.quizAnswerData);
   }
-  constructor(public dialog : MatDialog,public apiService:ApiService) { 
+  @Input()
+  set ListingPageRoute(val: any) {
+    this.listingPageRoute = (val) || '<no name set>';
+  }
+  @Input()
+  set LessonId(val: any) {
+    this.lessonId = (val) || '<no name set>';
+  }
+  constructor(public dialog : MatDialog,public apiService:ApiService,public router : Router) { 
 
   }
 
   ngOnInit() {
   }
-  test(){
-    
-  alert("works");
-  }
+  
   delete(id:any,index){
     console.log("idddd",id,index);
     this.deleteId = id;
@@ -99,5 +103,5 @@ export class UpdateAnswerComponent implements OnInit {
      
     })
   }
-
+ 
 }

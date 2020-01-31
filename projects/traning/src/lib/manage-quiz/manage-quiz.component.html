@@ -50,6 +50,11 @@
                                 edit
                             </i>
                         </span>
+                        <span (click)="statusUpdateModal(element._id,i)">
+                            <i class="material-icons">
+                              toggle_on
+                              </i>
+                           </span>
                         <button mat-button type="button" color="primary" (click)="goToAnswerPage(element._id)">Add Answer</button>
                         <button mat-button type="button" color="primary" (click)="goToUpdateAnswerPage(element._id)">Update Answer</button>
                     </span>

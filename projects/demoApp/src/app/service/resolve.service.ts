@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-
 import { HttpService } from './http.service';
 
 export interface EndpointComponent {

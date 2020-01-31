@@ -132,6 +132,52 @@ export class ManageQuizComponent implements OnInit {
       })
   
     }
+    statusUpdateModal(id:any,index:any){
+      let modalData: any = {
+        panelClass: 'delete-dialog',
+        data: {
+          header: "Message",
+          message: "Are you sure you want to change these status?",
+          button1: { text: "No" },
+          button2: { text: "Yes" },
+        }
+      }
+      this.dialogRef = this.dialog.open(DialogBoxComponent, modalData);
+        this.dialogRef.afterClosed().subscribe(result => {
+        
+          switch (result) {
+            case "No":
+              break;
+            case "Yes":
+              this.statusChange(id,index);
+              break;
+          }
+        });
+  
+    }     
+    statusChange(id:any,index:any){
+      let link = this.serverDetailsVal.serverUrl + this.formSourceVal.statusUpdateEndpoint;
+      let data:any = {
+        "source" :   this.formSourceVal.statusUpdateSourceName,
+        "_id_status": id
+      }
+      this.apiService.postDatawithoutToken(link,data).subscribe((response: any)=>{
+        let result :any;
+        if(response.status=true){
+          if(this.listingData[index].status=="Active"){
+            this.listingData[index].status = "Inactive"
+          }else{
+            this.listingData[index].status = "Active"
+  
+          }
+          console.log("souresh testtt",this.listingData[index].status);
+          let allData: PeriodicElement[] = this.listingData;
+          this.dataSource = new MatTableDataSource(allData);     
+         }
+                     
+      })    
+    }
+
     routerFunction(id:any){
       this.router.navigateByUrl(this.editPageRoute + id);
 
@@ -143,6 +189,6 @@ export class ManageQuizComponent implements OnInit {
     }
     goToUpdateAnswerPage(id:any){
       let paramsId:any=id;
-      this.router.navigateByUrl(this.addUpdateAnswerRoute.updateAnswerRoute+paramsId);
+      this.router.navigateByUrl(this.addUpdateAnswerRoute.updateAnswerRoute+paramsId );
     }
 }

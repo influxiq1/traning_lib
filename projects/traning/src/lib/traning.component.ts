@@ -43,6 +43,7 @@ export class TraningComponent implements OnInit {
   public uploadConfigData:any='';
   public cancelBtnRoute:any;
   public htmType:any;
+  public images_array:any=[];
   @Input()
     set formdata(formdata: string) {
         this.formdataval = (formdata) || '<no name set>';
@@ -155,7 +156,6 @@ export class TraningComponent implements OnInit {
 
   }
   formsubmit() {
-    console.log("html typeeee",this.uploadConfigData);
     this.issubmit = 1;
     for (let y in this.dataForm.controls) {
         this.dataForm.controls[y].markAsTouched();
@@ -173,7 +173,29 @@ export class TraningComponent implements OnInit {
           sourceobj: [this.objectId.objectId,this.objectId.objectId2],
           token:this.serverDetailsVal.jwttoken
         }
+        if(this.mediaTypeValue == 'html'){
+          data.data['typeHtml'] = this.htmType;
+        }
+        if(this.mediaTypeValue == 'image' || this.mediaTypeValue == 'video' || this.mediaTypeValue == 'audio' ||this.mediaTypeValue == 'file'){
+          if (this.uploadConfigData.files.length > 0) {
+            for (let loop = 0; loop < this.uploadConfigData.files.length; loop++) {
+              this.images_array =
+                this.images_array.concat({
+                  "upload_server_id": this.uploadConfigData.files[loop].upload.data._id,
+                  "basepath": this.uploadConfigData.files[loop].upload.data.basepath + '/' + this.uploadConfigData.path + '/',
+                  "fileservername": this.uploadConfigData.files[loop].upload.data.data.fileservername,
+                  "name": this.uploadConfigData.files[loop].name,
+                  "type": this.uploadConfigData.files[loop].type,
+                  "bucketname": this.uploadConfigData.bucketName
+                });
+            }
+            data.data['fileType'] =  this.images_array;
+          } else {
+            data.data['fileType'] =  false;
+          }
+        }
       this.apiService.postData(link,data).subscribe((res: any)=>{
+        
         if(res.status = "success"){
           this.router.navigateByUrl(this.listingPageRoute);
         }
