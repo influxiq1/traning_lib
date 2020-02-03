@@ -61,7 +61,7 @@
             <div>
                 <!-- <mat-label>Status</mat-label> -->
                 <mat-checkbox *ngIf="item.inputtype == 'checkbox'" [ngClass]="item.class"
-                    [formControlName]="[item.name]" (keyup)="issubmit=0"></mat-checkbox>
+                    [formControlName]="[item.name]" (keyup)="issubmit=0" [(ngModel)]="checked"></mat-checkbox>
             </div>
 
 

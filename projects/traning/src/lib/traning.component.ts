@@ -44,6 +44,7 @@ export class TraningComponent implements OnInit {
   public cancelBtnRoute:any;
   public htmType:any;
   public images_array:any=[];
+  public checked:boolean=true;
   @Input()
     set formdata(formdata: string) {
         this.formdataval = (formdata) || '<no name set>';
@@ -247,7 +248,7 @@ export class TraningComponent implements OnInit {
 }
 getMediaTypeVal(value:any){
   this.mediaTypeValue = value;
-
+ 
 }
 cancelButton(){
   this.router.navigateByUrl(this.listingPageRoute);

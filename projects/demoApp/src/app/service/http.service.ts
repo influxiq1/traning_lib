@@ -15,7 +15,7 @@ export class HttpService {
   public progress: any = [];
   public uploadtype;
   public uploaderror: any = '';
-  public accesstoken: any = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1ODA1MzQ5MTQsImlhdCI6MTU4MDQ0ODUxNH0.VBsQ4fE_K-v8dP5y5VAV30rPBxbF3qyh4IjN0tbOeS8";
+  public accesstoken: any = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1ODA3OTI3MzIsImlhdCI6MTU4MDcwNjMzMn0.kPY8xA70kLfgdfcRFb4-7j7178W_kQfn5DFvHcRv0_E";
   public fileservername: any = [];
   public serverUrl: any = 'https://9ozbyvv5v0.execute-api.us-east-1.amazonaws.com/production/api/';
   public addendpointUrl: any;

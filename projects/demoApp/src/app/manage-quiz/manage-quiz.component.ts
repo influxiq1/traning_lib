@@ -15,7 +15,7 @@ export class ManageQuizComponent implements OnInit {
   // public updateAnswerRoute:any="/manage-quiz/update-answer/";
   public serverDetails: any = {
     "serverUrl": "https://9ozbyvv5v0.execute-api.us-east-1.amazonaws.com/production/api/",
-    "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1ODA1MzQ5MTQsImlhdCI6MTU4MDQ0ODUxNH0.VBsQ4fE_K-v8dP5y5VAV30rPBxbF3qyh4IjN0tbOeS8"
+    "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1ODA3OTI3MzIsImlhdCI6MTU4MDcwNjMzMn0.kPY8xA70kLfgdfcRFb4-7j7178W_kQfn5DFvHcRv0_E"
   };
   public formSource: any = {
     "source":'quiz_question',
