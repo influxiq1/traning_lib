@@ -1,6 +1,8 @@
 import { Component, OnInit ,ViewChild,Input,Inject} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
+import {SelectionModel} from '@angular/cdk/collections';
+
 import {MatTableDataSource} from '@angular/material/table';
 import { HttpClient } from '@angular/common/http';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from "@angular/material";
@@ -8,6 +10,8 @@ import { ApiService } from '../../api.service';
 import { DialogBoxComponent } from '../../common/dialog-box/dialog-box.component';
 import { Router } from '@angular/router';
 export interface PeriodicElement {
+  select:string;
+  no:number;
   lession_title: string;
   description: string;
   test_associate_training: string;
@@ -27,8 +31,9 @@ export interface DialogData {
   styleUrls: ['./list-lession.component.css']
 })
 export class ListLessionComponent implements OnInit {
-  displayedColumns: string[] = ['lession_title', 'description', 'test_associate_training', 'mediaType','associated_training','prerequisite_lession','status','deleteRecord'];
+  displayedColumns: string[] = ['select','no','lession_title', 'description', 'test_associate_training', 'mediaType','associated_training','prerequisite_lession','status','deleteRecord'];
   // dataSource: MatTableDataSource<PeriodicElement>;
+
   public dataSource: any;
   public listingData :any=[];
   public dialogRef: any;
@@ -46,6 +51,28 @@ export class ListLessionComponent implements OnInit {
   public testAvailability:any;
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
+  selection = new SelectionModel<PeriodicElement>(true, []);
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: PeriodicElement): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.no + 1}`;
+  }
 
   @Input()           //getting all data from application
   set allDataList(val: any) {
@@ -233,6 +260,14 @@ export class ListLessionComponent implements OnInit {
        }
      
     })
+  }
+   
+  deleteAllRecords(){
+
+  }
+  statusUpdateAllRecords(){
+    console.log("selected souresh",this.selection.selected.length);
+
   }
 
 }
