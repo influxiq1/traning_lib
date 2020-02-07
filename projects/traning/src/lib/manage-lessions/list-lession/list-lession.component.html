@@ -47,9 +47,9 @@
     </span>
 
     <ng-container *ngIf="selection.selected.length!=null && selection.selected.length>0">
-      <span class="multipledeleteandupdatebuttan">
+      <span class="multipledeleteandupdatebuttan" >
 
-      <button mat-raised-button (click)="deleteAllRecords()"> Delete </button>
+      <button mat-raised-button (click)="deleteAllRecordModalFunction()"> Delete </button>
       <button mat-raised-button (click)="statusUpdateAllRecords()"> Update Status </button>
 
       </span>

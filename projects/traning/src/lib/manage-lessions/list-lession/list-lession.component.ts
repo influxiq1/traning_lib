@@ -10,6 +10,7 @@ import { ApiService } from '../../api.service';
 import { DialogBoxComponent } from '../../common/dialog-box/dialog-box.component';
 import { Router } from '@angular/router';
 export interface PeriodicElement {
+  _id:string;
   select:string;
   no:number;
   lession_title: string;
@@ -36,6 +37,7 @@ export class ListLessionComponent implements OnInit {
 
   public dataSource: any;
   public listingData :any=[];
+  public allDatAfterDelete:any=[];
   public dialogRef: any;
   public deleteId : any;
   public deleteIndex : any;
@@ -49,6 +51,7 @@ export class ListLessionComponent implements OnInit {
   public lessonName:any;
   public training:any;
   public testAvailability:any;
+  public idArray:any=[];
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   selection = new SelectionModel<PeriodicElement>(true, []);
@@ -254,19 +257,86 @@ export class ListLessionComponent implements OnInit {
           this.listingData[index].status = "Active"
 
         }
-        console.log("souresh testtt",this.listingData[index].status);
         let allData: PeriodicElement[] = this.listingData;
         this.dataSource = new MatTableDataSource(allData);     
        }
      
     })
   }
-   
+  deleteAllRecordModalFunction(){
+    
+    let modalData: any = {
+      panelClass: 'delete-dialog',
+      data: {
+        header: "Message",
+        message: "Are you want to delete these all record ?",
+        button1: { text: "No" },
+        button2: { text: "Yes" },
+      }
+    }
+    this.dialogRef = this.dialog.open(DialogBoxComponent, modalData);
+      this.dialogRef.afterClosed().subscribe(result => {
+      
+        switch (result) {
+          case "No":
+            break;
+          case "Yes":
+            this.deleteAllRecords();
+            break;
+        }
+      });
+    
+    }
+
+  
+
   deleteAllRecords(){
+    for (let c in this.selection.selected) {
+      this.idArray.push(this.selection.selected[c]._id);
+    }
+    let temparr:any=[];
+    let link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
+    let source :any= this.formSourceVal.source;
+    let token:any= this.serverDetailsVal.jwttoken
+    for (let val in this.listingData) {
+      if(this.idArray.includes(this.listingData[val]._id)==true){
+        temparr.push(val);
+        
+      }   
+    } 
+    this.apiService.deteManyData(link,this.idArray,token,source).subscribe((res:any)=>{
+        res.data.ids;
+        if(res.status == "success"){
+          setTimeout(() => {
+            for(let i in temparr){
+              let tval:any=temparr[i]-parseInt(i);
+              this.listingData.splice(tval,1);
+            }
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+            this.selection.clear();
+            let allData: PeriodicElement[] = this.listingData;
+            this.dataSource = new MatTableDataSource(allData);
+          }, 1000);
+        }
+        
+        
+   })
 
   }
+
+
+
+
   statusUpdateAllRecords(){
     console.log("selected souresh",this.selection.selected.length);
+    for (let c in this.selection.selected) {
+      this.idArray.push(this.selection.selected[c]._id);
+    }
+    console.log("id array",this.idArray);
+    let link = this.serverDetailsVal.serverUrl + this.formSourceVal.statusUpdateEndpoint;
+
+    // this.apiService.togglestatusmany()
 
   }
 

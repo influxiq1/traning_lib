@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild, Input, Inject } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit ,ViewChild,Input,Inject} from '@angular/core';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {SelectionModel} from '@angular/cdk/collections';
+
+import {MatTableDataSource} from '@angular/material/table';
 import { HttpClient } from '@angular/common/http';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from "@angular/material";
 import { ApiService } from '../../api.service';
@@ -9,6 +11,9 @@ import { DialogBoxComponent } from '../../common/dialog-box/dialog-box.component
 import { Router } from '@angular/router';
 
 export interface PeriodicElement {
+  _id:string;
+  select:string;
+  no:number;
   catagory_name: string;
   description: string;
   priority: string;
@@ -44,8 +49,31 @@ export class ListingTrainingComponent implements OnInit {
   public searchResults: any = [];
   public trainingTitle:any;
   public status:any
+  public idArray:any=[];
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
+  selection = new SelectionModel<PeriodicElement>(true, []);
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: PeriodicElement): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.no + 1}`;
+  }
 
   @Input()           //getting all data from application
   set allDataList(val: any) {
@@ -214,5 +242,82 @@ export class ListingTrainingComponent implements OnInit {
      
     })
   }
+  deleteAllRecordModalFunction(){
+    
+    let modalData: any = {
+      panelClass: 'delete-dialog',
+      data: {
+        header: "Message",
+        message: "Are you want to delete these all record ?",
+        button1: { text: "No" },
+        button2: { text: "Yes" },
+      }
+    }
+    this.dialogRef = this.dialog.open(DialogBoxComponent, modalData);
+      this.dialogRef.afterClosed().subscribe(result => {
+      
+        switch (result) {
+          case "No":
+            break;
+          case "Yes":
+            this.deleteAllRecords();
+            break;
+        }
+      });
+    
+    }
+
+  
+
+  deleteAllRecords(){
+    for (let c in this.selection.selected) {
+      this.idArray.push(this.selection.selected[c]._id);
+    }
+    let temparr:any=[];
+    let link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
+    let source :any= this.formSourceVal.source;
+    let token:any= this.serverDetailsVal.jwttoken
+    for (let val in this.listingData) {
+      if(this.idArray.includes(this.listingData[val]._id)==true){
+        temparr.push(val);
+        
+      }   
+    } 
+    this.apiService.deteManyData(link,this.idArray,token,source).subscribe((res:any)=>{
+        res.data.ids;
+        if(res.status == "success"){
+          setTimeout(() => {
+            for(let i in temparr){
+              let tval:any=temparr[i]-parseInt(i);
+              this.listingData.splice(tval,1);
+            }
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+            this.selection.clear();
+            let allData: PeriodicElement[] = this.listingData;
+            this.dataSource = new MatTableDataSource(allData);
+          }, 1000);
+        }
+        
+        
+   })
+
+  }
+
+
+
+
+  statusUpdateAllRecords(){
+    console.log("selected souresh",this.selection.selected.length);
+    for (let c in this.selection.selected) {
+      this.idArray.push(this.selection.selected[c]._id);
+    }
+    console.log("id array",this.idArray);
+    let link = this.serverDetailsVal.serverUrl + this.formSourceVal.statusUpdateEndpoint;
+
+    // this.apiService.togglestatusmany()
+
+  }
+
 }
 
