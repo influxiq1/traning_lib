@@ -10,6 +10,7 @@ import { ApiService } from '../../api.service';
 import { DialogBoxComponent } from '../../common/dialog-box/dialog-box.component';
 import { Router } from '@angular/router';
 
+
 export interface PeriodicElement {
   _id:string;
   select:string;

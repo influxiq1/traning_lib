@@ -15,7 +15,7 @@ export class AddEditLessionsComponent implements OnInit {
 
   public serverDetails: any = {
     "serverUrl": "https://9ozbyvv5v0.execute-api.us-east-1.amazonaws.com/production/api/",
-    "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1ODExNTAxNzYsImlhdCI6MTU4MTA2Mzc3Nn0.CNXLL48GzKbEY7s65ferCxqJGiPmgA1g0vZpvs9Rrmg"
+    "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1ODEzOTkxOTMsImlhdCI6MTU4MTMxMjc5M30.DtpEloPnleVpky0Ts30jf_XFJ5C9YXf4QHGbUeR2L18"
   };
   public formSource: any = {
     "source": 'manage_lession',
@@ -54,18 +54,12 @@ export class AddEditLessionsComponent implements OnInit {
 
     this.formdataval = [
       { inputtype: 'text', name: 'lession_title', label: 'Title', placeholder: 'Enter Lession Title', validationrule: { required: true }, validationerrormsg: 'is required' },
-
       { inputtype: 'textarea', name: 'description', label: 'Description', placeholder: 'Enter Description' },
-
-      { inputtype: 'radio', name: 'test_associate_training', value: ["Yes", "No"], valuelabel: '', label: "Is there a test associated with training ", placeholder: "", validationrule: { required: true }, validationerrormsg: '', class: 'radioclass' },
-
-
-      { inputtype: 'select', name: 'associated_training', label: 'Associated Training', defaultchoice: 'Select a Training', sourceview: 'training_category_management', endpoint: 'datalist', selectvalue: 'catagory_name', selectid: '_id' },
-
+      { inputtype: 'select', name: 'associated_training', label: 'Associated Training', defaultchoice: 'Select a Training', sourceview: 'training_category_management', endpoint: 'datalist', selectvalue: 'catagory_name', selectid: '_id', validationrule:{required:true},validationerrormsg:'is required'},
       { inputtype: 'select', name: 'prerequisite_lession', label: 'Prerequisite Lesson', defaultchoice: 'Select a Prerequisite Lession', sourceview: 'manage_lession', endpoint: 'datalist', selectvalue: 'lession_title', selectid: '_id' },
-
+      { inputtype: 'radio', name: 'test_associate_training', value: ["Yes", "No"], valuelabel: '', label: "Is there a test associated with training ", placeholder: "", validationrule: { required: true }, validationerrormsg: '', class: 'radioclass' },
+      { inputtype: 'select', name: 'mediaType', label: 'Training Type', defaultchoice: 'Select a Training Type', sourceview: 'assets/mediaType.json', sourcetype:'static', selectvalue: 'name', selectid: 'selectname'},
       { inputtype: 'checkbox', name: 'status', label: 'Active', placeholder: 'Enter Status', validationrule: { required: true }, validationerrormsg: 'is required' },
-      { inputtype: 'select', name: 'mediaType', label: 'Training Type', defaultchoice: 'Select a Training Type', sourceview: 'assets/mediaType.json', sourcetype:'static', selectvalue: 'name', selectid: 'selectname' ,validationrule:{required:true},validationerrormsg:'is required'},
 
     ];
 

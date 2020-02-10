@@ -47,10 +47,10 @@
 
       <mat-list>
         <ng-container *ngFor="let item of trainingCategoryList">
-          <mat-list-item>{{item.parent_catagory}}</mat-list-item>
+          <mat-list-item>{{item.catagory_name}}</mat-list-item>
           <mat-list style="margin-left:30px;">
             <div (click)="onClickCategoryName(item._id)">
-              <mat-list-item>{{ item.catagory_name }}</mat-list-item>
+              <mat-list-item>{{ item.childcat }}</mat-list-item>
             </div>
           </mat-list>
         </ng-container>

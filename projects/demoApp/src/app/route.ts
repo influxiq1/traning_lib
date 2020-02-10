@@ -37,7 +37,7 @@ const appRoutes: Routes = [
     { 
         path : 'training-center/list' , component : ListComponent,
         resolve: { trainingdata: ResolveService }, 
-        data: { requestcondition: { source: 'training_category_management_view', condition: {} }, endpoint: 'datalist' }
+        data: { requestcondition: { source: '', condition: {} }, endpoint: 'gettrainingcenterlist' }
     },
     { path: 'manage-center/add', component: AddEditCenterComponent },
     { path: 'manage-center/edit/:id', component: AddEditCenterComponent },

@@ -27,6 +27,7 @@ export class ListComponent implements OnInit {
   @Input()
   set TrainingCategoryList(val: any) {
     this.trainingCategoryList= (val) || '<no name set>';
+    console.log("all data",this.trainingCategoryList);
   }
   @Input()
   set serverDetails(serverDetails: {}) {

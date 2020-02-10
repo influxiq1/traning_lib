@@ -111,7 +111,7 @@ export class TraningComponent implements OnInit {
               formgrp[this.formdataval[c].name] = [moment().format('MM-DD-YY'), Validators.required];
           }
            else {
-              let tempdefault = [];
+              let tempdefault = '';
               // if (this.formdataval[c].multiple != null && this.formdataval[c].multiple == true){}
               // console.log(tempdefault);
               
@@ -231,9 +231,10 @@ export class TraningComponent implements OnInit {
                     // this.router.navigate(['/']);
                 } else {
                     this.formdataval[c].sourceval = result.res;
+                    // this.formdataval[c].sourceval = "";
                 }
             }, error => {
-                this.formdataval[c].sourceval = [];
+                this.formdataval[c].sourceval = '';
             });
     } else {
       
@@ -241,7 +242,7 @@ export class TraningComponent implements OnInit {
             .subscribe((res:any) => {
                 this.formdataval[c].sourceval =  res;
             }, error => {
-                this.formdataval[c].sourceval = [];
+                this.formdataval[c].sourceval = '';
             });
     }
 
