@@ -13,7 +13,7 @@
 <mat-card-content class="trainingcentercls">
   <span fxLayout="row" class="row" fxLayoutAlign="space-between center">
     <span fxLayout="column" class="column columnleft">
-      <span fxLayout="row" class="rowinner" *ngFor="let item of lessonData">
+      <span fxLayout="row" class="rowinner" *ngFor="let item of allLessonData">
         <mat-accordion>
         <mat-expansion-panel>
           <mat-expansion-panel-header>
@@ -28,7 +28,7 @@
             <button mat-button type="button" class="submitbtn" color="primary" (click)="questionDetails(item._id)" >Take A Quiz</button>
           </ng-container>
           <ng-container *ngIf="item.test_associate_training=='No'">
-            <button mat-button type="button" class="submitbtn" color="primary">Mark As Done</button>
+            <button mat-button type="button" class="submitbtn" color="primary" (click)="addMarkedData(item._id,item.associated_training)">Mark As Done</button>
           </ng-container>
           <!-- <mat-form-field>
             <input matInput placeholder="First name">
@@ -49,7 +49,7 @@
         <ng-container *ngFor="let item of trainingCategoryList">
           <mat-list-item>{{item.catagory_name}}</mat-list-item>
           <mat-list style="margin-left:30px;">
-            <div (click)="onClickCategoryName(item._id)">
+            <div >
               <mat-list-item>{{ item.childcat }}</mat-list-item>
             </div>
           </mat-list>

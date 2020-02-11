@@ -13,8 +13,12 @@ import { ManageQuizComponent } from './manage-quiz/manage-quiz.component';
 import { AddEditComponent } from './manage-quiz/add-edit/add-edit.component';
 import { AddUpdateAnswerComponent } from './manage-quiz/add-update-answer/add-update-answer.component';
 import { UpdateAnswerComponent } from './manage-quiz/update-answer/update-answer.component';
+import { LoginComponent } from './login/login.component';
 const appRoutes: Routes = [
     { path: 'home', component: AppComponent },
+    {
+        path :'login',component: LoginComponent
+    },
     { path: 'home/:id', component: AppComponent },
     /**Lession Management **/
     { path: 'manage-lession/add', component: AddEditLessionsComponent },
@@ -37,7 +41,7 @@ const appRoutes: Routes = [
     { 
         path : 'training-center/list' , component : ListComponent,
         resolve: { trainingdata: ResolveService }, 
-        data: { requestcondition: { source: '', condition: {} }, endpoint: 'gettrainingcenterlist' }
+        data: { requestcondition: { source: '', condition: {"associated_training":"5e312f3bac3278d2e7e1aaa0"} }, endpoint: 'gettrainingcenterlist' }
     },
     { path: 'manage-center/add', component: AddEditCenterComponent },
     { path: 'manage-center/edit/:id', component: AddEditCenterComponent },
@@ -63,6 +67,7 @@ const appRoutes: Routes = [
         resolve: { quizQuestionData: ResolveService }, 
         data: { requestcondition: { source: 'quiz_answer', condition: {} }, endpoint: 'datalist' }
     }
+    
 
 ]
 

@@ -14,7 +14,7 @@ public addPageRoute : any="/manage-lession/add";
 public manageQuizRoute:any="/manage-quiz/list/";
 public serverDetails: any = {
   "serverUrl": "https://9ozbyvv5v0.execute-api.us-east-1.amazonaws.com/production/api/",
-  "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1ODEzOTkxOTMsImlhdCI6MTU4MTMxMjc5M30.DtpEloPnleVpky0Ts30jf_XFJ5C9YXf4QHGbUeR2L18"
+  "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1ODE0ODQzNTksImlhdCI6MTU4MTM5Nzk1OX0.gcqaPlgKbk6iCZDV5ZeV5jDAXDL8htrrSvJo7mTiaGE"
 };
 public formSource: any = {
   "source":'manage_lession',

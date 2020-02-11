@@ -9,7 +9,7 @@
     <form novalidate (ngSubmit)="formsubmit()" class="formclass">
         <ng-container [formGroup]="dataForm" *ngFor="let item of formdataval; let i=index;">
             <div>
-                <mat-label *ngIf="item.inputtype!='radio'">{{item.label}}: </mat-label>
+                <!-- <mat-label *ngIf="item.inputtype!='radio'">{{item.label}} </mat-label> -->
 
                 <mat-form-field *ngIf="item.inputtype == 'text' || item.inputtype == 'password'">
                     <input matInput [type]="item.inputtype" [placeholder]="item.placeholder"
@@ -58,9 +58,9 @@
                         {{item.validationerrormsg}}</mat-error>
                 </mat-form-field>
             </div>
-            <div>
-                <!-- <mat-label>Status</mat-label> -->
-                <mat-checkbox *ngIf="item.inputtype == 'checkbox'" [ngClass]="item.class"
+            <div class="checkboxnew">
+                <mat-label *ngIf="item.inputtype!='radio'">{{item.label}}:</mat-label>
+                <mat-checkbox *ngIf="item.inputtype == 'checkbox'"  [ngClass]="item.class"
                     [formControlName]="[item.name]" (keyup)="issubmit=0" [(ngModel)]="checked"></mat-checkbox>
             </div>
 

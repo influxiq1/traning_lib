@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule ,CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { TraningModule } from 'projects/traning/src/public-api';
@@ -20,6 +20,7 @@ import { ManageQuizComponent } from './manage-quiz/manage-quiz.component';
 import { AddEditComponent } from './manage-quiz/add-edit/add-edit.component';
 import { AddUpdateAnswerComponent } from './manage-quiz/add-update-answer/add-update-answer.component';
 import { UpdateAnswerComponent } from './manage-quiz/update-answer/update-answer.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { UpdateAnswerComponent } from './manage-quiz/update-answer/update-answer
     AddEditComponent,
     AddUpdateAnswerComponent,
     UpdateAnswerComponent,
+    LoginComponent,
   ],
   imports: [
     routing,
@@ -51,6 +53,9 @@ import { UpdateAnswerComponent } from './manage-quiz/update-answer/update-answer
     RouterModule.forRoot([]),
     DemoMaterialModule
   ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+],
   providers: [],
   bootstrap: [AppComponent]
 })

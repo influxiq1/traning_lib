@@ -64,7 +64,7 @@
         [indeterminate]="selection.hasValue() && !isAllSelected()"
         [aria-label]="checkboxLabel()"> </mat-checkbox>
       </th>
-      <td mat-cell *matCellDef="let row">
+      <td mat-cell *matCellDef="let row" data-label = "select">
         <mat-checkbox (click)="$event.stopPropagation()"
         (change)="$event ? selection.toggle(row) : null"
         [checked]="selection.isSelected(row)"
@@ -72,15 +72,15 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="no">
-      <th mat-header-cell *matHeaderCellDef> No. </th>
-      <td mat-cell *matCellDef="let element; let i = index;" title="No"> {{ i + 1 }} </td>
-    </ng-container>
+   
       <ng-container matColumnDef="lession_title">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Lesson Title </th>
         <td mat-cell *matCellDef="let row" title="Lesson Title"> {{row.lession_title}} </td>
       </ng-container>
-  
+      <ng-container matColumnDef="no">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element; let i = index;" title= "No"> {{ i + 1 }} </td>
+      </ng-container>
       <!-- Progress Column -->
       <ng-container matColumnDef="description">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
@@ -115,7 +115,7 @@
       </ng-container>
       <ng-container matColumnDef="deleteRecord">
         <th mat-header-cell *matHeaderCellDef> Action </th>
-        <td mat-cell *matCellDef="let element; let i = index;">
+        <td mat-cell *matCellDef="let element; let i = index;" data-label = "Action">
           <span class="buttons_ro">
                     <span class="cursor" (click)="deleteRecord(element._id, i);">
             <i class="material-icons">

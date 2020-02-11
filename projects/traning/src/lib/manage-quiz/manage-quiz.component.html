@@ -10,7 +10,10 @@
     <mat-toolbar class="buttonsetToolbar">
         <button class="singleButton" mat-raised-button color="primary" type="button" (click)="addButton()"><i class="material-icons">add</i> Add
             Question</button>
-        <button class="singleButton" mat-raised-button color="primary" type="button" (click)="lessonList()">Back To
+        <button class="singleButton" mat-raised-button color="primary" type="button" (click)="lessonList()">
+            <i class="material-icons">
+                keyboard_backspace
+                </i>Back To
             Lesson List</button>
     </mat-toolbar>
           </span>
@@ -24,7 +27,7 @@
             <!-- ID Column -->
             <ng-container matColumnDef="question">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Question </th>
-                <td mat-cell *matCellDef="let row" title="Question"> {{row.question}} </td>
+                <td mat-cell *matCellDef="let row" data-label="Question"> {{row.question}} </td>
             </ng-container>
             <!-- Name Column -->
             <ng-container matColumnDef="priority">
@@ -37,7 +40,7 @@
             </ng-container>
             <ng-container matColumnDef="deleteRecord">
                 <th mat-header-cell *matHeaderCellDef> Action </th>
-                <td mat-cell *matCellDef="let element; let i = index;">
+                <td mat-cell *matCellDef="let element; let i = index;" data-label="Action">
                     <span class="buttons_ro">
                         <span class="cursor" (click)="deleteRecord(element._id, i);">
                             <i class="material-icons">
