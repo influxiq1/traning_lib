@@ -14,7 +14,7 @@
   <span fxLayout="row" class="row" fxLayoutAlign="space-between center">
     <span fxLayout="column" class="column columnleft">
       <span fxLayout="row" class="rowinner" *ngFor="let item of allLessonData">
-        <mat-accordion>
+        <mat-accordion (click)="currentlesson=item._id">
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
@@ -26,6 +26,8 @@
           </mat-expansion-panel-header>
           <ng-container *ngIf="item.test_associate_training=='Yes'">
             <button mat-button type="button" class="submitbtn" color="primary" (click)="questionDetails(item._id)" >Take A Quiz</button>
+            <mat-progress-bar *ngIf="progressLoader" mode="indeterminate"></mat-progress-bar>
+
           </ng-container>
           <ng-container *ngIf="item.test_associate_training=='No'">
             <button mat-button type="button" class="submitbtn" color="primary" (click)="addMarkedData(item._id,item.associated_training)">Mark As Done</button>
@@ -50,7 +52,12 @@
           <mat-list-item>{{item.catagory_name}}</mat-list-item>
           <mat-list style="margin-left:30px;">
             <div >
-              <mat-list-item>{{ item.childcat }}</mat-list-item>
+              <ng-container *ngIf="item.childcat!=null && item.childcat.length>0">
+                <mat-list *ngFor=" let childitem of item.childcat;let i = index">
+                  <mat-list-item (click)="childcatclick(item.childid[i])">{{ childitem }}</mat-list-item>
+                </mat-list>
+              </ng-container>
+              
             </div>
           </mat-list>
         </ng-container>

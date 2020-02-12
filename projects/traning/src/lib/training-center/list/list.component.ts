@@ -1,12 +1,13 @@
 import { Component, OnInit ,ViewChild,Input,Inject} from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from "@angular/material";
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSnackBar } from "@angular/material";
 import { ApiService } from '../../api.service';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { setTimeout } from 'timers';
 
 
 export interface DialogData {
-  message: string;
+  data: string;
 }
 @Component({
   selector: 'lib-list',
@@ -14,6 +15,7 @@ export interface DialogData {
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
+  public progressLoader:boolean=false;
   public trainingCategoryList:any=[];
   public allLessonData:any=[];
   public serverDetailsVal:any;
@@ -30,13 +32,17 @@ export class ListComponent implements OnInit {
   public allCookiesData:any;
   public cookiesData:any;
   public userId:any;
+  public questionindex:any=0;
+  public currentlesson:any='';
+  public paramsId:any;
+  public trainingCenterRoute:any;
 
   @Input()
   set TrainingCategoryList(val: any) {
     let results:any=(val) || '<no name set>';
     this.trainingCategoryList= results.trainingcenterlist;
+    console.log("left side sub data",this.trainingCategoryList);   
     this.allLessonData = results.lessondata;
-    console.log("lesson",this.allLessonData);
   }
   @Input()
   set serverDetails(serverDetails: {}) {
@@ -50,20 +56,30 @@ export class ListComponent implements OnInit {
   set QuizQuestionSource(val: any) {
     this.quizQuestionSource = (val) || '<no name set>';
   }
+  @Input()
+  set ParamsId(id: any) {
+    this.paramsId = (id) || '<no name set>';
+  }
+  @Input()
+  set TrainingCenterRoute(id: any) {
+    this.trainingCenterRoute = (id) || '<no name set>';
+  }
   constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router,
-    public cookieService:CookieService) {
+    public cookieService:CookieService,public snakBar:MatSnackBar) {
       this.allCookiesData = cookieService.getAll();
       this.cookiesData = JSON.parse(this.allCookiesData.login_details);
       this.userId = this.cookiesData._id;
-      console.log("cookies dataaaa",this.cookiesData);
-      console.log("cookies dataaaa",this.userId);
+     
    }
 
   ngOnInit() {
 
   }
   questionDetails(id:any){
+    this.progressLoader = true;
+
     this.questionId = id;
+    this.questionindex = 0;
     const link = this.serverDetailsVal.serverUrl + this.formSourceVal.showEndpoint;
     let data: any ={
       source:  this.quizQuestionSource.questionSourceName,
@@ -76,28 +92,60 @@ export class ListComponent implements OnInit {
     .subscribe((response):any=>{
       let result :any=response;
       this.questionArray = result.results.questionanswerlist;
-      this.quizQuestion = this.questionArray[0].question;
-      this.openDialog(this.quizQuestion);
+      if(this.questionArray.length>0){
+        this.progressLoader = false;
+        this.quizQuestion = this.questionArray[this.questionindex];
+        console.log("before modal data",this.quizQuestion);
+        this.openDialog(this.quizQuestion);
 
-      for (const i in this.questionArray) {
-        this.quizQuestion = this.questionArray[i].question;
-        for (const loop in this.quizQuestion.answers) {
-          this.currentQuestionIndex = this.quizQuestion.answers[loop].answer;
-          
-        }
+        console.log("all answers",this.currentQuestionIndex);
+      }else{
+        this.progressLoader = false;
+        let message :any="This Lesson Doesn't Have Any Questions";
+        let action : any="Ok";
+        this.snakBar.open(message,action,{
+          duration:3000
+        })
       }
-      console.log("all answers",this.currentQuestionIndex);
+      
 
-      this.answerDetails();
-    })
+      //this.answerDetails();
+    });
 
   }
+
+  openquestionmodal(){
+
+    this.quizQuestion = this.questionArray[this.questionindex];
+    console.log("before modal data",this.quizQuestion);
+    this.openDialog(this.quizQuestion);
+
+    for (const i in this.questionArray) {
+      this.quizQuestion = this.questionArray[i].question;
+      for (const loop in this.quizQuestion.answers) {
+        this.currentQuestionIndex = this.quizQuestion.answers[loop].answer;
+        
+      }
+    }
+    console.log("all answers",this.currentQuestionIndex);
+  }
   openDialog(x: any): void {
+    console.log('currentlesson',this.currentlesson,this.paramsId);
     this.dialogRef = this.dialog.open(Dialogtest, {
-      width: '250px',
-      data: { message: x }
+      width: '550px',
+      data: { data: x } 
     });
     this.dialogRef.afterClosed().subscribe(result => {
+      console.log(result,'res after close',this.questionindex,this.questionArray.length);
+      if(result==true) {
+        if((this.questionindex+1) == this.questionArray.length){
+          console.log("souresh test");
+          this.addMarkedData(this.currentlesson,this.paramsId);
+        }else{
+        this.questionindex++;
+        this.openquestionmodal();
+        }
+      }
     });
   }
   answerDetails(){
@@ -129,12 +177,19 @@ export class ListComponent implements OnInit {
         "associated_training":associated_training
       },
       "source":this.formSourceVal.markedSourceName,
+      "sourceobj":["user_id","lesson_id","associated_training"],
       "token":this.serverDetailsVal.jwttoken
     }
     this.apiService.postData(link,data).subscribe(response=>{
       console.log("results",response);
     })
 
+
+  }
+  childcatclick(childId:any){
+   console.log("childiddddd",childId);
+  this.router.navigateByUrl(this.trainingCenterRoute + childId);
+  //  this.trainingCenterRoute + childId;
 
   }
 
@@ -147,9 +202,52 @@ export class ListComponent implements OnInit {
 })
 export class Dialogtest {
   public is_error: any;
+  public error:any="";
+  public successanswer:boolean=false;
 
   constructor(public dialogRef: MatDialogRef<Dialogtest>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-    this.is_error = data.message;
+      
+    this.is_error = data.data;
+    let tempdata:any=this.data.data;
+    let ddata:any[]=tempdata.answers;
+    for(let b in ddata){
+        //console.log(ddata[b]._id,'did');
+        ddata[b].ans=false;
+    }
+  }
+  closeButton() {
+    this.dialogRef.close(false);
+  }
+
+  resetanswer(){
+    let tempdata:any=this.data.data;
+    let ddata:any[]=tempdata.answers;
+    for(let b in ddata){
+        //console.log(ddata[b]._id,'did');
+        ddata[b].ans=false;
+    }
+  }
+  submitanswer(){
+    this.error='';
+    let tempdata:any=this.data.data;
+    let ddata:any[]=tempdata.answers;
+    for(let b in ddata){
+        //console.log(ddata[b].ans,'did');
+        if(ddata[b].ans==true){
+          if(ddata[b].isCorrect==1){
+            this.successanswer=true;
+            setTimeout(() => {
+              this.successanswer=false;
+              this.dialogRef.close(true);
+            
+            }, 5000);
+          
+          }
+        }
+        
+    }
+    this.error="Wrong Answer !!";
+
   }
 }

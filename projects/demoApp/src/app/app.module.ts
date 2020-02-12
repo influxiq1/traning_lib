@@ -41,11 +41,9 @@ import { LoginComponent } from './login/login.component';
   imports: [
     routing,
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
-    BrowserModule,
     CommonModule,
     TraningModule,
     BrowserAnimationsModule,
-    BrowserModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,

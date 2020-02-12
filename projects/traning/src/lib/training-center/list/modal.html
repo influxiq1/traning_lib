@@ -2,6 +2,21 @@
     <h1 mat-dialog-title>Quiz Question</h1>
     <div mat-dialog-content>
 
-            <p>{{ data.message }}</p>
+            <p *ngIf="successanswer == false  ">{{ data.data.question}}</p>
+            <ng-container *ngIf="data.data.answers!=null && data.data.answers.length>0 && successanswer==false ">
+                <p *ngFor="let val of data.data.answers">
+                        <ng-container> 
+                            <div>
+                                <mat-checkbox class="example-margin" (click)="resetanswer()" [(ngModel)]="val.ans">{{val.answer}}</mat-checkbox>
+                            </div> 
+                        </ng-container>
+                </p> 
+                <p *ngIf="error!='' ">{{error}}</p>
+                <button mat-raised-button color="primary" type="button" (click)="submitanswer()">Submit</button>
+                <button mat-raised-button color="primary" type="button" (click)="closeButton()">Close</button>
+
+            </ng-container>
+            <div *ngIf="successanswer == true ">Success !!</div>
+            
     </div>
 </div>
