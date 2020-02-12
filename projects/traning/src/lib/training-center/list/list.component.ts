@@ -3,8 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSnackBar } from "@angular/
 import { ApiService } from '../../api.service';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { setTimeout } from 'timers';
-
+// import { setTimeout } from 'timers';
 
 export interface DialogData {
   data: string;
