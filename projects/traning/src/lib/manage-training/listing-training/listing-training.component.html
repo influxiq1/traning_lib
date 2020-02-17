@@ -39,14 +39,14 @@
 
 </span>
 
-<!-- <ng-container *ngIf="selection.selected.length!=null && selection.selected.length>0">
+<ng-container *ngIf="selection.selected.length!=null && selection.selected.length>0">
   <span class="multipledeleteandupdatebuttan" >
 
   <button mat-raised-button (click)="deleteAllRecordModalFunction()"> Delete </button>
   <button mat-raised-button (click)="statusUpdateAllRecords()"> Update Status </button>
 
   </span>
-</ng-container> -->
+</ng-container>
 <div class="mat-elevation-z8">
 <table mat-table [dataSource]="dataSource" matSort>
 <!-- Checkbox Column -->
@@ -65,15 +65,16 @@
   </td>
 </ng-container>
 
-<ng-container matColumnDef="no">
-  <th mat-header-cell *matHeaderCellDef> No. </th>
-  <td mat-cell *matCellDef="let element; let i = index;" title= "No"> {{ i + 1 }} </td>
-</ng-container>
+
 
       <!-- ID Column -->
       <ng-container matColumnDef="catagory_name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Training Title </th>
         <td mat-cell *matCellDef="let row" title="Training Title"> {{row.catagory_name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="no">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let row; let i = index;" title= "No"> {{ i + 1 }} </td>
       </ng-container>
 
       <!-- Progress Column -->

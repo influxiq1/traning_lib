@@ -91,7 +91,6 @@ export class ListLessionComponent implements OnInit {
   @Input()
   set formSource(formSource: any) {
     this.formSourceVal = (formSource) || '<no name set>';
-    console.log("form source",this.formSourceVal);
   }
   @Input()
   set EditPageRoute(val: any) {
@@ -207,7 +206,6 @@ export class ListLessionComponent implements OnInit {
       if(response.status="success"){
        result = response.res;
        this.allLessonData = result;
-      console.log("all leson data",result);
       }
      
     })
@@ -223,19 +221,20 @@ export class ListLessionComponent implements OnInit {
     let modalData: any = {
       panelClass: 'delete-dialog',
       data: {
-        header: "Message",
-        message: "Are you sure you want to change these status?",
-        button1: { text: "No" },
-        button2: { text: "Yes" },
+        header: "",
+        message: "",
+        button1: { text: "Inactive" },
+        button2: { text: "Active" },
       }
     }
     this.dialogRef = this.dialog.open(DialogBoxComponent, modalData);
       this.dialogRef.afterClosed().subscribe(result => {
       
         switch (result) {
-          case "No":
+          case "Inactive":
+            this.statusChange(id,index);
             break;
-          case "Yes":
+          case "Active":
             this.statusChange(id,index);
             break;
         }

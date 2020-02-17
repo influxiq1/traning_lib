@@ -69,7 +69,6 @@ export class ManageQuizComponent implements OnInit {
   @Input()
   set ParamsId(id: any) {
     this.lessonId = (id) || '<no name set>';
-    console.log("+++",this.lessonId);
   }
   
 
@@ -134,21 +133,22 @@ export class ManageQuizComponent implements OnInit {
     }
     statusUpdateModal(id:any,index:any){
       let modalData: any = {
-        panelClass: 'delete-dialog',
+        panelClass: 'dialog',
         data: {
-          header: "Message",
-          message: "Are you sure you want to change these status?",
-          button1: { text: "No" },
-          button2: { text: "Yes" },
+          header: "",
+          message: "",
+          button1: { text: "Inactive" },
+          button2: { text: "Active" },
         }
       }
       this.dialogRef = this.dialog.open(DialogBoxComponent, modalData);
         this.dialogRef.afterClosed().subscribe(result => {
         
           switch (result) {
-            case "No":
+            case "Inactive":
+              this.statusChange(id,index);
               break;
-            case "Yes":
+            case "Active":
               this.statusChange(id,index);
               break;
           }

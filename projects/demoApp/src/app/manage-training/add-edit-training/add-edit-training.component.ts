@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-add-edit-training',
   templateUrl: './add-edit-training.component.html',
@@ -7,12 +8,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AddEditTrainingComponent implements OnInit {
   title = 'demoApp';
+  public jwtToken:any;
   public formdataval: any;
   public recid: any;
   public listingPageRoute : any="/manage-training/list";
   public serverDetails: any = {
     "serverUrl": "https://9ozbyvv5v0.execute-api.us-east-1.amazonaws.com/production/api/",
-    "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1ODE1NzIxODEsImlhdCI6MTU4MTQ4NTc4MX0.s02ZEafcKSbetGQdvMkUfMZD1sTS4usTOJbYC2ayhCo"
+    "jwttoken": ""
   };
   public formSource: any = {
     "source":'training_category_management',
@@ -25,7 +27,10 @@ export class AddEditTrainingComponent implements OnInit {
   public additionalData: any = {
     "objectId": "parent_catagory"
   };
-  constructor(public route: ActivatedRoute) { }
+  constructor(public route: ActivatedRoute,public cookie:CookieService) {
+    this.jwtToken = cookie.get('jwtToken');
+    this.serverDetails.jwttoken=this.jwtToken;
+   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {

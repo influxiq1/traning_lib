@@ -34,8 +34,7 @@ export interface DialogData {
 })
 
 export class ListingTrainingComponent implements OnInit {
-  displayedColumns: string[] = ['catagory_name', 'description', 'priority', 'parent_catagory', 'status', 'deleteRecord'];
-  // dataSource: MatTableDataSource<PeriodicElement>;
+  displayedColumns: string[] = ['select','no','catagory_name', 'description', 'priority', 'parent_catagory', 'status', 'deleteRecord'];
   public dataSource: any;
   public listingData: any = [];
   public dialogRef: any;
@@ -200,21 +199,22 @@ export class ListingTrainingComponent implements OnInit {
   }
   statusUpdateModal(id:any,index:any){
     let modalData: any = {
-      panelClass: 'delete-dialog',
+      panelClass: 'dialog',
       data: {
-        header: "Message",
-        message: "Are you sure you want to change these status?",
-        button1: { text: "No" },
-        button2: { text: "Yes" },
+        header: "",
+        message: "",
+        button1: { text: "Inactive" },
+        button2: { text: "Active" },
       }
     }
     this.dialogRef = this.dialog.open(DialogBoxComponent, modalData);
       this.dialogRef.afterClosed().subscribe(result => {
       
         switch (result) {
-          case "No":
+          case "Inactive":
+            this.statusChange(id,index);
             break;
-          case "Yes":
+          case "Active":
             this.statusChange(id,index);
             break;
         }
@@ -228,7 +228,7 @@ export class ListingTrainingComponent implements OnInit {
       "_id_status": id
     }
     this.apiService.postDatawithoutToken(link,data).subscribe((response: any)=>{
-      let result :any;
+      
       if(response.status=true){
         if(this.listingData[index].status=="Active"){
           this.listingData[index].status = "Inactive"
@@ -236,7 +236,7 @@ export class ListingTrainingComponent implements OnInit {
           this.listingData[index].status = "Active"
 
         }
-        console.log("souresh testtt",this.listingData[index].status);
+        
         let allData: PeriodicElement[] = this.listingData;
         this.dataSource = new MatTableDataSource(allData);     
        }
@@ -310,13 +310,17 @@ export class ListingTrainingComponent implements OnInit {
 
   statusUpdateAllRecords(){
     console.log("selected souresh",this.selection.selected.length);
+    let ids:any=[];
+    console.log("all seleted status",this.selection);
     for (let c in this.selection.selected) {
-      this.idArray.push(this.selection.selected[c]._id);
+      ids.push(this.selection.selected[c]._id);
     }
-    console.log("id array",this.idArray);
+    // console.log("id array",this.idArray);
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.statusUpdateEndpoint;
+    let token:any= this.serverDetailsVal.jwttoken;
+    let source :any= this.formSourceVal.source;
 
-    // this.apiService.togglestatusmany()
+    // this.apiService.togglestatusmany(link,ids,results.val,token,source)
 
   }
 

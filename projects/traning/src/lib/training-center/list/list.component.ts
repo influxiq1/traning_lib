@@ -35,12 +35,12 @@ export class ListComponent implements OnInit {
   public currentlesson:any='';
   public paramsId:any;
   public trainingCenterRoute:any;
+  public isDisabled:boolean=true;
 
   @Input()
   set TrainingCategoryList(val: any) {
     let results:any=(val) || '<no name set>';
-    this.trainingCategoryList= results.trainingcenterlist;
-    console.log("left side sub data",this.trainingCategoryList);   
+    this.trainingCategoryList= results.trainingcenterlist;   
     this.allLessonData = results.lessondata;
   }
   @Input()
@@ -94,10 +94,7 @@ export class ListComponent implements OnInit {
       if(this.questionArray.length>0){
         this.progressLoader = false;
         this.quizQuestion = this.questionArray[this.questionindex];
-        console.log("before modal data",this.quizQuestion);
         this.openDialog(this.quizQuestion);
-
-        console.log("all answers",this.currentQuestionIndex);
       }else{
         this.progressLoader = false;
         let message :any="This Lesson Doesn't Have Any Questions";
@@ -107,8 +104,6 @@ export class ListComponent implements OnInit {
         })
       }
       
-
-      //this.answerDetails();
     });
 
   }
@@ -116,7 +111,6 @@ export class ListComponent implements OnInit {
   openquestionmodal(){
 
     this.quizQuestion = this.questionArray[this.questionindex];
-    console.log("before modal data",this.quizQuestion);
     this.openDialog(this.quizQuestion);
 
     for (const i in this.questionArray) {
@@ -126,19 +120,15 @@ export class ListComponent implements OnInit {
         
       }
     }
-    console.log("all answers",this.currentQuestionIndex);
   }
   openDialog(x: any): void {
-    console.log('currentlesson',this.currentlesson,this.paramsId);
     this.dialogRef = this.dialog.open(Dialogtest, {
       width: '550px',
       data: { data: x } 
     });
     this.dialogRef.afterClosed().subscribe(result => {
-      console.log(result,'res after close',this.questionindex,this.questionArray.length);
       if(result==true) {
         if((this.questionindex+1) == this.questionArray.length){
-          console.log("souresh test");
           this.addMarkedData(this.currentlesson,this.paramsId);
         }else{
         this.questionindex++;
@@ -186,7 +176,6 @@ export class ListComponent implements OnInit {
 
   }
   childcatclick(childId:any){
-   console.log("childiddddd",childId);
   this.router.navigateByUrl(this.trainingCenterRoute + childId);
   //  this.trainingCenterRoute + childId;
 
@@ -205,7 +194,7 @@ export class Dialogtest {
   public successanswer:boolean=false;
 
   constructor(public dialogRef: MatDialogRef<Dialogtest>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    @Inject(MAT_DIALOG_DATA) public data: any) {
       
     this.is_error = data.data;
     let tempdata:any=this.data.data;

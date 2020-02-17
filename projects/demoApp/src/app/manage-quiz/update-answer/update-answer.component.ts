@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-update-answer',
@@ -10,7 +11,7 @@ export class UpdateAnswerComponent implements OnInit {
 public quizAnswerList : any=[];
 public serverDetails: any = {
   "serverUrl": "https://9ozbyvv5v0.execute-api.us-east-1.amazonaws.com/production/api/",
-  "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1ODE1NzIxODEsImlhdCI6MTU4MTQ4NTc4MX0.s02ZEafcKSbetGQdvMkUfMZD1sTS4usTOJbYC2ayhCo"
+  "jwttoken": ""
 };
 public formSource: any = {
   "source":"quiz_answer",
@@ -19,8 +20,11 @@ public formSource: any = {
   "showEndpoint":"datalist",
   "formTitleName": 'Training'
 }
-  constructor(public activatedRoute : ActivatedRoute) { 
+public jwtToken:any;
 
+  constructor(public activatedRoute : ActivatedRoute,public cookie:CookieService) { 
+    this.jwtToken = cookie.get('jwtToken');
+    this.serverDetails.jwttoken=this.jwtToken;
   }
 
   ngOnInit() {

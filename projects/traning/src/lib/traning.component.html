@@ -79,7 +79,7 @@
                 <!-- <p>{{item.defaultchoice}}</p> -->
                 <mat-form-field *ngIf="item.inputtype == 'select'">
                     <mat-select [placeholder]="item.defaultchoice" [formControlName]="item.name"
-                        (selectionChange)="getMediaTypeVal($event.value);" value="">
+                        (selectionChange)="getMediaTypeVal($event.value,item.name);" value="">
                         <!-- <mat-option value="" selected>{{item.defaultchoice}}</mat-option> -->
                         <mat-option *ngFor="let selectval of item.sourceval" value="{{selectval[item.selectid]}}"
                             (keyup)="issubmit=0">
@@ -91,6 +91,7 @@
                         {{item.validationerrormsg}}</mat-error>
                 </mat-form-field>
             </div>
+            <mat-progress-bar *ngIf="progressLoader && item.name =='associated_training'" mode="indeterminate"></mat-progress-bar>
 
         </ng-container>
         <div *ngIf="mediaTypeValue == 'image' || mediaTypeValue == 'video' || mediaTypeValue == 'audio'  || mediaTypeValue == 'file' ">

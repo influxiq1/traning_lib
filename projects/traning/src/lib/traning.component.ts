@@ -15,7 +15,7 @@ declare var $: any;
   styleUrls: ['./traning.component.css']
 })
 export class TraningComponent implements OnInit {
-
+  public progressLoader:boolean=false;
   public formdataval: any = [];
   public serverDetailsVal: any;
   public formgroup: FormBuilder;
@@ -45,6 +45,7 @@ export class TraningComponent implements OnInit {
   public htmType:any;
   public images_array:any=[];
   public checked:boolean=true;
+  public allLessonData:any=[];
   @Input()
     set formdata(formdata: string) {
         this.formdataval = (formdata) || '<no name set>';
@@ -231,6 +232,7 @@ export class TraningComponent implements OnInit {
                     // this.router.navigate(['/']);
                 } else {
                     this.formdataval[c].sourceval = result.res;
+
                     // this.formdataval[c].sourceval = "";
                 }
             }, error => {
@@ -247,9 +249,30 @@ export class TraningComponent implements OnInit {
     }
 
 }
-getMediaTypeVal(value:any){
-  this.mediaTypeValue = value;
- 
+getMediaTypeVal(value:any,name:any){
+  if(name == 'mediaType'){
+    this.mediaTypeValue = value;
+  }
+  if(name =='associated_training'){
+    this.progressLoader=true;
+    let link =this.serverDetailsVal.serverUrl + this.formSourceVal.lessonDataEndpoint;
+    let data: any ={
+      condition:{
+        "associated_training": value
+      }
+    }
+    this.apiService.postDatawithoutToken(link,data).subscribe((response:any)=>{
+      this.progressLoader=false;
+       this.allLessonData = response.lesson_list;
+       for (let key in this.formdataval) {
+         if(this.formdataval[key].name=='prerequisite_lession'){
+          this.formdataval[key].sourceval=this.allLessonData;
+         }
+       }
+       console.log("successfully result",this.allLessonData);
+
+    })
+  }
 }
 cancelButton(){
   this.router.navigateByUrl(this.listingPageRoute);

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-add-update-answer',
@@ -12,7 +13,7 @@ public lessonId:any;
 public listingPageRoute:any="/manage-quiz/list/";
 public serverDetails: any = {
   "serverUrl": "https://9ozbyvv5v0.execute-api.us-east-1.amazonaws.com/production/api/",
-  "jwttoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1ODE1NzIxODEsImlhdCI6MTU4MTQ4NTc4MX0.s02ZEafcKSbetGQdvMkUfMZD1sTS4usTOJbYC2ayhCo"
+  "jwttoken": ""
 };
 public formSource: any = {
   "source":'quiz_answer',
@@ -22,9 +23,12 @@ public formSource: any = {
   "EditheaderText": "Edit Training",
   "formTitleName": 'Training'
 }
-  constructor(public activatedRoute:ActivatedRoute) { 
+public jwtToken:any;
+  constructor(public activatedRoute:ActivatedRoute,public cookie:CookieService) { 
     this.paramsId = activatedRoute.snapshot.params.id;
     this.lessonId = activatedRoute.snapshot.params.lessonid;
+    this.jwtToken = cookie.get('jwtToken');
+    this.serverDetails.jwttoken=this.jwtToken;
   }
 
   ngOnInit() {

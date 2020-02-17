@@ -15,7 +15,7 @@ export class HttpService {
   public progress: any = [];
   public uploadtype;
   public uploaderror: any = '';
-  public accesstoken: any = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1ODE1NzIxODEsImlhdCI6MTU4MTQ4NTc4MX0.s02ZEafcKSbetGQdvMkUfMZD1sTS4usTOJbYC2ayhCo";
+  public accesstoken: any = "";
   public fileservername: any = [];
   public serverUrl: any = 'https://9ozbyvv5v0.execute-api.us-east-1.amazonaws.com/production/api/';
   public addendpointUrl: any;
@@ -25,8 +25,11 @@ export class HttpService {
   public deletemultiple_endpointUrl: any;
   public updatestatus_multiple_endpointUrl: any;
   public getdata_endpointUrl: any = 'datalist';
-
-  constructor(private _http: HttpClient, private _authHttp: HttpClient, private cookieService: CookieService) { }
+  public jwtToken:any;
+  constructor(private _http: HttpClient, private _authHttp: HttpClient, private cookieService: CookieService) {
+    this.jwtToken = cookieService.get('jwtToken');
+    this.accesstoken=this.jwtToken;
+   }
 
   isTokenExpired() {
     // const helper = new JwtHelperService();
