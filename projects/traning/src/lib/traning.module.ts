@@ -20,7 +20,8 @@ import { ManageQuizComponent } from './manage-quiz/manage-quiz.component';
 import { AddEditComponent } from './manage-quiz/add-edit/add-edit.component';
 import { AddUpdateAnswerComponent } from './manage-quiz/add-update-answer/add-update-answer.component';
 import { UpdateAnswerComponent } from './manage-quiz/update-answer/update-answer.component';
-import { LoginComponent } from './login/login.component';
+// import { LoginComponent } from './login/login.component';
+import { LoginfortrainingComponent } from './loginfortraining/loginfortraining.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { LoginComponent } from './login/login.component';
     AddEditComponent,
     AddUpdateAnswerComponent,
     UpdateAnswerComponent,
-    LoginComponent
+    // LoginComponent,
+    LoginfortrainingComponent
     
   ],
   imports: [
@@ -51,7 +53,7 @@ import { LoginComponent } from './login/login.component';
     FileUploadModule
     
   ],
-  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest],
+  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest],
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [CookieService, ApiService],
   entryComponents:[DialogBoxComponent,Dialogtest]

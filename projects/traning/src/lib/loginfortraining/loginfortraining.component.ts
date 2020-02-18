@@ -3,12 +3,12 @@ import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, FormC
 import { CookieService } from 'ngx-cookie-service';
 import { ApiService } from '../api.service';
 @Component({
-  selector: 'lib-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'lib-loginfortraining',
+  templateUrl: './loginfortraining.component.html',
+  styleUrls: ['./loginfortraining.component.css']
 })
-export class LoginComponent implements OnInit {
-   public loginForm:FormGroup; 
+export class LoginfortrainingComponent implements OnInit {
+  public loginForm:FormGroup; 
    public serverDetailsVal:any;
    @Input()
    set ServerDetails(serverDetails: {}) {

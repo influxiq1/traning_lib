@@ -36,12 +36,14 @@ export class ListComponent implements OnInit {
   public paramsId:any;
   public trainingCenterRoute:any;
   public isDisabled:boolean=true;
+  public trainingCategoryName:any;
 
   @Input()
   set TrainingCategoryList(val: any) {
     let results:any=(val) || '<no name set>';
     this.trainingCategoryList= results.trainingcenterlist;   
     this.allLessonData = results.lessondata;
+    console.log(this.allLessonData);
   }
   @Input()
   set serverDetails(serverDetails: {}) {
@@ -74,7 +76,7 @@ export class ListComponent implements OnInit {
   ngOnInit() {
 
   }
-  questionDetails(id:any){
+  questionDetails(id:any,i:any){
     this.progressLoader = true;
 
     this.questionId = id;
@@ -94,7 +96,7 @@ export class ListComponent implements OnInit {
       if(this.questionArray.length>0){
         this.progressLoader = false;
         this.quizQuestion = this.questionArray[this.questionindex];
-        this.openDialog(this.quizQuestion);
+        this.openDialog(this.quizQuestion,i);
       }else{
         this.progressLoader = false;
         let message :any="This Lesson Doesn't Have Any Questions";
@@ -108,10 +110,10 @@ export class ListComponent implements OnInit {
 
   }
 
-  openquestionmodal(){
+  openquestionmodal(id:any){
 
     this.quizQuestion = this.questionArray[this.questionindex];
-    this.openDialog(this.quizQuestion);
+    this.openDialog(this.quizQuestion,id);
 
     for (const i in this.questionArray) {
       this.quizQuestion = this.questionArray[i].question;
@@ -121,7 +123,7 @@ export class ListComponent implements OnInit {
       }
     }
   }
-  openDialog(x: any): void {
+  openDialog(x: any,id:any): void {
     this.dialogRef = this.dialog.open(Dialogtest, {
       width: '550px',
       data: { data: x } 
@@ -129,35 +131,16 @@ export class ListComponent implements OnInit {
     this.dialogRef.afterClosed().subscribe(result => {
       if(result==true) {
         if((this.questionindex+1) == this.questionArray.length){
-          this.addMarkedData(this.currentlesson,this.paramsId);
+          this.addMarkedData(this.currentlesson,this.paramsId,id);
         }else{
         this.questionindex++;
-        this.openquestionmodal();
+        this.openquestionmodal(id);
         }
       }
     });
   }
-  answerDetails(){
-    const link = this.serverDetailsVal.serverUrl + this.formSourceVal.showEndpoint;
-    let data: any ={
-      source: this.quizQuestionSource.answerSourceName,
-      token:this.serverDetailsVal.jwttoken,
-      condition:{
-        questionId_object: this.questionId
-      }
-    }
-    this.apiService.getData(link, data)
-    .subscribe(response=>{
-      // let result :any=response;
-      // this.questionArray = result.res;
-      // for (const i in this.questionArray) {
-      //   this.quizQuestion = this.questionArray[i].question;
-      //   this.openDialog(this.quizQuestion);
-      // }
-    
-    })
-  }
-  addMarkedData(lessonId:any,associated_training:any){
+  
+  addMarkedData(lessonId:any,associated_training:any,i:any){
     const link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
     let data:any={
       "data":{
@@ -171,11 +154,33 @@ export class ListComponent implements OnInit {
     }
     this.apiService.postData(link,data).subscribe(response=>{
       console.log("results",response);
+      this.allLessonData[i].expanded=false;
+      this.allLessonData[i+1].expanded=true;
+      this.allLessonData[i+1].is_done=true;
     })
 
 
   }
-  childcatclick(childId:any){
+
+
+  videoended(item:any,i:any){
+    if(item.test_associate_training=='Yes'){
+        this.questionDetails(item._id,i);
+    }else{
+    this.addMarkedData(item._id,this.paramsId,i);
+    }
+  }
+
+  audioended(item:any,i:any){
+    if(item.test_associate_training=='Yes'){
+      this.questionDetails(item._id,i);
+   }else{
+     this.addMarkedData(item._id,this.paramsId,i);
+  }
+  }
+  childcatclick(childId:any,catName:any){
+    console.log("cat name",catName);
+    this.trainingCategoryName=catName;
   this.router.navigateByUrl(this.trainingCenterRoute + childId);
   //  this.trainingCenterRoute + childId;
 

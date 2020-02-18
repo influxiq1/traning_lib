@@ -34,12 +34,12 @@ export class AddEditLessionsComponent implements OnInit {
     baseUrl: "https://fileupload.influxhostserver.com/",
     endpoint: "uploads",
     size: "51200", // kb
-    format:["jpg", "jpeg", "png", "bmp", "zip", 'html','mp4'],  // use all small font
+    format:["jpg", "jpeg", "png", "bmp", "zip", 'html','mp4','mp3','doc','ppt','pptx','pdf','msword'],  // use all small font
     type: "imageGallery-picture",
     path: "imageGallery",
     prefix: "imageGallery-picture_",
     formSubmit: false,
-    conversionNeeded: 0,
+    conversionNeeded: 1,
     bucketName: "probidfiles-dev.com"
   }
   public jwtToken:any;
@@ -69,7 +69,7 @@ export class AddEditLessionsComponent implements OnInit {
       
       { inputtype: 'radio', name: 'test_associate_training', value: ["Yes", "No"], valuelabel: '', label: "Is there a test associated with training ", placeholder: "", validationrule: { required: true }, validationerrormsg: '', class: 'radioclass' },
       
-      { inputtype: 'select', name: 'mediaType', label: 'Training Type', defaultchoice: 'Select a Training Type', sourceview: 'assets/mediaType.json', sourcetype:'static', selectvalue: 'name', selectid: 'selectname'},
+      { inputtype: 'select', name: 'mediaType', label: 'Training Type', defaultchoice: 'Select a Training Type', sourceview: 'assets/mediaType.json', sourcetype:'static', selectvalue: 'name', selectid: 'selectname', validationrule:{required:true},validationerrormsg:'is required'},
       
       { inputtype: 'checkbox', name: 'status', label: 'Active', placeholder: 'Enter Status', validationrule: { required: true }, validationerrormsg: 'is required' },
 

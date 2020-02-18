@@ -269,7 +269,7 @@ getMediaTypeVal(value:any,name:any){
           this.formdataval[key].sourceval=this.allLessonData;
          }
        }
-       console.log("successfully result",this.allLessonData);
+       
 
     })
   }

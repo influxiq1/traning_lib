@@ -8,29 +8,56 @@
       </span>
     </span>
     </span>
-
+<h1>{{ trainingCategoryName }}</h1>
 
 <mat-card-content class="trainingcentercls">
   <span fxLayout="row" class="row" fxLayoutAlign="space-between center">
     <span fxLayout="column" class="column columnleft">
-      <span fxLayout="row" class="rowinner" *ngFor="let item of allLessonData">
-        <mat-accordion (click)="currentlesson=item._id">
-        <mat-expansion-panel >
-          <mat-expansion-panel-header>
+      <span fxLayout="row" class="rowinner" *ngFor="let item of allLessonData ; let i=index;">
+        <mat-accordion (click)="currentlesson=item._id"> 
+        <mat-expansion-panel [disabled]="item.is_done==true?false:true" [expanded]="item.expanded==true?true:false" (opened)="item.expanded = true"
+        (closed)="item.expanded = false"> 
+          <mat-expansion-panel-header >
             <mat-panel-title>
               {{item.lession_title}}
             </mat-panel-title>
-            <!-- <mat-panel-description>
-              {{item.mediaType}}
-            </mat-panel-description> -->
+            <mat-panel-description>
+             
+            </mat-panel-description>
           </mat-expansion-panel-header>
+         
+          <div *ngIf="item.mediaType=='html'">
+
+            <p [innerHtml]="item.typeHtml"></p>
+          </div>
+
+          <mat-card class="example-card" *ngIf="item.mediaType=='image'">
+            <img mat-card-image src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" alt="{{item.lession_title}}" />
+          </mat-card>
+          <mat-card class="example-card" *ngIf="item.mediaType=='video' && item.expanded==true ">
+            
+            <video width="640" height="360" autoplay (ended)="videoended(item,i)">
+              <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            
+          </mat-card>
+          <mat-card class="example-card" *ngIf="item.mediaType=='audio' ">
+            
+            <audio width="640" height="360"  (ended)="audioended(item,i)" controls>
+              <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="audio/mpeg">
+                Your browser does not support the audio tag.
+            </audio>
+            
+          </mat-card>
+          
+          <ng-container *ngIf="item.test_associate_training=='No'">
+            <button mat-button type="button" class="submitbtn" color="primary" (click)="addMarkedData(item._id,item.associated_training,i)">Mark As Done</button>
+          </ng-container>
           <ng-container *ngIf="item.test_associate_training=='Yes'">
-            <button mat-button type="button" class="submitbtn" color="primary" (click)="questionDetails(item._id)" >Take A Quiz</button>
+            <button mat-button type="button" class="submitbtn" color="primary" (click)="questionDetails(item._id,i)" >Take A Quiz</button>
             <mat-progress-bar *ngIf="progressLoader" mode="indeterminate"></mat-progress-bar>
 
-          </ng-container>
-          <ng-container *ngIf="item.test_associate_training=='No'">
-            <button mat-button type="button" class="submitbtn" color="primary" (click)="addMarkedData(item._id,item.associated_training)">Mark As Done</button>
           </ng-container>
           <!-- <mat-form-field>
             <input matInput placeholder="First name">
@@ -49,12 +76,12 @@
 
       <mat-list>
         <ng-container *ngFor="let item of trainingCategoryList">
-          <mat-list-item>{{item.catagory_name}}</mat-list-item>
+          <mat-list-item class="selectedclass">{{item.catagory_name}}</mat-list-item>
           <mat-list style="margin-left:30px;">
             <div >
               <ng-container *ngIf="item.childcat!=null && item.childcat.length>0">
                 <mat-list *ngFor=" let childitem of item.childcat;let i = index">
-                  <mat-list-item (click)="childcatclick(item.childid[i])">{{ childitem }}</mat-list-item>
+                  <mat-list-item class="pointer" (click)="childcatclick(item.childid[i],item.catagory_name)">{{ childitem }}</mat-list-item>
                 </mat-list>
               </ng-container>
               

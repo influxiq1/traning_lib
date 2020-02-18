@@ -20,7 +20,7 @@ import { ManageQuizComponent } from './manage-quiz/manage-quiz.component';
 import { AddEditComponent } from './manage-quiz/add-edit/add-edit.component';
 import { AddUpdateAnswerComponent } from './manage-quiz/add-update-answer/add-update-answer.component';
 import { UpdateAnswerComponent } from './manage-quiz/update-answer/update-answer.component';
-import { LoginComponent } from './login/login.component';
+import { LoginfortrainingComponent } from './loginfortraining/loginfortraining.component';
 
 
 @NgModule({
@@ -36,7 +36,7 @@ import { LoginComponent } from './login/login.component';
     AddEditComponent,
     AddUpdateAnswerComponent,
     UpdateAnswerComponent,
-    LoginComponent,
+    LoginfortrainingComponent,
   ],
   imports: [
     routing,

@@ -25,3 +25,9 @@
     background: #3f50b5 !important;
     color: #fff;
   }
+  .pointer{
+      cursor: pointer;
+  }
+  .selectedclass{
+      
+  }
