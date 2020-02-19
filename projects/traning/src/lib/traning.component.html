@@ -95,6 +95,7 @@
 
         </ng-container>
         <div *ngIf="mediaTypeValue == 'image' || mediaTypeValue == 'video' || mediaTypeValue == 'audio'  || mediaTypeValue == 'file' ">
+           <h4>Please Add Single File</h4>
             <lib-file-upload [config]="uploadConfigData"></lib-file-upload>
         </div>
 

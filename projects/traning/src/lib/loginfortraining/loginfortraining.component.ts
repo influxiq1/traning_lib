@@ -35,7 +35,7 @@ export class LoginfortrainingComponent implements OnInit {
       this.apiService.postlogin(link,data).subscribe(Response=>{
         let result : any = Response;
         if(result.status=="success"){
-           this.cookieService.set('login_details',JSON.stringify(result.item[0]));
+           this.cookieService.set('user_details',JSON.stringify(result.item[0]));
            this.cookieService.set('jwtToken',result.token);
         }
       })

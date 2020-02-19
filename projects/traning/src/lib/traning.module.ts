@@ -22,6 +22,8 @@ import { AddUpdateAnswerComponent } from './manage-quiz/add-update-answer/add-up
 import { UpdateAnswerComponent } from './manage-quiz/update-answer/update-answer.component';
 // import { LoginComponent } from './login/login.component';
 import { LoginfortrainingComponent } from './loginfortraining/loginfortraining.component';
+import { MatCarouselModule } from '@ngmodule/material-carousel';
+
 
 @NgModule({
   declarations: [
@@ -50,7 +52,8 @@ import { LoginfortrainingComponent } from './loginfortraining/loginfortraining.c
     BrowserAnimationsModule,
     DemoMaterialModule,
     CKEditorModule,
-    FileUploadModule
+    FileUploadModule,
+    MatCarouselModule.forRoot(),
     
   ],
   exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest],

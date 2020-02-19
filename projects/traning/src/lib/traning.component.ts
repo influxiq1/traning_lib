@@ -49,7 +49,6 @@ export class TraningComponent implements OnInit {
   @Input()
     set formdata(formdata: string) {
         this.formdataval = (formdata) || '<no name set>';
-        console.log("total form data",this.formdataval);
     }
     @Input()
     set PageName(val: {}) {
@@ -85,7 +84,6 @@ export class TraningComponent implements OnInit {
   constructor( formgroup: FormBuilder, public cookeiservice: CookieService, public sanitizer: DomSanitizer, public route: ActivatedRoute, public router: Router, public apiService: ApiService, public _http: HttpClient) {
     this.formgroup = formgroup;
     this.editorconfig.extraAllowedContent = '*[class](*),span;ul;li;table;td;style;*[id];*(*);*{*}';
-
    }
 
   ngOnInit() {
@@ -167,7 +165,7 @@ export class TraningComponent implements OnInit {
           this.dataForm.value.status = parseInt("1");
         else
           this.dataForm.value.status = parseInt("0");
-      
+    
       const link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
         let data: any ={
           source: this.formSourceVal.source,
@@ -290,11 +288,19 @@ geteditdata() {
         }
 
   this.apiService.getData(link, data).subscribe((res: any)=>{
+    console.log("edited data",res);
     if (res.status == 'error') {
       // this.router.navigate(['/']);
   } else {
 
+    if(this.route.snapshot.url[0].path=="manage-lession"){
+     if(this.route.snapshot.url[1].path=="edit"){
+      this.getMediaTypeVal(res.res[0].associated_training,'associated_training');
+     }
+    }
+
     let folder: any = '';
+    
     for (let c in this.dataForm.controls) {
         this.dataForm.controls[c].patchValue(res.res[0][c]);
         for (let j in this.formdataval) {

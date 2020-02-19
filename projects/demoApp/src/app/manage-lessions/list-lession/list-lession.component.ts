@@ -36,9 +36,7 @@ public searchSourceName :any="manage_lession_view";
     this.activatedRoute.data.forEach(data => {
       let result: any;
       result = data.lessionData.res;
-      this.manageLessionList = result;
-      console.log("dataaaa",this.manageLessionList);
-      
+      this.manageLessionList = result;      
     })
   }
 

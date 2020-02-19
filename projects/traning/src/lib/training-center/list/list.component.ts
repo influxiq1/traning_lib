@@ -3,6 +3,9 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSnackBar } from "@angular/
 import { ApiService } from '../../api.service';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel';
+import { MatCarouselSlide, MatCarouselSlideComponent } from '@ngmodule/material-carousel';
+
 // import { setTimeout } from 'timers';
 
 export interface DialogData {
@@ -43,7 +46,8 @@ export class ListComponent implements OnInit {
     let results:any=(val) || '<no name set>';
     this.trainingCategoryList= results.trainingcenterlist;   
     this.allLessonData = results.lessondata;
-    console.log(this.allLessonData);
+    
+    console.log("souresh",this.allLessonData);
   }
   @Input()
   set serverDetails(serverDetails: {}) {
@@ -68,7 +72,7 @@ export class ListComponent implements OnInit {
   constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router,
     public cookieService:CookieService,public snakBar:MatSnackBar) {
       this.allCookiesData = cookieService.getAll();
-      this.cookiesData = JSON.parse(this.allCookiesData.login_details);
+      this.cookiesData = JSON.parse(this.allCookiesData.user_details);
       this.userId = this.cookiesData._id;
      
    }
