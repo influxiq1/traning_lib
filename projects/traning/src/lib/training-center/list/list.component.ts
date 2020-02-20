@@ -44,14 +44,20 @@ export class ListComponent implements OnInit {
   @Input()
   set TrainingCategoryList(val: any) {
     let results:any=(val) || '<no name set>';
+    console.log(results,'trainingname');
     this.trainingCategoryList= results.trainingcenterlist;   
     this.allLessonData = results.lessondata;
+    this.trainingCategoryName=results.trainingname;
     
     console.log("souresh",this.allLessonData);
   }
   @Input()
   set serverDetails(serverDetails: {}) {
     this.serverDetailsVal = (serverDetails) || '<no name set>';
+  }
+  @Input()
+  set TrainingName(name: any) {
+    this.trainingCategoryName = (name) || '<no name set>';
   }
   @Input()
   set formSource(formSource: any) {
@@ -187,6 +193,9 @@ export class ListComponent implements OnInit {
     this.trainingCategoryName=catName;
   this.router.navigateByUrl(this.trainingCenterRoute + childId);
   //  this.trainingCenterRoute + childId;
+  }
+  nochildclick(id:any){
+    this.router.navigateByUrl(this.trainingCenterRoute + id);
 
   }
 

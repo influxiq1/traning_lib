@@ -100,13 +100,18 @@
       <span fxLayout="column" class="column">
 
         <mat-list>
-          <ng-container *ngFor="let item of trainingCategoryList">
-            <mat-list-item class="selectedclass">{{item.catagory_name}}</mat-list-item>
+          <ng-container *ngFor="let item of trainingCategoryList;let i = index">
+            <mat-list-item class="selectedclass" *ngIf="item.childcat.length>=1">{{item.catagory_name}}</mat-list-item>
+            <div class="pointer">
+              <mat-list-item  *ngIf="item.childcat.length==0" class="selectedclass" (click)="nochildclick(item._id)">{{item.catagory_name}}</mat-list-item>
+            </div>
+             
+
             <mat-list style="margin-left:30px;">
               <div>
                 <ng-container *ngIf="item.childcat!=null && item.childcat.length>0">
                   <mat-list *ngFor=" let childitem of item.childcat;let i = index">
-                    <mat-list-item class="pointer" (click)="childcatclick(item.childid[i],item.catagory_name)">
+                    <mat-list-item class="pointer" (click)="childcatclick(item.childid[i],item.childcat[i])">
                       {{ childitem }}</mat-list-item>
                   </mat-list>
                 </ng-container>

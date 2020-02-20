@@ -10,6 +10,8 @@ export class ListComponent implements OnInit {
 public manageTrainingList : any=[];
 public paramsId:any;
 public lessonData:any=[];
+public trainingName:any;
+
 public quizQuestionSourceName:any={
   "questionSourceName":"quiz_question",
   "answerSourceName":"quiz_answer"
@@ -36,7 +38,10 @@ public jwtToken:any;
 
   ngOnInit() {
     this.activatedRoute.data.forEach(data => {
-      console.log(data);
+      console.log(data,"=====");
+      this.trainingName = data.trainingdata.trainingname;
+      console.log("nameeeree",this.trainingName);
+      
       let result: any;
       result = data.trainingdata.results;
       this.lessonData = data.trainingdata.results.lessondata;
