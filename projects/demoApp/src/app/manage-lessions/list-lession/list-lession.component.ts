@@ -23,6 +23,7 @@ public formSource: any = {
   "searchEndpoint":"datalist",
   "associatedTrainingSourceName":"training_category_management",
   "statusUpdateEndpoint":"statusChange",
+  "statusUpdateManyEndpoint":"statusupdate",
   "statusUpdateSourceName":"manage_lession",
 }
 public jwtToken:any;

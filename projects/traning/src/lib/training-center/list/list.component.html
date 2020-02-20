@@ -2,137 +2,121 @@
   <span class="searchblock">
     <span class="searchblockwrapper">
       <span>
-  <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
-      <h2 class="headerSpan">Training Center</h2>
-    </mat-toolbar>
+        <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
+          <h2 class="headerSpan">Training Center</h2>
+        </mat-toolbar>
       </span>
     </span>
-    </span>
-<h1>{{ trainingCategoryName }}</h1>
-
-<mat-card-content class="trainingcentercls">
-  <span fxLayout="row" class="row" fxLayoutAlign="space-between center">
-    <span fxLayout="column" class="column columnleft">
-      <span fxLayout="row" class="rowinner" *ngFor="let item of allLessonData ; let i=index;">
-        <mat-accordion (click)="currentlesson=item._id"> 
-        <mat-expansion-panel [disabled]="item.is_done==true?false:true" [expanded]="item.expanded==true?true:false" (opened)="item.expanded = true"
-        (closed)="item.expanded = false"> 
-          <mat-expansion-panel-header >
-            <mat-panel-title>
-              {{item.lession_title}}
-            </mat-panel-title>
-            <mat-panel-description>
-             
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-         
-          <div *ngIf="item.mediaType=='html'">
-
-            <p [innerHtml]="item.typeHtml"></p>
-          </div>
-        
-          <mat-card class="example-card" *ngIf="item.mediaType=='image'">
-            <img mat-card-image src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" alt="{{item.lession_title}}" />
-          </mat-card>
-          <mat-card class="example-card" *ngIf="item.mediaType=='video' && item.expanded==true ">
-            
-            <video width="640" height="360" autoplay (ended)="videoended(item,i)">
-              <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-            
-          </mat-card>
-          <mat-card class="example-card" *ngIf="item.mediaType=='audio' ">
-            
-            <audio width="640" height="360"  (ended)="audioended(item,i)" controls>
-              <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="audio/mpeg">
-                Your browser does not support the audio tag.
-            </audio>
-            
-          </mat-card>
-
-
-          <mat-card class="example-card" *ngIf="item.mediaType=='file' ">
-            
-            <!-- <mat-carousel>
-              <mat-carousel-slide
-              #matCarouselSlide
-              *ngFor="let item of allLessonData ; let i=index;"
-              [image]="item.convertedimages"
-              overlayColor="#00000040"
-              [hideOverlay]="false"
-            ></mat-carousel-slide>
-            </mat-carousel> -->
-
-<!-- <div *ngFor="let slide of item.convertedimages; let i1 = index" >
-  {{slide}}
-
-</div> -->
-
-            <mat-carousel
-  timings="250ms ease-in"
-  [autoplay]="true"
-  interval="15000"
-  [loop]="true"
-  [maintainAspectRatio]="true"
-  [hideArrows]="false"
-  [hideIndicators]="false"
-  [useKeyboard]="true"
-  [useMouseWheel]="false"
-  orientation="ltr"
->
-  <mat-carousel-slide
-    #matCarouselSlide
-    *ngFor="let slide of item.convertedimages; let i1 = index"
-    [image]="slide"
-    overlayColor="#00000040"
-    [hideOverlay]="false"
-  ></mat-carousel-slide>
-</mat-carousel>
-            
-          </mat-card>
-          
-          
-          <ng-container *ngIf="item.test_associate_training=='No' && item.mediaType != 'audio' && item.mediaType != 'video'">
-            <button mat-button type="button" class="submitbtn" color="primary" (click)="addMarkedData(item._id,item.associated_training,i)">Mark As Done</button>
-          </ng-container>
-          <ng-container *ngIf="item.test_associate_training=='Yes' && item.mediaType != 'audio' && item.mediaType != 'video'">
-            <button mat-button type="button" class="submitbtn" color="primary" (click)="questionDetails(item._id,i)" >Take A Quiz</button>
-            <mat-progress-bar *ngIf="progressLoader" mode="indeterminate"></mat-progress-bar>
-
-          </ng-container>
-          <!-- <mat-form-field>
-            <input matInput placeholder="First name">
-          </mat-form-field>
-      
-          <mat-form-field>
-            <input matInput placeholder="Age">
-          </mat-form-field> -->
-        </mat-expansion-panel>
-        </mat-accordion>
-      </span>
-    </span>
-
-
-    <span fxLayout="column" class="column">
-
-      <mat-list>
-        <ng-container *ngFor="let item of trainingCategoryList">
-          <mat-list-item class="selectedclass">{{item.catagory_name}}</mat-list-item>
-          <mat-list style="margin-left:30px;">
-            <div >
-              <ng-container *ngIf="item.childcat!=null && item.childcat.length>0">
-                <mat-list *ngFor=" let childitem of item.childcat;let i = index">
-                  <mat-list-item class="pointer" (click)="childcatclick(item.childid[i],item.catagory_name)">{{ childitem }}</mat-list-item>
-                </mat-list>
-              </ng-container>
-              
-            </div>
-          </mat-list>
-        </ng-container>
-      </mat-list>
-    </span>
-
   </span>
-</mat-card-content>
+  <h1>{{ trainingCategoryName }}</h1>
+
+  <mat-card-content class="trainingcentercls">
+    <span fxLayout="row" class="row" fxLayoutAlign="space-between center">
+      <span fxLayout="column" class="column columnleft">
+        <span fxLayout="row" class="rowinner" *ngFor="let item of allLessonData ; let i=index;">
+          <mat-accordion (click)="currentlesson=item._id">
+            <mat-expansion-panel [disabled]="item.is_done==true?false:true" [expanded]="item.expanded==true?true:false"
+              (opened)="item.expanded = true" (closed)="item.expanded = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{item.lession_title}}
+                </mat-panel-title>
+                <mat-panel-description>
+
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <div *ngIf="item.mediaType=='html'">
+
+                <p [innerHtml]="item.typeHtml"></p>
+              </div>
+
+              <mat-card class="example-card" *ngIf="item.mediaType=='image'">
+                <img mat-card-image src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}"
+                  alt="{{item.lession_title}}" />
+              </mat-card>
+              <mat-card class="example-card" *ngIf="item.mediaType=='video' && item.expanded==true ">
+
+                <video width="640" height="360" autoplay (ended)="videoended(item,i)">
+                  <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+
+              </mat-card>
+              <mat-card class="example-card" *ngIf="item.mediaType=='audio' ">
+
+                <audio width="640" height="360" (ended)="audioended(item,i)" controls>
+                  <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="audio/mpeg">
+                  Your browser does not support the audio tag.
+                </audio>
+
+              </mat-card>
+
+
+              <mat-card class="example-card" *ngIf="item.mediaType=='file' ">
+
+                <mat-carousel 
+                timings="250ms ease-in" 
+                [autoplay]="true" 
+                interval="15000" 
+                [loop]="true"
+                [maintainAspectRatio]="true" 
+                [hideArrows]="false" 
+                [hideIndicators]="false" 
+                [useKeyboard]="true"
+                [useMouseWheel]="false" 
+                orientation="ltr">
+
+                <mat-carousel-slide 
+                #matCarouselSlide *ngFor="let slide of item.convertedimages; let i1 = index"
+                [image]="slide" 
+                overlayColor="#00000040" 
+                [hideOverlay]="false">
+              </mat-carousel-slide>
+                </mat-carousel>
+
+              </mat-card>
+
+
+              <ng-container
+                *ngIf="item.test_associate_training=='No' && item.mediaType != 'audio' && item.mediaType != 'video'">
+                <button mat-button type="button" class="submitbtn" color="primary"
+                  (click)="addMarkedData(item._id,item.associated_training,i)">Mark As Done</button>
+              </ng-container>
+              <ng-container
+                *ngIf="item.test_associate_training=='Yes' && item.mediaType != 'audio' && item.mediaType != 'video'">
+                <button mat-button type="button" class="submitbtn" color="primary"
+                  (click)="questionDetails(item._id,i)">Take A Quiz</button>
+                <mat-progress-bar *ngIf="progressLoader" mode="indeterminate"></mat-progress-bar>
+
+              </ng-container>
+          
+            </mat-expansion-panel>
+          </mat-accordion>
+        </span>
+      </span>
+
+
+      <span fxLayout="column" class="column">
+
+        <mat-list>
+          <ng-container *ngFor="let item of trainingCategoryList">
+            <mat-list-item class="selectedclass">{{item.catagory_name}}</mat-list-item>
+            <mat-list style="margin-left:30px;">
+              <div>
+                <ng-container *ngIf="item.childcat!=null && item.childcat.length>0">
+                  <mat-list *ngFor=" let childitem of item.childcat;let i = index">
+                    <mat-list-item class="pointer" (click)="childcatclick(item.childid[i],item.catagory_name)">
+                      {{ childitem }}</mat-list-item>
+                  </mat-list>
+                </ng-container>
+
+              </div>
+            </mat-list>
+          </ng-container>
+        </mat-list>
+      </span>
+
+    </span>
+  </mat-card-content>
 </mat-card>

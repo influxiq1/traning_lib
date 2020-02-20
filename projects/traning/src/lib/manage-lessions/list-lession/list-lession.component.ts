@@ -5,10 +5,12 @@ import {SelectionModel} from '@angular/cdk/collections';
 
 import {MatTableDataSource} from '@angular/material/table';
 import { HttpClient } from '@angular/common/http';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from "@angular/material";
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSnackBar } from "@angular/material";
 import { ApiService } from '../../api.service';
 import { DialogBoxComponent } from '../../common/dialog-box/dialog-box.component';
 import { Router } from '@angular/router';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Action } from 'rxjs/internal/scheduler/Action';
 export interface PeriodicElement {
   _id:string;
   select:string;
@@ -109,7 +111,7 @@ export class ListLessionComponent implements OnInit {
   set ManageQuizRoute(val: any) {
     this.manageQuizRoute = (val) || '<no name set>';
   }
-  constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router) {
+  constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router,public snakBar:MatSnackBar) {
    }
 
   ngOnInit() {
@@ -296,7 +298,7 @@ export class ListLessionComponent implements OnInit {
     let temparr:any=[];
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
     let source :any= this.formSourceVal.source;
-    let token:any= this.serverDetailsVal.jwttoken
+    let token:any= this.serverDetailsVal.jwttoken;
     for (let val in this.listingData) {
       if(this.idArray.includes(this.listingData[val]._id)==true){
         temparr.push(val);
@@ -328,15 +330,58 @@ export class ListLessionComponent implements OnInit {
 
 
   statusUpdateAllRecords(){
-    console.log("selected souresh",this.selection.selected.length);
     for (let c in this.selection.selected) {
       this.idArray.push(this.selection.selected[c]._id);
     }
-    console.log("id array",this.idArray);
-    let link = this.serverDetailsVal.serverUrl + this.formSourceVal.statusUpdateEndpoint;
+    let ids:any=this.idArray;
+    let modalData: any = {
+      panelClass: 'statusupdate-dialog',
+      data: {
+        header: "",
+        message: "",
+        button1: { text: "Inactive" },
+        button2: { text: "Active" },
+      }
+    }
+    this.dialogRef = this.dialog.open(DialogBoxComponent, modalData);
+      this.dialogRef.afterClosed().subscribe(result => {
+      let resval=result;
+      if (result == "Active")
+        result = parseInt("1");
+      else
+        result = parseInt("0");
 
-    // this.apiService.togglestatusmany()
+      let link = this.serverDetailsVal.serverUrl + this.formSourceVal.statusUpdateManyEndpoint;
+      let source :any= this.formSourceVal.source;
+      let token:any= this.serverDetailsVal.jwttoken;
+      
+      this.apiService.togglestatusmany(link,ids,result,token,source).subscribe((response:any)=>{
+       if(response.status == "success"){
+         let message:any = "Status Updated Successfully";
+         
+         let action : any="Ok";
+         this.snakBar.open(message,action,{
+           duration:3000
+         })
+         for(let c in this.selection.selected){
+          for(let b in this.listingData){
+            if(this.listingData[b]._id==this.selection.selected[c]._id){
+              this.listingData[b].status=resval;
+            }
+          }
+        }
+         this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+            this.selection.clear();
+            let allData: PeriodicElement[] = this.listingData;
+            this.dataSource = new MatTableDataSource(allData);        
 
+       }
+      
+      })
+
+      });
+    
   }
 
 }

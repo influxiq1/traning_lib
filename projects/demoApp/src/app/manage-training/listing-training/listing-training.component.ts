@@ -22,6 +22,7 @@ public formSource: any = {
   "endpoint": "deletesingledata",
   "searchEndpoint":"datalist",
   "statusUpdateEndpoint":"statusChange",
+  "statusUpdateManyEndpoint":"statusupdate",
   "statusUpdateSourceName":"training_category_management",
 }
 
