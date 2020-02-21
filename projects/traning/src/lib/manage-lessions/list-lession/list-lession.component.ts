@@ -57,27 +57,8 @@ export class ListLessionComponent implements OnInit {
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   selection = new SelectionModel<PeriodicElement>(true, []);
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
-  }
-
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: PeriodicElement): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.no + 1}`;
-  }
+  
+  
 
   @Input()           //getting all data from application
   set allDataList(val: any) {
@@ -123,6 +104,26 @@ export class ListLessionComponent implements OnInit {
     this.getAllLessonData();
 
   }
+
+  // for multiple select function start here
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+  checkboxLabel(row?: PeriodicElement): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.no + 1}`;
+  }
+  // for multiple select function end here
+
   deleteRecord(id:any,index:any){
     this.deleteId = id;
     this.deleteIndex = index;
@@ -189,6 +190,8 @@ export class ListLessionComponent implements OnInit {
         this.apiService.postData(link,data).subscribe(response => {
           let result : any=response;
           this.dataSource = result.res;
+          let allData: PeriodicElement[] = this.dataSource;
+          this.dataSource = new MatTableDataSource(allData);    
           });
       }
   

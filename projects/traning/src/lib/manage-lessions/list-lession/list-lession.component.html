@@ -18,15 +18,15 @@
       </span>
     </span>
 
-    <span class="searchbar">
+    <span class="searchbar" >
 
-    <mat-form-field class="searchdiv">
+    <mat-form-field class="searchdiv" >
       <input matInput placeholder="Search by Lesson Name "
         [(ngModel)]="lessonName" >
     </mat-form-field>
 
    
-    <mat-form-field class="searchdiv">
+    <mat-form-field class="searchdiv" >
       <mat-select placeholder="Search by Associate Training" [(ngModel)]="training" (selectionChange)="filterByTrainingName('associated_training_search_regex', $event.value)">
         <mat-option [value]=0>Select a Lesson</mat-option>
         <mat-option *ngFor="let val of allLessonData;" value="{{ val.catagory_name }}">{{ val.catagory_name }}</mat-option>
@@ -57,7 +57,7 @@
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
     <!-- Checkbox Column -->
-    <ng-container matColumnDef="select">
+    <ng-container matColumnDef="select" >
       <th mat-header-cell *matHeaderCellDef>
         <mat-checkbox (change)="$event ? masterToggle() : null"
         [checked]="selection.hasValue() && isAllSelected()"

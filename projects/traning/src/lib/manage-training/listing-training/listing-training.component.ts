@@ -186,6 +186,8 @@ export class ListingTrainingComponent implements OnInit {
     this.apiService.postData(link, data).subscribe(response => {
       let result: any = response;
       this.dataSource = result.res;
+      let allData: PeriodicElement[] = this.dataSource;
+      this.dataSource = new MatTableDataSource(allData);
     });
   }
  
