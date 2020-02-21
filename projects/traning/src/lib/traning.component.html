@@ -80,7 +80,7 @@
                 <mat-form-field *ngIf="item.inputtype == 'select'">
                     <mat-select [placeholder]="item.defaultchoice" [formControlName]="item.name"
                         (selectionChange)="getMediaTypeVal($event.value,item.name);" value="">
-                        <!-- <mat-option value="" selected>{{item.defaultchoice}}</mat-option> -->
+                        <mat-option value="" selected>{{item.defaultchoice}}</mat-option>
                         <mat-option *ngFor="let selectval of item.sourceval" value="{{selectval[item.selectid]}}"
                             (keyup)="issubmit=0">
                             {{selectval[item.selectvalue]}}</mat-option>

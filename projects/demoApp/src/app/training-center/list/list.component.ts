@@ -11,7 +11,7 @@ public manageTrainingList : any=[];
 public paramsId:any;
 public lessonData:any=[];
 public trainingName:any;
-
+public totalData:any=[];
 public quizQuestionSourceName:any={
   "questionSourceName":"quiz_question",
   "answerSourceName":"quiz_answer"
@@ -38,12 +38,11 @@ public jwtToken:any;
 
   ngOnInit() {
     this.activatedRoute.data.forEach(data => {
-      console.log(data,"=====");
-      this.trainingName = data.trainingdata.trainingname;
-      console.log("nameeeree",this.trainingName);
-      
+      this.trainingName = data.trainingdata.trainingname;      
       let result: any;
       result = data.trainingdata.results;
+      this.totalData=result;
+      console.log("results",result);
       this.lessonData = data.trainingdata.results.lessondata;
       this.manageTrainingList = result;
       

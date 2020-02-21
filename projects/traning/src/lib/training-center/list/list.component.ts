@@ -23,7 +23,7 @@ export class ListComponent implements OnInit {
   public serverDetailsVal:any;
   public formSourceVal:any;
   public lessonData:any=[];
-  panelOpenState = false;
+  public panelOpenState = false;
   public dialogRef: any;
   public quizQuestionSource:any;
   public quizQuestion:any;
@@ -40,16 +40,26 @@ export class ListComponent implements OnInit {
   public trainingCenterRoute:any;
   public isDisabled:boolean=true;
   public trainingCategoryName:any;
-
+  public percentageprogressLoader:boolean=true;
+  public totalData:any;
+  public reportPercentage:any;
+  public dividend:any;
+  public divisor:any;
   @Input()
   set TrainingCategoryList(val: any) {
     let results:any=(val) || '<no name set>';
-    console.log(results,'trainingname');
     this.trainingCategoryList= results.trainingcenterlist;   
     this.allLessonData = results.lessondata;
     this.trainingCategoryName=results.trainingname;
-    
-    console.log("souresh",this.allLessonData);
+  }
+  @Input()
+  set TotalData(data: {}) {
+    this.totalData = (data) || '<no name set>';
+    let lesson:any=this.totalData.total_lesson[0].count;
+    this.divisor=lesson;
+    let userPercentage:any=this.totalData.done_lesson_by_user[0].lessonsdone;
+    this.dividend=userPercentage;
+    this.reportPercentage=Math.floor(userPercentage/lesson*100);
   }
   @Input()
   set serverDetails(serverDetails: {}) {
@@ -163,10 +173,18 @@ export class ListComponent implements OnInit {
       "token":this.serverDetailsVal.jwttoken
     }
     this.apiService.postData(link,data).subscribe(response=>{
-      console.log("results",response);
+      
+      if(i<this.allLessonData.length){
       this.allLessonData[i].expanded=false;
       this.allLessonData[i+1].expanded=true;
       this.allLessonData[i+1].is_done=true;
+      }else{
+        let message :any="You Have Successfully Completed The Training";
+        let action : any="Ok";
+        this.snakBar.open(message,action,{
+          duration:3000
+        })
+      }
     })
 
 

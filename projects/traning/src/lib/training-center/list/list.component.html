@@ -11,8 +11,8 @@
   <h1>{{ trainingCategoryName }}</h1>
 
   <mat-card-content class="trainingcentercls">
-    <span fxLayout="row" class="row" fxLayoutAlign="space-between center">
-      <span fxLayout="column" class="column columnleft">
+    <span fxLayout="row" class="row" fxLayoutAlign="space-between center" >
+      <span fxLayout="column" class="column columnleft" class="leftside">
         <span fxLayout="row" class="rowinner" *ngFor="let item of allLessonData ; let i=index;">
           <mat-accordion (click)="currentlesson=item._id">
             <mat-expansion-panel [disabled]="item.is_done==true?false:true" [expanded]="item.expanded==true?true:false"
@@ -49,12 +49,8 @@
                   <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="audio/mpeg">
                   Your browser does not support the audio tag.
                 </audio>
-
               </mat-card>
-
-
               <mat-card class="example-card" *ngIf="item.mediaType=='file' ">
-
                 <mat-carousel 
                 timings="250ms ease-in" 
                 [autoplay]="true" 
@@ -66,7 +62,6 @@
                 [useKeyboard]="true"
                 [useMouseWheel]="false" 
                 orientation="ltr">
-
                 <mat-carousel-slide 
                 #matCarouselSlide *ngFor="let slide of item.convertedimages; let i1 = index"
                 [image]="slide" 
@@ -74,10 +69,7 @@
                 [hideOverlay]="false">
               </mat-carousel-slide>
                 </mat-carousel>
-
               </mat-card>
-
-
               <ng-container
                 *ngIf="item.test_associate_training=='No' && item.mediaType != 'audio' && item.mediaType != 'video'">
                 <button mat-button type="button" class="submitbtn" color="primary"
@@ -88,24 +80,25 @@
                 <button mat-button type="button" class="submitbtn" color="primary"
                   (click)="questionDetails(item._id,i)">Take A Quiz</button>
                 <mat-progress-bar *ngIf="progressLoader" mode="indeterminate"></mat-progress-bar>
-
               </ng-container>
-          
             </mat-expansion-panel>
           </mat-accordion>
         </span>
       </span>
 
 
-      <span fxLayout="column" class="column">
-
-        <mat-list>
+      
+      <span fxLayout="column" class="column" class="rightside">
+        <h2>You Have Completed {{ dividend }}/{{divisor}} Lessons</h2>
+        <mat-progress-bar *ngIf="percentageprogressLoader " mode="determinate" value="{{ reportPercentage }}"></mat-progress-bar>
+        <h3>{{ reportPercentage }}%</h3>
+        <mat-list>        
+      
           <ng-container *ngFor="let item of trainingCategoryList;let i = index">
             <mat-list-item class="selectedclass" *ngIf="item.childcat.length>=1">{{item.catagory_name}}</mat-list-item>
             <div class="pointer">
               <mat-list-item  *ngIf="item.childcat.length==0" class="selectedclass" (click)="nochildclick(item._id)">{{item.catagory_name}}</mat-list-item>
             </div>
-             
 
             <mat-list style="margin-left:30px;">
               <div>

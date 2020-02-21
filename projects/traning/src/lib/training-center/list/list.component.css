@@ -28,6 +28,10 @@
   .pointer{
       cursor: pointer;
   }
-  .selectedclass{
-      
+  .leftside{
+      width: 67%;
+      margin-right: 3%;
   }
+  .rightside{
+    width: 30%;
+}
