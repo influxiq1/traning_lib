@@ -6,8 +6,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel';
 import { MatCarouselSlide, MatCarouselSlideComponent } from '@ngmodule/material-carousel';
 
-// import { setTimeout } from 'timers';
-
 export interface DialogData {
   data: string;
 }
@@ -45,6 +43,7 @@ export class ListComponent implements OnInit {
   public reportPercentage:any;
   public dividend:any;
   public divisor:any;
+ 
   @Input()
   set TrainingCategoryList(val: any) {
     let results:any=(val) || '<no name set>';
@@ -57,9 +56,13 @@ export class ListComponent implements OnInit {
     this.totalData = (data) || '<no name set>';
     let lesson:any=this.totalData.total_lesson[0].count;
     this.divisor=lesson;
-    let userPercentage:any=this.totalData.done_lesson_by_user[0].lessonsdone;
-    this.dividend=userPercentage;
-    this.reportPercentage=Math.floor(userPercentage/lesson*100);
+    let userPercentage:any=0;
+    if(this.totalData.done_lesson_by_user!=null && this.totalData.done_lesson_by_user[0]!=null)
+    {
+      userPercentage=this.totalData.done_lesson_by_user[0].lessonsdone;
+      this.dividend=userPercentage;
+      this.reportPercentage=Math.floor(userPercentage/lesson*100);
+    }
   }
   @Input()
   set serverDetails(serverDetails: {}) {
@@ -90,7 +93,7 @@ export class ListComponent implements OnInit {
       this.allCookiesData = cookieService.getAll();
       this.cookiesData = JSON.parse(this.allCookiesData.user_details);
       this.userId = this.cookiesData._id;
-     
+   
    }
 
   ngOnInit() {
@@ -172,24 +175,55 @@ export class ListComponent implements OnInit {
       "sourceobj":["user_id","lesson_id","associated_training"],
       "token":this.serverDetailsVal.jwttoken
     }
-    this.apiService.postData(link,data).subscribe(response=>{
-      
-      if(i<this.allLessonData.length){
-      this.allLessonData[i].expanded=false;
-      this.allLessonData[i+1].expanded=true;
-      this.allLessonData[i+1].is_done=true;
-      }else{
-        let message :any="You Have Successfully Completed The Training";
-        let action : any="Ok";
-        this.snakBar.open(message,action,{
-          duration:3000
+    this.apiService.postData(link,data).subscribe((response:any)=>{
+      if(response.status="success"){
+        const link = this.serverDetailsVal.serverUrl + this.formSourceVal.getUpdatedTrainingPercentageByUserEndpoint;
+        let data:any={
+          "user_id":this.userId
+        }
+        this.apiService.postDatawithoutToken(link,data).subscribe((response:any)=>{
+          let divisor:any;
+          let dividend:any;
+          let percentageResult:any;
+          divisor = response.results.totallesson[0].count;
+          dividend = response.results.totalpercentage[0].lessonsdone;
+          percentageResult = Math.floor(dividend/divisor*100);
+          this.reportPercentage = percentageResult;
         })
-      }
+        if(i<this.allLessonData.length){
+          
+          if(this.allLessonData[i+1]!=null){
+          this.allLessonData[i].expanded=false;
+          this.allLessonData[i+1].expanded=true;
+          this.allLessonData[i+1].is_done=true;
+          
+          }else{
+            let message :any="You Have Successfully Completed The Training";
+            let action : any="Ok";
+            this.snakBar.open(message,action,{
+              duration:3000
+            });
+            setTimeout(() => {
+              this.lastOpenDialog('lessoncompletedmoal'); 
+            }, 4000);
+            
+          }
+          }
+          
+        }
+      
     })
-
-
   }
 
+  lastOpenDialog(x: any): void {
+    this.dialogRef = this.dialog.open(Dialogtest, {
+      width: '550px',
+      data: { data: x } 
+    });
+    this.dialogRef.afterClosed().subscribe(result => {
+ 
+    });
+  }
 
   videoended(item:any,i:any){
     if(item.test_associate_training=='Yes'){
@@ -207,9 +241,8 @@ export class ListComponent implements OnInit {
   }
   }
   childcatclick(childId:any,catName:any){
-    console.log("cat name",catName);
     this.trainingCategoryName=catName;
-  this.router.navigateByUrl(this.trainingCenterRoute + childId);
+    this.router.navigateByUrl(this.trainingCenterRoute + childId);
   //  this.trainingCenterRoute + childId;
   }
   nochildclick(id:any){

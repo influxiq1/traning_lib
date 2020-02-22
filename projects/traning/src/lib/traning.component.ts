@@ -46,6 +46,7 @@ export class TraningComponent implements OnInit {
   public images_array:any=[];
   public checked:boolean=true;
   public allLessonData:any=[];
+  public imagePath:any;
   @Input()
     set formdata(formdata: string) {
         this.formdataval = (formdata) || '<no name set>';
@@ -248,6 +249,7 @@ export class TraningComponent implements OnInit {
 
 }
 getMediaTypeVal(value:any,name:any){
+  console.log("imagee case",value,name);
   if(name == 'mediaType'){
     this.mediaTypeValue = value;
   }
@@ -275,6 +277,9 @@ getMediaTypeVal(value:any,name:any){
 cancelButton(){
   this.router.navigateByUrl(this.listingPageRoute);
 }
+clear_image(index:any){
+   console.log("index of image deleted",index);
+}
 
 geteditdata() {
 
@@ -290,12 +295,22 @@ geteditdata() {
   this.apiService.getData(link, data).subscribe((res: any)=>{
     console.log("edited data",res);
     if (res.status == 'error') {
-      // this.router.navigate(['/']);
+     
   } else {
 
     if(this.route.snapshot.url[0].path=="manage-lession"){
      if(this.route.snapshot.url[1].path=="edit"){
       this.getMediaTypeVal(res.res[0].associated_training,'associated_training');
+      this.getMediaTypeVal(res.res[0].mediaType,'mediaType');
+      let imageBasepath:any;
+      let fileserverName:any;
+      for (let key in res.res[0].fileType) {
+           imageBasepath = res.res[0].fileType[key].basepath;
+           fileserverName = res.res[0].fileType[key].fileservername;
+      }
+      this.imagePath = imageBasepath+fileserverName;
+      console.log("image base path",imageBasepath+fileserverName);
+      // imageBasepath=res.res[0]
      }
     }
 

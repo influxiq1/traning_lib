@@ -25,7 +25,8 @@ public formSource: any = {
   "markedSourceName":"done_training_lesson",
   "endpoint": "addorupdatedata",
   "showEndpoint":"getquestionanswerlistbylessonid",
-  "formTitleName": 'Training Center'
+  "formTitleName": 'Training Center',
+  "getUpdatedTrainingPercentageByUserEndpoint":"getupdatedtrainingpercentagebyuserid"
 }
 public trainingCenterRoute:any="/training-center/list/";
 public jwtToken:any;
