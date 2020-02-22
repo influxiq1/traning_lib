@@ -99,7 +99,7 @@
             <lib-file-upload [config]="uploadConfigData"></lib-file-upload>
             <ng-container *ngIf="mediaTypeValue == 'image'">
                 <mat-card class="example-card"  >
-                    <span class="closecard"  class="pointer" *ngIf="mediaTypeValue == 'image'" (click)="clear_image(i)"><i class="material-icons">clear</i></span>
+                    <span class="closecard"  class="pointer" *ngIf="mediaTypeValue == 'image'" (click)="clear_image()"><i class="material-icons">clear</i></span>
                     <img mat-card-image src="{{imagePath}}"
                        />
                   </mat-card>

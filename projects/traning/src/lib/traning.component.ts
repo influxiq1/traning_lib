@@ -277,8 +277,8 @@ getMediaTypeVal(value:any,name:any){
 cancelButton(){
   this.router.navigateByUrl(this.listingPageRoute);
 }
-clear_image(index:any){
-   console.log("index of image deleted",index);
+clear_image(){
+  //  console.log("index of image deleted",index);
 }
 
 geteditdata() {
