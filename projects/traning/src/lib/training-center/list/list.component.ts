@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel';
 import { MatCarouselSlide, MatCarouselSlideComponent } from '@ngmodule/material-carousel';
+import { count } from 'rxjs/operators';
+// import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 
 export interface DialogData {
   data: string;
@@ -43,20 +45,74 @@ export class ListComponent implements OnInit {
   public reportPercentage:any;
   public dividend:any;
   public divisor:any;
+  public parentPercentage:any;
+  public doneLessonByCatByUser:any;
  
   @Input()
   set TrainingCategoryList(val: any) {
     let results:any=(val) || '<no name set>';
+    let parentdone:any;
+    let parentcount:any;
     this.trainingCategoryList= results.trainingcenterlist;   
+    for (let i in this.trainingCategoryList) {
+     
+      parentdone = this.trainingCategoryList[i].done;
+      parentcount = this.trainingCategoryList[i].count;
+      if(this.trainingCategoryList[i].done !=null && this.trainingCategoryList[i].count !=null){
+        this.trainingCategoryList[i].percentage = Math.floor((this.trainingCategoryList[i].done/this.trainingCategoryList[i].count)*100);
+      console.log("result of count and done",this.trainingCategoryList[i].percentage);
+      }
+ 
+    }
+    // console.log("result of count and done",count,done);
+    
+
     this.allLessonData = results.lessondata;
     this.trainingCategoryName=results.trainingname;
   }
   @Input()
   set TotalData(data: {}) {
     this.totalData = (data) || '<no name set>';
+    this.doneLessonByCatByUser = this.totalData.done_lesson_by_cat_by_user;
+    console.log("souresh test",this.totalData);
+    console.log("souresh test another variable",'doneLessonByCatByUser',this.doneLessonByCatByUser,this.trainingCategoryList);
     let lesson:any=this.totalData.total_lesson[0].count;
     this.divisor=lesson;
     let userPercentage:any=0;
+    for(let n in  this.trainingCategoryList){
+      if(this.trainingCategoryList[n].count ==null)
+      this.trainingCategoryList[n].count=0;
+      if(this.trainingCategoryList[n].done ==null)
+      this.trainingCategoryList[n].done=0;
+      console.log('t block',this.trainingCategoryList[n]);
+      if(this.trainingCategoryList[n].childid!=null && this.trainingCategoryList[n].childid.length>0){
+        console.log('in child block');
+        for(let p in this.trainingCategoryList[n].childid){
+          if(this.trainingCategoryList[n].childcount[p]==null)
+          this.trainingCategoryList[n].childcount[p]=0;
+          if(this.trainingCategoryList[n].childdone==null)
+          this.trainingCategoryList[n].childdone=[];
+          if(this.trainingCategoryList[n].childpercentage==null)
+          this.trainingCategoryList[n].childpercentage=[];
+
+          if(this.trainingCategoryList[n].childdone[p]==null)
+          this.trainingCategoryList[n].childdone[p]=0;
+          if(this.trainingCategoryList[n].childpercentage[p]==null)
+          this.trainingCategoryList[n].childpercentage[p]=0;
+          for(let c in this.doneLessonByCatByUser){
+            console.log('done t',this.doneLessonByCatByUser[c].associated_training.toString(),this.trainingCategoryList[n].childid[p]);
+            if(this.doneLessonByCatByUser[c].associated_training.toString()==this.trainingCategoryList[n].childid[p]){
+
+              this.trainingCategoryList[n].childdone[p]=this.doneLessonByCatByUser[c].lessonsdone;
+              this.trainingCategoryList[n].childpercentage[p]=(parseInt(this.doneLessonByCatByUser[c].lessonsdone)/parseInt(this.trainingCategoryList[n].childcount[p]))*100;
+            
+              console.log('in if block true ...',this.trainingCategoryList[n].childdone[p]);
+            }
+          }
+        }
+
+      }
+    }
     if(this.totalData.done_lesson_by_user!=null && this.totalData.done_lesson_by_user[0]!=null)
     {
       userPercentage=this.totalData.done_lesson_by_user[0].lessonsdone;

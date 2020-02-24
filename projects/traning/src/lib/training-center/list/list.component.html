@@ -99,14 +99,34 @@
             <mat-list-item class="selectedclass" *ngIf="item.childcat.length>=1">{{item.catagory_name}}</mat-list-item>
             <div class="pointer">
               <mat-list-item  *ngIf="item.childcat.length==0" class="selectedclass" (click)="nochildclick(item._id)">{{item.catagory_name}} ({{item.done}}/{{item.count}})</mat-list-item>
+              <div *ngIf="item.count != null && item.childcat.length==0">
+                <mat-progress-bar *ngIf="percentageprogressLoader " mode="determinate" value="{{item.percentage}}"></mat-progress-bar>
+                <span style="font-size: 20px;font-weight: bold;">{{ item.percentage }}%</span>
+              </div>
+              
+
             </div>
 
             <mat-list style="margin-left:30px;">
               <div>
                 <ng-container *ngIf="item.childcat!=null && item.childcat.length>0">
-                  <mat-list *ngFor=" let childitem of item.childcat;let i = index">
-                    <mat-list-item class="pointer"  (click)="childcatclick(item.childid[i],item.childcat[i])">
-                      {{ childitem }} ({{item.childcount[i]}})</mat-list-item>
+                  <mat-list *ngFor=" let childitem of item.childcat;let i1 = index">
+                    <mat-list-item class="pointer"  (click)="childcatclick(item.childid[1],item.childcat[1])">
+                      {{ childitem }} (
+                        <ng-container *ngIf="item.childdone !=null && item.childdone[i1]!=null">
+                          {{item.childdone[i1]}}/
+                        </ng-container>  
+                      {{item.childcount[i1]}})
+                    </mat-list-item>
+
+                      
+                      <div *ngIf="item.childdone !=null && item.childdone[i1]!=null">
+                        <br/>
+                        <mat-progress-bar *ngIf="item.childdone !=null && item.childdone[i1]!=null " mode="determinate" value="{{item.childpercentage[i1]}}"></mat-progress-bar>
+                        <span style="font-size: 20px;font-weight: bold;"> {{item.childpercentage[i1]}}%</span>
+                      </div>
+
+                    
 
                   </mat-list>
                 </ng-container>

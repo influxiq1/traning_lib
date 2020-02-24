@@ -47,6 +47,7 @@ export class TraningComponent implements OnInit {
   public checked:boolean=true;
   public allLessonData:any=[];
   public imagePath:any;
+  public fileArray:any;
   @Input()
     set formdata(formdata: string) {
         this.formdataval = (formdata) || '<no name set>';
@@ -178,7 +179,7 @@ export class TraningComponent implements OnInit {
           data.data['typeHtml'] = this.htmType;
         }
         if(this.mediaTypeValue == 'image' || this.mediaTypeValue == 'video' || this.mediaTypeValue == 'audio' ||this.mediaTypeValue == 'file'){
-          if (this.uploadConfigData.files.length > 0) {
+          if (this.uploadConfigData.files.length >=1) {
             for (let loop = 0; loop < this.uploadConfigData.files.length; loop++) {
               this.images_array =
                 this.images_array.concat({
@@ -191,9 +192,7 @@ export class TraningComponent implements OnInit {
                 });
             }
             data.data['fileType'] =  this.images_array;
-          } else {
-            data.data['fileType'] =  false;
-          }
+          } 
         }
       this.apiService.postData(link,data).subscribe((res: any)=>{
         
@@ -278,7 +277,11 @@ cancelButton(){
   this.router.navigateByUrl(this.listingPageRoute);
 }
 clear_image(){
-  //  console.log("index of image deleted",index);
+  console.log("its workssss");
+  // delete this.fileArray; 
+  let index:any=0;
+  this.fileArray.splice(index, 1);
+  console.log("file array",this.fileArray);
 }
 
 geteditdata() {
@@ -304,13 +307,14 @@ geteditdata() {
       this.getMediaTypeVal(res.res[0].mediaType,'mediaType');
       let imageBasepath:any;
       let fileserverName:any;
+      this.fileArray = res.res[0].fileType;
+      console.log("file delete indexing",this.fileArray);
       for (let key in res.res[0].fileType) {
            imageBasepath = res.res[0].fileType[key].basepath;
            fileserverName = res.res[0].fileType[key].fileservername;
       }
       this.imagePath = imageBasepath+fileserverName;
-      console.log("image base path",imageBasepath+fileserverName);
-      // imageBasepath=res.res[0]
+      
      }
     }
 
