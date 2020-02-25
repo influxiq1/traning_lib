@@ -19,7 +19,8 @@ public serverDetails: any = {
 };
 public formSource: any = {
   "source":'training_category_management',
-  "endpoint": "deletesingledata",
+  "endpoint": "singledeletetrainingdata",
+  "deleteManyEndpoint":"multipledeletetrainingdata",
   "searchEndpoint":"datalist",
   "statusUpdateEndpoint":"statusChange",
   "statusUpdateManyEndpoint":"statusupdate",

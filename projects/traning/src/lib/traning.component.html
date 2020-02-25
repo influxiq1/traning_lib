@@ -104,13 +104,19 @@
                        />
                   </mat-card>
             </ng-container>
-            <ng-container>
-                <video width="640" height="360" autoplay >
+            <ng-container *ngIf="mediaTypeValue == 'video'">
+                <video width="640" height="360" controls >
                     <source src="{{ imagePath }}" type="video/mp4">
                     Your browser does not support the video tag.
                   </video>
             </ng-container>
-           
+            <ng-container *ngIf="mediaTypeValue == 'audio'">
+                <audio controls>
+                    <source src="{{ imagePath }}" type="audio/ogg">
+                    <source src="{{ imagePath }}" type="audio/mpeg">
+                  Your browser does not support the audio element.
+                  </audio>
+            </ng-container>
         </div>
        
        

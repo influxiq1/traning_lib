@@ -64,7 +64,7 @@ export class ListComponent implements OnInit {
       }
  
     }
-    // console.log("result of count and done",count,done);
+    
     
 
     this.allLessonData = results.lessondata;
@@ -76,6 +76,7 @@ export class ListComponent implements OnInit {
     this.doneLessonByCatByUser = this.totalData.done_lesson_by_cat_by_user;
     console.log("souresh test",this.totalData);
     console.log("souresh test another variable",'doneLessonByCatByUser',this.doneLessonByCatByUser,this.trainingCategoryList);
+
     let lesson:any=this.totalData.total_lesson[0].count;
     this.divisor=lesson;
     let userPercentage:any=0;

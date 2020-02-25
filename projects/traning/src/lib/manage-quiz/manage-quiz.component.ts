@@ -184,7 +184,6 @@ export class ManageQuizComponent implements OnInit {
     }
     goToAnswerPage(id:any){
       let paramsId:any=id;
-      console.log("idddddddddd==",paramsId);
       this.router.navigateByUrl(this.addUpdateAnswerRoute.addAnswerRoute+paramsId+'/'+ this.lessonId);
     }
     goToUpdateAnswerPage(id:any){

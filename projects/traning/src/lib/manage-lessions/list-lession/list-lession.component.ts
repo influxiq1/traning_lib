@@ -299,7 +299,7 @@ export class ListLessionComponent implements OnInit {
       this.idArray.push(this.selection.selected[c]._id);
     }
     let temparr:any=[];
-    let link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
+    let link = this.serverDetailsVal.serverUrl + this.formSourceVal.deleteManyEndpoint;
     let source :any= this.formSourceVal.source;
     let token:any= this.serverDetailsVal.jwttoken;
     for (let val in this.listingData) {
@@ -308,8 +308,8 @@ export class ListLessionComponent implements OnInit {
         
       }   
     } 
-    this.apiService.deteManyData(link,this.idArray,token,source).subscribe((res:any)=>{
-        res.data.ids;
+    this.apiService.deteteManyTrainingData(link,this.idArray,token,source).subscribe((res:any)=>{
+        // res.data.ids;
         if(res.status == "success"){
           setTimeout(() => {
             for(let i in temparr){

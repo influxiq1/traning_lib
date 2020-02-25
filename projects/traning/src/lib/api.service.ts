@@ -195,6 +195,18 @@ postSearch1( link:any, source: any) {
     var result = this._http.post(endpoint+'many',dataval, httpOptions).pipe(map(res => res));
     return result;
   }
+  deteteManyTrainingData(endpoint:any, data:any, token:any, source:any) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': token
+      })
+    };
+    let dataval:any;
+    dataval={source:source,ids:data}
+    var result = this._http.post(endpoint,dataval, httpOptions).pipe(map(res => res));
+    return result;
+  }
 
   togglestatusmany(endpoint:any, data,val,token,source) {
     const httpOptions = {
