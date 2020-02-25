@@ -25,3 +25,6 @@ table {
     margin: 5px; 
     float: right;
   }
+  .pointer{
+    cursor: pointer;
+  }

@@ -97,25 +97,31 @@
         <div *ngIf="mediaTypeValue == 'image' || mediaTypeValue == 'video' || mediaTypeValue == 'audio'  || mediaTypeValue == 'file' ">
            <h4>Please Add Single File</h4>
             <lib-file-upload [config]="uploadConfigData"></lib-file-upload>
-            <ng-container *ngIf="mediaTypeValue == 'image'">
+            <ng-container *ngIf="mediaTypeValue == 'image' && imagePath != null">
                 <mat-card class="example-card"  >
                     <span class="closecard"  class="pointer" *ngIf="mediaTypeValue == 'image'" (click)="clear_image()"><i class="material-icons">clear</i></span>
                     <img mat-card-image src="{{ imagePath }}"
                        />
                   </mat-card>
             </ng-container>
-            <ng-container *ngIf="mediaTypeValue == 'video'">
+            <ng-container *ngIf="mediaTypeValue == 'video' && imagePath != null" >
+               <div style="margin: 0 auto;display: block;">
                 <video width="640" height="360" controls >
                     <source src="{{ imagePath }}" type="video/mp4">
                     Your browser does not support the video tag.
                   </video>
+               </div>
+                
             </ng-container>
-            <ng-container *ngIf="mediaTypeValue == 'audio'">
+            <ng-container *ngIf="mediaTypeValue == 'audio' && imagePath != null ">
+                
+                <div style="margin: 0 auto;display: block;">
                 <audio controls>
                     <source src="{{ imagePath }}" type="audio/ogg">
                     <source src="{{ imagePath }}" type="audio/mpeg">
                   Your browser does not support the audio element.
                   </audio>
+                </div>
             </ng-container>
         </div>
        

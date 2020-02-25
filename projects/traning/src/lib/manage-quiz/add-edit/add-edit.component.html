@@ -27,7 +27,7 @@
             </mat-form-field>
 
         
-            <mat-checkbox [formControl]="manageQuizForm.controls['status']">Active</mat-checkbox>
+            <mat-checkbox [formControl]="manageQuizForm.controls['status']" [(ngModel)]="statuschecked">Active</mat-checkbox>
            
             <button mat-raised-button color="primary" mat-button class="submitbtn" type="submit">{{ buttonText }}</button>
 

@@ -179,7 +179,7 @@ export class TraningComponent implements OnInit {
           data.data['typeHtml'] = this.htmType;
         }
         if(this.mediaTypeValue == 'image' || this.mediaTypeValue == 'video' || this.mediaTypeValue == 'audio' ||this.mediaTypeValue == 'file'){
-          if (this.uploadConfigData.files.length >=1) {
+          if (typeof(this.uploadConfigData.files) != 'undefined' && this.uploadConfigData.files.length >=0) {
             for (let loop = 0; loop < this.uploadConfigData.files.length; loop++) {
               this.images_array =
                 this.images_array.concat({
@@ -248,6 +248,7 @@ export class TraningComponent implements OnInit {
 
 }
 getMediaTypeVal(value:any,name:any){
+  this.imagePath = null;
   console.log("imagee case",value,name);
   if(name == 'mediaType'){
     this.mediaTypeValue = value;
@@ -296,7 +297,7 @@ geteditdata() {
         }
 
   this.apiService.getData(link, data).subscribe((res: any)=>{
-    console.log("edited data",res);
+    console.log("edited data1111",res);
     if (res.status == 'error') {
      
   } else {
@@ -308,13 +309,12 @@ geteditdata() {
       let imageBasepath:any;
       let fileserverName:any;
       this.fileArray = res.res[0].fileType;
-      console.log("file delete indexing",this.fileArray);
+      
       for (let key in res.res[0].fileType) {
            imageBasepath = res.res[0].fileType[key].basepath;
            fileserverName = res.res[0].fileType[key].fileservername;
       }
       this.imagePath = imageBasepath+fileserverName;
-      
      }
     }
 

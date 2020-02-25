@@ -113,27 +113,27 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
         <td mat-cell *matCellDef="let row" title="Status"> {{row.status}} </td>
       </ng-container>
-      <ng-container matColumnDef="deleteRecord">
+      <ng-container matColumnDef="deleteRecord" >
         <th mat-header-cell *matHeaderCellDef> Action </th>
         <td mat-cell *matCellDef="let element; let i = index;" data-label = "Action">
           <span class="buttons_ro">
-                    <span class="cursor" (click)="deleteRecord(element._id, i);">
+                    <span class="pointer" (click)="deleteRecord(element._id, i);">
             <i class="material-icons">
               delete_outline
               </i>
           </span>         
-         <span (click)="routerFunction(element._id)"> 
+         <span class="pointer" (click)="routerFunction(element._id)"> 
            <i class="material-icons">
             edit
           </i>
          </span>
-         <span *ngIf="element.test_associate_training == 'Yes'" (click)="manageQuiz(element._id)">
+         <span class="pointer" *ngIf="element.test_associate_training == 'Yes'" (click)="manageQuiz(element._id)">
           <i class="material-icons">
             link
             </i>
          </span>
 
-         <span (click)="statusUpdateModal(element._id,i)">
+         <span class="pointer" (click)="statusUpdateModal(element._id,i)">
           <i class="material-icons">
             toggle_on
             </i>

@@ -17,6 +17,7 @@ export class AddEditComponent implements OnInit {
   public headerText : any="Add Question";
   public buttonText :any="Submit"
   public lessonId:any;
+  public statuschecked:boolean = true;
   @Input()
   set serverDetails(serverDetails: {}) {
     this.serverDetailsVal = (serverDetails) || '<no name set>';
