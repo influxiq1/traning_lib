@@ -14,6 +14,7 @@ import { AddEditComponent } from './manage-quiz/add-edit/add-edit.component';
 import { AddUpdateAnswerComponent } from './manage-quiz/add-update-answer/add-update-answer.component';
 import { UpdateAnswerComponent } from './manage-quiz/update-answer/update-answer.component';
 import { LoginfortrainingComponent} from './loginfortraining/loginfortraining.component';
+import { TrainingreportComponent } from './trainingreport/trainingreport.component';
 const appRoutes: Routes = [
     { path: 'home', component: AppComponent },
     {
@@ -66,7 +67,14 @@ const appRoutes: Routes = [
         path : 'manage-quiz/update-answer/:questionId_object',component : UpdateAnswerComponent,
         resolve: { quizQuestionData: ResolveService }, 
         data: { requestcondition: { source: 'quiz_answer', condition: {} }, endpoint: 'datalist' }
+    },
+    /**training-report**/
+    {
+        path    : 'training-report',component : TrainingreportComponent,
+        resolve : {trainingReportData : ResolveService},
+        data    : { requestcondition: { source: '', condition: {"skip":0,"limit":4} }, endpoint: 'gettrainingreportdata' }
     }
+
     
 
 ]

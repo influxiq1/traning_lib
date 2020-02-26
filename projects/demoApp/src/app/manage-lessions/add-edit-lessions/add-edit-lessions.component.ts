@@ -63,7 +63,7 @@ export class AddEditLessionsComponent implements OnInit {
       
       { inputtype: 'textarea', name: 'description', label: 'Description', placeholder: 'Enter Description' },
       
-      { inputtype: 'select', name: 'associated_training', label: 'Associated Training', defaultchoice: 'Select a Training', sourceview: 'training_category_management', endpoint: 'datalist', selectvalue: 'catagory_name', selectid: '_id', validationrule:{required:true},validationerrormsg:'is required'},
+      { inputtype: 'select', name: 'associated_training', label: 'Associated Training', defaultchoice: 'Select a Training', sourceview: 'training_category_management_view', endpoint: 'datalist', selectvalue: 'catagory_name', selectid: '_id', validationrule:{required:true},validationerrormsg:'is required'},
       
       { inputtype: 'select', name: 'prerequisite_lession', label: 'Prerequisite Lesson', defaultchoice: 'Select a Prerequisite Lession', sourceview: 'manage_lession_null', endpoint: 'datalist', selectvalue: 'lession_title', selectid: '_id' },
       

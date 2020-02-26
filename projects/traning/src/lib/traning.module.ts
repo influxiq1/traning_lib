@@ -23,6 +23,7 @@ import { UpdateAnswerComponent } from './manage-quiz/update-answer/update-answer
 // import { LoginComponent } from './login/login.component';
 import { LoginfortrainingComponent } from './loginfortraining/loginfortraining.component';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
+import { TrainingreportComponent } from './trainingreport/trainingreport.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { MatCarouselModule } from '@ngmodule/material-carousel';
     AddUpdateAnswerComponent,
     UpdateAnswerComponent,
     // LoginComponent,
-    LoginfortrainingComponent
+    LoginfortrainingComponent,
+    TrainingreportComponent
     
   ],
   imports: [
@@ -56,7 +58,7 @@ import { MatCarouselModule } from '@ngmodule/material-carousel';
     MatCarouselModule.forRoot(),
     
   ],
-  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest],
+  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest,TrainingreportComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [CookieService, ApiService],
   entryComponents:[DialogBoxComponent,Dialogtest]

@@ -258,7 +258,7 @@ getMediaTypeVal(value:any,name:any){
     let link =this.serverDetailsVal.serverUrl + this.formSourceVal.lessonDataEndpoint;
     let data: any ={
       condition:{
-        "associated_training": value
+        "associated_training_id": value
       }
     }
     this.apiService.postDatawithoutToken(link,data).subscribe((response:any)=>{
