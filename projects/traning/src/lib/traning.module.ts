@@ -24,6 +24,7 @@ import { UpdateAnswerComponent } from './manage-quiz/update-answer/update-answer
 import { LoginfortrainingComponent } from './loginfortraining/loginfortraining.component';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { TrainingreportComponent } from './trainingreport/trainingreport.component';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -60,7 +61,7 @@ import { TrainingreportComponent } from './trainingreport/trainingreport.compone
   ],
   exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest,TrainingreportComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-  providers: [CookieService, ApiService],
+  providers: [CookieService, ApiService,DatePipe],
   entryComponents:[DialogBoxComponent,Dialogtest]
 })
 export class TraningModule { }

@@ -15,6 +15,7 @@ export class TrainingreportComponent implements OnInit {
       let result: any;
       result = data.trainingReportData.training_report_data;
       this.totalTrainingReportData = result;
+      
     })
   }
 
