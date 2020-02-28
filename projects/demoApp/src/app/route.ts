@@ -72,7 +72,7 @@ const appRoutes: Routes = [
     {
         path    : 'training-report',component : TrainingreportComponent,
         resolve : {trainingReportData : ResolveService},
-        data    : { requestcondition: { source: '', condition: {"skip":0,"limit":4} }, endpoint: 'gettrainingreportdata' }
+        data    : { requestcondition: { source: '', condition: {"skip":0,"limit":50} }, endpoint: 'gettrainingreportdata' }
     }
 
     

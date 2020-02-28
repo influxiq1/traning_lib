@@ -96,6 +96,15 @@ export class ApiService {
     var result = this._http.post(link, JSON.stringify(data), httpOptions).pipe(map(res => res));
     return result;
   }
+  postDatawithoutTokenReportCount(link:any) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+    var result = this._http.post(link,httpOptions).pipe(map(res => res));
+    return result;
+  }
 
   postlogin(link:any, data:any) {
     const httpOptions = {

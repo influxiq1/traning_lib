@@ -8,6 +8,15 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class TrainingreportComponent implements OnInit {
   public totalTrainingReportData:any=[];
+  public serverDetails: any = {
+    "serverUrl": "https://9ozbyvv5v0.execute-api.us-east-1.amazonaws.com/production/api/",
+    "jwttoken": ""
+  };
+  public formSource: any = {
+    
+    "endpoint": "gettrainingreportdata-count",
+    
+  }
   constructor(public activatedRoute:ActivatedRoute) { }
 
   ngOnInit() {
