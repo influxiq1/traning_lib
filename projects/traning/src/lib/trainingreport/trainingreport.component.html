@@ -8,33 +8,42 @@
             </span>
         </span>
     </span>
+    <!-- search field start here -->
+    <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Name" [(ngModel)]="search.name"/>
+   </mat-form-field> 
+
+   <mat-form-field>
+    <mat-label>E-mail</mat-label>
+    <input matInput placeholder="E-mail" [(ngModel)]="search.email"/>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="getPageData()">Search</button>
+
+    <!-- search field start here -->
+
     <div class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSource" matSort>
 
             <ng-container matColumnDef="no">
                 <th mat-header-cell *matHeaderCellDef> No. </th>
-                <td mat-cell *matCellDef="let row; let i = index;" title="No"> {{ i + 1 }} </td>
+                <td mat-cell *matCellDef="let row; let i = index;" title="No"> {{ (page.page_no-1) * (page.page_count) + (i+1) }}. </td>
             </ng-container>
 
-            <ng-container matColumnDef="firstname">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Full Name </th>
-                <td mat-cell *matCellDef="let row" title="Full Name"> {{row.firstname}} {{row.lastname}} </td>
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef > Name </th>
+                <td mat-cell *matCellDef="let row" title="Name"> {{row.name}} </td>
             </ng-container>
 
             <ng-container matColumnDef="type">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+                <th mat-header-cell *matHeaderCellDef > Type </th>
                 <td mat-cell *matCellDef="let row" title="Type"> {{row.type}} </td>
             </ng-container>
 
             <ng-container matColumnDef="email">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> E-mail </th>
+                <th mat-header-cell *matHeaderCellDef > E-mail </th>
                 <td mat-cell *matCellDef="let row" title="E-mail"> {{row.email}} </td>
             </ng-container>
-
-            <!-- <ng-container matColumnDef="total_training">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Training</th>
-                <td mat-cell *matCellDef="let row" title="Total Training"> {{row.total_training}} </td>
-            </ng-container> -->
             <ng-container matColumnDef="totalTraining">
                 <th mat-header-cell *matHeaderCellDef> Total Training </th>
                 <td mat-cell *matCellDef="let element; let i = index;">
@@ -42,44 +51,66 @@
                 </td>
               </ng-container>
             <ng-container matColumnDef="trainingdone">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Training Done</th>
+                <th mat-header-cell *matHeaderCellDef >Training Done</th>
                 <td mat-cell *matCellDef="let row" title="Training Done"> {{row.trainingdone}} </td>
             </ng-container>
+            
             <ng-container matColumnDef="training_percentage">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Training Percentage</th>
+                <th mat-header-cell *matHeaderCellDef >Training Percentage</th>
                 <td mat-cell *matCellDef="let row" title="Total Training"> {{row.training_percentage}}% </td>
+            </ng-container>
+            <ng-container matColumnDef="lastupdated_training_percentage_at">
+                <th mat-header-cell *matHeaderCellDef >Last Training Percentage On</th>
+                                
+                     <td mat-cell *matCellDef="let row" title="Lastupdated Training Percentage At" > 
+                        <div *ngIf="row.lastupdated_training_percentage_at!='NA'">{{row.lastupdated_training_percentage_at | date }} </div> 
+                        <div *ngIf="row.lastupdated_training_percentage_at=='NA'">
+                           {{row.lastupdated_training_percentage_at}}
+                        </div>
+                    </td>
             </ng-container>
 
             <ng-container matColumnDef="lastlessonname">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Lesson</th>
+                <th mat-header-cell *matHeaderCellDef > Last Lesson</th>
                 <td mat-cell *matCellDef="let row" title="Last Lessonname"> {{row.lastlessonname}} </td>
             </ng-container>
             <ng-container matColumnDef="lasttrainingname">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Training </th>
+                <th mat-header-cell *matHeaderCellDef > Last Training </th>
                 <td mat-cell *matCellDef="let row" title="Status"> {{row.lasttrainingname}} </td>
             </ng-container>
+            
+            <ng-container matColumnDef="viewCatReport">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+               <td mat-cell *matCellDef="let element; let i = index;">
+              <button mat-raised-button type="button" color="primary" (click)="categoryWiseReportPage(element._id)"
+               >View Category Wise Report</button>
+        </td>
+              </ng-container>
+
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;">
             </tr>
 
         </table>
         <mat-list role="list">
-            <mat-list-item role="listitem">Showing 50 result from {{reportDataCount}}
-                <!-- <ng-container *ngIf="total_count == 0">Many.</ng-container>
-                <ng-container *ngIf="total_count > 0">{{ total_count }}.</ng-container> -->
+            <mat-list-item role="listitem">Showing {{ page.page_count }} result from 
+              <ng-container *ngIf="reportDataCount == 0">Many.</ng-container>
+                <ng-container *ngIf="reportDataCount > 0">{{reportDataCount}}.</ng-container>           
+
             </mat-list-item>
-        
-            <!-- <mat-form-field class="example-full-width">
-                <mat-label> Current page {{ page.page_no }} Total page {{ total_count / page.page_count }}</mat-label>
-                <input matInput type="number" placeholder="Total page {{ total_count / page.page_count }}"
+            <mat-form-field class="example-full-width">
+                <mat-label> Current page {{ page.page_no }} Total page {{ totalPage }}</mat-label>
+                <input matInput type="number" placeholder="Total page {{ totalPage}}"
                     (keyup)="getPageData();" [(ngModel)]="page.page_no">
             </mat-form-field>
-        
-            <mat-form-field class="example-full-width">
+
+            <mat-form-field appearance="fill" class="example-full-width">
                 <mat-label>Page Count</mat-label>
-                <input matInput type="number" placeholder="Page data {{ page.page_count }}" (keyup)="getPageData();"
-                    [(ngModel)]="page.page_count">
-            </mat-form-field> -->
+                <input matInput type="number" placeholder="Page data {{ page.page_count }}" [(ngModel)]="page.page_count">
+            </mat-form-field> 
+           
         </mat-list>
+        <button mat-raised-button color="primary" (click)="nextPage('prev')">Prev</button>
+        <button mat-raised-button color="primary" (click)="nextPage()">Next</button>
     </div>
 </mat-card>

@@ -1,0 +1,54 @@
+<mat-card>
+    <span class="searchblock">
+      <span class="searchblockwrapper">
+        <span>
+            <mat-toolbar color="primary" style="justify-content: center; align-items: center;" >
+      <h2 class="headerSpan">Category Wise Report</h2>
+    </mat-toolbar>
+  </span>
+  </span>
+    </span>
+<ng-container *ngIf="allData.length=='0'">
+<h3>No Record Found</h3>
+</ng-container>
+<ng-container *ngIf="allData.length >'0'">
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="#">
+        <th mat-header-cell *matHeaderCellDef> # </th>
+        <td mat-cell *matCellDef="let element; let i = index;"> {{ i + 1}}.
+        </td>
+    </ng-container>
+
+    <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item.key}}">
+        <th mat-header-cell *matHeaderCellDef>
+            <!-- <ng-container *ngIf="sort_val == item.key.toLowerCase()"> </ng-container> -->
+            {{ item.value }}
+            <!-- <i *ngIf="sort_type == 'asc'" (click)="sortPageData(item.key);"
+                class="material-icons">
+                keyboard_arrow_down
+            </i>
+            <i *ngIf="sort_type == 'desc'" (click)="sortPageData(item.key);"
+                class="material-icons">
+                keyboard_arrow_up
+            </i> -->
+        </th>
+        <td mat-cell *matCellDef="let element">
+            <span *ngIf="item.key != 'DOB' && item.key != 'lastupdated_training_percentage_at'"> {{ element[item.key] }} </span>
+            <span *ngIf="item.key == 'DOB' || item.key == 'lastupdated_training_percentage_at'"> {{ element[item.key] | date }} </span>
+        </td>
+        <td mat-cell *matCellDef="let element">
+            <span > {{ element[item.key] }} </span>
+            <!-- <span > {{ element[item.key] | date }} </span> -->
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displaycolvals"></tr>
+    <tr mat-row *matRowDef="let row; columns: displaycolvals;"></tr>
+
+</table>
+</ng-container>
+
+</mat-card>
+      
+      

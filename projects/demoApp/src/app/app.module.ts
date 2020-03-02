@@ -22,6 +22,7 @@ import { AddUpdateAnswerComponent } from './manage-quiz/add-update-answer/add-up
 import { UpdateAnswerComponent } from './manage-quiz/update-answer/update-answer.component';
 import { LoginfortrainingComponent } from './loginfortraining/loginfortraining.component';
 import { TrainingreportComponent } from './trainingreport/trainingreport.component';
+import { CategoryWiseReportComponent } from './category-wise-report/category-wise-report.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { TrainingreportComponent } from './trainingreport/trainingreport.compone
     UpdateAnswerComponent,
     LoginfortrainingComponent,
     TrainingreportComponent,
+    CategoryWiseReportComponent,
   ],
   imports: [
     routing,

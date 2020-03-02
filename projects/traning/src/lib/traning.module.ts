@@ -25,6 +25,7 @@ import { LoginfortrainingComponent } from './loginfortraining/loginfortraining.c
 import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { TrainingreportComponent } from './trainingreport/trainingreport.component';
 import { DatePipe } from '@angular/common';
+import { CategoryWiseReportComponent } from './category-wise-report/category-wise-report.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { DatePipe } from '@angular/common';
     UpdateAnswerComponent,
     // LoginComponent,
     LoginfortrainingComponent,
-    TrainingreportComponent
+    TrainingreportComponent,
+    CategoryWiseReportComponent
     
   ],
   imports: [
@@ -59,7 +61,7 @@ import { DatePipe } from '@angular/common';
     MatCarouselModule.forRoot(),
     
   ],
-  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest,TrainingreportComponent],
+  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest,TrainingreportComponent,CategoryWiseReportComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [CookieService, ApiService,DatePipe],
   entryComponents:[DialogBoxComponent,Dialogtest]

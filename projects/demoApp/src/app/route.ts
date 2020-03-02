@@ -15,6 +15,7 @@ import { AddUpdateAnswerComponent } from './manage-quiz/add-update-answer/add-up
 import { UpdateAnswerComponent } from './manage-quiz/update-answer/update-answer.component';
 import { LoginfortrainingComponent} from './loginfortraining/loginfortraining.component';
 import { TrainingreportComponent } from './trainingreport/trainingreport.component';
+import { CategoryWiseReportComponent } from './category-wise-report/category-wise-report.component';
 const appRoutes: Routes = [
     { path: 'home', component: AppComponent },
     {
@@ -73,6 +74,11 @@ const appRoutes: Routes = [
         path    : 'training-report',component : TrainingreportComponent,
         resolve : {trainingReportData : ResolveService},
         data    : { requestcondition: { source: '', condition: {"skip":0,"limit":50} }, endpoint: 'gettrainingreportdata' }
+    },
+    {
+        path   : 'category-wise-report-view/:user_id',component : CategoryWiseReportComponent,
+        resolve : {trainingReportData : ResolveService},
+        data    : { requestcondition: { source: '', condition: {} }, endpoint: 'getcategorywisereportdata' }
     }
 
     
