@@ -54,6 +54,9 @@ export class ListLessionComponent implements OnInit {
   public training:any;
   public testAvailability:any;
   public idArray:any=[];
+  public allTrashData:any=[];
+  public trashFlag:any=0;
+  public trashButtonText:any="View Trash";
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   selection = new SelectionModel<PeriodicElement>(true, []);
@@ -186,6 +189,11 @@ export class ListLessionComponent implements OnInit {
           "source": this.searchSourceName,
           "condition": searchJson,
           "token": this.serverDetailsVal.jwttoken
+        }
+        if(this.trashFlag == 1){
+           data.condition['is_trash'] = {$eq:1}
+        }else{
+          data.condition['is_trash'] = {$ne:1}
         }
         this.apiService.postData(link,data).subscribe(response => {
           let result : any=response;
@@ -385,6 +393,47 @@ export class ListLessionComponent implements OnInit {
 
       });
     
+  }
+  viewTrash(){
+    this.trashFlag = 1-this.trashFlag;
+    if(this.trashFlag==1){
+       this.trashButtonText="Hide Trash";
+    }
+    let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
+    let data:any = {
+      "source" :   this.formSourceVal.trashDataSource,
+      "token": this.serverDetailsVal.jwttoken,
+      "condition":{
+        is_trash: {$eq: 1}
+      }
+    }
+    this.apiService.postData(link,data).subscribe((response: any)=>{
+      this.allTrashData = response.res;
+      this.dataSource = new MatTableDataSource(this.allTrashData);
+     
+    })
+
+  }
+  restoreTrashData(trashId:any,index:any){
+    let link = this.serverDetailsVal.serverUrl + this.formSourceVal.retriveTrashDataEndpoint;
+   let data:any={
+     "source":this.formSourceVal.retriveTrashDataSourceName,
+     "token":this.serverDetailsVal.jwttoken,
+     "id":trashId
+   }
+   this.apiService.postData(link,data).subscribe((response: any)=>{
+    if(response.status=="success"){
+      this.listingData.splice(index, 1);
+      let allTrashData: PeriodicElement[] = this.listingData;
+      this.dataSource = new MatTableDataSource(allTrashData);
+      let message:any = "Successfully Restored This Record";
+      let action : any="Ok";
+      this.snakBar.open(message,action,{
+        duration:3000
+      })
+    }
+   
+  })
   }
 
 }

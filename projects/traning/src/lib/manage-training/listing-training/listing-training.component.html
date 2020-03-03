@@ -36,6 +36,7 @@
   <button class="submitbtn" mat-raised-button color="primary" type="button" (click)="filterByTrainingName('catagory_name_search_regex', trainingTitle)">Search</button>
 
   <button class="submitbtn" mat-raised-button color="primary" type="button" (click)="resetSearch()">Reset</button>
+  <button class="submitbtn" mat-raised-button color="primary" type="button" (click)="viewTrash()">{{ trashButtonText }}</button>
 
 </span>
 
@@ -117,6 +118,11 @@
             <span class="pointer" (click)="statusUpdateModal(element._id,i)">
               <i class="material-icons">
                 toggle_on
+                </i>
+             </span>
+             <span *ngIf="element.is_trash != null && element.is_trash==1" (click)="restoreTrashData(element._id,i)">
+              <i class="material-icons">
+                restore_page
                 </i>
              </span>
           </span>

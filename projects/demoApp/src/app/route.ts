@@ -27,7 +27,7 @@ const appRoutes: Routes = [
 
     { path: 'manage-lession/list', component : ListLessionComponent,
     resolve: { lessionData: ResolveService }, 
-    data: { requestcondition: { source: 'manage_lession_view', condition: {} }, endpoint: 'datalist' }},
+    data: { requestcondition: { source: 'manage_lession_view', condition: {'is_trash':{$ne:1}} }, endpoint: 'datalist' }},
     { path: 'manage-lession/edit/:id', component: AddEditLessionsComponent },
 
    /**Training Management**/
@@ -36,7 +36,7 @@ const appRoutes: Routes = [
     {
         path: 'manage-training/list', component: ListingTrainingComponent,
         resolve: { trainingdata: ResolveService }, 
-        data: { requestcondition: { source: 'training_category_management_view', condition: {} }, endpoint: 'datalist' }
+        data: { requestcondition: { source: 'training_category_management_view', condition: {'is_trash':{$ne:1}} }, endpoint: 'datalist' }
     },
     { path: 'manage-training/edit/:id', component: AddEditTrainingComponent },
     /**Training center**/
@@ -73,7 +73,7 @@ const appRoutes: Routes = [
     {
         path    : 'training-report',component : TrainingreportComponent,
         resolve : {trainingReportData : ResolveService},
-        data    : { requestcondition: { source: '', condition: {"skip":0,"limit":50} }, endpoint: 'gettrainingreportdata' }
+        data    : { requestcondition: { source: '',sort_val:'name',sort_type:'desc', condition: {"skip":0,"limit":50} }, endpoint: 'gettrainingreportdata' }
     },
     {
         path   : 'category-wise-report-view/:user_id',component : CategoryWiseReportComponent,

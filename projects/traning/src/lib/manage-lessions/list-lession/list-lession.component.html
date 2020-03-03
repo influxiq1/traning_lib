@@ -43,6 +43,7 @@
     <button class="submitbtn" mat-raised-button color="primary" type="button" (click)="filterByTrainingName('lession_title_search_regex', lessonName)">Search</button>
 
     <button class="submitbtn" mat-raised-button color="primary" type="button" (click)="resetSearch()">Reset</button>
+    <button class="submitbtn" mat-raised-button color="primary" type="button" (click)="viewTrash()">{{ trashButtonText }}</button>
 
     </span>
 
@@ -138,6 +139,12 @@
             toggle_on
             </i>
          </span>
+         <span *ngIf="element.is_trash != null && element.is_trash==1" (click)="restoreTrashData(element._id,i)">
+          <i class="material-icons">
+            restore_page
+            </i>
+         </span>
+         
          
         </span>
         </td>

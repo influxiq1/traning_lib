@@ -26,6 +26,9 @@ public formSource: any = {
   "statusUpdateEndpoint":"statusChange",
   "statusUpdateManyEndpoint":"statusupdate",
   "statusUpdateSourceName":"manage_lession",
+  "trashDataSource":"manage_lession_view",
+  "retriveTrashDataEndpoint":"restoretrashdata",
+  "retriveTrashDataSourceName":"manage_lession"
 }
 public jwtToken:any;
 public searchSourceName :any="manage_lession_view";

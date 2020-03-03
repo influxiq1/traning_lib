@@ -38,6 +38,9 @@ export class TrainingreportComponent implements OnInit {
   public reportDataCount:any=0;
   public lastSearchCondition:any={};
   public categoryWiseReportUrl:any;
+  public sort_val:any;
+  public sort_type:any;
+
   public page:any={
     "page_count":50,
     "page_no":1
@@ -79,6 +82,8 @@ export class TrainingreportComponent implements OnInit {
     
   }
   constructor(public datepipe : DatePipe,public apiService : ApiService,public router:Router) {
+    this.sort_val = 'name',
+    this.sort_type='desc'
    }
 
   ngOnInit() {
@@ -87,7 +92,9 @@ export class TrainingreportComponent implements OnInit {
   gettrainingreportdatacount(){
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
     let data:any={
-      search : this.lastSearchCondition
+      search : this.lastSearchCondition,
+      sort_val: "name",
+      sort_type:"desc"
     }
      this.apiService.postDatawithoutToken(link,data).subscribe((response:any)=>{
        this.reportDataCount = response.count;
@@ -118,7 +125,10 @@ export class TrainingreportComponent implements OnInit {
         "skip":(parseInt(this.page.page_no)-1) * parseInt(this.page.page_count),
         "limit":parseInt(this.page.page_count),
         "search" : searchCondition
-      }
+        
+      },
+      sort_val:this.sort_val,
+      sort_type:this.sort_type
       
     }
     this.apiService.postData(link,data).subscribe((response:any)=>{
@@ -143,5 +153,19 @@ export class TrainingreportComponent implements OnInit {
   categoryWiseReportPage(id:any){
      this.router.navigateByUrl(this.categoryWiseReportUrl+'/'+id);
   }
+  sortPageData(item:any){
+    if(item!=this.sort_val){
+      this.sort_type = item,
+      this.sort_val = 'asc'
+    }else{
+      if(this.sort_type=='desc'){
+        this.sort_type='asc';
+      }else{
+        this.sort_type='desc';
+      }
+      this.getPageData();
+    }
 
+    
+  }
 }

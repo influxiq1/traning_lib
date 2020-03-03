@@ -25,6 +25,9 @@ public formSource: any = {
   "statusUpdateEndpoint":"statusChange",
   "statusUpdateManyEndpoint":"statusupdate",
   "statusUpdateSourceName":"training_category_management",
+  "trashDataSource":"training_category_management_view",
+  "retriveTrashDataEndpoint":"restoretrashdata",
+  "retriveTrashDataSourceName":"training_category_management"
 }
 
   constructor(public activatedRoute : ActivatedRoute,public cookie:CookieService) { 
