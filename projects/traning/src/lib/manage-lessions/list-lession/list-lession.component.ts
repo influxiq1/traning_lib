@@ -57,6 +57,14 @@ export class ListLessionComponent implements OnInit {
   public allTrashData:any=[];
   public trashFlag:any=0;
   public trashButtonText:any="View Trash";
+  public trainingCounts:any={
+    "activatedtrainingcount":"",
+    "activatedlessoncount":"",
+    "trashedtrainingcount":"",
+    "trashedlessoncount":"",
+    "totaltrainingcount":" ",
+    "totallessoncount":" "
+  };
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   selection = new SelectionModel<PeriodicElement>(true, []);
@@ -96,6 +104,9 @@ export class ListLessionComponent implements OnInit {
     this.manageQuizRoute = (val) || '<no name set>';
   }
   constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router,public snakBar:MatSnackBar) {
+    setTimeout(() => {
+      this.trainingCount();
+     }, 500);
    }
 
   ngOnInit() {
@@ -107,7 +118,19 @@ export class ListLessionComponent implements OnInit {
     this.getAllLessonData();
 
   }
-
+  
+  trainingCount(){
+    let link = this.serverDetailsVal.serverUrl + this.formSourceVal.trainingCountEndpoint;
+    this.apiService.postDatawithoutTokenReportCount(link).subscribe((response:any)=>{
+        this.trainingCounts.activatedtrainingcount = response.activatedtrainingcount;
+        this.trainingCounts.activatedlessoncount = response.activatedlessoncount;
+        this.trainingCounts.trashedtrainingcount = response.trashedtrainingcount;
+        this.trainingCounts.trashedlessoncount = response.trashedlessoncount;
+        this.trainingCounts.totaltrainingcount = response.totaltrainingcount;
+        this.trainingCounts.totallessoncount = response.totallessoncount;
+       
+    })
+  }
   // for multiple select function start here
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -158,7 +181,8 @@ export class ListLessionComponent implements OnInit {
       let data:any = {
         "source" : this.formSourceVal.source,
         "id" : recordId,
-        "token": this.serverDetailsVal.jwttoken
+        "token": this.serverDetailsVal.jwttoken,
+        "lesson_id":recordId
       }
       this.apiService.postData(link,data).subscribe((res: any)=>{
         if(res.status="success"){

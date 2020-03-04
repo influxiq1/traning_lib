@@ -28,3 +28,7 @@ table {
   .pointer{
     cursor: pointer;
   }
+  .countSection{
+    float: left;
+    margin: 10px;
+  }

@@ -101,13 +101,14 @@ export class ListComponent implements OnInit {
           if(this.trainingCategoryList[n].childpercentage[p]==null)
           this.trainingCategoryList[n].childpercentage[p]=0;
           for(let c in this.doneLessonByCatByUser){
-            console.log('done t',this.doneLessonByCatByUser[c].associated_training.toString(),this.trainingCategoryList[n].childid[p]);
+           
             if(this.doneLessonByCatByUser[c].associated_training.toString()==this.trainingCategoryList[n].childid[p]){
 
               this.trainingCategoryList[n].childdone[p]=this.doneLessonByCatByUser[c].lessonsdone;
-              this.trainingCategoryList[n].childpercentage[p]=(parseInt(this.doneLessonByCatByUser[c].lessonsdone)/parseInt(this.trainingCategoryList[n].childcount[p]))*100;
+              // this.trainingCategoryList[n].childpercentage[p]=(parseInt(this.doneLessonByCatByUser[c].lessonsdone)/parseInt(this.trainingCategoryList[n].childcount[p]))*100;
+
+              this.trainingCategoryList[n].childpercentage[p]=Math.floor((this.doneLessonByCatByUser[c].lessonsdone)/(this.trainingCategoryList[n].childcount[p])*100);
             
-              console.log('in if block true ...',this.trainingCategoryList[n].childdone[p]);
             }
           }
         }

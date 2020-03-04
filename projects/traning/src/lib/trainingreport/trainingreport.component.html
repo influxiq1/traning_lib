@@ -33,10 +33,10 @@
 
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef> Name <i *ngIf="sort_type=='asc'" 
-                   (click)="sortPageData('name')"    class="material-icons">
+                   (click)="sortPageData('name')" class="pointer"   class="material-icons">
                         keyboard_arrow_down
                     </i>
-                    <i *ngIf="sort_type=='desc'" (click)="sortPageData('name')" class="material-icons">
+                    <i *ngIf="sort_type=='desc'" class="pointer" (click)="sortPageData('name')" class="material-icons">
                         keyboard_arrow_up
                     </i> </th>
                 <td mat-cell *matCellDef="let row" title="Name"> {{row.name}} </td>
@@ -63,10 +63,13 @@
             </ng-container>
 
             <ng-container matColumnDef="training_percentage">
-                <th mat-header-cell *matHeaderCellDef>Training Percentage <i class="material-icons">
+                <th mat-header-cell *matHeaderCellDef>Training Percentage <i
+                    *ngIf="sort_type=='asc'" 
+                   (click)="sortPageData('training_percentage')"   class="material-icons">
                         keyboard_arrow_down
-                    </i>
-                    <i class="material-icons">
+                    </i
+                    >
+                    <i *ngIf="sort_type=='desc'" (click)="sortPageData('training_percentage')" class="material-icons">
                         keyboard_arrow_up
                     </i></th>
                 <td mat-cell *matCellDef="let row" title="Total Training"> {{row.training_percentage}}% </td>

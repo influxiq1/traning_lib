@@ -19,7 +19,7 @@
               (opened)="item.expanded = true" (closed)="item.expanded = false">
               <mat-expansion-panel-header>
                 <mat-panel-title>
-                  {{item.lession_title}}
+                  {{item.lession_title}} {{item.is_done}} --- {{item.expanded}} 
                 </mat-panel-title>
                 <mat-panel-description>
 
@@ -123,7 +123,6 @@
                       <mat-progress-bar *ngIf="item.childdone !=null && item.childdone[i1]!=null " mode="determinate"
                         value="{{item.childpercentage[i1]}}"></mat-progress-bar>
                       <span style="font-size: 20px;font-weight: bold;"> {{item.childpercentage[i1]}}%</span>
-                      <!-- <p>{{item.childpercentage[i1]}}</p> -->
                     </div>
 
 

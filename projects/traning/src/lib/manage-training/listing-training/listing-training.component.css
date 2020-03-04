@@ -28,3 +28,15 @@ table {
  .pointer{
    cursor: pointer;
  }
+  .countsection{
+   width: 20%;
+   margin: 0px 5px;
+   box-sizing: border-box;
+   display: flex;
+
+ }
+.countSection{
+  float: left;
+  margin: 10px;
+}
+ 

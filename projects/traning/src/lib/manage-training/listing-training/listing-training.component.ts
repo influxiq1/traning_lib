@@ -34,7 +34,8 @@ export interface DialogData {
 })
 
 export class ListingTrainingComponent implements OnInit {
-  displayedColumns: string[] = ['select','no','catagory_name', 'description', 'priority', 'parent_catagory', 'status', 'deleteRecord'];
+  displayedColumns: string[] = ['select','no','catagory_name', 'description', 'priority', 
+  'parent_catagory', 'status', 'deleteRecord'];
   public dataSource: any;
   public listingData: any = [];
   public dialogRef: any;
@@ -53,6 +54,14 @@ export class ListingTrainingComponent implements OnInit {
   public allTrashData:any=[];
   public trashFlag:any=0;
   public trashButtonText:any="View Trash";
+  public trainingCounts:any={
+    "activatedtrainingcount":"",
+    "activatedlessoncount":"",
+    "trashedtrainingcount":"",
+    "trashedlessoncount":"",
+    "totaltrainingcount":" ",
+    "totallessoncount":" "
+  };
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   selection = new SelectionModel<PeriodicElement>(true, []);
@@ -109,7 +118,10 @@ export class ListingTrainingComponent implements OnInit {
   }
 
   constructor(public dialog: MatDialog, public apiService: ApiService, public router: Router,public snakBar:MatSnackBar) {
-
+   setTimeout(() => {
+    this.trainingCount();
+   }, 500);
+    
   }
 
   ngOnInit() {
@@ -119,6 +131,19 @@ export class ListingTrainingComponent implements OnInit {
 
     }, 100);
 
+  }
+  trainingCount(){
+    let link = this.serverDetailsVal.serverUrl + this.formSourceVal.trainingCountEndpoint;
+    this.apiService.postDatawithoutTokenReportCount(link).subscribe((response:any)=>{
+        console.log("counts data",response);
+        this.trainingCounts.activatedtrainingcount = response.activatedtrainingcount;
+        this.trainingCounts.activatedlessoncount = response.activatedlessoncount;
+        this.trainingCounts.trashedtrainingcount = response.trashedtrainingcount;
+        this.trainingCounts.trashedlessoncount = response.trashedlessoncount;
+        this.trainingCounts.totaltrainingcount = response.totaltrainingcount;
+        this.trainingCounts.totallessoncount = response.totallessoncount;
+        console.log("testing count",this.trainingCounts);
+    })
   }
 
   deleteRecord(id: any, index: any) {
@@ -152,7 +177,8 @@ export class ListingTrainingComponent implements OnInit {
     let data: any = {
       "source": this.formSourceVal.source,
       "id": recordId,
-      "token": this.serverDetailsVal.jwttoken
+      "token": this.serverDetailsVal.jwttoken,
+      "associated_training":recordId
     }
     this.apiService.postData(link, data).subscribe((res: any) => {
       if (res.status = "success") {

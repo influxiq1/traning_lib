@@ -28,7 +28,8 @@ public formSource: any = {
   "statusUpdateSourceName":"manage_lession",
   "trashDataSource":"manage_lession_view",
   "retriveTrashDataEndpoint":"restoretrashdata",
-  "retriveTrashDataSourceName":"manage_lession"
+  "retriveTrashDataSourceName":"manage_lession",
+  "trainingCountEndpoint" : "trainingcounts"
 }
 public jwtToken:any;
 public searchSourceName :any="manage_lession_view";
