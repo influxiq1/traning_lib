@@ -12,6 +12,7 @@ public paramsId:any;
 public lessonData:any=[];
 public trainingName:any;
 public totalData:any=[];
+public trainingCeneterData:any=[];
 public quizQuestionSourceName:any={
   "questionSourceName":"quiz_question",
   "answerSourceName":"quiz_answer"
@@ -43,7 +44,7 @@ public jwtToken:any;
       let result: any;
       result = data.trainingdata.results;
       this.totalData=result;
-      console.log("results",result);
+      this.trainingCeneterData = data.trainingdata;
       this.lessonData = data.trainingdata.results.lessondata;
       this.manageTrainingList = result;
       

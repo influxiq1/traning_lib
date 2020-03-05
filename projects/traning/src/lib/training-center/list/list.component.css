@@ -44,3 +44,14 @@
 .class3{
     background-color: dodgerblue;
 }
+.successModal .wrapper{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.successModal .wrapper .childButton{
+    width: 24%;
+    margin: 0.5%;
+}
+

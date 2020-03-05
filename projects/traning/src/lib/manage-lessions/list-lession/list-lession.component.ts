@@ -443,7 +443,8 @@ export class ListLessionComponent implements OnInit {
    let data:any={
      "source":this.formSourceVal.retriveTrashDataSourceName,
      "token":this.serverDetailsVal.jwttoken,
-     "id":trashId
+     "id":trashId,
+     "lesson_id":trashId
    }
    this.apiService.postData(link,data).subscribe((response: any)=>{
     if(response.status=="success"){

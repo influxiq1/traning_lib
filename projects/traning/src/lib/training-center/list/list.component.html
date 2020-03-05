@@ -19,7 +19,7 @@
               (opened)="item.expanded = true" (closed)="item.expanded = false">
               <mat-expansion-panel-header>
                 <mat-panel-title>
-                  {{item.lession_title}} {{item.is_done}} --- {{item.expanded}} 
+                  {{item.lession_title}} 
                 </mat-panel-title>
                 <mat-panel-description>
 
@@ -109,7 +109,7 @@
                     <mat-list-item class="pointer" [ngClass]="{'class1': item.childpercentage[i1]>1,
                                          'class2': item.childpercentage[i1]===100,
                                          'class3':item.childpercentage[i1] ===0 }"
-                      (click)="childcatclick(item.childid[1],item.childcat[1])">
+                      (click)="childcatclick(item.childid[i1],item.childcat[i1])">
                       {{ childitem }} (
                       <ng-container *ngIf="item.childdone !=null && item.childdone[i1]!=null">
                         {{item.childdone[i1]}}/

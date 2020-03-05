@@ -432,7 +432,8 @@ export class ListingTrainingComponent implements OnInit {
    let data:any={
      "source":this.formSourceVal.retriveTrashDataSourceName,
      "token":this.serverDetailsVal.jwttoken,
-     "id":trashId
+     "id":trashId,
+     "associated_training":trashId
    }
    this.apiService.postData(link,data).subscribe((response: any)=>{
     if(response.status=="success"){

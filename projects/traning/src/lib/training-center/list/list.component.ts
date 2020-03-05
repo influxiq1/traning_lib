@@ -1,7 +1,7 @@
 import { Component, OnInit ,ViewChild,Input,Inject} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSnackBar } from "@angular/material";
 import { ApiService } from '../../api.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel';
 import { MatCarouselSlide, MatCarouselSlideComponent } from '@ngmodule/material-carousel';
@@ -47,7 +47,8 @@ export class ListComponent implements OnInit {
   public divisor:any;
   public parentPercentage:any;
   public doneLessonByCatByUser:any;
- 
+  public uniquedonetrainingarray:any=[];
+  public paramsTrainingId:any; 
   @Input()
   set TrainingCategoryList(val: any) {
     let results:any=(val) || '<no name set>';
@@ -60,7 +61,7 @@ export class ListComponent implements OnInit {
       parentcount = this.trainingCategoryList[i].count;
       if(this.trainingCategoryList[i].done !=null && this.trainingCategoryList[i].count !=null){
         this.trainingCategoryList[i].percentage = Math.floor((this.trainingCategoryList[i].done/this.trainingCategoryList[i].count)*100);
-      console.log("result of count and done",this.trainingCategoryList[i].percentage);
+      
       }
  
     }
@@ -74,20 +75,18 @@ export class ListComponent implements OnInit {
   set TotalData(data: {}) {
     this.totalData = (data) || '<no name set>';
     this.doneLessonByCatByUser = this.totalData.done_lesson_by_cat_by_user;
-    console.log("souresh test",this.totalData);
-    console.log("souresh test another variable",'doneLessonByCatByUser',this.doneLessonByCatByUser,this.trainingCategoryList);
-
     let lesson:any=this.totalData.total_lesson[0].count;
-    this.divisor=lesson;
+    let done_lesson_by_cat_by_user:any=this.totalData.done_lesson_by_cat_by_user.length;
+    this.divisor=lesson; 
     let userPercentage:any=0;
     for(let n in  this.trainingCategoryList){
       if(this.trainingCategoryList[n].count ==null)
       this.trainingCategoryList[n].count=0;
       if(this.trainingCategoryList[n].done ==null)
       this.trainingCategoryList[n].done=0;
-      console.log('t block',this.trainingCategoryList[n]);
+      
       if(this.trainingCategoryList[n].childid!=null && this.trainingCategoryList[n].childid.length>0){
-        console.log('in child block');
+        
         for(let p in this.trainingCategoryList[n].childid){
           if(this.trainingCategoryList[n].childcount[p]==null)
           this.trainingCategoryList[n].childcount[p]=0;
@@ -121,7 +120,16 @@ export class ListComponent implements OnInit {
       this.dividend=userPercentage;
       this.reportPercentage=Math.floor(userPercentage/lesson*100);
     }
+    if(done_lesson_by_cat_by_user==0){
+      this.dividend=0;
+    }
   }
+  @Input()
+  set TrainingCeneterData(data: any) {
+    let results:any=(data) || '<no name set>';
+    this.uniquedonetrainingarray = results.uniquedonetrainingarray;
+  }
+   
   @Input()
   set serverDetails(serverDetails: {}) {
     this.serverDetailsVal = (serverDetails) || '<no name set>';
@@ -147,12 +155,12 @@ export class ListComponent implements OnInit {
     this.trainingCenterRoute = (id) || '<no name set>';
   }
   constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router,
-    public cookieService:CookieService,public snakBar:MatSnackBar) {
+    public cookieService:CookieService,public snakBar:MatSnackBar,public activatedRoute:ActivatedRoute) {
       this.allCookiesData = cookieService.getAll();
       this.cookiesData = JSON.parse(this.allCookiesData.user_details);
       this.userId = this.cookiesData._id;
-   
-   }
+      this.paramsTrainingId = activatedRoute.snapshot.params.associated_training;
+    }
 
   ngOnInit() {
 
@@ -243,6 +251,8 @@ export class ListComponent implements OnInit {
           let divisor:any;
           let dividend:any;
           let percentageResult:any;
+          let data:any=response.results.totalpercentage[0].lessonsdone;
+          this.dividend=data;
           divisor = response.results.totallesson[0].count;
           dividend = response.results.totalpercentage[0].lessonsdone;
           percentageResult = Math.floor(dividend/divisor*100);
@@ -275,8 +285,9 @@ export class ListComponent implements OnInit {
 
   lastOpenDialog(x: any): void {
     this.dialogRef = this.dialog.open(Dialogtest, {
+      panelClass: 'successModal',
       width: '550px',
-      data: { data: x } 
+      data: { data: x ,trainingdata:this.trainingCategoryList,currentTrainingId:this.paramsTrainingId ,trainingCenterRoute:this.trainingCenterRoute} 
     });
     this.dialogRef.afterClosed().subscribe(result => {
  
@@ -301,7 +312,7 @@ export class ListComponent implements OnInit {
   childcatclick(childId:any,catName:any){
     this.trainingCategoryName=catName;
     this.router.navigateByUrl(this.trainingCenterRoute + childId);
-  //  this.trainingCenterRoute + childId;
+  
   }
   nochildclick(id:any){
     this.router.navigateByUrl(this.trainingCenterRoute + id);
@@ -321,8 +332,8 @@ export class Dialogtest {
   public successanswer:boolean=false;
 
   constructor(public dialogRef: MatDialogRef<Dialogtest>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-      
+    @Inject(MAT_DIALOG_DATA) public data: any,public router:Router) {
+      console.log("modal data",this.data.trainingdata);
     this.is_error = data.data;
     let tempdata:any=this.data.data;
     let ddata:any[]=tempdata.answers;
@@ -333,6 +344,14 @@ export class Dialogtest {
   }
   closeButton() {
     this.dialogRef.close(false);
+  }
+  navigate(childId:any){
+    this.router.navigateByUrl(this.data.trainingCenterRoute+childId);
+    this.closeButton();
+  }
+  noChildNavigate(id:any){
+    this.router.navigateByUrl(this.data.trainingCenterRoute+id);
+    this.closeButton();
   }
 
   resetanswer(){

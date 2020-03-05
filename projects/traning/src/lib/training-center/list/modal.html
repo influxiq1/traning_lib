@@ -24,8 +24,25 @@
 
 
 <ng-container *ngIf="data.data == 'lessoncompletedmoal' ">
-    <h1 mat-dialog-title>Next Trainings</h1>
+    <h1 mat-dialog-title>You Need To Finish These  Trainings</h1>
     <div mat-dialog-content>
+        <ng-container *ngFor="let item of data.trainingdata;let i=index;">
+            <div *ngIf="item.percentage<100 && item.childcat==null && data.currentTrainingId!=item._id">
+                <button mat-button color="primary" (click)="noChildNavigate(item._id)">
+                    {{item.catagory_name}}</button>
+                 </div>
+        <ng-container *ngIf="item.childcat!=null && item.childcat.length>0">
+            <span class="wrapper">
+            <ng-container *ngFor="let itemc of item.childcat;let i1=index;">
+
+               <div *ngIf="item.childpercentage[i1]<100 && data.currentTrainingId!=item.childid[i1]"> 
+                   <button class="childButton" mat-button color="primary" (click)="navigate(item.childid[i1])" *ngIf="item.childdone !=null && item.childdone[i1]!=null">
+                    {{itemc}} ( {{item.childdone[i1]}}/{{item.childcount[i1]}})</button> </div> 
+            </ng-container>
+        </span >
+        </ng-container>
+
+        </ng-container>
      
     </div>
 </ng-container>
