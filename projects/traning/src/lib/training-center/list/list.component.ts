@@ -49,6 +49,8 @@ export class ListComponent implements OnInit {
   public doneLessonByCatByUser:any;
   public uniquedonetrainingarray:any=[];
   public paramsTrainingId:any; 
+  public lesson_title:any;
+  
   @Input()
   set TrainingCategoryList(val: any) {
     let results:any=(val) || '<no name set>';
@@ -69,6 +71,7 @@ export class ListComponent implements OnInit {
     
 
     this.allLessonData = results.lessondata;
+    // console.log("allLessonData details",this.allLessonData);
     this.trainingCategoryName=results.trainingname;
   }
   @Input()
@@ -165,9 +168,10 @@ export class ListComponent implements OnInit {
   ngOnInit() {
 
   }
-  questionDetails(id:any,i:any){
+  questionDetails(id:any,i:any,lesson_title:any){
+    this.lesson_title = lesson_title
     this.progressLoader = true;
-
+    
     this.questionId = id;
     this.questionindex = 0;
     const link = this.serverDetailsVal.serverUrl + this.formSourceVal.showEndpoint;
@@ -184,8 +188,9 @@ export class ListComponent implements OnInit {
       this.questionArray = result.results.questionanswerlist;
       if(this.questionArray.length>0){
         this.progressLoader = false;
+        let lesson_name:any=lesson_title;
         this.quizQuestion = this.questionArray[this.questionindex];
-        this.openDialog(this.quizQuestion,i);
+        this.openDialog(this.quizQuestion,i,this.lesson_title);
       }else{
         this.progressLoader = false;
         let message :any="This Lesson Doesn't Have Any Questions";
@@ -199,10 +204,10 @@ export class ListComponent implements OnInit {
 
   }
 
-  openquestionmodal(id:any){
+  openquestionmodal(id:any,lesson_title){
 
     this.quizQuestion = this.questionArray[this.questionindex];
-    this.openDialog(this.quizQuestion,id);
+    this.openDialog(this.quizQuestion,id,lesson_title);
 
     for (const i in this.questionArray) {
       this.quizQuestion = this.questionArray[i].question;
@@ -212,7 +217,7 @@ export class ListComponent implements OnInit {
       }
     }
   }
-  openDialog(x: any,id:any): void {
+  openDialog(x: any,id:any,lesson_title:any): void {
     this.dialogRef = this.dialog.open(Dialogtest, {
       width: '550px',
       data: { data: x } 
@@ -220,24 +225,25 @@ export class ListComponent implements OnInit {
     this.dialogRef.afterClosed().subscribe(result => {
       if(result==true) {
         if((this.questionindex+1) == this.questionArray.length){
-          this.addMarkedData(this.currentlesson,this.paramsId,id);
+          this.addMarkedData(this.currentlesson,this.paramsId,id,this.lesson_title);
         }else{
         this.questionindex++;
-        this.openquestionmodal(id);
+        this.openquestionmodal(id,lesson_title);
         }
       }
     });
   }
   
-  addMarkedData(lessonId:any,associated_training:any,i:any){
-    const link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
+  addMarkedData(lessonId:any,associated_training:any,i:any,lession_title:any){
+    const link = this.serverDetailsVal.serverUrl + this.formSourceVal.addMarkendpoint;
     let data:any={
       "data":{
         "user_id" : this.userId,
         "lesson_id": lessonId,
-        "associated_training":associated_training
+        "associated_training":associated_training,
+        "lastlessonname":lession_title,
+        "lasttrainingname":this.trainingCategoryName
       },
-      "source":this.formSourceVal.markedSourceName,
       "sourceobj":["user_id","lesson_id","associated_training"],
       "token":this.serverDetailsVal.jwttoken
     }
@@ -294,19 +300,19 @@ export class ListComponent implements OnInit {
     });
   }
 
-  videoended(item:any,i:any){
+  videoended(item:any,i:any,j){
     if(item.test_associate_training=='Yes'){
-        this.questionDetails(item._id,i);
+        this.questionDetails(item._id,i,j);
     }else{
-    this.addMarkedData(item._id,this.paramsId,i);
+    this.addMarkedData(item._id,this.paramsId,i,this.lesson_title);
     }
   }
 
-  audioended(item:any,i:any){
+  audioended(item:any,i:any,j){
     if(item.test_associate_training=='Yes'){
-      this.questionDetails(item._id,i);
+      this.questionDetails(item._id,i,j);
    }else{
-     this.addMarkedData(item._id,this.paramsId,i);
+     this.addMarkedData(item._id,this.paramsId,i,this.lesson_title);
   }
   }
   childcatclick(childId:any,catName:any){
@@ -325,6 +331,7 @@ export class ListComponent implements OnInit {
 @Component({
   selector: 'dialogtest',
   templateUrl: 'modal.html',
+  styleUrls: ['./list.component.css']
 })
 export class Dialogtest {
   public is_error: any;

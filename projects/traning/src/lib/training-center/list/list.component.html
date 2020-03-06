@@ -37,7 +37,7 @@
               </mat-card>
               <mat-card class="example-card" *ngIf="item.mediaType=='video' && item.expanded==true ">
 
-                <video width="640" height="360" autoplay (ended)="videoended(item,i)">
+                <video width="640" height="360" autoplay (ended)="videoended(item,i,1)">
                   <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
@@ -45,7 +45,7 @@
               </mat-card>
               <mat-card class="example-card" *ngIf="item.mediaType=='audio' ">
 
-                <audio width="640" height="360" (ended)="audioended(item,i)" controls>
+                <audio width="640" height="360" (ended)="audioended(item,i,1)" controls>
                   <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="audio/mpeg">
                   Your browser does not support the audio tag.
                 </audio>
@@ -62,12 +62,12 @@
               <ng-container
                 *ngIf="item.test_associate_training=='No' && item.mediaType != 'audio' && item.mediaType != 'video'">
                 <button mat-button type="button" class="submitbtn" color="primary"
-                  (click)="addMarkedData(item._id,item.associated_training,i)">Mark As Done</button>
+                  (click)="addMarkedData(item._id,item.associated_training,i,item.lession_title)">Mark As Done</button>
               </ng-container>
               <ng-container
                 *ngIf="item.test_associate_training=='Yes' && item.mediaType != 'audio' && item.mediaType != 'video'">
                 <button mat-button type="button" class="submitbtn" color="primary"
-                  (click)="questionDetails(item._id,i)">Take A Quiz</button>
+                  (click)="questionDetails(item._id,i,item.lession_title)">Take A Quiz</button>
                 <mat-progress-bar *ngIf="progressLoader" mode="indeterminate"></mat-progress-bar>
               </ng-container>
             </mat-expansion-panel>

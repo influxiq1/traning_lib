@@ -25,6 +25,7 @@ public formSource: any = {
   "source":'manage_lession_view',
   "markedSourceName":"done_training_lesson",
   "endpoint": "addorupdatedata",
+  "addMarkendpoint":"addmarkdata",
   "showEndpoint":"getquestionanswerlistbylessonid",
   "formTitleName": 'Training Center',
   "getUpdatedTrainingPercentageByUserEndpoint":"getupdatedtrainingpercentagebyuserid"
@@ -40,6 +41,7 @@ public jwtToken:any;
 
   ngOnInit() {
     this.activatedRoute.data.forEach(data => {
+      console.log("gettrainingcenterlist data",data);
       this.trainingName = data.trainingdata.trainingname;      
       let result: any;
       result = data.trainingdata.results;
