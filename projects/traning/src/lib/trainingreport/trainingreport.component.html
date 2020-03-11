@@ -75,7 +75,15 @@
                 <td mat-cell *matCellDef="let row" title="Total Training"> {{row.training_percentage}}% </td>
             </ng-container>
             <ng-container matColumnDef="lastupdated_training_percentage_at">
-                <th mat-header-cell *matHeaderCellDef>Last Training Percentage On</th>
+                <th mat-header-cell *matHeaderCellDef>Last Training Percentage On<i
+                    *ngIf="sort_type=='asc'" 
+                   (click)="sortPageData('lastupdated_training_percentage_at')"   class="material-icons">
+                        keyboard_arrow_down
+                    </i
+                    >
+                    <i *ngIf="sort_type=='desc'" (click)="sortPageData('lastupdated_training_percentage_at')" class="material-icons">
+                        keyboard_arrow_up
+                    </i></th>
 
                 <td mat-cell *matCellDef="let row" title="Lastupdated Training Percentage At">
                     <div *ngIf="row.lastupdated_training_percentage_at!='NA'">

@@ -155,8 +155,8 @@ export class TrainingreportComponent implements OnInit {
   }
   sortPageData(item:any){
     if(item!=this.sort_val){
-      this.sort_type = item,
-      this.sort_val = 'asc'
+      this.sort_type = 'asc',
+      this.sort_val = item;
     }else{
       if(this.sort_type=='desc'){
         this.sort_type='asc';
