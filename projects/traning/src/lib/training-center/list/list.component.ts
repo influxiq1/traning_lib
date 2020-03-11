@@ -71,7 +71,6 @@ export class ListComponent implements OnInit {
     
 
     this.allLessonData = results.lessondata;
-    // console.log("allLessonData details",this.allLessonData);
     this.trainingCategoryName=results.trainingname;
   }
   @Input()
@@ -159,6 +158,8 @@ export class ListComponent implements OnInit {
   }
   constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router,
     public cookieService:CookieService,public snakBar:MatSnackBar,public activatedRoute:ActivatedRoute) {
+      console.log("allLessonData details++++++=",this.allLessonData);
+
       this.allCookiesData = cookieService.getAll();
       this.cookiesData = JSON.parse(this.allCookiesData.user_details);
       this.userId = this.cookiesData._id;
@@ -186,6 +187,18 @@ export class ListComponent implements OnInit {
     .subscribe((response):any=>{
       let result :any=response;
       this.questionArray = result.results.questionanswerlist;
+      if(this.questionArray.length==0){
+        this.addMarkedData(this.currentlesson,this.paramsId,id,this.lesson_title);
+        this.questionArray.expanded = true;
+      }
+      if(i<this.allLessonData.length){
+          
+        if(this.allLessonData[i+1]!=null){
+        this.allLessonData[i].expanded=false;
+        this.allLessonData[i+1].expanded=true;
+        this.allLessonData[i+1].is_done=true;
+        }
+      }
       if(this.questionArray.length>0){
         this.progressLoader = false;
         let lesson_name:any=lesson_title;
@@ -235,6 +248,7 @@ export class ListComponent implements OnInit {
   }
   
   addMarkedData(lessonId:any,associated_training:any,i:any,lession_title:any){
+    console.log("i meaning data",i);
     const link = this.serverDetailsVal.serverUrl + this.formSourceVal.addMarkendpoint;
     let data:any={
       "data":{
