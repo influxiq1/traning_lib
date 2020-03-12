@@ -192,12 +192,24 @@ export class ListComponent implements OnInit {
         this.questionArray.expanded = true;
       }
       if(i<this.allLessonData.length){
+      if(i<this.allLessonData.length){
           
         if(this.allLessonData[i+1]!=null){
         this.allLessonData[i].expanded=false;
         this.allLessonData[i+1].expanded=true;
         this.allLessonData[i+1].is_done=true;
+        }else{
+          let message :any="You Have Successfully Completed The Training";
+          let action : any="Ok";
+          this.snakBar.open(message,action,{
+            duration:3000
+          });
+          setTimeout(() => {
+            this.lastOpenDialog('lessoncompletedmoal'); 
+          }, 4000);
+          
         }
+      }
       }
       if(this.questionArray.length>0){
         this.progressLoader = false;

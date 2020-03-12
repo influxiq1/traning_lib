@@ -99,29 +99,37 @@
             <lib-file-upload [config]="uploadConfigData"></lib-file-upload>
             <ng-container *ngIf="mediaTypeValue == 'image' && imagePath != null">
                 <mat-card class="example-card"  >
-                    <span class="closecard"  class="pointer" *ngIf="mediaTypeValue == 'image'" (click)="clear_image()"><i class="material-icons">clear</i></span>
+                    <span class="closecard"  class="pointer" *ngIf="mediaTypeValue == 'image'" (click)="clear()"><i class="material-icons">clear</i></span>
                     <img mat-card-image src="{{ imagePath }}"
                        />
                   </mat-card>
             </ng-container>
-            <ng-container *ngIf="mediaTypeValue == 'video' && imagePath != null" >
+            <ng-container *ngIf="mediaTypeValue == 'video' && imagePath != null && audioVideoFlag==true" >
                <div style="margin: 0 auto;display: block;">
-                <video width="640" height="360" controls >
+                <mat-card class="example-card"  >         
+                    <span class="closecard"  class="pointer" *ngIf="mediaTypeValue == 'video'" (click)="clear()"><i class="material-icons">clear</i></span>
+                 <video width="640" height="360" controls >
                     <source src="{{ imagePath }}" type="video/mp4">
                     Your browser does not support the video tag.
                   </video>
+                </mat-card>
                </div>
                 
             </ng-container>
-            <ng-container *ngIf="mediaTypeValue == 'audio' && imagePath != null ">
-                
+            <ng-container *ngIf="mediaTypeValue == 'audio' && imagePath != null && audioVideoFlag==true">
+               
                 <div style="margin: 0 auto;display: block;">
-                <audio controls>
+                 <mat-card class="example-card"  >
+                    <span class="closecard"  class="pointer" *ngIf="mediaTypeValue == 'audio'" (click)="clear()"><i class="material-icons">clear</i></span>
+                <audio controls >
+                   
                     <source src="{{ imagePath }}" type="audio/ogg">
                     <source src="{{ imagePath }}" type="audio/mpeg">
                   Your browser does not support the audio element.
                   </audio>
-                </div>
+            </mat-card>
+        </div>
+
             </ng-container>
         </div>
        

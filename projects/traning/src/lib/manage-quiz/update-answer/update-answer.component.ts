@@ -62,7 +62,6 @@ export class UpdateAnswerComponent implements OnInit {
   }
   
   delete(id:any,index){
-    console.log("idddd",id,index);
     this.deleteId = id;
     this.deleteIndex = index;
     let modalData: any = {

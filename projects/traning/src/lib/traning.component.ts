@@ -46,8 +46,9 @@ export class TraningComponent implements OnInit {
   public images_array:any=[];
   public checked:boolean=true;
   public allLessonData:any=[];
-  public imagePath:any;
+  public imagePath:any='';
   public fileArray:any;
+  public audioVideoFlag:boolean=true;
   @Input()
     set formdata(formdata: string) {
         this.formdataval = (formdata) || '<no name set>';
@@ -113,8 +114,7 @@ export class TraningComponent implements OnInit {
           }
            else {
               let tempdefault = '';
-              // if (this.formdataval[c].multiple != null && this.formdataval[c].multiple == true){}
-              // console.log(tempdefault);
+              
               
               if (this.formdataval[c].validationrule != null && this.formdataval[c].validationrule.required){ 
                 formgrp[this.formdataval[c].name] = [tempdefault, Validators.required];
@@ -138,7 +138,7 @@ export class TraningComponent implements OnInit {
                  formgrp[this.formdataval[c].name] = [tempdefault, Validators.compose([Validators.required, Validators.pattern('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?|^((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$')])];
                 }
               if (this.formdataval[c].inputtype == 'select') {
-                console.log('select is workiing');
+              
                   this.getselectdata(this.formdataval[c].sourceview, this.formdataval[c].endpoint, c);
               }
           }
@@ -249,7 +249,6 @@ export class TraningComponent implements OnInit {
 }
 getMediaTypeVal(value:any,name:any){
   this.imagePath = null;
-  console.log("imagee case",value,name);
   if(name == 'mediaType'){
     this.mediaTypeValue = value;
   }
@@ -277,12 +276,10 @@ getMediaTypeVal(value:any,name:any){
 cancelButton(){
   this.router.navigateByUrl(this.listingPageRoute);
 }
-clear_image(){
-  console.log("its workssss");
-  // delete this.fileArray; 
-  let index:any=0;
-  this.fileArray.splice(index, 1);
-  console.log("file array",this.fileArray);
+clear(){
+  this.imagePath = '';
+  this.audioVideoFlag=false;
+  
 }
 
 geteditdata() {
@@ -297,11 +294,10 @@ geteditdata() {
         }
 
   this.apiService.getData(link, data).subscribe((res: any)=>{
-    console.log("edited data1111",res);
     if (res.status == 'error') {
      
   } else {
-
+    console.log("edited data",res);
     if(this.route.snapshot.url[0].path=="manage-lession"){
      if(this.route.snapshot.url[1].path=="edit"){
       this.getMediaTypeVal(res.res[0].associated_training,'associated_training');
@@ -309,12 +305,15 @@ geteditdata() {
       let imageBasepath:any;
       let fileserverName:any;
       this.fileArray = res.res[0].fileType;
-      
+      console.log("cross fileArray",this.fileArray);
+
+      this.htmType = res.res[0].typeHtml;
       for (let key in res.res[0].fileType) {
            imageBasepath = res.res[0].fileType[key].basepath;
            fileserverName = res.res[0].fileType[key].fileservername;
       }
       this.imagePath = imageBasepath+fileserverName;
+      this.fileArray = this.imagePath;
      }
     }
 

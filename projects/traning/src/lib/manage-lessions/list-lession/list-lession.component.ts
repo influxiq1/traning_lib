@@ -223,7 +223,9 @@ export class ListLessionComponent implements OnInit {
           let result : any=response;
           this.dataSource = result.res;
           let allData: PeriodicElement[] = this.dataSource;
-          this.dataSource = new MatTableDataSource(allData);    
+          this.dataSource = new MatTableDataSource(allData);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;    
           });
       }
   

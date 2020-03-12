@@ -135,14 +135,12 @@ export class ListingTrainingComponent implements OnInit {
   trainingCount(){
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.trainingCountEndpoint;
     this.apiService.postDatawithoutTokenReportCount(link).subscribe((response:any)=>{
-        console.log("counts data",response);
         this.trainingCounts.activatedtrainingcount = response.activatedtrainingcount;
         this.trainingCounts.activatedlessoncount = response.activatedlessoncount;
         this.trainingCounts.trashedtrainingcount = response.trashedtrainingcount;
         this.trainingCounts.trashedlessoncount = response.trashedlessoncount;
         this.trainingCounts.totaltrainingcount = response.totaltrainingcount;
         this.trainingCounts.totallessoncount = response.totallessoncount;
-        console.log("testing count",this.trainingCounts);
     })
   }
 
@@ -217,6 +215,8 @@ export class ListingTrainingComponent implements OnInit {
       this.dataSource = result.res;
       let allData: PeriodicElement[] = this.dataSource;
       this.dataSource = new MatTableDataSource(allData);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
   }
  
@@ -338,21 +338,6 @@ export class ListingTrainingComponent implements OnInit {
   }
 
 
-
-
-  // statusUpdateAllRecords(){
-  //   console.log("selected souresh",this.selection.selected.length);
-  //   let ids:any=[];
-  //   console.log("all seleted status",this.selection);
-  //   for (let c in this.selection.selected) {
-  //     ids.push(this.selection.selected[c]._id);
-  //   }
-  //   let link = this.serverDetailsVal.serverUrl + this.formSourceVal.statusUpdateEndpoint;
-  //   let token:any= this.serverDetailsVal.jwttoken;
-  //   let source :any= this.formSourceVal.source;
-
-
-  // }
   statusUpdateAllRecords(){
     for (let c in this.selection.selected) {
       this.idArray.push(this.selection.selected[c]._id);
@@ -394,7 +379,7 @@ export class ListingTrainingComponent implements OnInit {
             }
           }
         }
-         this.dataSource.paginator = this.paginator;
+            this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
             this.selection.clear();
             let allData: PeriodicElement[] = this.listingData;

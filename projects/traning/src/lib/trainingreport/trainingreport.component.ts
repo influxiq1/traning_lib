@@ -89,6 +89,8 @@ export class TrainingreportComponent implements OnInit {
   ngOnInit() {
     this.gettrainingreportdatacount();
   }
+ 
+  //getting the total report data count
   gettrainingreportdatacount(){
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
     let data:any={
@@ -104,6 +106,8 @@ export class TrainingreportComponent implements OnInit {
 
      
   }
+
+  //geting all the sorted report data and include searching 
   getPageData(){
     let searchCondition:any={};
     let searchVal:any=this.search;
