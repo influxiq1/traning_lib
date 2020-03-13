@@ -1,3 +1,47 @@
 table {
-    width: 100%;
-  }
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 1%;
+}
+.headerSpan{
+  text-align: center;
+  display: block;
+  margin: auto;
+}
+.buttonsetToolbar{
+  background-color: #f4f3f8;
+  text-align: center;
+  display: block;
+  padding-top: 10px;
+}
+.singleButton{
+  margin: 5px; 
+  float: right;
+}
+.pointer{
+ cursor: pointer;
+}
+.mat-row {
+height: auto;
+}
+
+.mat-cell {
+padding: 8px 8px 8px 0;
+}
+.listpagination{
+display: flex;
+}
+.pagination{ height:auto; align-items: center; justify-content: center; padding-top: 16px; }
+.pagination .result{ margin: 0 16px; display: flex; align-items: center;}
+.pagination .result .mat-form-field{ width: auto;}
+.pagination .result .mat-form-field:last-child{margin-left: 10px; width: 100px;}
+.btn{ display: block; margin-top: -16px;}
+.btn button { margin-right: 10px;}
+.btn button:last-child{margin-right: 0;}

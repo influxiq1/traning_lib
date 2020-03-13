@@ -8,6 +8,11 @@
   </span>
   </span>
     </span>
+    <mat-form-field>
+        <mat-label>Training Name</mat-label>
+        <input matInput placeholder="Name" [(ngModel)]="search.training_name" />
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="getPageData()">Search</button>
 <ng-container *ngIf="allData.length=='0'">
 <h3>No Record Found</h3>
 </ng-container>
@@ -16,22 +21,23 @@
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="#">
         <th mat-header-cell *matHeaderCellDef> # </th>
-        <td mat-cell *matCellDef="let element; let i = index;"> {{ i + 1}}.
+        <td mat-cell *matCellDef="let element; let i = index;">
+             {{ (page.page_no-1) * (page.page_count) + (i+1) }}.
         </td>
     </ng-container>
 
     <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item.key}}">
         <th mat-header-cell *matHeaderCellDef>
-            <!-- <ng-container *ngIf="sort_val == item.key.toLowerCase()"> </ng-container> -->
+            <ng-container *ngIf="sort_val == item.key.toLowerCase()"> </ng-container>
             {{ item.value }}
-            <!-- <i *ngIf="sort_type == 'asc'" (click)="sortPageData(item.key);"
+            <i *ngIf="sort_type == 'asc'" (click)="sortPageData(item.key);"
                 class="material-icons">
                 keyboard_arrow_down
             </i>
             <i *ngIf="sort_type == 'desc'" (click)="sortPageData(item.key);"
                 class="material-icons">
                 keyboard_arrow_up
-            </i> -->
+            </i>
         </th>
         <td mat-cell *matCellDef="let element">
             <span *ngIf="item.key != 'training_percentage_cat' && item.key != 'lastupdated_training_percentage_at'"> {{ element[item.key] }} </span>
@@ -48,6 +54,32 @@
     <tr mat-row *matRowDef="let row; columns: displaycolvals;"></tr>
 
 </table>
+<span>
+    <h2 class="header">Showing {{ page.page_count }} result from
+    <ng-container *ngIf="reportDataCount == 0">Many.</ng-container>
+        <ng-container *ngIf="reportDataCount > 0">{{reportDataCount}}.</ng-container>
+    </h2>
+    </span>
+<mat-toolbar class="pagination">
+    
+    <span class="result">
+        <mat-form-field appearance="fill" class="example-full-width">
+            <mat-label> Current page {{ page.page_no }} Total page {{ totalPage }}</mat-label>
+            <input matInput type="number" placeholder="Total page {{ totalPage}}" (keyup)="getPageData();"
+                [(ngModel)]="page.page_no">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="example-full-width">
+            <mat-label>Page Count</mat-label>
+            <input matInput type="number" placeholder="Page data {{ page.page_count }}"
+                [(ngModel)]="page.page_count">
+        </mat-form-field>
+    </span>
+    <span class="btn">
+        <button mat-raised-button color="primary" (click)="nextPage('prev')">Prev</button>
+<button mat-raised-button color="primary" (click)="nextPage()">Next</button>
+    </span>
+</mat-toolbar>
 </ng-container>
 
 </mat-card>
