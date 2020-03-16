@@ -50,6 +50,7 @@ export class ListComponent implements OnInit {
   public uniquedonetrainingarray:any=[];
   public paramsTrainingId:any; 
   public lesson_title:any;
+  public trainingLessonCount:any;
   
   @Input()
   set TrainingCategoryList(val: any) {
@@ -76,12 +77,19 @@ export class ListComponent implements OnInit {
   @Input()
   set TotalData(data: {}) {
     this.totalData = (data) || '<no name set>';
+    this.trainingLessonCount = this.totalData.training_lesson_count;
     this.doneLessonByCatByUser = this.totalData.done_lesson_by_cat_by_user;
     let lesson:any=this.totalData.total_lesson[0].count;
     let done_lesson_by_cat_by_user:any=this.totalData.done_lesson_by_cat_by_user.length;
     this.divisor=lesson; 
     let userPercentage:any=0;
     for(let n in  this.trainingCategoryList){
+      for(let tc in this.trainingLessonCount){
+        //console.log('tc itteration ',this.trainingLessonCount[tc]._id.associated_training,this.trainingLessonCount[tc].lessons,this.trainingCategoryList[n]._id);
+        if(this.trainingCategoryList[n]._id.toString()==this.trainingLessonCount[tc]._id.associated_training.toString()){
+          this.trainingCategoryList[n].count=this.trainingLessonCount[tc].lessons;
+        }
+      }
       if(this.trainingCategoryList[n].count ==null)
       this.trainingCategoryList[n].count=0;
       if(this.trainingCategoryList[n].done ==null)
@@ -90,6 +98,16 @@ export class ListComponent implements OnInit {
       if(this.trainingCategoryList[n].childid!=null && this.trainingCategoryList[n].childid.length>0){
         
         for(let p in this.trainingCategoryList[n].childid){
+
+
+          for(let tc in this.trainingLessonCount){
+            //console.log('tc itteration loop 2  ',this.trainingLessonCount[tc]._id.associated_training,this.trainingLessonCount[tc].lessons,this.trainingCategoryList[n]._id);
+            if(this.trainingLessonCount[tc]._id.associated_training.toString() == this.trainingCategoryList[n].childid[p].toString()){
+              this.trainingCategoryList[n].childcount[p]=this.trainingLessonCount[tc].lessons;
+            }
+          }
+
+
           if(this.trainingCategoryList[n].childcount[p]==null)
           this.trainingCategoryList[n].childcount[p]=0;
           if(this.trainingCategoryList[n].childdone==null)
@@ -103,7 +121,7 @@ export class ListComponent implements OnInit {
           this.trainingCategoryList[n].childpercentage[p]=0;
           for(let c in this.doneLessonByCatByUser){
            
-            if(this.doneLessonByCatByUser[c].associated_training.toString()==this.trainingCategoryList[n].childid[p]){
+            if(this.doneLessonByCatByUser[c].associated_training.toString()==this.trainingCategoryList[n].childid[p].toString()){
 
               this.trainingCategoryList[n].childdone[p]=this.doneLessonByCatByUser[c].lessonsdone;
               // this.trainingCategoryList[n].childpercentage[p]=(parseInt(this.doneLessonByCatByUser[c].lessonsdone)/parseInt(this.trainingCategoryList[n].childcount[p]))*100;

@@ -94,7 +94,8 @@
                                          'class3':item.percentage ===0 }" *ngIf="item.childcat.length==0"
                 class="selectedclass" (click)="nochildclick(item._id)">{{item.catagory_name}}
                 ({{item.done}}/{{item.count}})</mat-list-item>
-                <!-- <p>{{item.catagory_name}}</p> -->
+
+                <!-- <p>({{item.done}}/{{item.count}})</p> -->
               <div *ngIf="item.count != null && item.childcat.length==0">
                 <mat-progress-bar *ngIf="percentageprogressLoader " mode="determinate" value="{{item.percentage}}">
                 </mat-progress-bar>

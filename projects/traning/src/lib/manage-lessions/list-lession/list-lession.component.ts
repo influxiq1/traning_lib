@@ -436,6 +436,8 @@ export class ListLessionComponent implements OnInit {
     this.apiService.postData(link,data).subscribe((response: any)=>{
       this.allTrashData = response.res;
       this.dataSource = new MatTableDataSource(this.allTrashData);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
      
     })
 

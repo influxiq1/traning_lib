@@ -30,12 +30,12 @@
         <th mat-header-cell *matHeaderCellDef>
             <ng-container *ngIf="sort_val == item.key.toLowerCase()"> </ng-container>
             {{ item.value }}
-            <i *ngIf="sort_type == 'asc'" (click)="sortPageData(item.key);"
-                class="material-icons">
+            <i *ngIf="sort_type == 'asc' && item.value!='Name' && item.value!='Total Lesson'" (click)="sortPageData(item.key);"
+                class="material-icons" >
                 keyboard_arrow_down
             </i>
-            <i *ngIf="sort_type == 'desc'" (click)="sortPageData(item.key);"
-                class="material-icons">
+            <i *ngIf="sort_type == 'desc' && item.value!='Name' && item.value!='Total Lesson'" (click)="sortPageData(item.key);"
+                class="material-icons"  >
                 keyboard_arrow_up
             </i>
         </th>
