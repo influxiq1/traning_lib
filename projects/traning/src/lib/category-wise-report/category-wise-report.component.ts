@@ -52,7 +52,7 @@ export class CategoryWiseReportComponent implements OnInit {
       {key:"name", value:'Name'},
       {key:"training_name", value:'Training Name'},
       {key:"totallesson", value:'Total Lesson'},
-      {key:"done", value:'Done Training'},
+      {key:"done", value:'Done lessons'},
       {key:"training_percentage_cat", value: "Training Percentage"},
       {key:"lastupdated_training_percentage_at", value: "Last Training Percentage On"}
     ];

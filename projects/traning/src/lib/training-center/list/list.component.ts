@@ -176,8 +176,6 @@ export class ListComponent implements OnInit {
   }
   constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router,
     public cookieService:CookieService,public snakBar:MatSnackBar,public activatedRoute:ActivatedRoute) {
-      console.log("allLessonData details++++++=",this.allLessonData);
-
       this.allCookiesData = cookieService.getAll();
       this.cookiesData = JSON.parse(this.allCookiesData.user_details);
       this.userId = this.cookiesData._id;
