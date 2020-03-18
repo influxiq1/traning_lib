@@ -89,17 +89,19 @@
             <mat-list-item class="selectedclass" *ngIf="item.childcat.length>=1">{{item.catagory_name}}</mat-list-item>
             <div class="pointer">
               <!-- parent section -->
-              <mat-list-item [ngClass]="{'class1': item.percentage>1,
-                                         'class2': item.percentage===100,
-                                         'class3':item.percentage ===0 }" *ngIf="item.childcat.length==0"
+              <mat-list-item [ngClass]="{'class1': ((item.done/item.count)*100)>1,
+                                         'class2': ((item.done/item.count)*100) ===100,
+                                         'class3': ((item.done/item.count)*100) ===0 }" *ngIf="item.childcat.length==0"
                 class="selectedclass" (click)="nochildclick(item._id)">{{item.catagory_name}}
                 ({{item.done}}/{{item.count}})</mat-list-item>
 
                 <!-- <p>({{item.done}}/{{item.count}})</p> -->
               <div *ngIf="item.count != null && item.childcat.length==0">
-                <mat-progress-bar *ngIf="percentageprogressLoader " mode="determinate" value="{{item.percentage}}">
+                <br>
+                <mat-progress-bar *ngIf="percentageprogressLoader " mode="determinate" value="{{((item.done/item.count)*100) }}">
                 </mat-progress-bar>
-                <span style="font-size: 20px;font-weight: bold;">{{ item.percentage }}%</span>
+                <span style="font-size: 20px;font-weight: bold;">{{((item.done/item.count)*100) }}%</span>
+                <!-- <p>{{ item.done/item.count | percent:'2.0-2' }}%</p> -->
               </div>
 
 

@@ -51,6 +51,7 @@ export class ListComponent implements OnInit {
   public paramsTrainingId:any; 
   public lesson_title:any;
   public trainingLessonCount:any;
+  public lesson_done:any;
   
   @Input()
   set TrainingCategoryList(val: any) {
@@ -89,7 +90,12 @@ export class ListComponent implements OnInit {
         if(this.trainingCategoryList[n]._id.toString()==this.trainingLessonCount[tc]._id.associated_training.toString()){
           this.trainingCategoryList[n].count=this.trainingLessonCount[tc].lessons;
         }
+         
       }
+      
+
+
+
       if(this.trainingCategoryList[n].count ==null)
       this.trainingCategoryList[n].count=0;
       if(this.trainingCategoryList[n].done ==null)
@@ -276,7 +282,7 @@ export class ListComponent implements OnInit {
   }
   
   addMarkedData(lessonId:any,associated_training:any,i:any,lession_title:any){
-    console.log("i meaning data",i);
+    
     const link = this.serverDetailsVal.serverUrl + this.formSourceVal.addMarkendpoint;
     let data:any={
       "data":{
