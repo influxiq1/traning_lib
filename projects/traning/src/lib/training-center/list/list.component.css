@@ -1,57 +1,41 @@
+.leftRightPortion{display:flex;justify-content:space-between}
+.mat-card-content{flex-direction:row;box-sizing:border-box;display:flex}
+.row{flex-direction:row;box-sizing:border-box;display:flex;place-content:top space-around;align-items:flex-start;-webkit-box-flex:1;flex:1 1 100%;max-width:100%;}
+.column{flex-direction:column;box-sizing:border-box;display:flex}
+.column .rowinner{flex-direction:row;box-sizing:border-box;display:flex;flex:1 1 100%;margin-bottom:10px}
+.column .rowinner:last-child{margin-bottom:0}
+.column .rowinner .mat-accordion{width:100%}
+.columnleft{width:70%}
+.submitbtn{display: block;width: 170px;margin: 0;background: #5c5f61;color: #fff;float: right;}
+.pointer{cursor:pointer}
+.leftside{width:67%;margin-right:3%}
+.rightside{width:30%;}
+.class1{background-color:#8fef8d}
+.class2{background-color:#aed8e6}
+.class3{background-color:#fffefd}
+.class4{background-color:#d3d3d5}
+.class5{background-color:#f5a216}
+.class6{background-color:#ff8f91}
+.wrapper{display:flex;justify-content:space-around;width:100%;flex-wrap:wrap}
+.wrapper .childButton{width:100%;background:#1162ad;color:#fff;margin-bottom:10px;min-width:240px}
 
-.leftRightPortion{
-    display: flex;
-    justify-content: space-between;
-}
 
-.mat-card-content{flex-direction: row; box-sizing: border-box; display: flex;}
-
-.row{    flex-direction: row;box-sizing: border-box;display: flex;place-content: top space-around; align-items: flex-start;
-    -webkit-box-flex: 1;
-    flex: 1 1 100%;
-    max-width: 100%;
-    margin-top: 20px !important;}
-
-.column{    flex-direction: column; box-sizing: border-box;  display: flex;}
-
-.column .rowinner{    flex-direction: row; box-sizing: border-box;  display: flex; flex: 1 1 100%; margin-bottom: 10px;}
-.column .rowinner:last-child{margin-bottom: 0;}
-.column .rowinner .mat-accordion{width: 100%;}
-.columnleft{width: 70%;}
-.submitbtn{
-    display: block;
-    width: 170px;
-    margin: 10px auto;
-    background: #3f50b5 !important;
-    color: #fff;
-  }
-  .pointer{
-      cursor: pointer;
-  }
-  .leftside{
-      width: 67%;
-      margin-right: 3%;
-  }
-  .rightside{
-    width: 30%;
-}
-.class1{
-    background-color: aqua
-}
-.class2{
-    background-color: crimson;
-}
-.class3{
-    background-color: dodgerblue;
-}
- .wrapper{
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    flex-wrap: wrap;
-}
- .wrapper .childButton{width: 100%;
-    background: #1162ad;
-    color: #fff;
-    margin-bottom: 10px;
-    min-width: 240px; }
+.trainingcentercls .rightside{padding:10px;background-color:#e5e5e5;}
+.trainingcentercls .mat-list .mat-list-item{height: auto;padding: 8px 0px;text-transform: capitalize;font-size: 16px;}
+.trainingcentercls .mat-list .mat-list-item.selectedclass:first-child{margin-top: 0;}
+.trainingcentercls .mat-list .mat-list-item.selectedclass{background-color:#c4c4c4;text-transform:uppercase;padding: 8px 0px; font-size:16px;margin-top: 8px;font-weight: 600;}
+.trainingcentercls .mat-list.sublistone{background-color:#d0d0d0;text-transform:capitalize; padding: 10px;}
+/* .trainingcentercls .mat-list.sublist .sublistwrapper{padding: 10px 6px;} */
+.trainingcentercls .matprogressbar br{display: none;}
+.trainingcentercls .mat-list {position: relative;padding-top: 0px;}
+.trainingcentercls .mat-list.sublist {margin-bottom: 8px;}
+.trainingcentercls .progresspercentage{font-size: 14px;font-weight: normal;position: absolute;right: 0;  bottom: 3px;}
+.trainingcentercls .trainingheadercls{margin: 0;padding: 0; margin-bottom: 10px;position: relative;}
+.trainingcentercls .trainingheadercls h2{margin: 0;font-size: 16px;text-transform: uppercase;width: 90%;
+    line-height: 28px;margin-bottom: 0px;}
+.trainingcentercls .trainingheadercls h3{margin: 0;position: absolute;right: 0;bottom: 4px;}
+.mat-card:not([class*=mat-elevation-z]){box-shadow:none !important}
+.rowinner .mat-expansion-panel:not([class*=mat-elevation-z]){box-shadow:none !important;background-color: #e5e5e5;}
+.rowinner {margin-top: 10px;display: inline-block;width: 100%;}
+.rowinner:first-child{margin-top: 0;}
+.rowinner .mat-expansion-panel-header {padding: 10px 24px;height: auto !important; background-color: #c4c4c4;}

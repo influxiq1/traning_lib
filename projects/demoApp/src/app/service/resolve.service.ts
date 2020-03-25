@@ -15,12 +15,13 @@ export interface EndpointComponent {
 export class ResolveService implements Resolve<any> {
 public allCookiesData:any;
 public cookiesData:any;
+public userType:any;
 public userId:any;
   constructor(private _apiService: HttpService, private router: Router,public cookiesService:CookieService ) { 
     this.allCookiesData = cookiesService.getAll();
       this.cookiesData = JSON.parse(this.allCookiesData.user_details);
       this.userId = this.cookiesData._id;
-      
+      this.userType=this.cookiesData.type;
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {     
@@ -29,6 +30,7 @@ public userId:any;
     requestData.condition = Object.assign(requestData.condition, route.params);
     if(route.url[0].path == "training-center") {
           requestData.condition['user_id'] = this.userId;
+          requestData.condition['type'] = this.userType;
     }
     return new Promise((resolve) => {
       this._apiService.CustomRequest(route.data.requestcondition, route.data.endpoint).subscribe(api_object => {

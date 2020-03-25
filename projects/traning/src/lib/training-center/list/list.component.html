@@ -78,10 +78,13 @@
 
 
       <span fxLayout="column" class="column" class="rightside">
-        <h2>You Have Completed {{ dividend }}/{{divisor}} Lessons</h2>
-        <mat-progress-bar *ngIf="percentageprogressLoader " mode="determinate" value="{{ reportPercentage }}">
-        </mat-progress-bar>
-        <h3>{{ reportPercentage }}%</h3>
+        <div class="trainingheadercls">
+          <h2>You Have Completed {{ dividend }}/{{divisor}} Lessons</h2>
+          <mat-progress-bar *ngIf="percentageprogressLoader " mode="determinate" value="{{ reportPercentage }}">
+          </mat-progress-bar>
+          <h3>{{ reportPercentage }}%</h3>
+        </div>
+        
         <mat-list>
 
           <ng-container *ngFor="let item of trainingCategoryList;let i = index">
@@ -97,18 +100,18 @@
 
                 <!-- <p>({{item.done}}/{{item.count}})</p> -->
               <div *ngIf="item.count != null && item.childcat.length==0">
-                <br>
+               
                 <mat-progress-bar *ngIf="percentageprogressLoader " mode="determinate" value="{{((item.done/item.count)*100) }}">
                 </mat-progress-bar>
-                <span style="font-size: 20px;font-weight: bold;">{{((item.done/item.count)*100) }}%</span>
+                <span class="progresspercentage">{{((item.done/item.count)*100) }}%</span>
                 <!-- <p>{{ item.done/item.count | percent:'2.0-2' }}%</p> -->
               </div>
 
 
             </div>
 
-            <mat-list style="margin-left:30px;">
-              <div>
+            <mat-list class="sublist">
+              <div class="sublistwrapper">
                 <ng-container *ngIf="item.childcat!=null && item.childcat.length>0">
                   <mat-list *ngFor=" let childitem of item.childcat;let i1 = index">
                     <mat-list-item class="pointer" [ngClass]="{'class1': item.childpercentage[i1]>1,
@@ -123,11 +126,11 @@
                     </mat-list-item>
 
 
-                    <div *ngIf="item.childdone !=null && item.childdone[i1]!=null">
-                      <br />
+                    <div *ngIf="item.childdone !=null && item.childdone[i1]!=null" class="matprogressbar">
+                     
                       <mat-progress-bar *ngIf="item.childdone !=null && item.childdone[i1]!=null " mode="determinate"
                         value="{{item.childpercentage[i1]}}"></mat-progress-bar>
-                      <span style="font-size: 20px;font-weight: bold;"> {{item.childpercentage[i1]}}%</span>
+                      <span class="progresspercentage"> {{item.childpercentage[i1]}}%</span>
                     </div>
 
 
