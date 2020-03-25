@@ -170,7 +170,7 @@ export class ManageQuizComponent implements OnInit {
             this.listingData[index].status = "Active"
   
           }
-          console.log("souresh testtt",this.listingData[index].status);
+         
           let allData: PeriodicElement[] = this.listingData;
           this.dataSource = new MatTableDataSource(allData);     
          }
