@@ -52,7 +52,6 @@ export class TraningComponent implements OnInit {
   @Input()
     set formdata(formdata: string) {
         this.formdataval = (formdata) || '<no name set>';
-        console.log("formdata val",this.formdataval);
     }
     @Input()
     set PageName(val: {}) {
