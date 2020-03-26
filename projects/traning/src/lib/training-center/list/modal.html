@@ -1,9 +1,13 @@
-<div class="modal" *ngIf="data.data != 'lessoncompletedmoal' ">
+<style type="text/css">
+  .modalclslibrary h1.mat-dialog-title {margin: 0;text-transform: capitalize;}
+  .modalclslibrary h3 {margin: 0;text-transform: capitalize;}
+</style>
+<div class="modal modalclslibrary" *ngIf="data.data != 'lessoncompletedmoal' ">
     <h1 mat-dialog-title>Quiz Question</h1>
     <!-- <p>{{ data.data }}</p> -->
     <div mat-dialog-content>
 
-            <p *ngIf="successanswer == false  ">{{ data.data.question}}</p>
+            <h3 *ngIf="successanswer == false  ">{{ data.data.question}}</h3>
             <ng-container *ngIf="data.data.answers!=null && data.data.answers.length>0 && successanswer==false ">
                 <p *ngFor="let val of data.data.answers">
                         <ng-container> 
