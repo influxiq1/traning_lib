@@ -37,6 +37,17 @@ public userId:any;
           requestData.condition['user_id'] = this.userId;
           requestData.condition['type'] = this.userType;
     }
+    if(route.url[0].path == "training-report") {
+      if(this.userType == "admin"){
+
+      }
+      if(this.userType == "salesrep"){
+        requestData.condition['user_id'] = this.userId;
+      }
+      if(this.userType == "user"){
+        requestData.condition['user_id'] = this.userId;
+      }
+}
     return new Promise((resolve) => {
       this._apiService.CustomRequest(route.data.requestcondition, route.data.endpoint).subscribe(api_object => {
         if (api_object) {

@@ -73,7 +73,7 @@ const appRoutes: Routes = [
     {
         path    : 'training-report',component : TrainingreportComponent,
         resolve : {trainingReportData : ResolveService},
-        data    : { requestcondition: { source: '',sort_val:'name',sort_type:'desc', condition: {"skip":0,"limit":50} }, endpoint: 'gettrainingreportdata' }
+        data    : { requestcondition: { source: '',sort_val:'name',sort_type:'desc', condition: {"skip":0,"limit":50,"search":{}} }, endpoint: 'gettrainingreportdata' }
     },
     {
         path   : 'category-wise-report-view/:user_id',component : CategoryWiseReportComponent,
