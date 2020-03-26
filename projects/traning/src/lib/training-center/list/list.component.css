@@ -27,10 +27,10 @@
 .trainingcentercls .matprogressbar br{display:none}
 .trainingcentercls .mat-list{position:relative;padding-top:0}
 .trainingcentercls .mat-list.sublist{margin-bottom:8px}
-.trainingcentercls .progresspercentage{font-size:14px;font-weight:400;position:absolute;right:0;bottom:3px}
+.trainingcentercls .progresspercentage{font-size:14px;font-weight:400;position:absolute;right:0;bottom:8px}
 .trainingcentercls .trainingheadercls{margin:0;padding:0;margin-bottom:10px;position:relative}
 .trainingcentercls .trainingheadercls h2{margin:0;font-size:16px;text-transform:uppercase;width:90%;line-height:28px;margin-bottom:0}
-.trainingcentercls .trainingheadercls h3{margin:0;position:absolute;right:0;bottom:4px}
+.trainingcentercls .trainingheadercls h3{margin:0;position:absolute;right:0;bottom:8px}
 .mat-card:not([class*=mat-elevation-z]){box-shadow:none!important}
 .rowinner .mat-expansion-panel:not([class*=mat-elevation-z]){box-shadow:none!important;background-color:#e5e5e5}
 .rowinner{margin-top:10px;display:inline-block;width:100%}
