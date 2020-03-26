@@ -17,7 +17,8 @@
 .class5{background-color:#f5a216}
 .class6{background-color:#ff8f91}
 .wrapper{display:flex;justify-content:space-around;width:100%;flex-wrap:wrap}
-.wrapper .childButton{width:100%;background:#1162ad;color:#fff;margin-bottom:10px;min-width:240px}
+.wrapper .buttonsingle{flex: 1; margin: 5px;}
+/* .wrapper .childButton{width:100%;background:#1162ad;color:#fff;margin-bottom:10px;min-width:240px} */
 .trainingcentercls .rightside{padding:10px;background-color:#e5e5e5}
 .trainingcentercls .mat-list .mat-list-item{height:auto;padding:8px 0;text-transform:capitalize;font-size:16px}
 .trainingcentercls .mat-list .mat-list-item.selectedclass:first-child{margin-top:0}
@@ -47,3 +48,9 @@
 .audioWrapper{margin:0;padding:0}
 .audioWrapper audio{width:100%}
 .trainingheadercls{text-transform: capitalize;}
+
+.modalclslibrary h1.mat-dialog-title {margin: 0;text-transform: uppercase;font-weight: bold;}
+.modalclslibrary h3 {margin: 0;text-transform: capitalize;margin-bottom: 5px;}
+.modalclslibrary .mat-dialog-content{margin-top: 5px;}
+.modalclslibrary button,.modalclslibrary button.childButton{margin-right: 5px;background: #5c5f61;color: #fff;margin-top: 5px;width: 100%;}
+.modalclslibrary .matcheckboxcls{margin-top: 5px;margin-bottom: 5px;}
