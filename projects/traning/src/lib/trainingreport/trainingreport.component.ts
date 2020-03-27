@@ -3,6 +3,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { DatePipe } from '@angular/common';
 import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 export interface PeriodicElement {
   _id:string;
@@ -40,6 +41,9 @@ export class TrainingreportComponent implements OnInit {
   public categoryWiseReportUrl:any;
   public sort_val:any;
   public sort_type:any;
+  public allCookiesData:any;
+  public cookiesData:any;
+  public userId:any;
 
   public page:any={
     "page_count":50,
@@ -58,7 +62,7 @@ export class TrainingreportComponent implements OnInit {
   @Input()
   set CategoryWiseReportUrl(url: any) {
     this.categoryWiseReportUrl = (url) || '<no name set>';
-    console.log("categoryWiseReportUrl",this.categoryWiseReportUrl);
+    
   }
   @Input()
   set formSource(formSource: any) {
@@ -81,9 +85,13 @@ export class TrainingreportComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.trainingReportData);
     
   }
-  constructor(public datepipe : DatePipe,public apiService : ApiService,public router:Router) {
+  constructor(public datepipe : DatePipe,public apiService : ApiService,public router:Router,public cookie:CookieService) {
     this.sort_val = 'name',
     this.sort_type='desc'
+    this.allCookiesData = cookie.getAll();
+    this.cookiesData = JSON.parse(this.allCookiesData.user_details);
+    this.userId = this.cookiesData._id;
+    
    }
 
   ngOnInit() {
@@ -96,7 +104,16 @@ export class TrainingreportComponent implements OnInit {
     let data:any={
       search : this.lastSearchCondition,
       sort_val: "name",
-      sort_type:"desc"
+      sort_type:"desc",
+      condition:{}
+    }
+    if(this.cookiesData.type=='salesrep'){
+      data.condition['user_id']= this.userId;
+      this.page.page_count = 1;
+    }
+    if(this.cookiesData.type=='user'){
+      data.condition['user_id']= this.userId;
+      this.page.page_count = 1;
     }
      this.apiService.postDatawithoutToken(link,data).subscribe((response:any)=>{
        this.reportDataCount = response.count;

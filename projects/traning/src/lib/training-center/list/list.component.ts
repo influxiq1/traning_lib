@@ -52,6 +52,7 @@ export class ListComponent implements OnInit {
   public lesson_title:any;
   public trainingLessonCount:any;
   public lesson_done:any;
+  public salesrepLessonCount:any=0;
   
   @Input()
   set TrainingCategoryList(val: any) {
@@ -84,17 +85,16 @@ export class ListComponent implements OnInit {
     let done_lesson_by_cat_by_user:any=this.totalData.done_lesson_by_cat_by_user.length;
     this.divisor=lesson; 
     let userPercentage:any=0;
+
     for(let n in  this.trainingCategoryList){
       for(let tc in this.trainingLessonCount){
-        //console.log('tc itteration ',this.trainingLessonCount[tc]._id.associated_training,this.trainingLessonCount[tc].lessons,this.trainingCategoryList[n]._id);
         if(this.trainingCategoryList[n]._id.toString()==this.trainingLessonCount[tc]._id.associated_training.toString()){
           this.trainingCategoryList[n].count=this.trainingLessonCount[tc].lessons;
+          this.salesrepLessonCount = this.salesrepLessonCount + this.trainingLessonCount[tc].lessons;
         }
+        
          
       }
-      
-
-
 
       if(this.trainingCategoryList[n].count ==null)
       this.trainingCategoryList[n].count=0;
@@ -107,13 +107,12 @@ export class ListComponent implements OnInit {
 
 
           for(let tc in this.trainingLessonCount){
-            //console.log('tc itteration loop 2  ',this.trainingLessonCount[tc]._id.associated_training,this.trainingLessonCount[tc].lessons,this.trainingCategoryList[n]._id);
+    
             if(this.trainingLessonCount[tc]._id.associated_training.toString() == this.trainingCategoryList[n].childid[p].toString()){
               this.trainingCategoryList[n].childcount[p]=this.trainingLessonCount[tc].lessons;
+              this.salesrepLessonCount = this.salesrepLessonCount + this.trainingLessonCount[tc].lessons;
             }
           }
-
-
           if(this.trainingCategoryList[n].childcount[p]==null)
           this.trainingCategoryList[n].childcount[p]=0;
           if(this.trainingCategoryList[n].childdone==null)
@@ -130,8 +129,6 @@ export class ListComponent implements OnInit {
             if(this.doneLessonByCatByUser[c].associated_training.toString()==this.trainingCategoryList[n].childid[p].toString()){
 
               this.trainingCategoryList[n].childdone[p]=this.doneLessonByCatByUser[c].lessonsdone;
-              // this.trainingCategoryList[n].childpercentage[p]=(parseInt(this.doneLessonByCatByUser[c].lessonsdone)/parseInt(this.trainingCategoryList[n].childcount[p]))*100;
-
               this.trainingCategoryList[n].childpercentage[p]=Math.floor((this.doneLessonByCatByUser[c].lessonsdone)/(this.trainingCategoryList[n].childcount[p])*100);
             
             }
@@ -149,6 +146,7 @@ export class ListComponent implements OnInit {
     if(done_lesson_by_cat_by_user==0){
       this.dividend=0;
     }
+    this.divisor = this.salesrepLessonCount;
   }
   @Input()
   set TrainingCeneterData(data: any) {
