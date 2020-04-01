@@ -45,3 +45,14 @@ table {
 .btn{ display: block; margin-top: -16px;}
 .btn button { margin-right: 10px;}
 .btn button:last-child{margin-right: 0;}
+.countsection{
+  width: 20%;
+  margin: 0px 5px;
+  box-sizing: border-box;
+  display: flex;
+
+}
+.countSection{
+ float: left;
+ margin: 10px;
+}

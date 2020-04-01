@@ -452,8 +452,8 @@ export class ListLessionComponent implements OnInit {
    }
    this.apiService.postData(link,data).subscribe((response: any)=>{
     if(response.status=="success"){
-      this.listingData.splice(index, 1);
-      let allTrashData: PeriodicElement[] = this.listingData;
+      this.allTrashData.splice(index, 1);
+      let allTrashData: PeriodicElement[] = this.allTrashData;
       this.dataSource = new MatTableDataSource(allTrashData);
       let message:any = "Successfully Restored This Record";
       let action : any="Ok";

@@ -53,6 +53,7 @@ export class ListComponent implements OnInit {
   public trainingLessonCount:any;
   public lesson_done:any;
   public salesrepLessonCount:any=0;
+  public userName:any;
   
   @Input()
   set TrainingCategoryList(val: any) {
@@ -182,6 +183,8 @@ export class ListComponent implements OnInit {
     public cookieService:CookieService,public snakBar:MatSnackBar,public activatedRoute:ActivatedRoute) {
       this.allCookiesData = cookieService.getAll();
       this.cookiesData = JSON.parse(this.allCookiesData.user_details);
+      this.userName = this.cookiesData.firstname+' '+this.cookiesData.lastname;
+      console.log("user email+++++++",this.cookiesData.type);
       this.userId = this.cookiesData._id;
       this.paramsTrainingId = activatedRoute.snapshot.params.associated_training;
     }
@@ -309,6 +312,19 @@ export class ListComponent implements OnInit {
           dividend = response.results.totalpercentage[0].lessonsdone;
           percentageResult = Math.floor(dividend/divisor*100);
           this.reportPercentage = percentageResult;
+          if(this.reportPercentage === 100){
+           //after completion of training  module, mail send to user
+           const link = this.serverDetailsVal.serverUrl + this.formSourceVal.trainingCompletEmailEndpoint;
+           let data:any={
+               "user_id":this.userId,
+               "user_email":this.cookiesData.email,
+               "user_name":this.userName,
+               "user_type":this.cookiesData.type
+           }
+           this.apiService.postDatawithoutToken(link,data).subscribe((response:any)=>{
+           
+           });
+          }
         })
         if(i<this.allLessonData.length){
           

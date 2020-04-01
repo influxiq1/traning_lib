@@ -44,6 +44,15 @@ export class TrainingreportComponent implements OnInit {
   public allCookiesData:any;
   public cookiesData:any;
   public userId:any;
+  public userType:any;
+  public trainingCounts:any={
+    "activatedtrainingcount":"",
+    "activatedlessoncount":"",
+    "trashedtrainingcount":"",
+    "trashedlessoncount":"",
+    "totaltrainingcount":" ",
+    "totallessoncount":" "
+  };
 
   public page:any={
     "page_count":50,
@@ -91,11 +100,27 @@ export class TrainingreportComponent implements OnInit {
     this.allCookiesData = cookie.getAll();
     this.cookiesData = JSON.parse(this.allCookiesData.user_details);
     this.userId = this.cookiesData._id;
+    this.userType=this.cookiesData.type;
+    setTimeout(() => {
+      this.trainingCount();
+     }, 500);
+  
     
    }
 
   ngOnInit() {
     this.gettrainingreportdatacount();
+  }
+  trainingCount(){
+    let link = this.serverDetailsVal.serverUrl + this.formSourceVal.trainingCountEndpoint;
+    this.apiService.postDatawithoutTokenReportCount(link).subscribe((response:any)=>{
+        this.trainingCounts.activatedtrainingcount = response.activatedtrainingcount;
+        this.trainingCounts.activatedlessoncount = response.activatedlessoncount;
+        this.trainingCounts.trashedtrainingcount = response.trashedtrainingcount;
+        this.trainingCounts.trashedlessoncount = response.trashedlessoncount;
+        this.trainingCounts.totaltrainingcount = response.totaltrainingcount;
+        this.trainingCounts.totallessoncount = response.totallessoncount;
+    })
   }
  
   //getting the total report data count

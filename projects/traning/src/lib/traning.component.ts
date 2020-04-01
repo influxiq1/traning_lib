@@ -220,12 +220,16 @@ export class TraningComponent implements OnInit {
         const link = this.serverDetailsVal.serverUrl + endpoint;
         let data: any ={
           source: source ,
+          condition:{'is_trash':{$ne:1}},
           token:this.serverDetailsVal.jwttoken,
         }
+
+        
         this.apiService.getData(link, data)
             .subscribe(res => {
                 let result;
                 result = res;
+                console.log("drop down",result);
                 if (result.status == 'error') {
                     // this.router.navigate(['/']);
                 } else {
@@ -257,7 +261,8 @@ getMediaTypeVal(value:any,name:any){
     let link =this.serverDetailsVal.serverUrl + this.formSourceVal.lessonDataEndpoint;
     let data: any ={
       condition:{
-        "associated_training_id": value
+        "associated_training_id": value,
+        'is_trash':{$ne:1}
       }
     }
     this.apiService.postDatawithoutToken(link,data).subscribe((response:any)=>{

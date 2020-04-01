@@ -17,7 +17,8 @@ export class TrainingreportComponent implements OnInit {
   public formSource: any = {
     
     "endpoint": "gettrainingreportdata-count",
-    "viewReportEndpoint":"gettrainingreportdata"
+    "viewReportEndpoint":"gettrainingreportdata",
+    "trainingCountEndpoint" : "trainingcounts"
   }
   public categoryWiseReportUrl:any="/category-wise-report-view";
   constructor(public activatedRoute : ActivatedRoute,public cookie:CookieService) { 

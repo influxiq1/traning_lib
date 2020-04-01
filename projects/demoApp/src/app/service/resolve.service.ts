@@ -21,9 +21,7 @@ public userId:any;
   constructor(private _apiService: HttpService, private router: Router,public cookiesService:CookieService ) { 
     this.allCookiesData = cookiesService.getAll();
       this.cookiesData = JSON.parse(this.allCookiesData.user_details);
-      console.log("cookies data",this.cookiesData);
       this.userType=this.cookiesData.type;
-      console.log("cookies data typeee",this.userType);
 
       this.userId = this.cookiesData._id;
       this.userType=this.cookiesData.type;

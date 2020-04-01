@@ -5,10 +5,40 @@
                 <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
                     <h2 class="headerSpan">Training Report</h2>
                 </mat-toolbar>
+                <mat-card-content class="countSection">
+                    <h2>{{trainingCounts.totaltrainingcount}}</h2>
+                
+                    <span>Total Number Of <br>Training</span>
+                  </mat-card-content>
+                  <mat-card-content class="countSection">
+                    <h2>{{trainingCounts.totallessoncount}}</h2>
+                
+                    <span>Total Number Of <br>Lessons</span>
+                  </mat-card-content>
+                  <mat-card-content class="countSection">
+                    <h2>{{trainingCounts.activatedtrainingcount}}</h2>
+                
+                    <span>Total Number Of <br>Activate Training</span>
+                  </mat-card-content>
+                  <mat-card-content  class="countSection">
+                    <h2>{{trainingCounts.activatedlessoncount}}</h2>
+                
+                    <span>Total Number Of <br>Activate Lesson</span>
+                  </mat-card-content >
+                  <mat-card-content class="countSection">
+                    <h2>{{trainingCounts.trashedtrainingcount}}</h2>
+                
+                    <span>Total Number Of <br>Trashed Trainings</span>
+                  </mat-card-content>
+                  <mat-card-content >
+                    <h2>{{trainingCounts.trashedlessoncount}}</h2>
+                    <span>Total Number Of <br>Trashed Lessons</span>
+                  </mat-card-content>
             </span>
         </span>
     </span>
     <!-- search field start here -->
+    <ng-container *ngIf="userType=='admin'">
     <mat-form-field>
         <mat-label>Name</mat-label>
         <input matInput placeholder="Name" [(ngModel)]="search.name" />
@@ -19,6 +49,7 @@
         <input matInput placeholder="E-mail" [(ngModel)]="search.email" />
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="getPageData()">Search</button>
+</ng-container>
 
     <!-- search field start here -->
 
