@@ -29,14 +29,22 @@ table {
    cursor: pointer;
  }
   .countsection{
-   width: 20%;
-   margin: 0px 5px;
    box-sizing: border-box;
    display: flex;
 
  }
-.countSection{
-  float: left;
-  margin: 10px;
-}
+.countSection{float: left;margin: 2px;}
  
+.searchblock .searchblockwrapper span{display: flex;justify-content: space-between;width: 100%;flex-wrap: wrap;}
+.searchblock .searchblockwrapper span .mat-toolbar.mat-primary {flex: 1 1 100%;}
+.searchblock .searchblockwrapper span .countSection {flex: 1;display: flex;align-items: center;justify-content: space-between;background: #f3f3f3;border: 1px solid #dedddd;padding: 16px;}
+.searchblock .searchblockwrapper span .countSection h2 {margin-bottom: 0;flex: 1 1 30%}
+.searchblock .searchblockwrapper span .countSection span{flex: 1 1 70%;}
+
+@media screen and (max-width: 991px) {
+.searchblock .searchblockwrapper span .countSection {flex: 1 1 28%;}
+}
+
+@media screen and (max-width: 540px) {
+  .searchblock .searchblockwrapper span .countSection {flex: 1 1 98%;}
+  }
