@@ -51,6 +51,7 @@ export class ListLessionComponent implements OnInit {
   public manageQuizRoute:any;
   public allLessonData : any = [];
   public lessonName:any;
+  public status:any;
   public training:any;
   public testAvailability:any;
   public idArray:any=[];
@@ -65,6 +66,10 @@ export class ListLessionComponent implements OnInit {
     "totaltrainingcount":" ",
     "totallessoncount":" "
   };
+  public searchjson:any={
+    "lession_title_search_regex":"",
+    "prerequisite_lession_search_regex":""
+  }
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   selection = new SelectionModel<PeriodicElement>(true, []);
@@ -201,17 +206,17 @@ export class ListLessionComponent implements OnInit {
       this.router.navigateByUrl(this.addPageRoute);
   
     }
-    filterByTrainingName(key: string, value: string){
-      if(value == "0"){
-        this.dataSource = new MatTableDataSource(this.listingData);
-      }
-      else{
-        let searchJson: any = {};
-        searchJson[key] = value.toLowerCase();
+    filter(){
+      // if(value == "0"){
+      //   this.dataSource = new MatTableDataSource(this.listingData);
+      // }
+      // else{
+      //   let searchJson: any = {};
+      //   searchJson[key] = value.toLowerCase();
         let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
         var data = {
           "source": this.searchSourceName,
-          "condition": searchJson,
+          "condition": this.searchjson,
           "token": this.serverDetailsVal.jwttoken
         }
         if(this.trashFlag == 1){
@@ -227,10 +232,40 @@ export class ListLessionComponent implements OnInit {
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;    
           });
-      }
+      // }
   
     
   }
+  filterByTrainingName(key,value){
+    if(value == "0"){
+      this.dataSource = new MatTableDataSource(this.listingData);
+    }
+    else{
+      let searchJson: any = {};
+      searchJson[key] = value.toLowerCase();
+      let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
+      var data = {
+        "source": this.searchSourceName,
+        "condition": this.searchjson,
+        "token": this.serverDetailsVal.jwttoken
+      }
+      if(this.trashFlag == 1){
+         data.condition['is_trash'] = {$eq:1}
+      }else{
+        data.condition['is_trash'] = {$ne:1}
+      }
+      this.apiService.postData(link,data).subscribe(response => {
+        let result : any=response;
+        this.dataSource = result.res;
+        let allData: PeriodicElement[] = this.dataSource;
+        this.dataSource = new MatTableDataSource(allData);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;    
+        });
+    }
+
+  
+}
   manageQuiz(id:any){
     this.router.navigateByUrl(this.manageQuizRoute + id);
   }

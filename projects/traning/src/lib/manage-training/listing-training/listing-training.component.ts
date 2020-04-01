@@ -48,6 +48,7 @@ export class ListingTrainingComponent implements OnInit {
   public additionalinfo: any;
   public searchResults: any = [];
   public trainingTitle:any;
+  public parentCategory:any;
   public status:any
   public idArray:any=[];
   public allTrashData:any=[];
@@ -61,6 +62,11 @@ export class ListingTrainingComponent implements OnInit {
     "totaltrainingcount":" ",
     "totallessoncount":" "
   };
+  public searchjson:any={
+    "catagory_name_search_regex":"",
+    "parent_catagory_search_regex":"",
+    "status_search":""
+  }
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   selection = new SelectionModel<PeriodicElement>(true, []);
@@ -195,20 +201,31 @@ export class ListingTrainingComponent implements OnInit {
 
   }
 
-  filterByTrainingName(key: string, value: string) {
-  if(value == "Select a status"){
-    this.dataSource = new MatTableDataSource(this.listingData);
+  filterByTrainingName() {
+  // if(value == "Select a status"){
+  //   this.dataSource = new MatTableDataSource(this.listingData);
+  //   this.dataSource.paginator = this.paginator;
+  //     this.dataSource.sort = this.sort;
 
-  }
-  else{
+  // }
+  // else{
     let searchJson: any = {};
-    searchJson[key] = value.toLowerCase();
+    console.log(this.trainingTitle);
+    // if(key!='catagory_name_search_regex'){
+    //   key = 'parent_catagory_search_regex'
+    // }
+    // searchJson[key] = value.toLowerCase();
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
     var data = {
       "source": this.searchSourceName,
-      "condition": searchJson,
+      "condition": this.searchjson,
       "token": this.serverDetailsVal.jwttoken
     }
+    if(this.trashFlag == 1){
+      data.condition['is_trash'] = {$eq:1}
+   }else{
+     data.condition['is_trash'] = {$ne:1}
+   }
     this.apiService.postData(link, data).subscribe(response => {
       let result: any = response;
       this.dataSource = result.res;
@@ -217,7 +234,7 @@ export class ListingTrainingComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
-  }
+  // }
  
 
   }
@@ -393,9 +410,9 @@ export class ListingTrainingComponent implements OnInit {
   }
   viewTrash(){
     this.trashFlag = 1-this.trashFlag;
-    if(this.trashFlag==1){
-       this.trashButtonText="Hide Trash";
-    }
+    if(this.trashFlag==0){
+      this.dataSource = new MatTableDataSource(this.listingData);
+      }
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
     let data:any = {
       "source" :   this.formSourceVal.trashDataSource,
@@ -405,6 +422,8 @@ export class ListingTrainingComponent implements OnInit {
       }
     }
     this.apiService.postData(link,data).subscribe((response: any)=>{
+      this.trashButtonText="Hide Trash";
+       this.trashFlag = 1-this.trashFlag;
       this.allTrashData = response.res;
       this.dataSource = new MatTableDataSource(this.allTrashData);
       this.dataSource.paginator = this.paginator;

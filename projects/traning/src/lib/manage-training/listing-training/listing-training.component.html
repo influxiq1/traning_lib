@@ -52,23 +52,27 @@
   </span>
 <span class="searchbar">
 <mat-form-field   class="searchdiv">
-
     <input matInput placeholder="Search by Training Title"
-     [(ngModel)]="trainingTitle">
+     [(ngModel)]="searchjson.catagory_name_search_regex">
   </mat-form-field>
 
+  <mat-form-field   class="searchdiv">
+    <input matInput placeholder="Search by Parent Category"
+     [(ngModel)]="searchjson.parent_catagory_search_regex">
+  </mat-form-field>
 
   <mat-form-field class="searchdiv">
-    <mat-select placeholder="Search By Status" [(ngModel)]="status" (selectionChange)="filterByTrainingName('status_search', $event.value)">
+    <mat-select placeholder="Search By Status" [(ngModel)]="searchjson.status_search" (selectionChange)="filterByTrainingName()">
       <mat-option value="Select a status">Select a status</mat-option>
-      <mat-option value="Active">Active</mat-option>
-      <mat-option value="Inactive">Inactive</mat-option>
+      <mat-option value="active">Active</mat-option>
+      <mat-option value="inactive">Inactive</mat-option>
     </mat-select>
   </mat-form-field>
-  <button class="submitbtn" mat-raised-button color="primary" type="button" (click)="filterByTrainingName('catagory_name_search_regex', trainingTitle)">Search</button>
+  <button class="submitbtn" mat-raised-button color="primary" type="button" (click)="filterByTrainingName()">Search</button>
+  <!-- <button class="submitbtn" mat-raised-button color="primary" type="button" (click)="filterByTrainingName('parent_catagory_search_regex', parentCategory)">Search</button> -->
 
   <button class="submitbtn" mat-raised-button color="primary" type="button" (click)="resetSearch()">Reset</button>
-  <button class="submitbtn" mat-raised-button color="primary" type="button" (click)="viewTrash()">{{ trashButtonText }}</button>
+  <button  class="submitbtn" mat-raised-button color="primary" type="button" (click)="viewTrash()">{{ trashButtonText }}</button>
 
 </span>
 
