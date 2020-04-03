@@ -206,13 +206,7 @@ export class ListLessionComponent implements OnInit {
       this.router.navigateByUrl(this.addPageRoute);
   
     }
-    filter(){
-      // if(value == "0"){
-      //   this.dataSource = new MatTableDataSource(this.listingData);
-      // }
-      // else{
-      //   let searchJson: any = {};
-      //   searchJson[key] = value.toLowerCase();
+    filter(){ 
         let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
         var data = {
           "source": this.searchSourceName,
@@ -231,10 +225,7 @@ export class ListLessionComponent implements OnInit {
           this.dataSource = new MatTableDataSource(allData);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;    
-          });
-      // }
-  
-    
+          }); 
   }
   filterByTrainingName(key,value){
     if(value == "0"){
@@ -398,9 +389,6 @@ export class ListLessionComponent implements OnInit {
 
   }
 
-
-
-
   statusUpdateAllRecords(){
     for (let c in this.selection.selected) {
       this.idArray.push(this.selection.selected[c]._id);
@@ -456,25 +444,34 @@ export class ListLessionComponent implements OnInit {
     
   }
   viewTrash(){
-    this.trashFlag = 1-this.trashFlag;
-    if(this.trashFlag==1){
-       this.trashButtonText="Hide Trash";
+    switch (this.trashButtonText) {
+      case 'View Trash':
+        this.trashFlag = 1-this.trashFlag;
+        let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
+        let data:any = {
+          "source" :   this.formSourceVal.trashDataSource,
+          "token": this.serverDetailsVal.jwttoken,
+          "condition":{
+            is_trash: {$eq: 1}
+          }
+        }
+        this.apiService.postData(link,data).subscribe((response: any)=>{
+          this.trashButtonText="Hide Trash";
+          this.allTrashData = response.res;
+          this.dataSource = new MatTableDataSource(this.allTrashData);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+         
+        })
+        break;
+      case 'Hide Trash': 
+        this.trashButtonText = "View Trash";
+        this.dataSource = new MatTableDataSource(this.listingData);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        break;
     }
-    let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
-    let data:any = {
-      "source" :   this.formSourceVal.trashDataSource,
-      "token": this.serverDetailsVal.jwttoken,
-      "condition":{
-        is_trash: {$eq: 1}
-      }
-    }
-    this.apiService.postData(link,data).subscribe((response: any)=>{
-      this.allTrashData = response.res;
-      this.dataSource = new MatTableDataSource(this.allTrashData);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-     
-    })
+ 
 
   }
   restoreTrashData(trashId:any,index:any){

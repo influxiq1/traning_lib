@@ -53,6 +53,8 @@ export class ListingTrainingComponent implements OnInit {
   public idArray:any=[];
   public allTrashData:any=[];
   public trashFlag:any=0;
+
+
   public trashButtonText:any="View Trash";
   public trainingCounts:any={
     "activatedtrainingcount":"",
@@ -126,7 +128,7 @@ export class ListingTrainingComponent implements OnInit {
    setTimeout(() => {
     this.trainingCount();
    }, 500);
-    
+   
   }
 
   ngOnInit() {
@@ -409,28 +411,34 @@ export class ListingTrainingComponent implements OnInit {
     
   }
   viewTrash(){
-    this.trashFlag = 1-this.trashFlag;
-    if(this.trashFlag==0){
-      this.dataSource = new MatTableDataSource(this.listingData);
+    switch(this.trashButtonText) {
+      case 'View Trash':
+      this.trashFlag = 1-this.trashFlag;
+      let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
+      let data:any = {
+        "source" :   this.formSourceVal.trashDataSource,
+        "token": this.serverDetailsVal.jwttoken,
+        "condition":{
+          is_trash: {$eq: 1}
+        }
       }
-    let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
-    let data:any = {
-      "source" :   this.formSourceVal.trashDataSource,
-      "token": this.serverDetailsVal.jwttoken,
-      "condition":{
-        is_trash: {$eq: 1}
-      }
+      this.apiService.postData(link,data).subscribe((response: any)=>{
+        this.trashButtonText="Hide Trash";
+        this.trashFlag = 1-this.trashFlag;
+        this.allTrashData = response.res;
+        this.dataSource = new MatTableDataSource(this.allTrashData);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      
+      })
+        break;
+      case 'Hide Trash':
+        this.trashButtonText="View Trash";
+        this.dataSource = new MatTableDataSource(this.listingData);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        break;
     }
-    this.apiService.postData(link,data).subscribe((response: any)=>{
-      this.trashButtonText="Hide Trash";
-       this.trashFlag = 1-this.trashFlag;
-      this.allTrashData = response.res;
-      this.dataSource = new MatTableDataSource(this.allTrashData);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-     
-    })
-
   }
   restoreTrashData(trashId:any,index:any){
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.retriveTrashDataEndpoint;

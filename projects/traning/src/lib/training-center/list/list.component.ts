@@ -52,8 +52,10 @@ export class ListComponent implements OnInit {
   public lesson_title:any;
   public trainingLessonCount:any;
   public lesson_done:any;
-  public salesrepLessonCount:any=0;
   public userName:any;
+  public adminlessoncount:any;
+  public salesreplessoncount:any;
+  public userlessoncount:any;
   
   @Input()
   set TrainingCategoryList(val: any) {
@@ -82,16 +84,18 @@ export class ListComponent implements OnInit {
     this.totalData = (data) || '<no name set>';
     this.trainingLessonCount = this.totalData.training_lesson_count;
     this.doneLessonByCatByUser = this.totalData.done_lesson_by_cat_by_user;
-    let lesson:any=this.totalData.total_lesson[0].count;
+    this.adminlessoncount=this.totalData.total_lesson[0].count;
+    this.salesreplessoncount=this.totalData.total_lesson_salesrep[0].count;
+    this.userlessoncount=this.totalData.total_lesson_user[0].count;
     let done_lesson_by_cat_by_user:any=this.totalData.done_lesson_by_cat_by_user.length;
-    this.divisor=lesson; 
+    // this.divisor=lesson; 
     let userPercentage:any=0;
 
     for(let n in  this.trainingCategoryList){
       for(let tc in this.trainingLessonCount){
         if(this.trainingCategoryList[n]._id.toString()==this.trainingLessonCount[tc]._id.associated_training.toString()){
           this.trainingCategoryList[n].count=this.trainingLessonCount[tc].lessons;
-          this.salesrepLessonCount = this.salesrepLessonCount + this.trainingLessonCount[tc].lessons;
+          // this.salesrepLessonCount = this.salesrepLessonCount + this.trainingLessonCount[tc].lessons;
         }
         
          
@@ -111,7 +115,7 @@ export class ListComponent implements OnInit {
     
             if(this.trainingLessonCount[tc]._id.associated_training.toString() == this.trainingCategoryList[n].childid[p].toString()){
               this.trainingCategoryList[n].childcount[p]=this.trainingLessonCount[tc].lessons;
-              this.salesrepLessonCount = this.salesrepLessonCount + this.trainingLessonCount[tc].lessons;
+              // this.salesrepLessonCount = this.salesrepLessonCount + this.trainingLessonCount[tc].lessons;
             }
           }
           if(this.trainingCategoryList[n].childcount[p]==null)
@@ -142,12 +146,12 @@ export class ListComponent implements OnInit {
     {
       userPercentage=this.totalData.done_lesson_by_user[0].lessonsdone;
       this.dividend=userPercentage;
-      this.reportPercentage=Math.floor(userPercentage/lesson*100);
+      this.reportPercentage=Math.floor(userPercentage/this.adminlessoncount*100);
     }
     if(done_lesson_by_cat_by_user==0){
       this.dividend=0;
     }
-    this.divisor = this.salesrepLessonCount;
+    // this.divisor = this.salesrepLessonCount;
   }
   @Input()
   set TrainingCeneterData(data: any) {
@@ -184,12 +188,24 @@ export class ListComponent implements OnInit {
       this.allCookiesData = cookieService.getAll();
       this.cookiesData = JSON.parse(this.allCookiesData.user_details);
       this.userName = this.cookiesData.firstname+' '+this.cookiesData.lastname;
-      console.log("user email+++++++",this.cookiesData.type);
       this.userId = this.cookiesData._id;
       this.paramsTrainingId = activatedRoute.snapshot.params.associated_training;
+      
     }
 
   ngOnInit() {
+    switch (this.cookiesData.type) {
+      case 'admin':
+        this.divisor = this.adminlessoncount;
+        break;
+      case 'salesrep':
+        this.divisor = this.salesreplessoncount;
+        break;
+      case 'user':
+        this.divisor = this.userlessoncount;
+        break ;
+    
+    }
 
   }
   questionDetails(id:any,i:any,lesson_title:any){
