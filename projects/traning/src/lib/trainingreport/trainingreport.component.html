@@ -1,5 +1,5 @@
-<mat-tab-group>
-    <mat-tab label="First"> 
+<mat-tab-group mat-align-tabs="center">
+    <mat-tab label="Training Report"> 
 <mat-card>
     <span class="searchblock">
         <span class="searchblockwrapper">
@@ -182,10 +182,10 @@
 
 
 <!-- <mat-tab-group> -->
-    
-    <mat-tab label="Second">
+    <!-- popular training listing start here -->
+    <mat-tab label="Popular Trainings">
         <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
-            <h2 class="headerSpan">Most Popular Training</h2>
+            <h2 class="headerSpan">Most Popular Trainings</h2>
         </mat-toolbar>
         <span class="searchblock">
             <span class="searchblockwrapper">
@@ -223,7 +223,59 @@
                 </span>
             </span>
         </span>
-        
+        <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="allPopularDataSource" matSort>
+
+            <ng-container matColumnDef="no">
+                <th mat-header-cell *matHeaderCellDef> No. </th>
+                <td mat-cell *matCellDef="let element; let i = index;" title= "No"> {{ i + 1 }} </td>
+              </ng-container>
+
+            <ng-container matColumnDef="catagory_name">
+                <th mat-header-cell *matHeaderCellDef>Training Category Name </th>
+                <td mat-cell *matCellDef="let row" title="Category Name"> {{row.catagory_name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef> Type </th>
+                <td mat-cell *matCellDef="let row" title="Type"> {{row.type}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="description_html">
+                <th mat-header-cell *matHeaderCellDef> Description </th>
+                <td mat-cell *matCellDef="let row" title="Description"> {{row.description_html}} </td>
+            </ng-container>
+           
+            <ng-container matColumnDef="priority">
+                <th mat-header-cell *matHeaderCellDef>Priority</th>
+                <td mat-cell *matCellDef="let row" title="Priority"> {{row.priority}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status </th>
+                <td mat-cell *matCellDef="let row" title="Status">
+                    <div *ngIf="row.status===1">
+                        Active </div>
+                    <div *ngIf="row.status===0">
+                        Inactive
+                    </div>
+
+                     </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="user_done">
+                <th mat-header-cell *matHeaderCellDef> User Done</th>
+                <td mat-cell *matCellDef="let row" title="User Done"> {{row.user_done}} </td>
+            </ng-container>
+           
+
+            <tr mat-header-row *matHeaderRowDef="popularTrainingdisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: popularTrainingdisplayedColumns;">
+            </tr>
+
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 15,25]"></mat-paginator>
+    </div>
     </mat-tab>
     
   </mat-tab-group>

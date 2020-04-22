@@ -1,9 +1,10 @@
-import { Component, OnInit ,Input} from '@angular/core';
+import { Component, OnInit ,Input,ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import { DatePipe } from '@angular/common';
 import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import {MatPaginator} from '@angular/material/paginator';
 
 export interface PeriodicElement {
   _id:string;
@@ -20,6 +21,16 @@ export interface PeriodicElement {
   lastupdated_training_percentage_at:any;
   viewCatReport:any;
 }
+export interface PeriodicTrainingElement {
+  _id:string;
+  catagory_name:string;
+  no:number;
+  type: string;
+  description_html: string;
+  priority:number;
+  status: number;
+  user_done: number;
+}
 @Component({
   selector: 'lib-trainingreport',
   templateUrl: './trainingreport.component.html',
@@ -28,6 +39,8 @@ export interface PeriodicElement {
 
 export class TrainingreportComponent implements OnInit {
   displayedColumns: string[] = ['no','name','type', 'email','totalTraining','trainingdone','training_percentage','lastupdated_training_percentage_at', 'lastlessonname','lasttrainingname','viewCatReport'];
+  popularTrainingdisplayedColumns: string[] = ['no','catagory_name','description_html', 'priority','status','user_done'];
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   public totalPage:any;
   public trainingReportData : any;
   public dataSource:any;
@@ -45,6 +58,8 @@ export class TrainingreportComponent implements OnInit {
   public cookiesData:any;
   public userId:any;
   public userType:any;
+  public allPopularData:any=[];
+  public allPopularDataSource:any=[];
   public trainingCounts:any={
     "activatedtrainingcount":"",
     "activatedlessoncount":"",
@@ -55,6 +70,10 @@ export class TrainingreportComponent implements OnInit {
   };
 
   public page:any={
+    "page_count":50,
+    "page_no":1
+  }
+  public populartrainingpage:any={
     "page_count":50,
     "page_no":1
   }
@@ -76,11 +95,11 @@ export class TrainingreportComponent implements OnInit {
   set formSource(formSource: any) {
     this.formSourceVal = (formSource) || '<no name set>';
   }
-public allPopularData:any=[];
   @Input()
   set MostPopularTrainingData(allData: any) {
     this.allPopularData = (allData) || '<no name set>';
-    
+    this.allPopularDataSource = new MatTableDataSource(this.allPopularData);
+    this.allPopularDataSource.paginator = this.paginator;
   }
 
   
@@ -114,6 +133,9 @@ public allPopularData:any=[];
    }
 
   ngOnInit() {
+    setTimeout(() => {
+      this.allPopularDataSource.paginator = this.paginator;
+    }, 100);
     this.gettrainingreportdatacount();
   }
   trainingCount(){
