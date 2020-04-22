@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-
+import { HttpService } from '../service/http.service'
 @Component({
   selector: 'app-trainingreport',
   templateUrl: './trainingreport.component.html',
@@ -10,6 +10,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class TrainingreportComponent implements OnInit {
   public jwtToken:any;
   public totalTrainingReportData:any=[];
+  public popularTrainingData:any=[];
   public serverDetails: any = {
     "serverUrl": "https://9ozbyvv5v0.execute-api.us-east-1.amazonaws.com/production/api/",
     "jwttoken": ""
@@ -21,9 +22,10 @@ export class TrainingreportComponent implements OnInit {
     "trainingCountEndpoint" : "trainingcounts"
   }
   public categoryWiseReportUrl:any="/category-wise-report-view";
-  constructor(public activatedRoute : ActivatedRoute,public cookie:CookieService) { 
+  constructor(public activatedRoute : ActivatedRoute,public cookie:CookieService,public httpService:HttpService) { 
     this.jwtToken = cookie.get('jwtToken');
     this.serverDetails.jwttoken=this.jwtToken;
+   this.getPopularTrainingData();
   }
 
   ngOnInit() {
@@ -32,6 +34,17 @@ export class TrainingreportComponent implements OnInit {
       result = data.trainingReportData.training_report_data;
       this.totalTrainingReportData = result;
       
+    })
+  }
+  getPopularTrainingData(){
+    let endpoint : any="datalist";
+    let data:any={
+      "source":"most_popular_training_view"
+    }
+    this.httpService.CustomRequest(data,endpoint).subscribe((res:any)=>{
+      this.popularTrainingData = res.res;
+      console.log("testing data",this.popularTrainingData);
+
     })
   }
 

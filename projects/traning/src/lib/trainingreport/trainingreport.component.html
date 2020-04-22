@@ -1,3 +1,5 @@
+<mat-tab-group>
+    <mat-tab label="First"> 
 <mat-card>
     <span class="searchblock">
         <span class="searchblockwrapper">
@@ -176,3 +178,52 @@
         </mat-toolbar>
     </div>
 </mat-card>
+</mat-tab>
+
+
+<!-- <mat-tab-group> -->
+    
+    <mat-tab label="Second">
+        <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
+            <h2 class="headerSpan">Most Popular Training</h2>
+        </mat-toolbar>
+        <span class="searchblock">
+            <span class="searchblockwrapper">
+                <span>
+                    
+                    <mat-card-content class="countSection">
+                        <h2>{{trainingCounts.totaltrainingcount}}</h2>
+                    
+                        <span>Total Number Of <br>Training</span>
+                      </mat-card-content>
+                      <mat-card-content class="countSection">
+                        <h2>{{trainingCounts.totallessoncount}}</h2>
+                    
+                        <span>Total Number Of <br>Lessons</span>
+                      </mat-card-content>
+                      <mat-card-content class="countSection">
+                        <h2>{{trainingCounts.activatedtrainingcount}}</h2>
+                    
+                        <span>Total Number Of <br>Activate Training</span>
+                      </mat-card-content>
+                      <mat-card-content  class="countSection">
+                        <h2>{{trainingCounts.activatedlessoncount}}</h2>
+                    
+                        <span>Total Number Of <br>Activate Lesson</span>
+                      </mat-card-content >
+                      <mat-card-content class="countSection">
+                        <h2>{{trainingCounts.trashedtrainingcount}}</h2>
+                    
+                        <span>Total Number Of <br>Trashed Trainings</span>
+                      </mat-card-content>
+                      <mat-card-content class="countSection">
+                        <h2>{{trainingCounts.trashedlessoncount}}</h2>
+                        <span>Total Number Of <br>Trashed Lessons</span>
+                      </mat-card-content>
+                </span>
+            </span>
+        </span>
+        
+    </mat-tab>
+    
+  </mat-tab-group>

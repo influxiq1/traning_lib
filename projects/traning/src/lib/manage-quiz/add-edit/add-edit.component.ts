@@ -102,8 +102,6 @@ export class AddEditComponent implements OnInit {
           "sourceobj": ["lesson_id"],
         }
       }
-      
-       
       this.apiService.postData(link,data).subscribe((res: any)=>{
         if(res.status = "success"){
           this.router.navigateByUrl(this.listingPageRoute + this.lessonId);

@@ -62,7 +62,6 @@ export class TrainingreportComponent implements OnInit {
     "name":"",
     "email":""
   }
-
   @Input()
   set serverDetails(serverDetails: {}) {
     this.serverDetailsVal = (serverDetails) || '<no name set>';
@@ -76,8 +75,14 @@ export class TrainingreportComponent implements OnInit {
   @Input()
   set formSource(formSource: any) {
     this.formSourceVal = (formSource) || '<no name set>';
+  }
+public allPopularData:any=[];
+  @Input()
+  set MostPopularTrainingData(allData: any) {
+    this.allPopularData = (allData) || '<no name set>';
     
   }
+
   
   @Input()
   set TotalTrainingReportData(val: any) {
