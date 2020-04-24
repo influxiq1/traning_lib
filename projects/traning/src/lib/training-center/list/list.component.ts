@@ -350,6 +350,19 @@ export class ListComponent implements OnInit {
           this.allLessonData[i+1].is_done=true;
           
           }else{
+             //after completion of training category, mail send to user
+            const link = this.serverDetailsVal.serverUrl + this.formSourceVal.trainingcatcompletemailendpoint;
+            let data:any={
+              "email":this.cookiesData.email,
+              "user_name":this.userName,
+              "cat_name":this.trainingCategoryName,
+              "user_type":this.cookiesData.type
+          }
+          
+          this.apiService.postDatawithoutToken(link,data).subscribe((response:any)=>{
+          //  console.log("after completion of training category",response);
+          });
+            
             let message :any="You Have Successfully Completed The Training";
             let action : any="Ok";
             this.snakBar.open(message,action,{

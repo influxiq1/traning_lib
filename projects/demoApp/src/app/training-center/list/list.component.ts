@@ -29,7 +29,8 @@ public formSource: any = {
   "showEndpoint":"getquestionanswerlistbylessonid",
   "formTitleName": 'Training Center',
   "getUpdatedTrainingPercentageByUserEndpoint":"getupdatedtrainingpercentagebyuserid",
-  "trainingCompletEmailEndpoint":"trainingcompletemail"
+  "trainingCompletEmailEndpoint":"trainingcompletemail",
+  "trainingcatcompletemailendpoint":"trainingcatcompletemail"
 }
 public trainingCenterRoute:any="/training-center/list/";
 public jwtToken:any;

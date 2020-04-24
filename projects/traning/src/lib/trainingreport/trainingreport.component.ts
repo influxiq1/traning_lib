@@ -24,6 +24,7 @@ export interface PeriodicElement {
 export interface PeriodicTrainingElement {
   _id:string;
   catagory_name:string;
+  parent_catagory:string;
   no:number;
   type: string;
   description_html: string;
@@ -39,7 +40,7 @@ export interface PeriodicTrainingElement {
 
 export class TrainingreportComponent implements OnInit {
   displayedColumns: string[] = ['no','name','type', 'email','totalTraining','trainingdone','training_percentage','lastupdated_training_percentage_at', 'lastlessonname','lasttrainingname','viewCatReport'];
-  popularTrainingdisplayedColumns: string[] = ['no','catagory_name','description_html', 'priority','status','user_done'];
+  popularTrainingdisplayedColumns: string[] = ['no','catagory_name','parent_catagory','description_html', 'priority','status','user_done'];
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   public totalPage:any;
   public trainingReportData : any;
