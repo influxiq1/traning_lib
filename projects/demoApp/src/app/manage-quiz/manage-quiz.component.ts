@@ -15,7 +15,7 @@ export class ManageQuizComponent implements OnInit {
   public paramsId:any;
   // public updateAnswerRoute:any="/manage-quiz/update-answer/";
   public serverDetails: any = {
-    "serverUrl": "https://9ozbyvv5v0.execute-api.us-east-1.amazonaws.com/production/api/",
+    "serverUrl": "https://p6ttrc8ikc.execute-api.us-east-1.amazonaws.com/production/api/",
     "jwttoken": ""
   };
   public formSource: any = {

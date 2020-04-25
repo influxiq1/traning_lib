@@ -17,7 +17,7 @@ export class HttpService {
   public uploaderror: any = '';
   public accesstoken: any = "";
   public fileservername: any = [];
-  public serverUrl: any = 'https://9ozbyvv5v0.execute-api.us-east-1.amazonaws.com/production/api/';
+  public serverUrl: any = 'https://p6ttrc8ikc.execute-api.us-east-1.amazonaws.com/production/api/';
   public addendpointUrl: any;
   public updateendpointUrl: any;
   public deletesingle_endpointUrl: any;
