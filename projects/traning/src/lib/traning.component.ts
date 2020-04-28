@@ -43,6 +43,8 @@ export class TraningComponent implements OnInit {
   public uploadConfigData:any='';
   public cancelBtnRoute:any;
   public htmType:any;
+  public title:any;
+  public description:any;
   public images_array:any=[];
   public checked:boolean=true;
   public allLessonData:any=[];
@@ -191,7 +193,31 @@ export class TraningComponent implements OnInit {
                   "bucketname": this.uploadConfigData.bucketName
                 });
             }
+            
             data.data['fileType'] =  this.images_array;
+            switch (this.mediaTypeValue) {
+              case 'image':
+                data.data['image_typeHtml'] = this.htmType;
+                data.data['image_title']=this.title;
+                data.data['image_description']=this.description;
+                break;
+              case 'video':
+                data.data['video_typeHtml'] = this.htmType;
+                data.data['video_title']=this.title;
+                data.data['video_description']=this.description;
+                break;
+              case 'audio':
+                data.data['audio_typeHtml'] = this.htmType;
+                data.data['audio_title']=this.title;
+                data.data['audio_description']=this.description;
+                  break;
+              case 'file':
+                data.data['file_typeHtml'] = this.htmType;
+                data.data['file_title']=this.title;
+                data.data['file_description']=this.description;
+                  break;
+            
+            }
           } 
         }
       this.apiService.postData(link,data).subscribe((res: any)=>{
@@ -310,9 +336,32 @@ geteditdata() {
       let imageBasepath:any;
       let fileserverName:any;
       this.fileArray = res.res[0].fileType;
-      console.log("cross fileArray",this.fileArray);
+      // console.log("dingle data",res.res[0]);
 
       this.htmType = res.res[0].typeHtml;
+      switch (res.res[0].mediaType) {
+        case 'image':
+          this.htmType = res.res[0].image_typeHtml;
+          this.title=res.res[0].image_title;
+          this.description=res.res[0].image_description;
+          break;
+        case 'video':
+          this.htmType = res.res[0].video_typeHtml;
+          this.title=res.res[0].video_title;
+          this.description=res.res[0].video_description;
+          break;
+        case 'audio':
+          this.htmType = res.res[0].audio_typeHtml;
+          this.title=res.res[0].audio_title;
+          this.description=res.res[0].audio_description;
+          break;
+        case 'file':
+          this.htmType = res.res[0].file_typeHtml;
+          this.title=res.res[0].file_title;
+          this.description=res.res[0].file_description;
+          break;
+      
+      }
       for (let key in res.res[0].fileType) {
            imageBasepath = res.res[0].fileType[key].basepath;
            fileserverName = res.res[0].fileType[key].fileservername;

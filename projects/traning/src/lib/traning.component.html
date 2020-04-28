@@ -96,7 +96,21 @@
         </ng-container>
         <div *ngIf="mediaTypeValue == 'image' || mediaTypeValue == 'video' || mediaTypeValue == 'audio'  || mediaTypeValue == 'file' ">
            <h4>Please Add Single File</h4>
+         <!-- file uploader start here -->
             <lib-file-upload [config]="uploadConfigData"></lib-file-upload>
+            
+            <mat-form-field>
+                <input type="text" matInput  placeholder="Title" [(ngModel)]="title" [ngModelOptions]="{standalone: true}">
+                <mat-icon matSuffix>title</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field>
+                <textarea type="text" matInput 
+                    placeholder="Description" [(ngModel)]="description" [ngModelOptions]="{standalone: true}"></textarea>
+                <mat-icon matSuffix>description</mat-icon>
+            </mat-form-field>
+      <!-- file uploader end here -->
+
             <ng-container *ngIf="mediaTypeValue == 'image' && imagePath != null">
                 <mat-card class="example-card"  >
                     <span class="closecard"  class="pointer" *ngIf="mediaTypeValue == 'image'" (click)="clear()"><i class="material-icons">clear</i></span>
@@ -134,7 +148,7 @@
         </div>
        
        
-        <div *ngIf="mediaTypeValue == 'html'">
+        <div *ngIf="mediaTypeValue == 'html' || mediaTypeValue == 'image' || mediaTypeValue == 'video' || mediaTypeValue == 'audio'  || mediaTypeValue == 'file' ">
             <ck-editor [config]="editorconfig"  [(ngModel)]="htmType" [ngModelOptions]="{standalone: true}">
             </ck-editor>
         </div>
