@@ -68,7 +68,10 @@ export class ListLessionComponent implements OnInit {
   };
   public searchjson:any={
     "lession_title_search_regex":"",
-    "prerequisite_lession_search_regex":""
+    "prerequisite_lession_search_regex":"",
+    "status_search_regex":"",
+    "test_associate_training_search_regex":"",
+    "associated_training_search_regex":""
   }
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
@@ -206,11 +209,18 @@ export class ListLessionComponent implements OnInit {
       this.router.navigateByUrl(this.addPageRoute);
   
     }
+    
     filter(){ 
         let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
+        let searchval:any={};
+         searchval["lession_title_search_regex"]=this.searchjson.lession_title_search_regex.toLowerCase();
+         searchval["prerequisite_lession_search_regex"]=this.searchjson.prerequisite_lession_search_regex.toLowerCase();
+         searchval["status_search_regex"]=this.searchjson.status_search_regex.toLowerCase();
+         searchval["test_associate_training_search_regex"]=this.searchjson.test_associate_training_search_regex.toLowerCase();
+         searchval["associated_training_search_regex"]=this.searchjson.associated_training_search_regex.toLowerCase();
         var data = {
           "source": this.searchSourceName,
-          "condition": this.searchjson,
+          "condition": searchval,
           "token": this.serverDetailsVal.jwttoken
         }
         if(this.trashFlag == 1){
@@ -227,36 +237,7 @@ export class ListLessionComponent implements OnInit {
           this.dataSource.sort = this.sort;    
           }); 
   }
-  filterByTrainingName(key,value){
-    if(value == "0"){
-      this.dataSource = new MatTableDataSource(this.listingData);
-    }
-    else{
-      let searchJson: any = {};
-      searchJson[key] = value.toLowerCase();
-      let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
-      var data = {
-        "source": this.searchSourceName,
-        "condition": this.searchjson,
-        "token": this.serverDetailsVal.jwttoken
-      }
-      if(this.trashFlag == 1){
-         data.condition['is_trash'] = {$eq:1}
-      }else{
-        data.condition['is_trash'] = {$ne:1}
-      }
-      this.apiService.postData(link,data).subscribe(response => {
-        let result : any=response;
-        this.dataSource = result.res;
-        let allData: PeriodicElement[] = this.dataSource;
-        this.dataSource = new MatTableDataSource(allData);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;    
-        });
-    }
-
   
-}
   manageQuiz(id:any){
     this.router.navigateByUrl(this.manageQuizRoute + id);
   }
@@ -276,9 +257,8 @@ export class ListLessionComponent implements OnInit {
     })
   }
   resetSearch(){
-  this.lessonName = "";
-  this.training = "";
-  this.testAvailability = "";
+   
+ this.searchjson = "";
   this.dataSource = new MatTableDataSource(this.listingData);
 
   }

@@ -161,9 +161,39 @@ export class TraningComponent implements OnInit {
   }
   formsubmit() {
     this.issubmit = 1;
+    // return;
     for (let y in this.dataForm.controls) {
         this.dataForm.controls[y].markAsTouched();
     }
+    switch (this.mediaTypeValue) {
+      case 'image':
+        this.dataForm.value.image_typeHtml=this.htmType;
+    this.dataForm.value.image_title=this.title;
+    this.dataForm.value.image_description=this.description;
+        break;
+      case 'video':
+        this.dataForm.value.video_typeHtml=this.htmType;
+    this.dataForm.value.video_title=this.title;
+    this.dataForm.value.video_description=this.description;
+       
+        break;
+      case 'audio':
+        this.dataForm.value.audio_typeHtml=this.htmType;
+        this.dataForm.value.audio_title=this.title;
+        this.dataForm.value.audio_description=this.description;
+      
+          break;
+      case 'file':
+        this.dataForm.value.file_typeHtml=this.htmType;
+        this.dataForm.value.file_title=this.title;
+        this.dataForm.value.file_description=this.description;
+        
+          break;
+    
+    }
+
+
+    // return;
     if (this.dataForm.valid && this.submitval == 1) {
       if (this.dataForm.value.status)
           this.dataForm.value.status = parseInt("1");
@@ -344,6 +374,7 @@ geteditdata() {
           this.htmType = res.res[0].image_typeHtml;
           this.title=res.res[0].image_title;
           this.description=res.res[0].image_description;
+          
           break;
         case 'video':
           this.htmType = res.res[0].video_typeHtml;
@@ -372,8 +403,35 @@ geteditdata() {
     }
 
     let folder: any = '';
+    // switch (res.res[0].mediaType) {
+    //   case 'image':
+    //     this.htmType = res.res[0].image_typeHtml;
+    //     this.title=res.res[0].image_title;
+    //     this.description=res.res[0].image_description;
+    //     this.dataForm.controls['image_typeHtml'].patchValue(res.res[0].image_typeHtml);
+    //     this.dataForm.controls['image_title']=res.res[0].image_title;
+    //     this.dataForm.controls['image_description']=res.res[0].image_description;
+    //     break;
+    //   case 'video':
+    //     this.htmType = res.res[0].video_typeHtml;
+    //     this.title=res.res[0].video_title;
+    //     this.description=res.res[0].video_description;
+    //     break;
+    //   case 'audio':
+    //     this.htmType = res.res[0].audio_typeHtml;
+    //     this.title=res.res[0].audio_title;
+    //     this.description=res.res[0].audio_description;
+    //     break;
+    //   case 'file':
+    //     this.htmType = res.res[0].file_typeHtml;
+    //     this.title=res.res[0].file_title;
+    //     this.description=res.res[0].file_description;
+    //     break;
     
+    // }
+    console.log("dataform control",this.dataForm.controls);
     for (let c in this.dataForm.controls) {
+      
         this.dataForm.controls[c].patchValue(res.res[0][c]);
         for (let j in this.formdataval) {
 
@@ -437,6 +495,34 @@ geteditdata() {
         }
     }
     this.dataForm.addControl('id', new FormControl(this.recid, Validators.required));
+    console.log("mediatypeeee",res.res[0].mediaType);
+    switch (res.res[0].mediaType) {
+      case 'image':
+        // this.htmType = res.res[0].image_typeHtml;
+        // this.title=res.res[0].image_title;
+        // this.description=res.res[0].image_description;
+        this.dataForm.addControl('image_typeHtml', new FormControl(this.title, Validators.required));
+        this.dataForm.addControl('image_title', new FormControl(this.title, Validators.required));
+        this.dataForm.addControl('image_description', new FormControl(res.res[0].image_description, Validators.required));
+
+        break;
+      case 'video':
+        this.htmType = res.res[0].video_typeHtml;
+        this.title=res.res[0].video_title;
+        this.description=res.res[0].video_description;
+        break;
+      case 'audio':
+        this.htmType = res.res[0].audio_typeHtml;
+        this.title=res.res[0].audio_title;
+        this.description=res.res[0].audio_description;
+        break;
+      case 'file':
+        this.htmType = res.res[0].file_typeHtml;
+        this.title=res.res[0].file_title;
+        this.description=res.res[0].file_description;
+        break;
+    
+    }
 }
 }, error => {
 // this.datalist = [];

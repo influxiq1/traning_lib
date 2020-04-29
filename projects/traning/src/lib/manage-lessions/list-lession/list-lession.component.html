@@ -60,21 +60,21 @@
 
    
     <mat-form-field class="searchdiv" >
-      <mat-select placeholder="Search by Associate Training" [(ngModel)]="training" (selectionChange)="filterByTrainingName('associated_training_search_regex', $event.value)">
+      <mat-select placeholder="Search by Associate Training" [(ngModel)]="searchjson.associated_training_search_regex" >
         <mat-option [value]=0>Select a Lesson</mat-option>
         <mat-option *ngFor="let val of allLessonData;" value="{{ val.catagory_name }}">{{ val.catagory_name }}</mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field class="searchdiv">
-      <mat-select placeholder="Search by Test availability" [(ngModel)]="testAvailability" (selectionChange)="filterByTrainingName('test_associate_training_search_regex', $event.value)">
+      <mat-select placeholder="Search by Test availability" [(ngModel)]="searchjson.test_associate_training_search_regex" >
         <mat-option value=0>Select a Test availability</mat-option>
         <mat-option value="yes">Yes</mat-option>
         <mat-option value="no">No</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field class="searchdiv">
-      <mat-select placeholder="Search By Status" [(ngModel)]="status" (selectionChange)="filterByTrainingName('status_search', $event.value)">
+      <mat-select placeholder="Search By Status" [(ngModel)]="searchjson.status_search_regex" >
         <mat-option value="Select a status">Select a status</mat-option>
         <mat-option value="Active">Active</mat-option>
         <mat-option value="Inactive">Inactive</mat-option>

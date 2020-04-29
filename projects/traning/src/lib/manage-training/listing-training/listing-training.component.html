@@ -62,7 +62,7 @@
   </mat-form-field>
 
   <mat-form-field class="searchdiv">
-    <mat-select placeholder="Search By Status" [(ngModel)]="searchjson.status_search" (selectionChange)="filterByTrainingName()">
+    <mat-select placeholder="Search By Status" [(ngModel)]="searchjson.status_search_regex" >
       <mat-option value="Select a status">Select a status</mat-option>
       <mat-option value="active">Active</mat-option>
       <mat-option value="inactive">Inactive</mat-option>
