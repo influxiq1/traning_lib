@@ -619,9 +619,12 @@ geteditdata() {
   //         this.datalist = [];
   //     });
 }
-getchkboxval(val:any){
-this.hasLessonVal = val;
-console.log("kjhjakhdkashjkfdhs",this.hasLessonVal);
+
+ getchkboxval(val:any){
+   this.hasLessonVal = val;
+     if(this.hasLessonVal==false){
+     this.lessonplanValue="";
+     }
 }
 
 }

@@ -40,14 +40,14 @@ export class AddEditTrainingComponent implements OnInit {
         // this.geteditdata()
       }
   });
-
+  
     this.formdataval = [
       { inputtype: 'text', name: 'catagory_name', label: 'Training Title', placeholder: 'Enter Training Title', validationrule: { required: true }, validationerrormsg: 'is required' },
 
       { inputtype: 'textarea', name: 'description', label: 'Description', placeholder: 'Enter Description'},
 
       { inputtype: 'text', name: 'priority', label: 'Priority', placeholder: 'Enter Priority', validationrule: { required: true }, validationerrormsg: 'is required' }, 
-      {inputtype:'radio',name:'type',value:["User","Salesrep","All"],valuelabel:'',label:"Training accessible to",placeholder:"",validationrule:{required:true},validationerrormsg:'', class:'radioclass'},
+      {inputtype:'radio',name:'type',value:["Mentor","Mentee","All"],valuelabel:'',label:"Training accessible to",placeholder:"",validationrule:{required:true},validationerrormsg:'', class:'radioclass'},
 
       // { inputtype: 'text', name: 'catagoryname', label: 'Catagory Name ', placeholder: 'Enter Catagory Name', validationrule: { required: true }, validationerrormsg: 'is required' },
 
