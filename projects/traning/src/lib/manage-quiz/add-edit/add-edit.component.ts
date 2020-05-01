@@ -18,15 +18,22 @@ export class AddEditComponent implements OnInit {
   public buttonText :any="Submit"
   public lessonId:any;
   public statuschecked:boolean = true;
+  public lessonidineditForm:any;
   @Input()
   set serverDetails(serverDetails: {}) {
     this.serverDetailsVal = (serverDetails) || '<no name set>';
+  }
+  @Input()
+  set lessonIdInedit(id:any) {
+   
+    this.lessonidineditForm=id;
   }
   @Input()           //getting data for edit from application
   set DataList(val: any) {
     this.listingData = (val) || 'no name set';
     this.listingData = val;
     if(this.paramId){
+      this.manageQuizForm.controls['question_type'].patchValue(val[0].question_type);
       this.manageQuizForm.controls['question'].patchValue(val[0].question);
       this.manageQuizForm.controls['priority'].patchValue(val[0].priority);
       this.manageQuizForm.controls['status'].patchValue(val[0].status);
@@ -35,7 +42,7 @@ export class AddEditComponent implements OnInit {
   @Input()
   set formSource(formSource: any) {
     this.formSourceVal = (formSource) || '<no name set>';
-    console.log("dddd",this.formSourceVal);                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+    // console.log("dddd",this.formSourceVal);                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
   }
   @Input()
   set ListingPageRoute(val: any) {
@@ -49,6 +56,7 @@ export class AddEditComponent implements OnInit {
   constructor(public apiService : ApiService,public fb: FormBuilder,public router:Router,public activatedRoute:ActivatedRoute) { 
     this.manageQuizForm = this.fb.group({                                                                                                                                                                       
       lesson_id:[''],
+      question_type:[''],
       question: ["", Validators.required],
       priority: ["", Validators.required],
       status  :[""]
@@ -68,6 +76,8 @@ export class AddEditComponent implements OnInit {
   }
  
   ManageQuizFormSubmit(){
+    // console.log("soursh test",this.manageQuizForm.value);
+    // return;
       for (let x in this.manageQuizForm.controls) {
         this.manageQuizForm.controls[x].markAsTouched();
       }
@@ -80,7 +90,7 @@ export class AddEditComponent implements OnInit {
         this.manageQuizForm.value.status = parseInt("0");
            
       const link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
-      console.log("add",link);
+      // console.log("add",link);
       var data;
       if(this.paramId){
         data = {
@@ -88,6 +98,7 @@ export class AddEditComponent implements OnInit {
           "token":this.serverDetailsVal.jwttoken,
           "data": {
             "id": this.paramId,
+            'question_type': this.manageQuizForm.value.question_type,
             'question': this.manageQuizForm.value.question,
             'priority': this.manageQuizForm.value.priority,
             'status': this.manageQuizForm.value.status,
@@ -104,7 +115,13 @@ export class AddEditComponent implements OnInit {
       }
       this.apiService.postData(link,data).subscribe((res: any)=>{
         if(res.status = "success"){
-          this.router.navigateByUrl(this.listingPageRoute + this.lessonId);
+          if(this.paramId){
+            this.router.navigateByUrl(this.listingPageRoute + this.lessonidineditForm);
+              
+          }else{
+            this.router.navigateByUrl(this.listingPageRoute + this.lessonId);
+          }
+         
         }
       })
     }

@@ -61,7 +61,8 @@
             <div class="checkboxnew">
                 <mat-label *ngIf="item.inputtype!='radio'">{{item.label}}:</mat-label>
                 <mat-checkbox *ngIf="item.inputtype == 'checkbox'"  [ngClass]="item.class"
-                    [formControlName]="[item.name]" (keyup)="issubmit=0" [(ngModel)]="checked"></mat-checkbox>
+                    [formControlName]="[item.name]" (keyup)="issubmit=0" [(ngModel)]="checked"
+                    ></mat-checkbox>
             </div>
 
 
@@ -75,6 +76,7 @@
                     </mat-radio-group>
                 </span>
             </div>
+            
             <div>
                 <!-- <p>{{item.defaultchoice}}</p> -->
                 <mat-form-field *ngIf="item.inputtype == 'select'">
@@ -94,6 +96,24 @@
             <mat-progress-bar *ngIf="progressLoader && item.name =='associated_training'" mode="indeterminate"></mat-progress-bar>
 
         </ng-container>
+
+      <ng-container *ngIf="dnaFlag==true">
+        <div>
+            <span>
+                <mat-checkbox (change)="getchkboxval($event.checked)" [(ngModel)]="chkboxval" [ngModelOptions]="{standalone: true}" >Has Lesson plan?</mat-checkbox>
+            </span>
+        </div>
+        <div *ngIf="hasLessonVal == true">
+            <mat-form-field>
+                <mat-label>Select A One</mat-label>
+                <mat-select [(ngModel)]="lessonplanValue" [ngModelOptions]="{standalone: true}" >
+                  <mat-option  value="purchasable">Purchasable </mat-option>
+                  <mat-option  value="not_purchasable">Not Purchasable </mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+    </ng-container>
+
         <div *ngIf="mediaTypeValue == 'image' || mediaTypeValue == 'video' || mediaTypeValue == 'audio'  || mediaTypeValue == 'file' ">
            <h4>Please Add Single File</h4>
          <!-- file uploader start here -->

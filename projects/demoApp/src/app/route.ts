@@ -57,7 +57,7 @@ const appRoutes: Routes = [
         path : 'manage-quiz/add/:id', component : AddEditComponent
     },
     {
-        path : 'manage-quiz/edit/:_id', component : AddEditComponent,
+        path : 'manage-quiz/edit/:_id/:lesson_id_object', component : AddEditComponent,
         resolve: { quizQuestionData: ResolveService }, 
         data: { requestcondition: { source: 'quiz_question', condition: {} }, endpoint: 'datalist' }
     },

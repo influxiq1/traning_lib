@@ -8,6 +8,7 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./add-edit.component.css']
 })
 export class AddEditComponent implements OnInit {
+  public lessonIdInedit:any;
   public quizQuestionSingleDataList:any=[];
   public lessonId:any
   public serverDetails: any = {
@@ -23,6 +24,8 @@ export class AddEditComponent implements OnInit {
   public listingPageRoute : any="/manage-quiz/list/";
   public jwtToken:any
   constructor(public activatedRoute : ActivatedRoute,public cookie:CookieService) { 
+    console.log(this.activatedRoute.snapshot.params.lesson_id_object);
+    this.lessonIdInedit=this.activatedRoute.snapshot.params.lesson_id_object;
     this.lessonId = this.activatedRoute.snapshot.params.id;
     this.jwtToken = cookie.get('jwtToken');
     this.serverDetails.jwttoken=this.jwtToken;

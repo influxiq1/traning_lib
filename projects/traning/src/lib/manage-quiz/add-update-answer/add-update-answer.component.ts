@@ -14,6 +14,7 @@ export class AddUpdateAnswerComponent implements OnInit {
   public listingPageRoute:any;
   public paramsId:any;
   public lessonId:any;
+  public dnaFlag:any;
   @Input()
   set serverDetails(serverDetails: {}) {
     this.serverDetailsVal = (serverDetails) || '<no name set>';    
@@ -22,6 +23,10 @@ export class AddUpdateAnswerComponent implements OnInit {
   @Input()
   set formSource(formSource: any) {
     this.formSourceVal = (formSource) || '<no name set>';
+  }
+  @Input()
+  set DnaFlag(flag: any) {
+    this.dnaFlag = flag;
   }
   @Input()
   set ListingPageRoute(val: any) {
@@ -49,22 +54,28 @@ export class AddUpdateAnswerComponent implements OnInit {
     form.controls[val].markAsUntouched();
   }
   AddUpdateAnswerFormSubmit(){
+    
     for (let x in this.addUpdateAnswerForm.controls) {
       this.addUpdateAnswerForm.controls[x].markAsTouched();
     }
     this.addUpdateAnswerForm.controls['questionId'].patchValue(this.paramsId);
 
+    
     if(this.addUpdateAnswerForm.valid){
       if (this.addUpdateAnswerForm.value.isCorrect)
       this.addUpdateAnswerForm.value.isCorrect = parseInt("1");
     else
       this.addUpdateAnswerForm.value.isCorrect = parseInt("0");
+     
     const link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
       let data: any ={
         source: this.formSourceVal.source,
         data: this.addUpdateAnswerForm.value,
         sourceobj: ["questionId"],
         token:this.serverDetailsVal.jwttoken
+      }
+      if(this.dnaFlag ==true){
+        delete this.addUpdateAnswerForm.value.isCorrect;
       }
     this.apiService.postData(link,data).subscribe((res: any)=>{
       if(res.status = "success"){

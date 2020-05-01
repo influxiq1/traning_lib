@@ -11,6 +11,7 @@
     <mat-card-content>
         <form class="example-form" novalidate [formGroup]="addUpdateAnswerForm" name="addUpdateAnswerForm"
             (ngSubmit)="AddUpdateAnswerFormSubmit()" autocomplete="off">
+
             <mat-form-field class="example-full-width">
                 <input matInput placeholder="Answer" [formControl]="addUpdateAnswerForm.controls['answer']"
                     (blur)="inputUntouch(addUpdateAnswerForm,'answer')">
@@ -19,8 +20,10 @@
                            Answer field can not be blank</mat-error>
             </mat-form-field>
         
-
+          <ng-container *ngIf="dnaFlag!=true">
             <mat-checkbox [formControl]="addUpdateAnswerForm.controls['isCorrect']">Is it correct?</mat-checkbox>
+
+          </ng-container>
            
             <button mat-raised-button color="primary" mat-button class="submitbtn" type="submit">Submit</button>
 

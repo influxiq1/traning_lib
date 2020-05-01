@@ -13,6 +13,7 @@ export class AddEditLessionsComponent implements OnInit {
   public recid: any;
   public listingPageRoute : any="/manage-lession/list";
   public pageName : any="Manage Lesson";
+  public isitdna:any=true;
 
   public serverDetails: any = {
     "serverUrl": "https://p6ttrc8ikc.execute-api.us-east-1.amazonaws.com/production/api/",

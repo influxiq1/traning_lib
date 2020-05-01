@@ -23,6 +23,7 @@ public formSource: any = {
   "EditheaderText": "Edit Training",
   "formTitleName": 'Training'
 }
+public dnaFlag:any=true;
 public jwtToken:any;
   constructor(public activatedRoute:ActivatedRoute,public cookie:CookieService) { 
     this.paramsId = activatedRoute.snapshot.params.id;

@@ -8,6 +8,7 @@ import { ApiService } from '../api.service';
 import { DialogBoxComponent } from '../common/dialog-box/dialog-box.component';
 import { Router } from '@angular/router';
 export interface PeriodicElement {
+  question_type:string;
   question: string;
   priority: string;
   status: string;
@@ -31,7 +32,7 @@ export class ManageQuizComponent implements OnInit {
   public lessonId:any;
   public dataSource:any;
   public listingData:any=[];
-  displayedColumns: string[] = ['question', 'priority', 'status', 'deleteRecord'];
+  displayedColumns: string[] = ['question','question_type', 'priority', 'status', 'deleteRecord'];
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
 
@@ -179,7 +180,7 @@ export class ManageQuizComponent implements OnInit {
     }
 
     routerFunction(id:any){
-      this.router.navigateByUrl(this.editPageRoute + id);
+      this.router.navigateByUrl(this.editPageRoute + id+'/'+ this.lessonId);
 
     }
     goToAnswerPage(id:any){

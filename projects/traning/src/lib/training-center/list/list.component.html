@@ -33,17 +33,21 @@
               </div>
 
               <mat-card class="example-card" *ngIf="item.mediaType=='image'">
+                <div class="paragraphwrapper">
+                  <p [innerHtml]="item.image_typeHtml" class="paragraphcls"></p>
+                </div>
                 <div class="imgwrappercls">
-                  <span>Image Title : {{ item.image_title }}</span>
+                  <span>{{ item.image_title }}</span>
                   <img mat-card-image src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}"
                     alt="{{item.lession_title}}" />
-                    <span>Image Description : {{ item.image_description }}</span>
-                    <div class="paragraphwrapper">
-                      <p [innerHtml]="item.image_typeHtml" class="paragraphcls"></p>
-                    </div>
+                    <span>{{ item.image_description }}</span>
+                    
                 </div>
               </mat-card>
               <mat-card class="example-card" *ngIf="item.mediaType=='video' && item.expanded==true ">
+                <div class="paragraphwrapper">
+                  <p [innerHtml]="item.video_typeHtml" class="paragraphcls"></p>
+                </div> 
                 <div class="videoWrapper">
                   <span>{{ item.video_title }}</span>
                   <video width="640" height="360" autoplay (ended)="videoended(item,i,1)">
@@ -53,12 +57,13 @@
                   <span>{{ item.video_description }}</span>
                  
                 </div>
-                <div class="paragraphwrapper">
-                  <p [innerHtml]="item.video_typeHtml" class="paragraphcls"></p>
-                </div> 
+                
                
               </mat-card>
               <mat-card class="example-card" *ngIf="item.mediaType=='audio' ">
+                <div class="paragraphwrapper">
+                  <p [innerHtml]="item.audio_typeHtml" class="paragraphcls"></p>
+                </div>
                 <div class="audioWrapper">
                   <span>{{ item.audio_title }}</span>
 
@@ -69,11 +74,12 @@
                   <span>{{ item.audio_description }}</span>
 
                 </div>
-                <div class="paragraphwrapper">
-                  <p [innerHtml]="item.audio_typeHtml" class="paragraphcls"></p>
-                </div>
+                
               </mat-card>
               <mat-card class="example-card" *ngIf="item.mediaType=='file' ">
+                <div class="paragraphwrapper">
+                  <p [innerHtml]="item.file_typeHtml" class="paragraphcls"></p>
+                </div>
                 <div class="carouselWrapper">
                   <span>{{ item.file_title }}</span>
                   <mat-carousel timings="250ms ease-in" [autoplay]="true" interval="15000" [loop]="true"
@@ -85,9 +91,7 @@
                   </mat-carousel>
                   <span>{{ item.file_description }}</span>
                 </div>
-                <div class="paragraphwrapper">
-                  <p [innerHtml]="item.file_typeHtml" class="paragraphcls"></p>
-                </div>
+               
               </mat-card>
               <ng-container
                 *ngIf="item.test_associate_training=='No' && item.mediaType != 'audio' && item.mediaType != 'video'">

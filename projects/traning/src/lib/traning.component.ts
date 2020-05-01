@@ -15,6 +15,7 @@ declare var $: any;
   styleUrls: ['./traning.component.css']
 })
 export class TraningComponent implements OnInit {
+  public chkboxval:any;
   public progressLoader:boolean=false;
   public formdataval: any = [];
   public serverDetailsVal: any;
@@ -51,6 +52,9 @@ export class TraningComponent implements OnInit {
   public imagePath:any='';
   public fileArray:any;
   public audioVideoFlag:boolean=true;
+  public hasLessonVal:any;
+  public dnaFlag:any;
+  public lessonplanValue:any;
   @Input()
     set formdata(formdata: string) {
         this.formdataval = (formdata) || '<no name set>';
@@ -83,6 +87,11 @@ export class TraningComponent implements OnInit {
   @Input()
   set FileUpload(getConfig: any) {
     this.uploadConfigData = getConfig;
+  }
+  @Input()
+  set IsItDna(val:any){
+    this.dnaFlag = val;
+    console.log("dna flag",this.dnaFlag);
   }
    
 
@@ -160,8 +169,9 @@ export class TraningComponent implements OnInit {
 
   }
   formsubmit() {
+    console.log("data value",this.dataForm.value);
+  // return;
     this.issubmit = 1;
-    // return;
     for (let y in this.dataForm.controls) {
         this.dataForm.controls[y].markAsTouched();
     }
@@ -191,14 +201,17 @@ export class TraningComponent implements OnInit {
           break;
     
     }
-
-
-    // return;
+    
+ 
+  
     if (this.dataForm.valid && this.submitval == 1) {
       if (this.dataForm.value.status)
           this.dataForm.value.status = parseInt("1");
         else
           this.dataForm.value.status = parseInt("0");
+
+
+          
     
       const link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
         let data: any ={
@@ -207,9 +220,26 @@ export class TraningComponent implements OnInit {
           sourceobj: [this.objectId.objectId,this.objectId.objectId2],
           token:this.serverDetailsVal.jwttoken
         }
+        if(this.dnaFlag==true){
+          if(this.hasLessonVal==true){
+            data.data['has_lessonplan'] = 1;
+            data.data['lessonplan_value']=this.lessonplanValue;
+          } 
+          else
+          data.data['has_lessonplan'] = 0;
+
+        if(this.hasLessonVal==0){
+          delete this.dataForm.value.lessonplan_value;
+        }
+          
+        }
+        
+        
+         
         if(this.mediaTypeValue == 'html'){
           data.data['typeHtml'] = this.htmType;
         }
+      
         if(this.mediaTypeValue == 'image' || this.mediaTypeValue == 'video' || this.mediaTypeValue == 'audio' ||this.mediaTypeValue == 'file'){
           if (typeof(this.uploadConfigData.files) != 'undefined' && this.uploadConfigData.files.length >=0) {
             for (let loop = 0; loop < this.uploadConfigData.files.length; loop++) {
@@ -369,6 +399,10 @@ geteditdata() {
       // console.log("dingle data",res.res[0]);
 
       this.htmType = res.res[0].typeHtml;
+      // this.hasLessonVal=res.res[0].has_lessonplan;
+      this.chkboxval=res.res[0].has_lessonplan;
+      this.getchkboxval(this.chkboxval);
+      this.lessonplanValue=res.res[0].lessonplan_value;
       switch (res.res[0].mediaType) {
         case 'image':
           this.htmType = res.res[0].image_typeHtml;
@@ -403,33 +437,7 @@ geteditdata() {
     }
 
     let folder: any = '';
-    // switch (res.res[0].mediaType) {
-    //   case 'image':
-    //     this.htmType = res.res[0].image_typeHtml;
-    //     this.title=res.res[0].image_title;
-    //     this.description=res.res[0].image_description;
-    //     this.dataForm.controls['image_typeHtml'].patchValue(res.res[0].image_typeHtml);
-    //     this.dataForm.controls['image_title']=res.res[0].image_title;
-    //     this.dataForm.controls['image_description']=res.res[0].image_description;
-    //     break;
-    //   case 'video':
-    //     this.htmType = res.res[0].video_typeHtml;
-    //     this.title=res.res[0].video_title;
-    //     this.description=res.res[0].video_description;
-    //     break;
-    //   case 'audio':
-    //     this.htmType = res.res[0].audio_typeHtml;
-    //     this.title=res.res[0].audio_title;
-    //     this.description=res.res[0].audio_description;
-    //     break;
-    //   case 'file':
-    //     this.htmType = res.res[0].file_typeHtml;
-    //     this.title=res.res[0].file_title;
-    //     this.description=res.res[0].file_description;
-    //     break;
-    
-    // }
-    console.log("dataform control",this.dataForm.controls);
+   
     for (let c in this.dataForm.controls) {
       
         this.dataForm.controls[c].patchValue(res.res[0][c]);
@@ -495,31 +503,34 @@ geteditdata() {
         }
     }
     this.dataForm.addControl('id', new FormControl(this.recid, Validators.required));
-    console.log("mediatypeeee",res.res[0].mediaType);
+    this.dataForm.addControl('has_lessonplan', new FormControl(this.hasLessonVal, Validators.required));
+
+    this.dataForm.addControl('lessonplan_value', new FormControl(this.lessonplanValue, Validators.required));
+   
     switch (res.res[0].mediaType) {
       case 'image':
-        // this.htmType = res.res[0].image_typeHtml;
-        // this.title=res.res[0].image_title;
-        // this.description=res.res[0].image_description;
-        this.dataForm.addControl('image_typeHtml', new FormControl(this.title, Validators.required));
-        this.dataForm.addControl('image_title', new FormControl(this.title, Validators.required));
+        this.dataForm.addControl('image_typeHtml', new FormControl(this.htmType, Validators.required));
+        this.dataForm.addControl('image_title', new FormControl(res.res[0].image_title, Validators.required));
         this.dataForm.addControl('image_description', new FormControl(res.res[0].image_description, Validators.required));
 
         break;
       case 'video':
-        this.htmType = res.res[0].video_typeHtml;
-        this.title=res.res[0].video_title;
-        this.description=res.res[0].video_description;
+        this.dataForm.addControl('video_typeHtml', new FormControl(this.htmType, Validators.required));
+        this.dataForm.addControl('video_title', new FormControl(res.res[0].video_title, Validators.required));
+        this.dataForm.addControl('video_description', new FormControl(res.res[0].video_description, Validators.required));
+
         break;
       case 'audio':
-        this.htmType = res.res[0].audio_typeHtml;
-        this.title=res.res[0].audio_title;
-        this.description=res.res[0].audio_description;
+        this.dataForm.addControl('audio_typeHtml', new FormControl(this.htmType, Validators.required));
+        this.dataForm.addControl('audio_title', new FormControl(res.res[0].audio_title, Validators.required));
+        this.dataForm.addControl('audio_description', new FormControl(res.res[0].audio_description, Validators.required));
+ 
         break;
       case 'file':
-        this.htmType = res.res[0].file_typeHtml;
-        this.title=res.res[0].file_title;
-        this.description=res.res[0].file_description;
+        this.dataForm.addControl('file_typeHtml', new FormControl(this.htmType, Validators.required));
+        this.dataForm.addControl('file_title', new FormControl(res.res[0].file_title, Validators.required));
+        this.dataForm.addControl('file_description', new FormControl(res.res[0].file_description, Validators.required));
+
         break;
     
     }
@@ -607,6 +618,10 @@ geteditdata() {
   //     }, error => {
   //         this.datalist = [];
   //     });
+}
+getchkboxval(val:any){
+this.hasLessonVal = val;
+console.log("kjhjakhdkashjkfdhs",this.hasLessonVal);
 }
 
 }
