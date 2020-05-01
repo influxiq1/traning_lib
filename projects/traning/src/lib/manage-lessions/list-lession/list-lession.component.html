@@ -122,19 +122,27 @@
         <th mat-header-cell *matHeaderCellDef> No. </th>
         <td mat-cell *matCellDef="let element; let i = index;" title= "No"> {{ i + 1 }} </td>
       </ng-container>
-      <!-- Progress Column -->
+     
       <ng-container matColumnDef="description">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
         <td mat-cell *matCellDef="let row" title="Description"> {{row.description}} </td>
       </ng-container>
-  
-      <!-- Name Column -->
+
+      <ng-container matColumnDef="has_lessonplan">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Has Lesson Plan</th>
+        <td mat-cell *matCellDef="let row" title="Has Lesson Plan"> {{row.has_lessonplan}} </td>
+      </ng-container>
+      <ng-container matColumnDef="lessonplan_value">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Lesson plan</th>
+        <td mat-cell *matCellDef="let row" title="Has Test"> {{row.lessonplan_value}} </td>
+      </ng-container>
+     
       <ng-container matColumnDef="test_associate_training">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Has Test</th>
         <td mat-cell *matCellDef="let row" title="Has Test"> {{row.test_associate_training}} </td>
       </ng-container>
   
-      <!-- Color Column -->
+  
       <ng-container matColumnDef="mediaType">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Training Type </th>
         <td mat-cell *matCellDef="let row" title="Training Type"> {{row.mediaType}} </td>

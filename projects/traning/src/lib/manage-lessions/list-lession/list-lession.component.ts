@@ -34,7 +34,7 @@ export interface DialogData {
   styleUrls: ['./list-lession.component.css']
 })
 export class ListLessionComponent implements OnInit {
-  displayedColumns: string[] = ['select','no','lession_title', 'description', 'test_associate_training', 'mediaType','associated_training','prerequisite_lession','status','deleteRecord'];
+  displayedColumns: string[] = ['select','no','lession_title', 'description','has_lessonplan','lessonplan_value', 'test_associate_training', 'mediaType','associated_training','prerequisite_lession','status','deleteRecord'];
   // dataSource: MatTableDataSource<PeriodicElement>;
 
   public dataSource: any;
