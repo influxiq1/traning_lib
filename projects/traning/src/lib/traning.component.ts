@@ -503,9 +503,14 @@ geteditdata() {
         }
     }
     this.dataForm.addControl('id', new FormControl(this.recid, Validators.required));
-    this.dataForm.addControl('has_lessonplan', new FormControl(this.hasLessonVal, Validators.required));
+    if(this.route.snapshot.url[0].path=="manage-lession"){
+      if(this.route.snapshot.url[1].path=="edit"){
+        this.dataForm.addControl('has_lessonplan', new FormControl(this.hasLessonVal, Validators.required));
 
     this.dataForm.addControl('lessonplan_value', new FormControl(this.lessonplanValue, Validators.required));
+      }
+    }
+    
    
     switch (res.res[0].mediaType) {
       case 'image':
