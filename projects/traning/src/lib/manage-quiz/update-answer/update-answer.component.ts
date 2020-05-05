@@ -44,6 +44,7 @@ export class UpdateAnswerComponent implements OnInit {
   @Input()
   set DataList(val: any) {
     this.quizAnswerData = (val) || '<no name set>';
+    
     this.dataSource = this.quizAnswerData;
   }
   @Input()

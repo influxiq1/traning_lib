@@ -71,7 +71,9 @@ export class ListLessionComponent implements OnInit {
     "prerequisite_lession_search_regex":"",
     "status_search_regex":"",
     "test_associate_training_search_regex":"",
-    "associated_training_search_regex":""
+    "associated_training_search_regex":"",
+    "has_lessonplan_regex":"",
+    "lessonplan_value_regex":""
   }
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
@@ -218,6 +220,9 @@ export class ListLessionComponent implements OnInit {
          searchval["status_search_regex"]=this.searchjson.status_search_regex.toLowerCase();
          searchval["test_associate_training_search_regex"]=this.searchjson.test_associate_training_search_regex.toLowerCase();
          searchval["associated_training_search_regex"]=this.searchjson.associated_training_search_regex.toLowerCase();
+
+         searchval["has_lessonplan_search_regex"]=this.searchjson.has_lessonplan_regex.toLowerCase();
+         searchval["lessonplan_value_search_regex"]=this.searchjson.lessonplan_value_regex.toLowerCase();
         var data = {
           "source": this.searchSourceName,
           "condition": searchval,

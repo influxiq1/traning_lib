@@ -9,29 +9,8 @@
         </span>
     </span>
   </span>
-    <!-- <div *ngFor="let item of quizAnswerData">
-        
-    <div>
-        <input type="checkbox">
-        <label>{{ item.answer }}</label>
-        <label (click)="test()">DELETE</label>
-    </div>
-    <div>
-        <input type="checkbox">
-        <label>{{ item.answer }}</label>
-        <label>DELETE</label>
-    </div>
-    <div>
-        <input type="checkbox">
-        <label>{{ item.answer }}</label>
-        <label>DELETE</label>
-    </div>
-    <div>
-        <input type="checkbox">
-        <label>{{ item.answer }}</label>
-        <label>DELETE</label>
-    </div>
-</div> -->
+ 
+<span class="questioncls"> Question : {{ quizAnswerData[0].question}}</span>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 

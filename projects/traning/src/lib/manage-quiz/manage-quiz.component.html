@@ -61,8 +61,14 @@
                               toggle_on
                               </i>
                            </span>
-                        <button mat-button type="button" color="primary" (click)="goToAnswerPage(element._id)">Add Answer</button>
-                        <button mat-button type="button" color="primary" (click)="goToUpdateAnswerPage(element._id)">Update Answer</button>
+                           <span *ngIf="element.question_type!='text_box'">
+                            
+                            <button  mat-button type="button" color="primary" (click)="goToAnswerPage 
+                            (element._id)">Add Answer</button>
+
+                           </span>
+                        
+                        <button mat-button type="button" color="primary" (click)="goToUpdateAnswerPage(element._id)">View Answer</button>
                     </span>
                 </td>
 

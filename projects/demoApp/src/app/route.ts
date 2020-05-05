@@ -67,7 +67,7 @@ const appRoutes: Routes = [
     {
         path : 'manage-quiz/update-answer/:questionId_object',component : UpdateAnswerComponent,
         resolve: { quizQuestionData: ResolveService }, 
-        data: { requestcondition: { source: 'quiz_answer', condition: {} }, endpoint: 'datalist' }
+        data: { requestcondition: { source: 'quiz_answer_view', condition: {} }, endpoint: 'datalist' }
     },
     /**training-report**/
     {
