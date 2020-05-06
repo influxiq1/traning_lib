@@ -16,7 +16,18 @@ import { UpdateAnswerComponent } from './manage-quiz/update-answer/update-answer
 import { LoginfortrainingComponent} from './loginfortraining/loginfortraining.component';
 import { TrainingreportComponent } from './trainingreport/trainingreport.component';
 import { CategoryWiseReportComponent } from './category-wise-report/category-wise-report.component';
+import { TrainingCenterDnaComponent } from './training-center-dna/training-center-dna.component';
 const appRoutes: Routes = [
+    {
+        path : 'training-center-dna/:associated_training/:_id',component :  TrainingCenterDnaComponent,
+        resolve: { trainingdata: ResolveService }, 
+        data: { requestcondition: { source: '', condition: {} }, endpoint: 'gettrainingcenterlist' }
+    },
+    {
+        path : 'training-center-dna/:associated_training',component :  TrainingCenterDnaComponent,
+        resolve: { trainingdata: ResolveService }, 
+        data: { requestcondition: { source: '', condition: {} }, endpoint: 'gettrainingcenterlist' }
+    },
     { path: 'home', component: AppComponent },
     {
         path :'training-login',component: LoginfortrainingComponent

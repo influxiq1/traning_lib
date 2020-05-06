@@ -26,6 +26,7 @@ import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { TrainingreportComponent } from './trainingreport/trainingreport.component';
 import { DatePipe } from '@angular/common';
 import { CategoryWiseReportComponent } from './category-wise-report/category-wise-report.component';
+import { TrainingCenterDnaComponent } from './training-center-dna/training-center-dna.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { CategoryWiseReportComponent } from './category-wise-report/category-wis
     // LoginComponent,
     LoginfortrainingComponent,
     TrainingreportComponent,
-    CategoryWiseReportComponent
+    CategoryWiseReportComponent,
+    TrainingCenterDnaComponent
     
   ],
   imports: [
@@ -61,7 +63,7 @@ import { CategoryWiseReportComponent } from './category-wise-report/category-wis
     MatCarouselModule.forRoot(),
     
   ],
-  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest,TrainingreportComponent,CategoryWiseReportComponent],
+  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest,TrainingreportComponent,CategoryWiseReportComponent,TrainingCenterDnaComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [CookieService, ApiService,DatePipe],
   entryComponents:[DialogBoxComponent,Dialogtest]

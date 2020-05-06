@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  selector: 'app-training-center-dna',
+  templateUrl: './training-center-dna.component.html',
+  styleUrls: ['./training-center-dna.component.css']
 })
-export class ListComponent implements OnInit {
+export class TrainingCenterDnaComponent implements OnInit {
 public manageTrainingList : any=[];
 public paramsId:any;
 public lessonData:any=[];

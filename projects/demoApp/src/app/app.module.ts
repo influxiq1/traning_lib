@@ -23,6 +23,7 @@ import { UpdateAnswerComponent } from './manage-quiz/update-answer/update-answer
 import { LoginfortrainingComponent } from './loginfortraining/loginfortraining.component';
 import { TrainingreportComponent } from './trainingreport/trainingreport.component';
 import { CategoryWiseReportComponent } from './category-wise-report/category-wise-report.component';
+import { TrainingCenterDnaComponent } from './training-center-dna/training-center-dna.component';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { CategoryWiseReportComponent } from './category-wise-report/category-wis
     LoginfortrainingComponent,
     TrainingreportComponent,
     CategoryWiseReportComponent,
+    TrainingCenterDnaComponent,
   ],
   imports: [
     routing,
