@@ -25,6 +25,7 @@ public userId:any;
 
       this.userId = this.cookiesData._id;
       this.userType=this.cookiesData.type;
+      // console.log("routeee",this.acti);
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {     
@@ -33,8 +34,21 @@ public userId:any;
     requestData.condition = Object.assign(requestData.condition, route.params);
     if(route.url[0].path == "training-center") {
           requestData.condition['user_id'] = this.userId;
-          requestData.condition['type'] = this.userType;
+          requestData.condition['type'] = "admin";
     }
+
+    // lesson plan 
+    if(route.url[0].path == "lesson-plan-material") {
+      // requestData.condition['lesson_id'] = this.userId;
+      delete requestData.condition.associated_training;
+      // requestData.condition['type'] = "admin";
+    }
+
+
+    if(route.url[0].path == "training-center-dna") {
+      // requestData.condition['user_id'] = this.userId;
+      requestData['type'] = "admin";
+}
     if(route.url[0].path == "training-report") {
       if(this.userType == "admin"){
 

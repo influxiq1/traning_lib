@@ -20,6 +20,8 @@
 .wrapper .buttonsingle{flex: 1; margin: 5px;}
 /* .wrapper .childButton{width:100%;background:#1162ad;color:#fff;margin-bottom:10px;min-width:240px} */
 .trainingcentercls .rightside{padding:10px;background-color:#e5e5e5}
+.trainingcentercls {flex-direction: column;}
+.sublistwrapper{display: flex; align-items: center; justify-content: flex-start; flex-wrap:wrap}
 .trainingcentercls .mat-list .mat-list-item{height:auto;padding:8px 0;text-transform:capitalize;font-size:16px}
 .trainingcentercls .mat-list .mat-list-item.selectedclass:first-child{margin-top:0}
 .trainingcentercls .mat-list .mat-list-item.selectedclass{background-color:#c4c4c4;text-transform:uppercase;padding:8px 0;font-size:16px;margin-top:8px;font-weight:600}

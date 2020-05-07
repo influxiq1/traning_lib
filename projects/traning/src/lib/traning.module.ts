@@ -27,6 +27,11 @@ import { TrainingreportComponent } from './trainingreport/trainingreport.compone
 import { DatePipe } from '@angular/common';
 import { CategoryWiseReportComponent } from './category-wise-report/category-wise-report.component';
 import { TrainingCenterDnaComponent } from './training-center-dna/training-center-dna.component';
+import { LessonPlanMaterialComponent } from './lesson-plan-material/lesson-plan-material.component';
+import { ListingModule } from 'listing-angular7';
+
+
+
 
 
 @NgModule({
@@ -47,7 +52,8 @@ import { TrainingCenterDnaComponent } from './training-center-dna/training-cente
     LoginfortrainingComponent,
     TrainingreportComponent,
     CategoryWiseReportComponent,
-    TrainingCenterDnaComponent
+    TrainingCenterDnaComponent,
+    LessonPlanMaterialComponent
     
   ],
   imports: [
@@ -61,9 +67,10 @@ import { TrainingCenterDnaComponent } from './training-center-dna/training-cente
     CKEditorModule,
     FileUploadModule,
     MatCarouselModule.forRoot(),
+    ListingModule
     
   ],
-  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest,TrainingreportComponent,CategoryWiseReportComponent,TrainingCenterDnaComponent],
+  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest,TrainingreportComponent,CategoryWiseReportComponent,TrainingCenterDnaComponent,LessonPlanMaterialComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [CookieService, ApiService,DatePipe],
   entryComponents:[DialogBoxComponent,Dialogtest]

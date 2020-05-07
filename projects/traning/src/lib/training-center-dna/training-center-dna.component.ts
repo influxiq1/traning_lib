@@ -56,12 +56,18 @@ export class TrainingCenterDnaComponent implements OnInit {
   public adminlessoncount:any;
   public salesreplessoncount:any;
   public userlessoncount:any;
-  
+  public lessonplanmaterialroute:any;
+  public lessonDataList:any=[];
+  @Input()
+  set lessonplanmaterialRoute(route:any){
+   this.lessonplanmaterialroute = route;
+  }
   @Input()
   set TrainingCategoryList(val: any) {
     let results:any=(val) || '<no name set>';
     let parentdone:any;
     let parentcount:any;
+    console.log("souresh test",results);
     this.trainingCategoryList= results.trainingcenterlist;   
     for (let i in this.trainingCategoryList) {
      
@@ -157,6 +163,8 @@ export class TrainingCenterDnaComponent implements OnInit {
   set TrainingCeneterData(data: any) {
     let results:any=(data) || '<no name set>';
     this.uniquedonetrainingarray = results.uniquedonetrainingarray;
+    this.lessonDataList = results.rdata;
+    console.log("++++++++++++++++++",this.lessonDataList)
   }
    
   @Input()
@@ -190,6 +198,7 @@ export class TrainingCenterDnaComponent implements OnInit {
       this.userName = this.cookiesData.firstname+' '+this.cookiesData.lastname;
       this.userId = this.cookiesData._id;
       this.paramsTrainingId = activatedRoute.snapshot.params.associated_training;
+      console.log("training id__",this.paramsTrainingId);
       
     }
 
@@ -207,6 +216,9 @@ export class TrainingCenterDnaComponent implements OnInit {
     
     }
 
+  }
+  lessonplanpageroute(id){
+    this.router.navigateByUrl(this.lessonplanmaterialroute+this.paramsTrainingId+'/'+id);
   }
   questionDetails(id:any,i:any,lesson_title:any){
     this.lesson_title = lesson_title
@@ -412,7 +424,8 @@ export class TrainingCenterDnaComponent implements OnInit {
   
   }
   nochildclick(id:any){
-    this.router.navigateByUrl(this.trainingCenterRoute + id);
+    console.log("dddidddddd",id);
+    this.router.navigateByUrl(this.trainingCenterRoute + this.paramsTrainingId+'/'+id);
 
   }
 

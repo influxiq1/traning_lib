@@ -17,6 +17,7 @@ import { LoginfortrainingComponent} from './loginfortraining/loginfortraining.co
 import { TrainingreportComponent } from './trainingreport/trainingreport.component';
 import { CategoryWiseReportComponent } from './category-wise-report/category-wise-report.component';
 import { TrainingCenterDnaComponent } from './training-center-dna/training-center-dna.component';
+import { LessonPlanMaterialComponent } from './lesson-plan-material/lesson-plan-material.component';
 const appRoutes: Routes = [
     {
         path : 'training-center-dna/:associated_training/:_id',component :  TrainingCenterDnaComponent,
@@ -27,6 +28,12 @@ const appRoutes: Routes = [
         path : 'training-center-dna/:associated_training',component :  TrainingCenterDnaComponent,
         resolve: { trainingdata: ResolveService }, 
         data: { requestcondition: { source: '', condition: {} }, endpoint: 'gettrainingcenterlist' }
+    },
+    {
+        path : 'lesson-plan-material/:associated_training/:lesson_id_object',component :  LessonPlanMaterialComponent,
+        resolve: { lessonplandata: ResolveService }, 
+        data: { requestcondition: { source: 'quiz_question_answer_data', condition: {} }, endpoint: 'datalist' }
+        
     },
     { path: 'home', component: AppComponent },
     {

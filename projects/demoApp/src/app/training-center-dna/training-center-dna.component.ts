@@ -32,7 +32,8 @@ public formSource: any = {
   "trainingCompletEmailEndpoint":"trainingcompletemail",
   "trainingcatcompletemailendpoint":"trainingcatcompletemail"
 }
-public trainingCenterRoute:any="/training-center/list/";
+public trainingCenterRoute:any="/training-center-dna/";
+public lessonplanmaterialRoute:any="/lesson-plan-material/";
 public jwtToken:any;
 
   constructor(public activatedRoute : ActivatedRoute,public cookie:CookieService) {

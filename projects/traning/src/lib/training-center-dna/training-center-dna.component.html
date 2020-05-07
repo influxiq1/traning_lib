@@ -4,5 +4,153 @@
     <h2>You Have Completed {{ dividend }}/{{divisor}} Lessons</h2>
    
   </div>
+  <!-- <h1 class="trainingheadercls">{{ trainingCategoryName }}</h1> -->
+  <ng-container *ngFor="let item of trainingCategoryList;let i = index">
+
+    <mat-list-item class="selectedclass" *ngIf="item.childcat.length>=1">{{item.catagory_name}}</mat-list-item>
+    <div class="pointer">
+      <!-- parent section -->
+      <mat-list-item [ngClass]="{'class1': ((item.done/item.count)*100)>1,
+                                 'class2': ((item.done/item.count)*100) ===100,
+                                 'class3': ((item.done/item.count)*100) ===0 }" *ngIf="item.childcat.length==0"
+        class="selectedclass" (click)="nochildclick(item._id)">{{item.catagory_name}}
+        </mat-list-item>
+
+        <!-- <p>({{item.done}}/{{item.count}})</p> -->
+      <div *ngIf="item.count != null && item.childcat.length==0">
+       
+        <mat-progress-bar *ngIf="percentageprogressLoader " mode="determinate" value="{{((item.done/item.count)*100) }}">
+        </mat-progress-bar>
+        <!-- <span class="progresspercentage">{{((item.done/item.count)*100) }}%</span> -->
+        <!-- <p>{{ item.done/item.count | percent:'2.0-2' }}%</p> -->
+      </div>
+
+
+    </div>
+
+    <mat-list class="sublist">
+      <div class="sublistwrapper">
+        <ng-container *ngIf="item.childcat!=null && item.childcat.length>0">
+          <mat-list *ngFor=" let childitem of item.childcat;let i1 = index">
+            <mat-list-item class="pointer" [ngClass]="{'class1': item.childpercentage[i1]>1,
+                                 'class2': item.childpercentage[i1]===100,
+                                 'class3':item.childpercentage[i1] ===0 }"
+              (click)="childcatclick(item.childid[i1],item.childcat[i1])">
+              {{ childitem }} 
+              <!-- <ng-container *ngIf="item.childdone !=null && item.childdone[i1]!=null">
+                {{item.childdone[i1]}}/
+              </ng-container>
+              {{item.childcount[i1]}}) -->
+            </mat-list-item>
+
+
+            <div *ngIf="item.childdone !=null && item.childdone[i1]!=null" class="matprogressbar">
+             
+              <!-- <mat-progress-bar *ngIf="item.childdone !=null && item.childdone[i1]!=null " mode="determinate"
+                value="{{item.childpercentage[i1]}}"></mat-progress-bar> -->
+              <!-- <span class="progresspercentage"> {{item.childpercentage[i1]}}%</span> -->
+            </div>
+
+
+
+          </mat-list>
+        </ng-container>
+
+      </div>
+    </mat-list>
+  </ng-container>
+  <mat-card-content class="trainingcentercls">
+    <span fxLayout="row" class="rowinner" *ngFor="let item of lessonDataList ; let i=index;">
+      <div (click)="nochildclick(item._id)">
+      {{item.lession_title}}
+      </div>
+      
+    </span>
+  </mat-card-content>
+
+  <mat-card-content>
+    <span fxLayout="row" class="trainingcentercls" *ngFor="let item of lessonDataList ; let i=index;">
+
+    <div *ngIf="item.mediaType=='html'">
+      <div class="paragraphwrapper">
+        <p [innerHtml]="item.typeHtml" class="paragraphcls"></p>
+      </div>
+    </div>
+
+    <mat-card class="example-card" *ngIf="item.mediaType=='image'">
+      <div class="paragraphwrapper">
+        <p [innerHtml]="item.image_typeHtml" class="paragraphcls"></p>
+      </div>
+      <div class="imgwrappercls">
+        <span>{{ item.image_title }}</span>
+        <img mat-card-image src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}"
+          alt="{{item.lession_title}}" />
+          <span>{{ item.image_description }}</span>
+          
+      </div>
+    </mat-card>
+    <mat-card class="example-card" *ngIf="item.mediaType=='video'">
+      <div class="paragraphwrapper">
+        <p [innerHtml]="item.video_typeHtml" class="paragraphcls"></p>
+      </div> 
+      <div class="videoWrapper">
+        <span>{{ item.video_title }}</span>
+        <video width="640" height="360" autoplay (ended)="videoended(item,i,1)">
+          <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <span>{{ item.video_description }}</span>
+       
+      </div>
+      
+     
+    </mat-card>
+    <mat-card class="example-card" *ngIf="item.mediaType=='audio' ">
+      <div class="paragraphwrapper">
+        <p [innerHtml]="item.audio_typeHtml" class="paragraphcls"></p>
+      </div>
+      <div class="audioWrapper">
+        <span>{{ item.audio_title }}</span>
+
+        <audio width="640" height="360" (ended)="audioended(item,i,1)" controls>
+          <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="audio/mpeg">
+          Your browser does not support the audio tag.
+        </audio>
+        <span>{{ item.audio_description }}</span>
+
+      </div>
+      
+    </mat-card>
+    <mat-card class="example-card" *ngIf="item.mediaType=='file' ">
+      <div class="paragraphwrapper">
+        <p [innerHtml]="item.file_typeHtml" class="paragraphcls"></p>
+      </div>
+      <div class="carouselWrapper">
+        <span>{{ item.file_title }}</span>
+        <mat-carousel timings="250ms ease-in" [autoplay]="true" interval="15000" [loop]="true"
+          [maintainAspectRatio]="true" [hideArrows]="false" [hideIndicators]="false" [useKeyboard]="true"
+          [useMouseWheel]="false" orientation="ltr">
+          <mat-carousel-slide #matCarouselSlide *ngFor="let slide of item.convertedimages; let i1 = index"
+            [image]="slide" overlayColor="#00000040" [hideOverlay]="false">
+          </mat-carousel-slide>
+        </mat-carousel>
+        <span>{{ item.file_description }}</span>
+      </div>
+     
+    </mat-card>
+    <ng-container
+              *ngIf="item.test_associate_training=='No' && item.mediaType != 'audio' && item.mediaType != 'video'">
+              <button mat-button type="button" class="submitbtn" color="primary"
+                (click)="addMarkedData(item._id,item.associated_training,i,item.lession_title)">Mark As Done</button>
+            </ng-container>
+            <ng-container
+              *ngIf="item.test_associate_training=='Yes' && item.mediaType != 'audio' && item.mediaType != 'video'">
+              <button mat-button type="button" class="submitbtn" color="primary"
+                (click)="lessonplanpageroute(item._id)">Lesson Plan Material</button>
+              <mat-progress-bar *ngIf="progressLoader" mode="indeterminate"></mat-progress-bar>
+            </ng-container>
+            </span>
+  </mat-card-content>
+
 </span>
 </mat-card>

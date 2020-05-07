@@ -24,6 +24,7 @@ import { LoginfortrainingComponent } from './loginfortraining/loginfortraining.c
 import { TrainingreportComponent } from './trainingreport/trainingreport.component';
 import { CategoryWiseReportComponent } from './category-wise-report/category-wise-report.component';
 import { TrainingCenterDnaComponent } from './training-center-dna/training-center-dna.component';
+import { LessonPlanMaterialComponent } from './lesson-plan-material/lesson-plan-material.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { TrainingCenterDnaComponent } from './training-center-dna/training-cente
     TrainingreportComponent,
     CategoryWiseReportComponent,
     TrainingCenterDnaComponent,
+    LessonPlanMaterialComponent,
   ],
   imports: [
     routing,
