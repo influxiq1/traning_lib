@@ -12,7 +12,7 @@ export class AddEditComponent implements OnInit {
   public quizQuestionSingleDataList:any=[];
   public lessonId:any
   public serverDetails: any = {
-    "serverUrl": "https://p6ttrc8ikc.execute-api.us-east-1.amazonaws.com/production/api/",
+    "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/",
     "jwttoken": ""
   };
   public formSource: any = {

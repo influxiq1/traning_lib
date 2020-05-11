@@ -215,7 +215,6 @@ export class TrainingreportComponent implements OnInit {
 
   }
   nextPage(flag : string = null){
-
    if(flag=='prev' && this.page.page_no > 1){
       this.page.page_no--;
    }

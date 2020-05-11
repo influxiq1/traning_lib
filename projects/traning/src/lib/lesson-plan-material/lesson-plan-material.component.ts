@@ -13,7 +13,7 @@ public serverdata:any;
 formfieldrefresh: boolean = true;
   updatetable: boolean = true;
   formfieldrefreshdata: any = null;
-public selectValue:any=[];
+public selectValue:any=[{}];
 @Input()
 set lessonplandata(val:any){
 this.allData= val;
@@ -43,7 +43,7 @@ console.log(this.serverdata.serverUrl)
       resettext:"Reset This",
       submitactive:true, //optional, default true
       apiUrl: this.serverdata.serverUrl,
-      endpoint: 'api/addorupdatedata',  //change endpoint
+      endpoint: '/addorupdatedata',  //change endpoint
       jwttoken: '',
     
       fields: []
@@ -58,20 +58,21 @@ console.log(this.serverdata.serverUrl)
         label: this.allData[loop].answerdata[0].answer,
         name: "answer",
         value: this.allData[loop].answerdata[0].answer,
-        validations: [
-          { rule: 'required' },
-          { rule: 'maxLength', value: 10 },
-          { rule: 'minLength', value: 2 }
-        ]
+        // validations: [
+        //   { rule: 'required' },
+        //   { rule: 'maxLength', value: 10 },
+        //   { rule: 'minLength', value: 2 }
+        // ]
       };
     let selecttypedata:any=[{}];
     this.selectValue.push(
       { 'name': this.allData[loop].answerdata[0].answer, val: this.allData[loop].answerdata[0].answer }
     );
-
+   console.log("selected val+++++++++",this.selectValue);
       switch (this.allData[loop].question_type) {
         case 'checkbox':
           jsonObj.type = 'checkbox';
+          
           break;
         case 'dropdown':
           jsonObj.type = 'select';

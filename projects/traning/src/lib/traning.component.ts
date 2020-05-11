@@ -55,6 +55,7 @@ export class TraningComponent implements OnInit {
   public hasLessonVal:any;
   public dnaFlag:any;
   public lessonplanValue:any;
+  public  
   @Input()
     set formdata(formdata: string) {
         this.formdataval = (formdata) || '<no name set>';

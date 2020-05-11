@@ -58,6 +58,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   public userlessoncount:any;
   public lessonplanmaterialroute:any;
   public lessonDataList:any=[];
+  public nextdata:any = 1;
   @Input()
   set lessonplanmaterialRoute(route:any){
    this.lessonplanmaterialroute = route;
@@ -193,30 +194,32 @@ export class TrainingCenterDnaComponent implements OnInit {
   }
   constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router,
     public cookieService:CookieService,public snakBar:MatSnackBar,public activatedRoute:ActivatedRoute) {
-      this.allCookiesData = cookieService.getAll();
-      this.cookiesData = JSON.parse(this.allCookiesData.user_details);
-      this.userName = this.cookiesData.firstname+' '+this.cookiesData.lastname;
-      this.userId = this.cookiesData._id;
+      // this.allCookiesData = cookieService.getAll();
+      // this.cookiesData = JSON.parse(this.allCookiesData.user_details);
+      // this.userName = this.cookiesData.firstname+' '+this.cookiesData.lastname;
+      // this.userId = this.cookiesData._id;
       this.paramsTrainingId = activatedRoute.snapshot.params.associated_training;
       console.log("training id__",this.paramsTrainingId);
       
     }
 
   ngOnInit() {
-    switch (this.cookiesData.type) {
-      case 'admin':
-        this.divisor = this.adminlessoncount;
-        break;
-      case 'salesrep':
-        this.divisor = this.salesreplessoncount;
-        break;
-      case 'user':
-        this.divisor = this.userlessoncount;
-        break ;
+    this.divisor = this.adminlessoncount;
+    // switch (this.cookiesData.type) {
+    //   case 'admin':
+    //     this.divisor = this.adminlessoncount;
+    //     break;
+    //   case 'salesrep':
+    //     this.divisor = this.salesreplessoncount;
+    //     break;
+    //   case 'user':
+    //     this.divisor = this.userlessoncount;
+    //     break ;
     
-    }
+    // }
 
   }
+  
   lessonplanpageroute(id){
     this.router.navigateByUrl(this.lessonplanmaterialroute+this.paramsTrainingId+'/'+id);
   }
@@ -229,7 +232,7 @@ export class TrainingCenterDnaComponent implements OnInit {
     const link = this.serverDetailsVal.serverUrl + this.formSourceVal.showEndpoint;
     let data: any ={
       source:  this.quizQuestionSource.questionSourceName,
-      token:this.serverDetailsVal.jwttoken,
+      // token:this.serverDetailsVal.jwttoken,
       condition:{
         lesson_id: id
       }
@@ -322,7 +325,7 @@ export class TrainingCenterDnaComponent implements OnInit {
         "lasttrainingname":this.trainingCategoryName
       },
       "sourceobj":["user_id","lesson_id","associated_training"],
-      "token":this.serverDetailsVal.jwttoken
+      // "token":this.serverDetailsVal.jwttoken
     }
     this.apiService.postData(link,data).subscribe((response:any)=>{
       if(response.status="success"){
@@ -424,11 +427,34 @@ export class TrainingCenterDnaComponent implements OnInit {
   
   }
   nochildclick(id:any){
-    console.log("dddidddddd",id);
+    // console.log("dddidddddd",id);
     this.router.navigateByUrl(this.trainingCenterRoute + this.paramsTrainingId+'/'+id);
 
   }
+  clicktrcataining(id:any){
+    // console.log("dddidddddd",id);
+    this.router.navigateByUrl(this.trainingCenterRoute + id);
 
+  }
+  nextbutton(value:any){
+     switch (value) {
+       case 'next':
+        if(this.nextdata<this.trainingCategoryList.length){
+          this.nextdata++;
+          console.log("souresh test",this.nextdata);
+        }
+         break;
+         case 'prev':
+        if(this.nextdata==this.nextdata){
+          this.nextdata--;
+          console.log("souresh test",this.nextdata);
+        }
+         break;
+
+     
+       }
+   
+  }
 }
 
 
