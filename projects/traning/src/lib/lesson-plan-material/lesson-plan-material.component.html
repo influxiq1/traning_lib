@@ -1,6 +1,6 @@
-<lib-showform *ngIf="formdata !=null"
+<lib-showform *ngIf="formdata != null && formdata.fields != null && formdata.fields.length > 0"
 [formdata]="formdata"
 [formfieldrefresh]="formfieldrefresh"
 [formfieldrefreshdata]="formfieldrefreshdata"
 > </lib-showform>
-<!-- <h1>yfyff</h1> -->
+<!-- <h1>{{formdata | json}}</h1> -->
