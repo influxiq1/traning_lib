@@ -2,7 +2,9 @@
 <span fxLayout="column" class="column" class="rightside">
 <div class="trainingheadercls">
     <h2>You Have Completed {{ dividend }}/{{divisor}} Lessons</h2>
-   
+    <mat-progress-bar *ngIf="percentageprogressLoader " mode="determinate" value="{{ reportPercentage }}">
+    </mat-progress-bar>
+    <h3>{{ reportPercentage }}%</h3>
   </div>
   <!-- <h1 class="trainingheadercls">{{ trainingCategoryName }}</h1> -->
   <ng-container *ngFor="let item of trainingCategoryList;let i = index" >
@@ -13,14 +15,15 @@
                                  'class2': ((item.done/item.count)*100) ===100,
                                  'class3': ((item.done/item.count)*100) ===0 }" *ngIf="item.childcat.length==0"
         class="selectedclass" (click)="clicktrcataining(item._id)">{{item.catagory_name}}
+        ({{item.done}}/{{item.count}})
         </mat-list-item>
-
+        <!-- <p>{{categoryPercentage}}</p> -->
         <!-- <p>({{item.done}}/{{item.count}})</p> -->
       <div *ngIf="item.count != null && item.childcat.length==0">
        
         <mat-progress-bar *ngIf="percentageprogressLoader " mode="determinate" value="{{((item.done/item.count)*100) }}">
         </mat-progress-bar>
-        <!-- <span class="progresspercentage">{{((item.done/item.count)*100) }}%</span> -->
+        <span class="progresspercentage">{{((item.done/item.count)*100) }}%</span>
         <!-- <p>{{ item.done/item.count | percent:'2.0-2' }}%</p> -->
       </div>
 
@@ -146,7 +149,7 @@
     </mat-card>
     <ng-container
               *ngIf="item.test_associate_training=='No' && item.mediaType != 'audio' && item.mediaType != 'video'">
-              <button mat-button type="button" class="submitbtn" color="primary"
+              <button mat-button type="button" class="submitbtn" color="primary" (click)="addMarkedData(item._id,item.associated_training,i,item.lession_title)"
                 >Mark As Done</button>
             </ng-container>
             <ng-container

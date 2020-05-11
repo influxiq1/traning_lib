@@ -44,8 +44,8 @@ public jwtToken:any;
 
   ngOnInit() {
     this.activatedRoute.data.forEach(data => {
-      console.log("gettrainingcenterlist data",data);
-      this.trainingName = data.trainingdata.trainingname;      
+      this.trainingName = data.trainingdata.trainingname;  
+      console.log("gettrainingcenterlist data",this.trainingName);
       let result: any;
       result = data.trainingdata.results;
       this.totalData=result;

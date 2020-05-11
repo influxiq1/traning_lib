@@ -7,7 +7,7 @@ import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel';
 import { MatCarouselSlide, MatCarouselSlideComponent } from '@ngmodule/material-carousel';
 import { count } from 'rxjs/operators';
 // import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
-
+import { Pipe, PipeTransform } from '@angular/core';
 export interface DialogData {
   data: string;
 }
@@ -153,7 +153,7 @@ export class TrainingCenterDnaComponent implements OnInit {
     {
       userPercentage=this.totalData.done_lesson_by_user[0].lessonsdone;
       this.dividend=userPercentage;
-      this.reportPercentage=Math.floor(userPercentage/this.adminlessoncount*100);
+      // this.reportPercentage=Math.floor(userPercentage/this.adminlessoncount*100);
     }
     if(done_lesson_by_cat_by_user==0){
       this.dividend=0;
@@ -198,6 +198,8 @@ export class TrainingCenterDnaComponent implements OnInit {
       // this.cookiesData = JSON.parse(this.allCookiesData.user_details);
       // this.userName = this.cookiesData.firstname+' '+this.cookiesData.lastname;
       // this.userId = this.cookiesData._id;
+      this.userId = JSON.parse(this.cookieService.get('userid'));
+      console.log("user id in cookies",this.userId);
       this.paramsTrainingId = activatedRoute.snapshot.params.associated_training;
       console.log("training id__",this.paramsTrainingId);
       
@@ -205,6 +207,8 @@ export class TrainingCenterDnaComponent implements OnInit {
 
   ngOnInit() {
     this.divisor = this.adminlessoncount;
+    this.reportPercentage=Math.floor(this.dividend/this.divisor*100);
+
     // switch (this.cookiesData.type) {
     //   case 'admin':
     //     this.divisor = this.adminlessoncount;
@@ -313,8 +317,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   //   });
   // }
   
-  addMarkedData(lessonId:any,associated_training:any,i:any,lession_title:any){
-    
+  addMarkedData(lessonId:any,associated_training:any,i:any,lession_title:any){    
     const link = this.serverDetailsVal.serverUrl + this.formSourceVal.addMarkendpoint;
     let data:any={
       "data":{
@@ -325,8 +328,9 @@ export class TrainingCenterDnaComponent implements OnInit {
         "lasttrainingname":this.trainingCategoryName
       },
       "sourceobj":["user_id","lesson_id","associated_training"],
-      // "token":this.serverDetailsVal.jwttoken
+      "token":this.serverDetailsVal.jwttoken
     }
+    
     this.apiService.postData(link,data).subscribe((response:any)=>{
       if(response.status="success"){
         const link = this.serverDetailsVal.serverUrl + this.formSourceVal.getUpdatedTrainingPercentageByUserEndpoint;
@@ -357,38 +361,41 @@ export class TrainingCenterDnaComponent implements OnInit {
            });
           }
         })
-        if(i<this.allLessonData.length){
+
+
+
+        // if(i<this.allLessonData.length){
           
-          if(this.allLessonData[i+1]!=null){
-          this.allLessonData[i].expanded=false;
-          this.allLessonData[i+1].expanded=true;
-          this.allLessonData[i+1].is_done=true;
+        //   if(this.allLessonData[i+1]!=null){
+        //   this.allLessonData[i].expanded=false;
+        //   this.allLessonData[i+1].expanded=true;
+        //   this.allLessonData[i+1].is_done=true;
           
-          }else{
-             //after completion of training category, mail send to user
-            const link = this.serverDetailsVal.serverUrl + this.formSourceVal.trainingcatcompletemailendpoint;
-            let data:any={
-              "email":this.cookiesData.email,
-              "user_name":this.userName,
-              "cat_name":this.trainingCategoryName,
-              "user_type":this.cookiesData.type
-          }
+        //   }else{
+             
+        //     const link = this.serverDetailsVal.serverUrl + this.formSourceVal.trainingcatcompletemailendpoint;
+        //     let data:any={
+        //       "email":this.cookiesData.email,
+        //       "user_name":this.userName,
+        //       "cat_name":this.trainingCategoryName,
+        //       "user_type":this.cookiesData.type
+        //   }
           
-          this.apiService.postDatawithoutToken(link,data).subscribe((response:any)=>{
-          //  console.log("after completion of training category",response);
-          });
+        //   this.apiService.postDatawithoutToken(link,data).subscribe((response:any)=>{
+          
+        //   });
             
-            let message :any="You Have Successfully Completed The Training";
-            let action : any="Ok";
-            this.snakBar.open(message,action,{
-              duration:3000
-            });
-            setTimeout(() => {
-              // this.lastOpenDialog('lessoncompletedmoal'); 
-            }, 4000);
+        //     let message :any="You Have Successfully Completed The Training";
+        //     let action : any="Ok";
+        //     this.snakBar.open(message,action,{
+        //       duration:3000
+        //     });
+        //     setTimeout(() => {
+              
+        //     }, 4000);
             
-          }
-          }
+        //   }
+        //   }
           
         }
       

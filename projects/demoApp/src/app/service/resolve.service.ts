@@ -26,6 +26,8 @@ public userId:any;
     //   this.userId = this.cookiesData._id;
     //   this.userType=this.cookiesData.type;
       // console.log("routeee",this.acti);
+      this.userId = JSON.parse(this.cookiesService.get('userid'));
+
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {     
@@ -46,8 +48,10 @@ public userId:any;
 
 
     if(route.url[0].path == "training-center-dna") {
-      // requestData.condition['user_id'] = this.userId;
+      requestData['user_id'] = this.userId;
       requestData['type'] = "admin";
+      requestData['associated_training']="5eb3b43d3702b803ad82f230";
+
 }
     if(route.url[0].path == "training-report") {
       if(this.userType == "admin"){
