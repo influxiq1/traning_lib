@@ -1,6 +1,7 @@
 import { Component, OnInit ,Input} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../api.service';
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'lib-lesson-plan-material',
   templateUrl: './lesson-plan-material.component.html',
@@ -10,10 +11,14 @@ export class LessonPlanMaterialComponent implements OnInit {
 public  allData:any=[];
 public formdata:any = {};
 public serverdata:any;
+public associated_training_id:any;
+public lessonId:any;
 formfieldrefresh: boolean = true;
   updatetable: boolean = true;
   formfieldrefreshdata: any = null;
 public selectValue:any=[{}];
+public userId:any;
+public redirectPath:any;
 @Input()
 set lessonplandata(val:any){
 this.allData= val;
@@ -22,25 +27,30 @@ this.allData= val;
 set serverDetails(val: {}){
 this.serverdata = val;
 }
-  constructor(public activatedroute:ActivatedRoute,public apiService:ApiService) { 
+@Input()
+set Redirectpath(val: any){
+this.redirectPath = val;
+}
+  constructor(public activatedroute:ActivatedRoute,public apiService:ApiService,public cookieService:CookieService) { 
+    this.userId = JSON.parse(this.cookieService.get('userid'));
 
-    
+    this.associated_training_id = this.activatedroute.snapshot.params.associated_training;
+    this.lessonId = this.activatedroute.snapshot.params.lesson_id_object;
+
   }
 
   ngOnInit() {
     this.formdata = {
       successmessage: "Added Successfully !!",
-      redirectpath: "/",
+      redirectpath: this.redirectPath+'/'+this.associated_training_id,
       submittext:"Submit",
       // canceltext:"Cancel Now",
       resettext:"Reset This",
       submitactive:true, //optional, default true
       apiUrl: this.serverdata.serverUrl,
-      endpoint: '/addorupdatedata',  //change endpoint
+      endpoint: 'addlessonplandata',  //change endpoint
       jwttoken: '',
     
-      // fields: []
-        
     };
 
 let answer:any = [];
@@ -52,17 +62,16 @@ let answerForSelect:any = [];
  
         if (this.allData[loop].answerdata != null && this.allData[loop].answerdata.length > 1) {
         for (const key in this.allData[loop].answerdata) {
-         answer.push({key:key, val:this.allData[loop].answerdata[key].answer});
-         answerForSelect.push({val:key, name:this.allData[loop].answerdata[key].answer});
+         answer.push({key:this.allData[loop].answerdata[key].answer, val:this.allData[loop].answerdata[key].answer});
+         answerForSelect.push({val:this.allData[loop].answerdata[key].answer, name:this.allData[loop].answerdata[key].answer});
         }
       }
       let jsonObj: any = {
         // heading: '',
         label: this.allData[loop].question,
-        name: this.allData[loop]._id,
+        name: this.allData[loop].question,
        
       };
-    let selecttypedata:any=[{}];
    
       switch (this.allData[loop].question_type) {
         case 'checkbox':
@@ -70,7 +79,7 @@ let answerForSelect:any = [];
           if (this.allData[loop].answerdata != null && this.allData[loop].answerdata.length > 0) {
             jsonObj.multiple = true;
             jsonObj.val = answer;
-            jsonObj.value = []
+            jsonObj.value = [];
           }
           break;
         case 'dropdown':
@@ -89,14 +98,35 @@ let answerForSelect:any = [];
         default:
           break;
       }
-
-
-      tempfrondata.push(jsonObj);
+       let traininghiddenfield:any={
+        label:"associated_training",
+        name:"associated_training",
+        type:'hidden',
+        value:this.associated_training_id
+      } ;
+      let lessonhiddenfields:any={
+        label:"lesson_id",
+        name:"lesson_id",
+        type:'hidden',
+        value:this.lessonId
+      } 
+      let userhiddenfields:any={
+        label:"user_id",
+        name:"user_id",
+        type:'hidden',
+        value:this.userId
+      } 
+      
+       tempfrondata.push(jsonObj);
+       tempfrondata.push(traininghiddenfield);
+       tempfrondata.push(lessonhiddenfields);
+       tempfrondata.push(userhiddenfields);
 ;
-    // }
+    
     }
     if (tempfrondata.length > 0) {
       this.formdata.fields = tempfrondata;
+      
     }
    
   }

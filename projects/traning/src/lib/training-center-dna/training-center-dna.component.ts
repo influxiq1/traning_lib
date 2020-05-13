@@ -59,6 +59,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   public lessonplanmaterialroute:any;
   public lessonDataList:any=[];
   public nextdata:any = 1;
+  public userType:any;
   @Input()
   set lessonplanmaterialRoute(route:any){
    this.lessonplanmaterialroute = route;
@@ -165,7 +166,6 @@ export class TrainingCenterDnaComponent implements OnInit {
     let results:any=(data) || '<no name set>';
     this.uniquedonetrainingarray = results.uniquedonetrainingarray;
     this.lessonDataList = results.rdata;
-    console.log("++++++++++++++++++",this.lessonDataList)
   }
    
   @Input()
@@ -194,14 +194,10 @@ export class TrainingCenterDnaComponent implements OnInit {
   }
   constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router,
     public cookieService:CookieService,public snakBar:MatSnackBar,public activatedRoute:ActivatedRoute) {
-      // this.allCookiesData = cookieService.getAll();
-      // this.cookiesData = JSON.parse(this.allCookiesData.user_details);
-      // this.userName = this.cookiesData.firstname+' '+this.cookiesData.lastname;
-      // this.userId = this.cookiesData._id;
+    
       this.userId = JSON.parse(this.cookieService.get('userid'));
-      console.log("user id in cookies",this.userId);
+      this.userType = JSON.parse(this.cookieService.get('type'));
       this.paramsTrainingId = activatedRoute.snapshot.params.associated_training;
-      console.log("training id__",this.paramsTrainingId);
       
     }
 

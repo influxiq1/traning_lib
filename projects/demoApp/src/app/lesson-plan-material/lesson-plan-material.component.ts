@@ -12,6 +12,7 @@ public serverDetails: any = {
   "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/",
   "jwttoken": ""
 };
+public redirectpath:any="/training-center-dna";
   constructor(public activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
@@ -19,8 +20,7 @@ public serverDetails: any = {
       let result: any;
       result = data.lessonplandata.res;
       this.lessonplandata = result;      
-      console.log("lesson plan data",this.lessonplandata);
-
+     
     })
   }
 

@@ -6,13 +6,13 @@
 .column .rowinner:last-child{margin-bottom:0}
 .column .rowinner .mat-accordion{width:100%}
 .columnleft{width:70%}
-.submitbtn{display:block;width:170px;margin:0;background:#5c5f61;color:#fff;float:right;margin-top:16px}
+.submitbtn{display:block;width:170px;margin:0;background:#5c5f61;color:#fff;float:left;margin-top:16px}
 .pointer{cursor:pointer}
 .leftside{width:67%;margin-right:3%}
 .rightside{width:30%}
 .class1{background-color:#8fef8d}
 .class2{background-color:red}
-.class3{background-color:#fffefd}
+.class3{background-color:#d67a56}
 .class4{background-color:#d3d3d5}
 .class5{background-color:#f5a216}
 .class6{background-color:#ff8f91}
@@ -29,7 +29,7 @@
 .trainingcentercls .matprogressbar br{display:none}
 .trainingcentercls .mat-list{position:relative;padding-top:0}
 .trainingcentercls .mat-list.sublist{margin-bottom:8px}
-.trainingcentercls .progresspercentage{font-size:14px;font-weight:400;position:absolute;right:4px;bottom:8px}
+.trainingcentercls .progresspercentage{font-size:14px;font-weight:400;position:absolute;right:0px;bottom:19px}
 .trainingcentercls .trainingheadercls{margin:0;padding:0;margin-bottom:10px;position:relative}
 .trainingcentercls .trainingheadercls h2{margin:0;font-size:16px;text-transform:uppercase;width:90%;line-height:28px;margin-bottom:0}
 .trainingcentercls .trainingheadercls h3{margin:0;position:absolute;right:4px;bottom:8px}
@@ -56,3 +56,30 @@
 .modalclslibrary .mat-dialog-content{margin-top: 5px;}
 .modalclslibrary button,.modalclslibrary button.childButton{margin-right: 5px;background: #5c5f61;color: #fff;margin-top: 5px;width: 100%;}
 .modalclslibrary .matcheckboxcls{margin-top: 5px;margin-bottom: 5px;}
+
+
+.trainingcenterclsnew{
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+    .trainingcenterclsnew .trainingCategoryList{height: auto;display:flex;align-items: stretch;}
+    .trainingcenterclsnew .trainingCategoryList:nth-child(3n){margin-right: 0 !important;}
+    .trainingcenterclsnew .trainingCategoryList .selectedclass{height: auto;
+        padding: 6px 5px;
+        -webkit-box-flex: 1;
+        flex: 1 1 33.33%;
+        display: -webkit-box;
+        display: flex;
+        height: 100%;
+        justify-content: space-between;
+        margin-right: 1%;}
+    .trainingcenterclsnew .trainingCategoryList .selectedclass .progressbarcls{flex: 1 1 100%;}
+    .trainingcenterclsnew .trainingCategoryList .selectedclass .categoryname{flex: 1 1 100%;padding:10px}
+
+    .trainingcenterclsnew .trainingCategoryList .selectedclass .mat-list-item-content{padding: 0; display: flex; align-items: stretch;justify-content: space-between;flex-direction: row;}
+
+    
