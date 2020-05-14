@@ -344,19 +344,19 @@ export class TrainingCenterDnaComponent implements OnInit {
           dividend = response.results.totalpercentage[0].lessonsdone;
           percentageResult = Math.floor(dividend/divisor*100);
           this.reportPercentage = percentageResult;
-          if(this.reportPercentage === 100){
-           //after completion of training  module, mail send to user
-           const link = this.serverDetailsVal.serverUrl + this.formSourceVal.trainingCompletEmailEndpoint;
-           let data:any={
-               "user_id":this.userId,
-               "user_email":this.cookiesData.email,
-               "user_name":this.userName,
-               "user_type":this.cookiesData.type
-           }
-           this.apiService.postDatawithoutToken(link,data).subscribe((response:any)=>{
+          // if(this.reportPercentage === 100){
            
-           });
-          }
+          //  const link = this.serverDetailsVal.serverUrl + this.formSourceVal.trainingCompletEmailEndpoint;
+          //  let data:any={
+          //      "user_id":this.userId,
+          //      "user_email":this.cookiesData.email,
+          //      "user_name":this.userName,
+          //      "user_type":this.cookiesData.type
+          //  }
+          //  this.apiService.postDatawithoutToken(link,data).subscribe((response:any)=>{
+           
+          //  });
+          // }
         })
 
 
@@ -440,17 +440,39 @@ export class TrainingCenterDnaComponent implements OnInit {
     this.router.navigateByUrl(this.trainingCenterRoute + id);
 
   }
+  getTrainingCenterlistFunction(associated_training:any,type:any,user_id:any){
+    const link = this.serverDetailsVal.serverUrl + "gettrainingcenterlist";  
+    let data:any={
+      "condition":{
+        "associated_training":associated_training
+      },
+      "user_id":this.userId,
+      "type":type,
+      "associated_training":associated_training
+    }
+    this.apiService.postDatawithoutToken(link,data).subscribe((response:any)=>{
+      // console.log("response",response);
+      this.trainingCategoryList = response.results.trainingcenterlist;
+      this.lessonDataList = response.rdata;
+      this.dividend = response.results.done_lesson_by_user[0].lessonsdone;
+      this.divisor = response.results.total_lesson[0].count;
+      this.reportPercentage=Math.floor(this.dividend/this.divisor*100);
+
+    });
+  }
   nextbutton(value:any){
+    // console.log("next button",this.lessonDataList[this.nextdata].lession_title);
      switch (value) {
        case 'next':
-         this.lessonDataList[1];
-        if(this.nextdata<this.trainingCategoryList.length){
+        if(this.nextdata<this.lessonDataList.length){
+          this.addMarkedData(this.lessonDataList[this.nextdata]._id,this.paramsId,this.nextdata,this.lessonDataList[this.nextdata].lession_title);
+          this.getTrainingCenterlistFunction(this.paramsId,this.userType,this.userId);
           this.nextdata++;
-          console.log("souresh test",this.nextdata);
+          // console.log("souresh test",this.nextdata);
         }
          break;
          case 'prev':
-        if(this.nextdata==this.nextdata){
+        if(this.nextdata===0){
           this.nextdata--;
           console.log("souresh test",this.nextdata);
         }

@@ -19,8 +19,15 @@ public userType:any;
 public userId:any;
 
   constructor(private _apiService: HttpService, private router: Router,public cookiesService:CookieService ) { 
-    
-      this.userId = JSON.parse(this.cookiesService.get('userid'));
+    // this.allCookiesData = cookiesService.getAll();
+    //   this.cookiesData = JSON.parse(this.allCookiesData.user_details);
+    //   this.userType=this.cookiesData.type;
+
+    //   this.userId = this.cookiesData._id;
+    //   this.userType=this.cookiesData.type;
+      // console.log("routeee",this.acti);
+      this.userType = JSON.parse(this.cookiesService.get('type'));
+         this.userId = JSON.parse(this.cookiesService.get('userid'));
 
   }
 
@@ -42,9 +49,11 @@ public userId:any;
 
 
     if(route.url[0].path == "training-center-dna") {
-      requestData['user_id'] = this.userId;
-      requestData['type'] = "admin";
-      requestData['associated_training']="5eb3b43d3702b803ad82f230";
+      requestData.condition['associated_training']=route.params.associated_training;
+       requestData['user_id'] = this.userId;
+       requestData['type'] = this.userType;
+    //    requestData['type'] = "mentor";
+       requestData['associated_training']=route.params.associated_training;
 
 }
     if(route.url[0].path == "training-report") {
