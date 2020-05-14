@@ -71,6 +71,8 @@
 .trainingcenterclsnew .trainingCategoryList .selectedclass .mat-list-item-content{padding:0;display:flex;align-items:stretch;justify-content:space-between;flex-direction:row}  
 .trainingcenterclsnew .lessondatadiv{padding: 10px;border:1px solid #bcbdbf}
 .trainingcenterclsnew .paragraphwrapper .paragraphcls h1{margin: 0;padding: 0;}
+.trainingcenterclsnew .paragraphwrapper .paragraphcls h2{margin: 0;padding: 0;}
+.trainingcenterclsnew .paragraphwrapper .paragraphcls p{margin: 5px 0; padding: 0;}
 
 .trainingcenterclsupdate{margin-top: 20px;}
 .trainingcenterclsupdate .rowinner{padding: 10px;display: inherit;width: inherit;background-color: #afe689;margin-top: 3px;}
