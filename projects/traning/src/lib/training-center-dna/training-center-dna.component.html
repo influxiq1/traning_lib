@@ -55,8 +55,10 @@
         <button mat-button type="button" class="submitbtn" style="float: left;" color="primary"
           (click)="nextbutton('prev')">Previous</button>
       </span>
+      
       <mat-card-content>
         <span fxLayout="row" class="trainingcentercls" *ngFor="let item of lessonDataList ; let i=index;">
+          <!-- <p>{{item.expanded}}</p> -->
           <ng-container *ngIf="item.expanded == true">
 
             <div *ngIf="item.mediaType=='html'">

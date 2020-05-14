@@ -58,7 +58,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   public userlessoncount:any;
   public lessonplanmaterialroute:any;
   public lessonDataList:any=[];
-  public nextdata:any = 1;
+  public nextdata:any = 0;
   public userType:any;
   @Input()
   set lessonplanmaterialRoute(route:any){
@@ -197,6 +197,7 @@ export class TrainingCenterDnaComponent implements OnInit {
     
       this.userId = JSON.parse(this.cookieService.get('userid'));
       this.userType = JSON.parse(this.cookieService.get('type'));
+      // this.userType = "mentor";
       this.paramsTrainingId = activatedRoute.snapshot.params.associated_training;
       
     }
@@ -442,6 +443,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   nextbutton(value:any){
      switch (value) {
        case 'next':
+         this.lessonDataList[1];
         if(this.nextdata<this.trainingCategoryList.length){
           this.nextdata++;
           console.log("souresh test",this.nextdata);
