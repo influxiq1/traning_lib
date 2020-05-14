@@ -8,7 +8,7 @@
 .column .rowinner:last-child{margin-bottom:0}
 .column .rowinner .mat-accordion{width:100%}
 .columnleft{width:70%}
-.submitbtn{display:block;width:170px;margin:0;background:#5c5f61;color:#fff;float:left;margin-top:16px}
+.submitbtn{display:block;min-width: 40px;margin:0;background:#5c5f61;color:#fff;float:left;margin-top:16px}
 .pointer{cursor:pointer}
 .leftside{width:67%;margin-right:3%}
 .rightside{width:30%}
@@ -31,7 +31,7 @@
 .trainingcentercls .matprogressbar br{display:none}
 .trainingcentercls .mat-list{position:relative;padding-top:0}
 .trainingcentercls .mat-list.sublist{margin-bottom:8px}
-.trainingcentercls .progresspercentage{font-size:14px;font-weight:400;position:absolute;right:0px;bottom:19px}
+.trainingcentercls .progresspercentage{font-size:14px;font-weight:400;position:absolute;right:0px;bottom:6px}
 .trainingcentercls .trainingheadercls{margin:0;padding:0;margin-bottom:10px;position:relative}
 .trainingcentercls .trainingheadercls h2{margin:0;font-size:16px;text-transform:uppercase;width:90%;line-height:28px;margin-bottom:0}
 .trainingcentercls .trainingheadercls h3{margin:0;position:absolute;right:4px;bottom:8px}
@@ -51,8 +51,9 @@
 .videoWrapper iframe,.videoWrapper video,.videoWrapper object{position:absolute;top:0;left:0;width:100%;height:100%}
 .audioWrapper{margin:0;padding:0}
 .audioWrapper audio{width:100%}
-.trainingheadercls{text-transform: capitalize;}
-
+.trainingheadercls{text-transform: capitalize;display: flex;align-items: center;justify-content: space-between;padding: 5px 10px;border: 1px solid #bcbdbf;}
+.trainingheadercls h2{flex: 1;margin: 0;}
+.trainingheadercls .mat-progress-bar{flex: 1;margin: 0;}
 .modalclslibrary h1.mat-dialog-title {margin: 0;text-transform: uppercase;font-weight: bold;}
 .modalclslibrary h3 {margin: 0;text-transform: capitalize;margin-bottom: 5px;}
 .modalclslibrary .mat-dialog-content{margin-top: 5px;}
@@ -61,10 +62,22 @@
 
 
 /* Skin Theme 2 */
-.trainingcenterclsnew{display:flex;align-items:stretch;justify-content:space-between;flex-direction:column;flex-wrap:wrap}
-.trainingcenterclsnew .trainingCategoryList{height:auto;display:flex;align-items:stretch}
+.trainingcenterclsnew{display:flex;align-items:stretch;justify-content:space-between;flex-direction:column;flex-wrap:wrap;padding-top: 0;}
+.trainingcenterclsnew .trainingCategoryList{ display: flex;flex-direction: row;flex-wrap: wrap;justify-content: space-between;height: auto;}
 .trainingcenterclsnew .trainingCategoryList:nth-child(3n){margin-right:0!important}
-.trainingcenterclsnew .trainingCategoryList .selectedclass{height:auto;padding:6px 5px;-webkit-box-flex:1;flex:1 1 33.33%;display:-webkit-box;display:flex;height:100%;justify-content:space-between;margin-right:1%}
+.trainingcenterclsnew .trainingCategoryList .selectedclass{height:auto;padding:6px 5px;box-sizing: border-box; margin: 10px 10px 0 0;width: calc(1/3*100% - (1 - 1/3)*10px);}
 .trainingcenterclsnew .trainingCategoryList .selectedclass .progressbarcls{flex:1 1 100%}
 .trainingcenterclsnew .trainingCategoryList .selectedclass .categoryname{flex:1 1 100%;padding:10px}
 .trainingcenterclsnew .trainingCategoryList .selectedclass .mat-list-item-content{padding:0;display:flex;align-items:stretch;justify-content:space-between;flex-direction:row}  
+.trainingcenterclsnew .lessondatadiv{padding: 10px;border:1px solid #bcbdbf}
+.trainingcenterclsnew .paragraphwrapper .paragraphcls h1{margin: 0;padding: 0;}
+
+.trainingcenterclsupdate{margin-top: 20px;}
+.trainingcenterclsupdate .rowinner{padding: 10px;display: inherit;width: inherit;background-color: #afe689;margin-top: 3px;}
+
+.lessondatadiv{margin: 20px 0;border: 1px solid #bcbdbf;padding: 20px;display: flex;flex-wrap: wrap;justify-content: space-between;}
+.lessondatadiv .lessondatabuttoncls{display: flex;justify-content: space-between;width:100%;}
+.lessondatadiv .lessondatabuttoncls .submitbtn {margin-top: 0;}
+.trainingcenterclsnew .mentortitle{background: #000;padding: 10px;color: #fff;text-transform: uppercase;}
+
+

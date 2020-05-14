@@ -195,8 +195,10 @@ export class TrainingCenterDnaComponent implements OnInit {
   constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router,
     public cookieService:CookieService,public snakBar:MatSnackBar,public activatedRoute:ActivatedRoute) {
     
-      this.userId = JSON.parse(this.cookieService.get('userid'));
-      this.userType = JSON.parse(this.cookieService.get('type'));
+      // this.userId = JSON.parse(this.cookieService.get('userid'));
+      this.userId = '5ea9193a7c5f3b3c5240d0b7';
+      // this.userType = JSON.parse(this.cookieService.get('type'));
+      this.userType = 'admin';
       this.paramsTrainingId = activatedRoute.snapshot.params.associated_training;
       
     }

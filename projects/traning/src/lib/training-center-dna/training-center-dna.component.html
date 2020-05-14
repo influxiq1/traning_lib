@@ -37,7 +37,8 @@
 
 
     <mat-card-content class="trainingcentercls trainingcenterclsupdate">
-
+      
+      <mat-card-title class="mentortitle">Advance Mentor Course Certification</mat-card-title>
       <!-- <ng-container>
        
       </ng-container> -->
@@ -49,120 +50,114 @@
 
       </span>
 
-      <!-- content for lesson data -->
-      <span class="lessondatabuttoncls">
-        <button mat-button type="button" class="submitbtn" color="primary" style="float: right;" (click)="nextbutton('next')">Next</button>
-        <button mat-button type="button" class="submitbtn" style="float: left;" color="primary"
-          (click)="nextbutton('prev')">Previous</button>
-      </span>
-      <mat-card-content>
-        <span fxLayout="row" class="trainingcentercls" *ngFor="let item of lessonDataList ; let i=index;">
-          <ng-container *ngIf="item.expanded == true">
-
-            <div *ngIf="item.mediaType=='html'">
-              <div class="paragraphwrapper">
-                <p [innerHtml]="item.typeHtml" class="paragraphcls"></p>
-              </div>
-            </div>
-
-            <mat-card class="example-card" *ngIf="item.mediaType=='image'">
-              <div class="paragraphwrapper">
-                <p [innerHtml]="item.image_typeHtml" class="paragraphcls"></p>
-              </div>
-              <div class="imgwrappercls">
-                <span>{{ item.image_title }}</span>
-                <img mat-card-image src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}"
-                  alt="{{item.lession_title}}" />
-                <span>{{ item.image_description }}</span>
-
-              </div>
-            </mat-card>
-            <mat-card class="example-card" *ngIf="item.mediaType=='video'">
-              <div class="paragraphwrapper">
-                <p [innerHtml]="item.video_typeHtml" class="paragraphcls"></p>
-              </div>
-              <div class="videoWrapper">
-                <span>{{ item.video_title }}</span>
-                <video width="640" height="360" autoplay (ended)="videoended(item,i,1)">
-                  <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-                <span>{{ item.video_description }}</span>
-
-              </div>
-
-
-            </mat-card>
-            <mat-card class="example-card" *ngIf="item.mediaType=='audio' ">
-              <div class="paragraphwrapper">
-                <p [innerHtml]="item.audio_typeHtml" class="paragraphcls"></p>
-              </div>
-              <div class="audioWrapper">
-                <span>{{ item.audio_title }}</span>
-
-                <audio width="640" height="360" (ended)="audioended(item,i,1)" controls>
-                  <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="audio/mpeg">
-                  Your browser does not support the audio tag.
-                </audio>
-                <span>{{ item.audio_description }}</span>
-
-              </div>
-
-            </mat-card>
-            <mat-card class="example-card" *ngIf="item.mediaType=='file' ">
-              <div class="paragraphwrapper">
-                <p [innerHtml]="item.file_typeHtml" class="paragraphcls"></p>
-              </div>
-              <div class="carouselWrapper">
-                <span>{{ item.file_title }}</span>
-                <mat-carousel timings="250ms ease-in" [autoplay]="true" interval="15000" [loop]="true"
-                  [maintainAspectRatio]="true" [hideArrows]="false" [hideIndicators]="false" [useKeyboard]="true"
-                  [useMouseWheel]="false" orientation="ltr">
-                  <mat-carousel-slide #matCarouselSlide *ngFor="let slide of item.convertedimages; let i1 = index"
-                    [image]="slide" overlayColor="#00000040" [hideOverlay]="false">
-                  </mat-carousel-slide>
-                </mat-carousel>
-                <span>{{ item.file_description }}</span>
-              </div>
-
-            </mat-card>
-            <ng-container
-              *ngIf="item.test_associate_training=='No' && item.mediaType != 'audio' && item.mediaType != 'video'">
-              <button mat-button type="button" class="submitbtn"  color="primary"
-                (click)="addMarkedData(item._id,item.associated_training,i,item.lession_title)">Mark As Done</button>
-            </ng-container>
-            <ng-container
-              *ngIf="userType=='mentor' && item.test_associate_training=='Yes' && item.mediaType != 'audio' && item.mediaType != 'video'">
-              <button mat-button type="button" class="submitbtn" color="primary"
-                (click)="lessonplanpageroute(item._id)">Submit Lesson Plan</button>
-              <mat-progress-bar *ngIf="progressLoader" mode="indeterminate"></mat-progress-bar>
-            </ng-container>
-            <ng-container *ngIf="userType=='mentee'">
-              <button mat-button type="button" class="submitbtn" color="primary">Book Now</button>
-            </ng-container>
-          </ng-container>
-
+      <!-- start content for lesson data -->
+      <span class="lessondatadiv">
+        <span class="lessondatabuttoncls">
+          <button mat-button type="button" class="submitbtn" style="float: left;" color="primary" (click)="nextbutton('prev')"><mat-icon>keyboard_arrow_left</mat-icon> Previous</button>
+          <button mat-button type="button" class="submitbtn" color="primary" style="float: right;" (click)="nextbutton('next')">Next <mat-icon>keyboard_arrow_right</mat-icon></button>         
         </span>
-      </mat-card-content>
 
-      <!-- next prev button again -->
+        <mat-card-content>
+          <span fxLayout="row" class="trainingcentercls" *ngFor="let item of lessonDataList ; let i=index;">
+            <ng-container *ngIf="item.expanded == true">
+  
+              <div *ngIf="item.mediaType=='html'">
+                <div class="paragraphwrapper">
+                  <p [innerHtml]="item.typeHtml" class="paragraphcls"></p>
+                </div>
+              </div>
+  
+              <mat-card class="example-card" *ngIf="item.mediaType=='image'">
+                <div class="paragraphwrapper">
+                  <p [innerHtml]="item.image_typeHtml" class="paragraphcls"></p>
+                </div>
+                <div class="imgwrappercls">
+                  <span>{{ item.image_title }}</span>
+                  <img mat-card-image src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}"
+                    alt="{{item.lession_title}}" />
+                  <span>{{ item.image_description }}</span>
+  
+                </div>
+              </mat-card>
+              <mat-card class="example-card" *ngIf="item.mediaType=='video'">
+                <div class="paragraphwrapper">
+                  <p [innerHtml]="item.video_typeHtml" class="paragraphcls"></p>
+                </div>
+                <div class="videoWrapper">
+                  <span>{{ item.video_title }}</span>
+                  <video width="640" height="360" autoplay (ended)="videoended(item,i,1)">
+                    <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                  <span>{{ item.video_description }}</span>
+  
+                </div>
+  
+  
+              </mat-card>
+              <mat-card class="example-card" *ngIf="item.mediaType=='audio' ">
+                <div class="paragraphwrapper">
+                  <p [innerHtml]="item.audio_typeHtml" class="paragraphcls"></p>
+                </div>
+                <div class="audioWrapper">
+                  <span>{{ item.audio_title }}</span>
+  
+                  <audio width="640" height="360" (ended)="audioended(item,i,1)" controls>
+                    <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="audio/mpeg">
+                    Your browser does not support the audio tag.
+                  </audio>
+                  <span>{{ item.audio_description }}</span>
+  
+                </div>
+  
+              </mat-card>
+              <mat-card class="example-card" *ngIf="item.mediaType=='file' ">
+                <div class="paragraphwrapper">
+                  <p [innerHtml]="item.file_typeHtml" class="paragraphcls"></p>
+                </div>
+                <div class="carouselWrapper">
+                  <span>{{ item.file_title }}</span>
+                  <mat-carousel timings="250ms ease-in" [autoplay]="true" interval="15000" [loop]="true"
+                    [maintainAspectRatio]="true" [hideArrows]="false" [hideIndicators]="false" [useKeyboard]="true"
+                    [useMouseWheel]="false" orientation="ltr">
+                    <mat-carousel-slide #matCarouselSlide *ngFor="let slide of item.convertedimages; let i1 = index"
+                      [image]="slide" overlayColor="#00000040" [hideOverlay]="false">
+                    </mat-carousel-slide>
+                  </mat-carousel>
+                  <span>{{ item.file_description }}</span>
+                </div>
+  
+              </mat-card>
+              <ng-container
+                *ngIf="item.test_associate_training=='No' && item.mediaType != 'audio' && item.mediaType != 'video'">
+                <button mat-button type="button" class="submitbtn"  color="primary"
+                  (click)="addMarkedData(item._id,item.associated_training,i,item.lession_title)">Mark As Done</button>
+              </ng-container>
+              <ng-container
+                *ngIf="userType=='mentor' && item.test_associate_training=='Yes' && item.mediaType != 'audio' && item.mediaType != 'video'">
+                <button mat-button type="button" class="submitbtn" color="primary"
+                  (click)="lessonplanpageroute(item._id)">Submit Lesson Plan</button>
+                <mat-progress-bar *ngIf="progressLoader" mode="indeterminate"></mat-progress-bar>
+              </ng-container>
+              <ng-container *ngIf="userType=='mentee'">
+                <button mat-button type="button" class="submitbtn" color="primary">Book Now</button>
+              </ng-container>
+            </ng-container>
+  
+          </span>
+        </mat-card-content>
 
-      <span class="lessondatabuttoncls">
-        <button mat-button type="button" class="submitbtn" color="primary" style="float: right;" (click)="nextbutton('next')">Next</button>
-        <button mat-button type="button" class="submitbtn" style="float: left;" color="primary"
-          (click)="nextbutton('prev')">Previous</button>
-      </span>
-
-     
+        <!-- next prev button again -->
+        <span class="lessondatabuttoncls">
+          <button mat-button type="button" class="submitbtn" style="float: left;" color="primary" (click)="nextbutton('prev')"><mat-icon>keyboard_arrow_left</mat-icon> Previous</button>
+          <button mat-button type="button" class="submitbtn" color="primary" style="float: right;" (click)="nextbutton('next')">Next <mat-icon>keyboard_arrow_right</mat-icon></button>          
+        </span>
+      </span>     
+      <!--end  content for lesson data -->
     </mat-card-content>
- <!-- again lesson list data -->
-      <span fxLayout="row" class="rowinner" *ngFor="let item of lessonDataList ; let i=index;">
-        <div (click)="nochildclick(item._id)">
-          {{item.lession_title}}
-        </div>
+    
 
-      </span>
-<!-- again category list data -->
+    <!-- again category list data -->
     <mat-list class="trainingcentercls trainingcenterclsnew">
       <mat-list-item class="trainingCategoryList">
         <ng-container *ngFor="let item of trainingCategoryList;let i = index">
@@ -190,6 +185,21 @@
         </ng-container>
       </mat-list-item>
     </mat-list>
+
+    <mat-card-content class="trainingcentercls trainingcenterclsupdate">
+
+      <mat-card-title class="mentortitle">Advance Mentor Course Certification</mat-card-title>
+
+  <!-- again lesson list data -->
+        <span fxLayout="row" class="rowinner" *ngFor="let item of lessonDataList ; let i=index;">
+          <div (click)="nochildclick(item._id)">
+            {{item.lession_title}}
+          </div>
+        </span>  
+         <!-- start content for lesson data -->
+
+          <!--end  content for lesson data -->
+    </mat-card-content>
   </span>
 </mat-card>
 <!-- 

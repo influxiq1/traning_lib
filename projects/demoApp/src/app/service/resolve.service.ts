@@ -26,7 +26,8 @@ public userId:any;
     //   this.userId = this.cookiesData._id;
     //   this.userType=this.cookiesData.type;
       // console.log("routeee",this.acti);
-      this.userId = JSON.parse(this.cookiesService.get('userid'));
+      // this.userId = JSON.parse(this.cookiesService.get('userid'));
+      this.userId = '5ea9193a7c5f3b3c5240d0b7';
 
   }
 
