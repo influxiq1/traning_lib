@@ -1,3 +1,5 @@
+/* Default Skin */
+
 .leftRightPortion{display:flex;justify-content:space-between}
 .mat-card-content{flex-direction:row;box-sizing:border-box;display:flex}
 .row{flex-direction:row;box-sizing:border-box;display:flex;place-content:top space-around;align-items:flex-start;-webkit-box-flex:1;flex:1 1 100%;max-width:100%}
@@ -58,28 +60,11 @@
 .modalclslibrary .matcheckboxcls{margin-top: 5px;margin-bottom: 5px;}
 
 
-.trainingcenterclsnew{
-    display: flex;
-    align-items: stretch;
-    justify-content: space-between;
-    flex-direction: column;
-    flex-wrap: wrap;
-}
-
-    .trainingcenterclsnew .trainingCategoryList{height: auto;display:flex;align-items: stretch;}
-    .trainingcenterclsnew .trainingCategoryList:nth-child(3n){margin-right: 0 !important;}
-    .trainingcenterclsnew .trainingCategoryList .selectedclass{height: auto;
-        padding: 6px 5px;
-        -webkit-box-flex: 1;
-        flex: 1 1 33.33%;
-        display: -webkit-box;
-        display: flex;
-        height: 100%;
-        justify-content: space-between;
-        margin-right: 1%;}
-    .trainingcenterclsnew .trainingCategoryList .selectedclass .progressbarcls{flex: 1 1 100%;}
-    .trainingcenterclsnew .trainingCategoryList .selectedclass .categoryname{flex: 1 1 100%;padding:10px}
-
-    .trainingcenterclsnew .trainingCategoryList .selectedclass .mat-list-item-content{padding: 0; display: flex; align-items: stretch;justify-content: space-between;flex-direction: row;}
-
-    
+/* Skin Theme 2 */
+.trainingcenterclsnew{display:flex;align-items:stretch;justify-content:space-between;flex-direction:column;flex-wrap:wrap}
+.trainingcenterclsnew .trainingCategoryList{height:auto;display:flex;align-items:stretch}
+.trainingcenterclsnew .trainingCategoryList:nth-child(3n){margin-right:0!important}
+.trainingcenterclsnew .trainingCategoryList .selectedclass{height:auto;padding:6px 5px;-webkit-box-flex:1;flex:1 1 33.33%;display:-webkit-box;display:flex;height:100%;justify-content:space-between;margin-right:1%}
+.trainingcenterclsnew .trainingCategoryList .selectedclass .progressbarcls{flex:1 1 100%}
+.trainingcenterclsnew .trainingCategoryList .selectedclass .categoryname{flex:1 1 100%;padding:10px}
+.trainingcenterclsnew .trainingCategoryList .selectedclass .mat-list-item-content{padding:0;display:flex;align-items:stretch;justify-content:space-between;flex-direction:row}  
