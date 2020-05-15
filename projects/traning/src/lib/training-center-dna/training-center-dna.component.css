@@ -82,5 +82,20 @@
 .lessondatadiv .lessondatabuttoncls{display: flex;justify-content: space-between;width:100%;}
 .lessondatadiv .lessondatabuttoncls .submitbtn {margin-top: 0;}
 .trainingcenterclsnew .mentortitle{background: #000;padding: 10px;color: #fff;text-transform: uppercase;}
-
-
+.banner1cls{display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: #d4d0d0;
+    border-radius: 0;
+    margin-top: 20px;}
+.banner1cls .submitbtngroup{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.banner1cls .submitbtngroup .submitbtn{
+    margin-right: 10px;
+}
+.lessontitlecls{margin-top: 10px;} 
+.banner1cls .mat-card-content,.banner2cls.mat-card-content{margin-bottom: 0;}

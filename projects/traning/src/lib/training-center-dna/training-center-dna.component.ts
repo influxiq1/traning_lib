@@ -58,8 +58,12 @@ export class TrainingCenterDnaComponent implements OnInit {
   public userlessoncount:any;
   public lessonplanmaterialroute:any;
   public lessonDataList:any=[];
-  public nextdata:any = 0;
+  public allLessonDataList:any=[];
+  public nextdata:number=0;
   public userType:any;
+  public Index:number;
+  public flag:any=0;
+  public lastIndex:number;
   @Input()
   set lessonplanmaterialRoute(route:any){
    this.lessonplanmaterialroute = route;
@@ -69,7 +73,6 @@ export class TrainingCenterDnaComponent implements OnInit {
     let results:any=(val) || '<no name set>';
     let parentdone:any;
     let parentcount:any;
-    console.log("souresh test",results);
     this.trainingCategoryList= results.trainingcenterlist;   
     for (let i in this.trainingCategoryList) {
      
@@ -164,8 +167,10 @@ export class TrainingCenterDnaComponent implements OnInit {
   @Input()
   set TrainingCeneterData(data: any) {
     let results:any=(data) || '<no name set>';
+console.log("souresh testing++++++++++",results);
     this.uniquedonetrainingarray = results.uniquedonetrainingarray;
     this.lessonDataList = results.rdata;
+    this.allLessonDataList = results.alllessondata;
   }
    
   @Input()
@@ -197,15 +202,16 @@ export class TrainingCenterDnaComponent implements OnInit {
     
       this.userId = JSON.parse(this.cookieService.get('userid'));
       this.userType = JSON.parse(this.cookieService.get('type'));
-      // this.userType = "mentor";
+      // this.userType = "mentee";
       this.paramsTrainingId = activatedRoute.snapshot.params.associated_training;
+      
       
     }
 
   ngOnInit() {
     this.divisor = this.adminlessoncount;
     this.reportPercentage=Math.floor(this.dividend/this.divisor*100);
-
+     
     // switch (this.cookiesData.type) {
     //   case 'admin':
     //     this.divisor = this.adminlessoncount;
@@ -220,6 +226,7 @@ export class TrainingCenterDnaComponent implements OnInit {
     // }
 
   }
+  
   
   lessonplanpageroute(id){
     this.router.navigateByUrl(this.lessonplanmaterialroute+this.paramsTrainingId+'/'+id);
@@ -431,9 +438,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   
   }
   nochildclick(id:any){
-    // console.log("dddidddddd",id);
     this.router.navigateByUrl(this.trainingCenterRoute + this.paramsTrainingId+'/'+id);
-
   }
   clicktrcataining(id:any){
     // console.log("dddidddddd",id);
@@ -461,21 +466,43 @@ export class TrainingCenterDnaComponent implements OnInit {
     });
   }
   nextbutton(value:any){
-    // console.log("next button",this.lessonDataList[this.nextdata].lession_title);
+    console.log("next button",this.lessonDataList);
+    for (const key in this.lessonDataList) {
+      if (this.lessonDataList[key].expanded == true) {
+        this.Index = this.lessonDataList.indexOf(this.lessonDataList[key]);
+        
+      }
+    }
+    this.lastIndex=this.lessonDataList.length; 
+    console.log("+++++++++",this.lastIndex);
+
      switch (value) {
        case 'next':
-        if(this.nextdata<this.lessonDataList.length){
-          this.addMarkedData(this.lessonDataList[this.nextdata]._id,this.paramsId,this.nextdata,this.lessonDataList[this.nextdata].lession_title);
+        if(this.Index<this.lessonDataList.length){
+          this.addMarkedData(this.lessonDataList[this.Index]._id,this.paramsId,this.nextdata,this.lessonDataList[this.Index].lession_title);
           this.getTrainingCenterlistFunction(this.paramsId,this.userType,this.userId);
           this.nextdata++;
           // console.log("souresh test",this.nextdata);
         }
          break;
          case 'prev':
-        if(this.nextdata===0){
-          this.nextdata--;
-          console.log("souresh test",this.nextdata);
-        }
+        this.flag=1;
+           let index:any=this.Index-1;
+           console.log(this.lessonDataList[index]);
+         
+            this.lessonDataList = [this.lessonDataList[index]];
+          
+           
+           console.log("++++++++",this.lessonDataList);
+           console.log("____________",index);
+          //  let index = 0;
+          //  let lessonData:any=this.lessonDataList;
+          //  if(index===0){
+          //     index = this.lessonDataList.length;
+          //  }
+          //  index = index-1;
+          //  this.lessonDataList=lessonData[index];
+          // console.log("+++++++",lessonData[index]);
          break;
 
      
