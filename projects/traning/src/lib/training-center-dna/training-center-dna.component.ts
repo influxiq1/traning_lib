@@ -64,7 +64,9 @@ export class TrainingCenterDnaComponent implements OnInit {
   public Index:number;
   public flag:any=0;
   public lastIndex:number;
+  public firstIndex:number;
   public currentLesson:any;
+  public completedLessons:any=[];
  
   @Input()
   set lessonplanmaterialRoute(route:any){
@@ -177,6 +179,14 @@ console.log("souresh testing++++++++++",results);
         this.currentLesson = this.lessonDataList[i]._id;
       }
     }
+    for (const i in this.lessonDataList) {
+      if (this.lessonDataList[i].expanded==false) {
+
+        this.completedLessons.push(this.lessonDataList[i]._id);
+      }
+    }
+    console.log("completed lessons",this.completedLessons);
+
     this.allLessonDataList = results.alllessondata;
   }
    
@@ -219,6 +229,14 @@ console.log("souresh testing++++++++++",results);
     this.divisor = this.adminlessoncount;
     this.reportPercentage=Math.floor(this.dividend/this.divisor*100);
      console.log("curreentLesson ++++++",this.currentLesson);
+     for (const key in this.lessonDataList) {
+      if (this.lessonDataList[key].expanded == true) {
+        this.Index = this.lessonDataList.indexOf(this.lessonDataList[key]);
+        
+      }
+    }
+     this.lastIndex =this.lessonDataList.length-1; 
+
     // switch (this.cookiesData.type) {
     //   case 'admin':
     //     this.divisor = this.adminlessoncount;
@@ -463,7 +481,7 @@ console.log("souresh testing++++++++++",results);
       "condition":{
         "associated_training":associated_training
       },
-      "user_id":this.userId,
+      "user_id":user_id,
       "type":type,
       "associated_training":associated_training
     }
@@ -478,16 +496,6 @@ console.log("souresh testing++++++++++",results);
     });
   }
   nextbutton(value:any,bottomval){
-
-    for (const key in this.lessonDataList) {
-      if (this.lessonDataList[key].expanded == true) {
-        this.Index = this.lessonDataList.indexOf(this.lessonDataList[key]);
-        
-      }
-    }
-    this.lastIndex=this.lessonDataList.length; 
-   
-
      switch (value) {
        case 'next':
         
@@ -495,6 +503,7 @@ console.log("souresh testing++++++++++",results);
           this.addMarkedData(this.lessonDataList[this.Index]._id,this.paramsId,this.nextdata,this.lessonDataList[this.Index].lession_title);
           this.getTrainingCenterlistFunction(this.paramsId,this.userType,this.userId);
           this.Index++;
+          this.lessonDataList[this.Index];
 
           if(bottomval != "" && bottomval == "bottomNext"){
             window.scroll({ 
@@ -511,6 +520,7 @@ console.log("souresh testing++++++++++",results);
 
           this.flag=1;
            let index:any=this.Index-1; 
+           this.firstIndex = index;
             this.lessonDataList = [this.lessonDataList[index]];
             if(bottomval != "" && bottomval == "bottomPrev"){
              window.scroll({ 
@@ -530,67 +540,3 @@ console.log("souresh testing++++++++++",results);
 }
 
 
-// @Component({
-//   selector: 'dialogtest',
-//   templateUrl: 'modal.html',
-//   styleUrls: ['./list.component.css']
-// })
-// export class Dialogtest {
-//   public is_error: any;
-//   public error:any="";
-//   public successanswer:boolean=false;
-
-//   constructor(public dialogRef: MatDialogRef<Dialogtest>,
-//     @Inject(MAT_DIALOG_DATA) public data: any,public router:Router) {
-//       console.log("modal data",this.data.trainingdata);
-//     this.is_error = data.data;
-//     let tempdata:any=this.data.data;
-//     let ddata:any[]=tempdata.answers;
-//     for(let b in ddata){
-//         //console.log(ddata[b]._id,'did');
-//         ddata[b].ans=false;
-//     }
-//   }
-//   closeButton() {
-//     this.dialogRef.close(false);
-//   }
-//   navigate(childId:any){
-//     this.router.navigateByUrl(this.data.trainingCenterRoute+childId);
-//     this.closeButton();
-//   }
-//   noChildNavigate(id:any){
-//     this.router.navigateByUrl(this.data.trainingCenterRoute+id);
-//     this.closeButton();
-//   }
-
-//   resetanswer(){
-//     let tempdata:any=this.data.data;
-//     let ddata:any[]=tempdata.answers;
-//     for(let b in ddata){
-//         //console.log(ddata[b]._id,'did');
-//         ddata[b].ans=false;
-//     }
-//   }
-//   submitanswer(){
-//     this.error='';
-//     let tempdata:any=this.data.data;
-//     let ddata:any[]=tempdata.answers;
-//     for(let b in ddata){
-//         //console.log(ddata[b].ans,'did');
-//         if(ddata[b].ans==true){
-//           if(ddata[b].isCorrect==1){
-//             this.successanswer=true;
-//             setTimeout(() => {
-//               this.successanswer=false;
-//               this.dialogRef.close(true);
-            
-//             }, 5000);
-          
-//           }
-//         }
-        
-//     }
-//     this.error="Wrong Answer !!";
-
-//   }
-// }
