@@ -64,6 +64,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   public Index:number;
   public flag:any=0;
   public lastIndex:number;
+ 
   @Input()
   set lessonplanmaterialRoute(route:any){
    this.lessonplanmaterialroute = route;
@@ -416,6 +417,7 @@ console.log("souresh testing++++++++++",results);
  
   //   });
   // }
+ 
 
   videoended(item:any,i:any,j){
     if(item.test_associate_training=='Yes'){
@@ -441,9 +443,13 @@ console.log("souresh testing++++++++++",results);
     this.router.navigateByUrl(this.trainingCenterRoute + this.paramsTrainingId+'/'+id);
   }
   clicktrcataining(id:any){
-    // console.log("dddidddddd",id);
     this.router.navigateByUrl(this.trainingCenterRoute + id);
-
+  }
+  activatedclass(item){
+    item.active=!item.active;
+  }
+  activatedclasslesson(item){
+    item.active=!item.active;
   }
   getTrainingCenterlistFunction(associated_training:any,type:any,user_id:any){
     const link = this.serverDetailsVal.serverUrl + "gettrainingcenterlist";  
@@ -475,15 +481,16 @@ console.log("souresh testing++++++++++",results);
     }
     this.lastIndex=this.lessonDataList.length; 
     console.log("+++++++++",this.lastIndex);
+    console.log("+++++++++",this.Index);
 
      switch (value) {
        case 'next':
-        if(this.Index<this.lessonDataList.length){
+        // if(this.Index<this.lessonDataList.length){
           this.addMarkedData(this.lessonDataList[this.Index]._id,this.paramsId,this.nextdata,this.lessonDataList[this.Index].lession_title);
           this.getTrainingCenterlistFunction(this.paramsId,this.userType,this.userId);
-          this.nextdata++;
+          this.Index++;
           // console.log("souresh test",this.nextdata);
-        }
+        // }
          break;
          case 'prev':
         this.flag=1;
