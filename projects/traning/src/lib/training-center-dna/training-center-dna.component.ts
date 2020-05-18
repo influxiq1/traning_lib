@@ -64,6 +64,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   public Index:number;
   public flag:any=0;
   public lastIndex:number;
+  public currentLesson:any;
  
   @Input()
   set lessonplanmaterialRoute(route:any){
@@ -171,6 +172,11 @@ export class TrainingCenterDnaComponent implements OnInit {
 console.log("souresh testing++++++++++",results);
     this.uniquedonetrainingarray = results.uniquedonetrainingarray;
     this.lessonDataList = results.rdata;
+    for (const i in this.lessonDataList) {
+      if (this.lessonDataList[i].expanded==true) {
+        this.currentLesson = this.lessonDataList[i]._id;
+      }
+    }
     this.allLessonDataList = results.alllessondata;
   }
    
@@ -212,7 +218,7 @@ console.log("souresh testing++++++++++",results);
   ngOnInit() {
     this.divisor = this.adminlessoncount;
     this.reportPercentage=Math.floor(this.dividend/this.divisor*100);
-     
+     console.log("curreentLesson ++++++",this.currentLesson);
     // switch (this.cookiesData.type) {
     //   case 'admin':
     //     this.divisor = this.adminlessoncount;
@@ -448,8 +454,8 @@ console.log("souresh testing++++++++++",results);
   activatedclass(item){
     item.active=!item.active;
   }
-  activatedclasslesson(item){
-    item.active=!item.active;
+  activatedclasslesson(items){
+    items.active1=!items.active1;
   }
   getTrainingCenterlistFunction(associated_training:any,type:any,user_id:any){
     const link = this.serverDetailsVal.serverUrl + "gettrainingcenterlist";  
@@ -471,8 +477,8 @@ console.log("souresh testing++++++++++",results);
 
     });
   }
-  nextbutton(value:any){
-    console.log("next button",this.lessonDataList);
+  nextbutton(value:any,bottomval){
+
     for (const key in this.lessonDataList) {
       if (this.lessonDataList[key].expanded == true) {
         this.Index = this.lessonDataList.indexOf(this.lessonDataList[key]);
@@ -480,40 +486,45 @@ console.log("souresh testing++++++++++",results);
       }
     }
     this.lastIndex=this.lessonDataList.length; 
-    console.log("+++++++++",this.lastIndex);
-    console.log("+++++++++",this.Index);
+   
 
      switch (value) {
        case 'next':
+        
         // if(this.Index<this.lessonDataList.length){
           this.addMarkedData(this.lessonDataList[this.Index]._id,this.paramsId,this.nextdata,this.lessonDataList[this.Index].lession_title);
           this.getTrainingCenterlistFunction(this.paramsId,this.userType,this.userId);
           this.Index++;
+
+          if(bottomval != "" && bottomval == "bottomNext"){
+            window.scroll({ 
+              top: 0, 
+              left: 0, 
+              behavior: 'smooth' 
+            });
+           }
+          
           // console.log("souresh test",this.nextdata);
         // }
          break;
          case 'prev':
-        this.flag=1;
-           let index:any=this.Index-1;
-           console.log(this.lessonDataList[index]);
-         
+
+          this.flag=1;
+           let index:any=this.Index-1; 
             this.lessonDataList = [this.lessonDataList[index]];
-          
-           
-           console.log("++++++++",this.lessonDataList);
-           console.log("____________",index);
-          //  let index = 0;
-          //  let lessonData:any=this.lessonDataList;
-          //  if(index===0){
-          //     index = this.lessonDataList.length;
-          //  }
-          //  index = index-1;
-          //  this.lessonDataList=lessonData[index];
-          // console.log("+++++++",lessonData[index]);
+            if(bottomval != "" && bottomval == "bottomPrev"){
+             window.scroll({ 
+             top: 0, 
+             left: 0, 
+             behavior: 'smooth' 
+           });
+         }
+         
          break;
 
      
        }
+    
    
   }
 }

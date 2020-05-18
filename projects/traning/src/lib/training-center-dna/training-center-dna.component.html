@@ -9,15 +9,16 @@
     <!-- <h1 class="trainingheadercls">{{ trainingCategoryName }}</h1> -->
     <mat-list class="trainingcentercls trainingcenterclsnew">
       <mat-list-item class="trainingCategoryList">
-        <div *ngFor="let item of trainingCategoryList;let i = index" (click)="activatedclass(item)" [ngClass]="{'active':item.active}">
+        <div class="selectedclass" *ngFor="let item of trainingCategoryList;let i = index" (click)="activatedclass(item)" [ngClass]="{'active':item.active}">
 
-          <mat-list-item class="selectedclass" *ngIf="item.childcat.length>=1">{{item.catagory_name}}</mat-list-item>
+          <mat-list-item  *ngIf="item.childcat.length>=1">{{item.catagory_name}}</mat-list-item>
           <!-- parent section -->
           <mat-list-item 
             [ngClass]="{'class1': ((item.done/item.count)*100)>1,
                                   'class2': ((item.done/item.count)*100) ===100,
-                                  'class3': ((item.done/item.count)*100) ===0 }" *ngIf="item.childcat.length==0"
-            class="selectedclass" (click)="clicktrcataining(item._id)">
+                                  'class3': ((item.done/item.count)*100) ===0 ,
+                                  'class4':(item._id==paramsTrainingId)}" *ngIf="item.childcat.length==0"
+             (click)="clicktrcataining(item._id)">
             <div class="categoryname" >
               {{item.catagory_name}}
               <span class="countcls">
@@ -47,33 +48,33 @@
        
       </ng-container> -->
     
-      <span fxLayout="row" class="rowinner" *ngFor="let item of allLessonDataList ; let i=index;" (click)="activatedclasslesson(item)" [ngClass]="{'active':item.active}">
-        <div (click)="nochildclick(item._id)">
+      <div fxLayout="row" class="rowinner"  *ngFor="let item of allLessonDataList ; let i=index;" (click)="activatedclasslesson(item)" [ngClass]="{'active1':item.active1}">
+        <div [ngClass]="{'class5': (item._id == currentLesson)}" (click)="nochildclick(item._id)">
           {{item.lession_title}}
         </div>
 
-      </span>
+      </div>
 
       <!-- start content for lesson data -->
       <span class="lessondatadiv">
         <span class="lessondatabuttoncls">
           <ng-container >
             <button mat-button type="button" class="submitbtn" style="float: left;" color="primary"
-            (click)="nextbutton('prev')">
+            (click)="nextbutton('prev','')">
             <mat-icon>keyboard_arrow_left</mat-icon> Previous
           </button>
           </ng-container>
           
           <ng-container >
             <button mat-button type="button" class="submitbtn" color="primary" style="float: right;"
-            (click)="nextbutton('next')">Next <mat-icon>keyboard_arrow_right</mat-icon></button>
+            (click)="nextbutton('next','')">Next <mat-icon>keyboard_arrow_right</mat-icon></button>
           </ng-container>
         </span>
 
         <mat-card-content>
           <span fxLayout="row" class="trainingcentercls" *ngFor="let item of lessonDataList ;let i=index">
            <ng-container *ngIf="item.expanded ==true && flag === 0">
-            <mat-card-title class="lessontitlecls">
+            <mat-card-title class="lessontitlecls" >
               {{item.lession_title}}
             </mat-card-title>
 
@@ -415,14 +416,14 @@
         <span class="lessondatabuttoncls" >
           <ng-container *ngIf="Index!=0">
             <button mat-button type="button" class="submitbtn" style="float: left;" color="primary"
-            (click)="nextbutton('prev')">
+            (click)="nextbutton('prev','bottomPrev')">
             <mat-icon>keyboard_arrow_left</mat-icon> Previous
           </button>
           </ng-container>
           
           <ng-container >
             <button mat-button type="button" class="submitbtn" color="primary" style="float: right;"
-            (click)="nextbutton('next')">Next <mat-icon>keyboard_arrow_right</mat-icon></button>
+            (click)="nextbutton('next','bottomNext')">Next <mat-icon>keyboard_arrow_right</mat-icon></button>
           </ng-container>
           
         </span>
@@ -435,15 +436,16 @@
     <!-- again category list data -->
     <mat-list class="trainingcentercls trainingcenterclsnew">
       <mat-list-item class="trainingCategoryList">
-        <ng-container *ngFor="let item of trainingCategoryList;let i = index">
+        <div class="selectedclass" *ngFor="let item of trainingCategoryList;let i = index" (click)="activatedclass(item)" [ngClass]="{'active':item.active}">
 
-          <mat-list-item class="selectedclass" *ngIf="item.childcat.length>=1">{{item.catagory_name}}</mat-list-item>
+          <mat-list-item  *ngIf="item.childcat.length>=1">{{item.catagory_name}}</mat-list-item>
           <!-- parent section -->
           <mat-list-item [ngClass]="{'class1': ((item.done/item.count)*100)>1,
                                   'class2': ((item.done/item.count)*100) ===100,
-                                  'class3': ((item.done/item.count)*100) ===0 }" *ngIf="item.childcat.length==0"
-            class="selectedclass" (click)="clicktrcataining(item._id)">
-            <div class="categoryname">
+                                  'class3': ((item.done/item.count)*100) ===0,
+                                'class4':(item._id==paramsTrainingId) }" *ngIf="item.childcat.length==0"
+             (click)="clicktrcataining(item._id)">
+            <div >
               {{item.catagory_name}}
               <span class="countcls">
                 ({{item.done}}/{{item.count}})
@@ -459,7 +461,7 @@
             </div>
           </mat-list-item>
 
-        </ng-container>
+        </div>
       </mat-list-item>
     </mat-list>
 
@@ -468,22 +470,15 @@
       <mat-card-title class="mentortitle">Advance Mentor Course Certification</mat-card-title>
 
       <!-- again lesson list data -->
-      <span fxLayout="row" class="rowinner" *ngFor="let item of allLessonDataList ; let i=index;">
-        <div (click)="nochildclick(item._id)">
+      <div fxLayout="row" class="rowinner"  *ngFor="let item of allLessonDataList ; let i=index;" (click)="activatedclasslesson(item)" [ngClass]="{'active1':item.active1}">
+        <div [ngClass]="{'class5': (item._id == currentLesson)}" (click)="nochildclick(item._id)">
           {{item.lession_title}}
         </div>
-      </span>
+
+      </div>
       <!-- start content for lesson data -->
 
       <!--end  content for lesson data -->
     </mat-card-content>
   </span>
 </mat-card>
-<!-- 
-
-<div class="left-btn">
-  <button class="btn">Previous</button>
-</div>
-<div class="right-btn">
-  <button class="btn">Next</button>
-</div> -->
