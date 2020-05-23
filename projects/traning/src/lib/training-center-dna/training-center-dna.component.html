@@ -49,7 +49,8 @@
       </ng-container> -->
     
       <div fxLayout="row" class="rowinner"  *ngFor="let item of allLessonDataList ; let i=index;" (click)="activatedclasslesson(item)" [ngClass]="{'active1':item.active1}">
-        <div [ngClass]="{'class5': (item._id == currentLesson)}" (click)="nochildclick(item._id)">
+        <div [ngClass]="{'class5': (item._id == currentLesson),
+                          'class7':(item._id==completedLessons)}" (click)="nochildclick(item._id)">
           {{item.lession_title}}
         </div>
 
@@ -58,14 +59,14 @@
       <!-- start content for lesson data -->
       <span class="lessondatadiv">
         <span class="lessondatabuttoncls">
-          <ng-container >
+          <ng-container *ngIf="firstIndex!=0">
             <button mat-button type="button" class="submitbtn" style="float: left;" color="primary"
             (click)="nextbutton('prev','')">
             <mat-icon>keyboard_arrow_left</mat-icon> Previous
           </button>
           </ng-container>
           
-          <ng-container >
+          <ng-container *ngIf="lastIndex!=Index">
             <button mat-button type="button" class="submitbtn" color="primary" style="float: right;"
             (click)="nextbutton('next','')">Next <mat-icon>keyboard_arrow_right</mat-icon></button>
           </ng-container>
@@ -414,14 +415,14 @@
 
         <!-- next prev button again -->
         <span class="lessondatabuttoncls" >
-          <ng-container *ngIf="Index!=0">
+          <ng-container *ngIf="firstIndex!=0">
             <button mat-button type="button" class="submitbtn" style="float: left;" color="primary"
             (click)="nextbutton('prev','bottomPrev')">
             <mat-icon>keyboard_arrow_left</mat-icon> Previous
           </button>
           </ng-container>
           
-          <ng-container >
+          <ng-container *ngIf="lastIndex!=Index">
             <button mat-button type="button" class="submitbtn" color="primary" style="float: right;"
             (click)="nextbutton('next','bottomNext')">Next <mat-icon>keyboard_arrow_right</mat-icon></button>
           </ng-container>
