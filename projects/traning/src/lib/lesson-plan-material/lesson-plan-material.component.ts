@@ -45,7 +45,7 @@ this.redirectPath = val;
       redirectpath: this.redirectPath+'/'+this.associated_training_id,
       submittext:"Submit",
       // canceltext:"Cancel Now",
-      resettext:"Reset This",
+      resettext:"Reset",
       submitactive:true, //optional, default true
       apiUrl: this.serverdata.serverUrl,
       endpoint: 'addlessonplandata',  //change endpoint
