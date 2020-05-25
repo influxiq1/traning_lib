@@ -6,6 +6,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel';
 import { MatCarouselSlide, MatCarouselSlideComponent } from '@ngmodule/material-carousel';
 import { count } from 'rxjs/operators';
+import {MatProgressBarModule, MatRadioModule, MatSliderModule} from '@angular/material'
 // import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 import { Pipe, PipeTransform } from '@angular/core';
 export interface DialogData {
@@ -67,6 +68,12 @@ export class TrainingCenterDnaComponent implements OnInit {
   public firstIndex:number;
   public currentLesson:any;
   public completedLessons:any=[];
+  public lesson_content:any;
+  public lesson_data:any;
+  public progress_bar = 0;
+  public training_cat_name:any;
+  public training_header_text:any='ADVANCED MENTOR COURSE CERTIFICATION';
+  public paramslessonId:any;
  
   @Input()
   set lessonplanmaterialRoute(route:any){
@@ -77,7 +84,10 @@ export class TrainingCenterDnaComponent implements OnInit {
     let results:any=(val) || '<no name set>';
     let parentdone:any;
     let parentcount:any;
-    this.trainingCategoryList= results.trainingcenterlist;   
+    this.trainingCategoryList= results.trainingcenterlist; 
+
+
+
     for (let i in this.trainingCategoryList) {
      
       parentdone = this.trainingCategoryList[i].done;
@@ -170,8 +180,22 @@ export class TrainingCenterDnaComponent implements OnInit {
   }
   @Input()
   set TrainingCeneterData(data: any) {
+
+    this.progress_bar = 0;
+     if(this.progress_bar == 0){
+        window.scrollTo({ 
+          top: 200, 
+          left: 0, 
+          behavior: 'smooth' 
+        });
+      }
+    // console.log(this.progress_bar,'>>>+++',this.training_header_text)
+    // this.training_cat_name=this.training_header_text;
     let results:any=(data) || '<no name set>';
-console.log("souresh testing++++++++++",results);
+    // console.log("souresh testing++++++++++",results);
+    this.lesson_content=results.results.lesson_content[0];
+    console.log( this.lesson_content,'lesson dada>>>>')
+
     this.uniquedonetrainingarray = results.uniquedonetrainingarray;
     this.lessonDataList = results.rdata;
     for (const i in this.lessonDataList) {
@@ -187,7 +211,27 @@ console.log("souresh testing++++++++++",results);
     }
     console.log("completed lessons",this.completedLessons);
 
-    this.allLessonDataList = results.alllessondata;
+    this.allLessonDataList = results.results.lessondata;
+    setTimeout(() => {
+      this.paramsTrainingId = this.activatedRoute.snapshot.params.associated_training;
+      this.paramslessonId = this.activatedRoute.snapshot.params._id;
+
+      console.log(this.paramsTrainingId,'>>>>',this.paramslessonId)
+
+      if(this.activatedRoute.snapshot.params._id == null){
+        this.paramslessonId = results.results.lessondata[0]._id;
+        // this.lesson_content=results.results.lesson_content[0];
+         console.log(this.lesson_content,'+++++++++>>>>',this.paramslessonId)
+
+      }
+      }, 200);
+
+      for(let i in results.results.trainingcenterlist){
+        if(this.activatedRoute.snapshot.params.associated_training == results.results.trainingcenterlist[i]._id){
+          this.training_cat_name=results.results.trainingcenterlist[i].catagory_name;
+        }
+      }
+     
   }
    
   @Input()
@@ -220,7 +264,10 @@ console.log("souresh testing++++++++++",results);
       this.userId = JSON.parse(this.cookieService.get('userid'));
       this.userType = JSON.parse(this.cookieService.get('type'));
       // this.userType = "mentee";
+      setTimeout(() => {
       this.paramsTrainingId = activatedRoute.snapshot.params.associated_training;
+      console.log(this.paramsTrainingId,'>>>>')
+      }, 200);
       
       
     }
@@ -232,10 +279,11 @@ console.log("souresh testing++++++++++",results);
      for (const key in this.lessonDataList) {
       if (this.lessonDataList[key].expanded == true) {
         this.Index = this.lessonDataList.indexOf(this.lessonDataList[key]);
-        
+        console.log(this.Index,'>>>>>');
       }
     }
      this.lastIndex =this.lessonDataList.length-1; 
+     console.log(this.lastIndex)
 
     // switch (this.cookiesData.type) {
     //   case 'admin':
@@ -458,23 +506,59 @@ console.log("souresh testing++++++++++",results);
      this.addMarkedData(item._id,this.paramsId,i,this.lesson_title);
   }
   }
+
+  
   childcatclick(childId:any,catName:any){
     this.trainingCategoryName=catName;
     this.router.navigateByUrl(this.trainingCenterRoute + childId);
   
   }
+
+
   nochildclick(id:any){
+    setTimeout(() => {
+      this.progress_bar = 1;
+      }, 100);
     this.router.navigateByUrl(this.trainingCenterRoute + this.paramsTrainingId+'/'+id);
+    this.lesson_content=this.lesson_data.results.lesson_content[0];
+    // console.log(this.lesson_content,'___++++')
+
   }
-  clicktrcataining(id:any){
+
+
+  clicktrcataining(id:any,catagory_name:any){
+
+    setTimeout(() => {
+    this.progress_bar = 1;
+    }, 100);
+
+    console.log(id,'++++++++++',catagory_name)
+
     this.router.navigateByUrl(this.trainingCenterRoute + id);
+    // if( this.progress_bar == 0){
+      this.training_header_text=catagory_name;
+    // }
+
+    // setTimeout(() => {
+    //   if(this.progress_bar == 0){
+    //     window.scrollTo({ 
+    //       top: 200, 
+    //       left: 0, 
+    //       behavior: 'smooth' 
+    //     });
+    //   }
+    // }, 500);
+
   }
+
   activatedclass(item){
     item.active=!item.active;
   }
-  activatedclasslesson(items){
-    items.active1=!items.active1;
-  }
+
+  // activatedclasslesson(items){
+  //   items.active1=!items.active1;
+  // }
+
   getTrainingCenterlistFunction(associated_training:any,type:any,user_id:any){
     const link = this.serverDetailsVal.serverUrl + "gettrainingcenterlist";  
     let data:any={
@@ -486,22 +570,42 @@ console.log("souresh testing++++++++++",results);
       "associated_training":associated_training
     }
     this.apiService.postDatawithoutToken(link,data).subscribe((response:any)=>{
-      // console.log("response",response);
+      this.lesson_data=response;
+      console.log("response",response);
       this.trainingCategoryList = response.results.trainingcenterlist;
       this.lessonDataList = response.rdata;
       this.dividend = response.results.done_lesson_by_user[0].lessonsdone;
       this.divisor = response.results.total_lesson[0].count;
       this.reportPercentage=Math.floor(this.dividend/this.divisor*100);
+      this.lesson_content=this.lesson_data.results.lesson_content[0];
+      console.log(this.lesson_data,'+++++>>>')
+
+      if(this.lesson_data.status == 'success'){
+    
+          this.progress_bar = 0;
+          console.log(this.progress_bar,'>>>>>>>>>>',this.lesson_data.status)
+          
+      }
+  
 
     });
+   
+  
   }
-  nextbutton(value:any,bottomval){
+
+  //next prev button work
+
+  nextbutton(value:any,bottomval:any){
+
      switch (value) {
        case 'next':
-        
+        this.nochildclick(this.lessonDataList[this.Index]._id)
+
+         console.log(this.lessonDataList[this.Index],'>>>>>>>>>>>>',this.lessonDataList[this.Index]._id)
         // if(this.Index<this.lessonDataList.length){
           this.addMarkedData(this.lessonDataList[this.Index]._id,this.paramsId,this.nextdata,this.lessonDataList[this.Index].lession_title);
           this.getTrainingCenterlistFunction(this.paramsId,this.userType,this.userId);
+
           this.Index++;
           this.lessonDataList[this.Index];
 
@@ -517,11 +621,14 @@ console.log("souresh testing++++++++++",results);
         // }
          break;
          case 'prev':
+          console.log(this.lessonDataList[this.Index],'>>>>>>>>>>>>')
+          this.nochildclick(this.lessonDataList[this.Index]._id)
 
           this.flag=1;
            let index:any=this.Index-1; 
            this.firstIndex = index;
             this.lessonDataList = [this.lessonDataList[index]];
+
             if(bottomval != "" && bottomval == "bottomPrev"){
              window.scroll({ 
              top: 0, 
