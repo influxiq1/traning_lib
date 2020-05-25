@@ -21,7 +21,7 @@
           (click)="activatedclass(item)">
 
           <mat-list-item *ngIf="item.childcat.length>=1">{{item.catagory_name}}</mat-list-item>
-          <span>{{item | json}}</span>
+          <!-- <span>{{item | json}}</span> -->
           <!-- parent section -->
           <mat-list-item *ngIf="item.childcat.length==0" (click)="clicktrcataining(item._id,item.catagory_name)">
             <div class="categoryname" [ngClass]="paramsTrainingId ==  item._id ? 'classongoing':
