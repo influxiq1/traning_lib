@@ -133,3 +133,12 @@
  .mentortitle{display: block;
     padding: 5px;
     background-color: cyan;text-transform: uppercase;}
+
+
+    .lessontitleclass,.lessoncontent {
+        display: none;
+        }
+
+    .lessontitleclass_0 ,.lessoncontent0 {
+        display: block;
+        }
