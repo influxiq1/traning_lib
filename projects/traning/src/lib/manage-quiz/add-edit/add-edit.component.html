@@ -35,8 +35,17 @@
                           Priority field can not be blank</mat-error>
             </mat-form-field>
 
+            <!-- <mat-form-field appearance="fill">
+                <mat-label>Description</mat-label>
+                <textarea matInput [formControl]="manageQuizForm.controls['description']"></textarea>
+              </mat-form-field> -->
+              <mat-label>Description</mat-label>
+              <ck-editor name="description" [formControl]="manageQuizForm.controls['description']" skin="moono-lisa" language="en" [fullPage]="true"></ck-editor>
+
         
             <mat-checkbox [formControl]="manageQuizForm.controls['status']" [(ngModel)]="statuschecked">Active</mat-checkbox>
+
+            <br>
            
             <button mat-raised-button color="primary" mat-button class="trainingsubbtn" type="submit">{{ buttonText }}</button>
 

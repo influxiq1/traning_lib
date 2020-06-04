@@ -74,6 +74,8 @@ export class TrainingCenterDnaComponent implements OnInit {
   public training_cat_name: any;
   public training_header_text: any = 'ADVANCED MENTOR COURSE CERTIFICATION';
   public paramslessonId: any;
+  public lesson_id_flag:any;
+  public flag_id:any;
 
   @Input()
   set lessonplanmaterialRoute(route: any) {
@@ -94,7 +96,7 @@ export class TrainingCenterDnaComponent implements OnInit {
       parentcount = this.trainingCategoryList[i].count;
       if (this.trainingCategoryList[i].done != null && this.trainingCategoryList[i].count != null) {
         this.trainingCategoryList[i].percentage = Math.floor((this.trainingCategoryList[i].done / this.trainingCategoryList[i].count) * 100);
-        console.log('this.trainingCategoryList[i].percentage',this.trainingCategoryList[i].percentage,this.trainingCategoryList[i],i,this.trainingCategoryList[i].done,this.trainingCategoryList[i].count);
+        // console.log('this.trainingCategoryList[i].percentage',this.trainingCategoryList[i].percentage,this.trainingCategoryList[i],i,this.trainingCategoryList[i].done,this.trainingCategoryList[i].count);
 
       }
 
@@ -194,7 +196,7 @@ export class TrainingCenterDnaComponent implements OnInit {
     let results: any = (data) || '<no name set>';
     // console.log("souresh testing++++++++++",results);
     this.lesson_content = results.results.lesson_content[0];
-    console.log(this.lesson_content, 'lesson dada>>>>')
+    // console.log(this.lesson_content, 'lesson dada>>>>')
 
     this.uniquedonetrainingarray = results.uniquedonetrainingarray;
     this.lessonDataList = results.rdata;
@@ -209,19 +211,20 @@ export class TrainingCenterDnaComponent implements OnInit {
         this.completedLessons.push(this.lessonDataList[i]._id);
       }
     }
-    console.log("completed lessons", this.completedLessons);
+    // console.log("completed lessons", this.completedLessons);
 
     this.allLessonDataList = results.results.lessondata;
+    // console.log(">>>>",this.allLessonDataList)
     setTimeout(() => {
       this.paramsTrainingId = this.activatedRoute.snapshot.params.associated_training;
       this.paramslessonId = this.activatedRoute.snapshot.params._id;
 
-      console.log(this.paramsTrainingId, '>>>>', this.paramslessonId)
+      // console.log(this.paramsTrainingId, '>>>>', this.paramslessonId)
 
       if (this.activatedRoute.snapshot.params._id == null) {
         this.paramslessonId = results.results.lessondata[0]._id;
         // this.lesson_content=results.results.lesson_content[0];
-        console.log(this.lesson_content, '+++++++++>>>>', this.paramslessonId)
+        // console.log(this.lesson_content, '+++++++++>>>>', this.paramslessonId)
 
       }
     }, 200);
@@ -230,6 +233,22 @@ export class TrainingCenterDnaComponent implements OnInit {
       if (this.activatedRoute.snapshot.params.associated_training == results.results.trainingcenterlist[i]._id) {
         this.training_cat_name = results.results.trainingcenterlist[i].catagory_name;
       }
+    }
+
+
+    // console.log('less ids>>',results.results.lesson_ids[0].lesson_ids,this.activatedRoute.snapshot.params._id)
+    for(let id in results.results.lesson_ids[0].lesson_ids){
+      if(this.activatedRoute.snapshot.params._id == results.results.lesson_ids[0].lesson_ids[id] || 
+        this.allLessonDataList[0]._id ==  results.results.lesson_ids[0].lesson_ids[id]){
+      this.lesson_id_flag = results.results.lesson_ids[0].lesson_ids[id];
+      // console.log(this.lesson_id_flag,'flag--->')
+
+      }
+
+      // if(results.results.lesson_ids[0].lesson_ids[id] == this.allLessonDataList[0]._id){
+      //   this.flag_id=results.results.lesson_ids[0].lesson_ids[id];
+      //   console.log(this.flag_id,'??',this.allLessonDataList[0]._id)
+      // }
     }
 
   }
@@ -266,7 +285,7 @@ export class TrainingCenterDnaComponent implements OnInit {
     // this.userType = "mentee";
     setTimeout(() => {
       this.paramsTrainingId = activatedRoute.snapshot.params.associated_training;
-      console.log(this.paramsTrainingId, '>>>>')
+      // console.log(this.paramsTrainingId, '>>>>')
     }, 200);
 
 
@@ -275,15 +294,15 @@ export class TrainingCenterDnaComponent implements OnInit {
   ngOnInit() {
     this.divisor = this.adminlessoncount;
     this.reportPercentage = Math.floor(this.dividend / this.divisor * 100);
-    console.log("curreentLesson ++++++", this.currentLesson);
+    // console.log("curreentLesson ++++++", this.currentLesson);
     for (const key in this.lessonDataList) {
       if (this.lessonDataList[key].expanded == true) {
         this.Index = this.lessonDataList.indexOf(this.lessonDataList[key]);
-        console.log(this.Index, '>>>>>');
+        // console.log(this.Index, '>>>>>');
       }
     }
     this.lastIndex = this.lessonDataList.length - 1;
-    console.log(this.lastIndex)
+    // console.log(this.lastIndex)
 
     // switch (this.cookiesData.type) {
     //   case 'admin':
@@ -400,8 +419,8 @@ export class TrainingCenterDnaComponent implements OnInit {
     let data: any = {
       "data": {
         "user_id": this.userId,
-        "lesson_id": lessonId,
-        "associated_training": associated_training,
+        "lesson_id": this.paramslessonId,
+        "associated_training": this.paramsTrainingId,
         "lastlessonname": lession_title,
         "lasttrainingname": this.trainingCategoryName
       },
@@ -409,7 +428,7 @@ export class TrainingCenterDnaComponent implements OnInit {
       "token": this.serverDetailsVal.jwttoken
     }
 
-    console.log('post data',data);
+    // console.log('post data',data);
 
     this.apiService.postData(link, data).subscribe((response: any) => {
       if (response.status = "success") {
@@ -536,7 +555,7 @@ export class TrainingCenterDnaComponent implements OnInit {
       this.progress_bar = 1;
     }, 100);
 
-    console.log(id, '++++++++++', catagory_name)
+    // console.log(id, '++++++++++', catagory_name)
 
     this.router.navigateByUrl(this.trainingCenterRoute + id);
     // if( this.progress_bar == 0){
@@ -575,19 +594,19 @@ export class TrainingCenterDnaComponent implements OnInit {
     }
     this.apiService.postDatawithoutToken(link, data).subscribe((response: any) => {
       this.lesson_data = response;
-      console.log("response", response);
+      // console.log("response", response);
       this.trainingCategoryList = response.results.trainingcenterlist;
       this.lessonDataList = response.rdata;
       this.dividend = response.results.done_lesson_by_user[0].lessonsdone;
       this.divisor = response.results.total_lesson[0].count;
       this.reportPercentage = Math.floor(this.dividend / this.divisor * 100);
       this.lesson_content = this.lesson_data.results.lesson_content[0];
-      console.log(this.lesson_data, '+++++>>>')
+      // console.log(this.lesson_data, '+++++>>>')
 
       if (this.lesson_data.status == 'success') {
 
         this.progress_bar = 0;
-        console.log(this.progress_bar, '>>>>>>>>>>', this.lesson_data.status)
+        // console.log(this.progress_bar, '>>>>>>>>>>', this.lesson_data.status)
 
       }
 
@@ -605,7 +624,7 @@ export class TrainingCenterDnaComponent implements OnInit {
       case 'next':
         
 
-        console.log(this.lessonDataList[this.Index], '>>>>>>>>>>>>', this.lessonDataList[this.Index]._id)
+        // console.log(this.lessonDataList[this.Index], '>>>>>>>>>>>>', this.lessonDataList[this.Index]._id)
         // if(this.Index<this.lessonDataList.length){
         this.addMarkedData(this.lessonDataList[this.Index]._id, this.paramsId, this.nextdata, this.lessonDataList[this.Index].lession_title);
         // this.getTrainingCenterlistFunction(this.paramsId, this.userType, this.userId);
@@ -616,7 +635,7 @@ export class TrainingCenterDnaComponent implements OnInit {
             if(this.lessonDataList[b]._id==this.lesson_content._id)
             ind=(parseInt(b)+1);
           }
-          console.log('ind',ind);
+          // console.log('ind',ind);
           if(this.lessonDataList[ind]!=null){
           this.nochildclick(this.lessonDataList[ind]._id);
           this.progressLoader=true;
@@ -644,7 +663,7 @@ export class TrainingCenterDnaComponent implements OnInit {
         // }
         break;
       case 'prev':
-        console.log(this.lessonDataList[this.Index], '>>>>>>>>>>>>')
+        // console.log(this.lessonDataList[this.Index], '>>>>>>>>>>>>')
         let ind1:number=0;
         setTimeout(() => {
         // if(this.Index<this.lessonDataList.length){

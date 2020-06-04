@@ -32,7 +32,7 @@ export class ManageQuizComponent implements OnInit {
   public lessonId:any;
   public dataSource:any;
   public listingData:any=[];
-  displayedColumns: string[] = ['question','question_type', 'priority', 'status', 'deleteRecord'];
+  displayedColumns: string[] = ['question','description_html','question_type', 'priority', 'status', 'deleteRecord'];
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
 
@@ -73,7 +73,12 @@ export class ManageQuizComponent implements OnInit {
   }
   
 
-  constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router) { }
+  constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router) { 
+
+    // console.log(this.listingData,'>>>>>')
+
+
+  }
 
   ngOnInit() {
     setTimeout(() => {

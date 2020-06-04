@@ -2,5 +2,9 @@
 [formdata]="formdata"
 [formfieldrefresh]="formfieldrefresh"
 [formfieldrefreshdata]="formfieldrefreshdata"
+ (onFormFieldChange)="listenFormFieldChange($event)"
 > </lib-showform>
 <!-- <h1>{{formdata | json}}</h1> -->
+
+
+<p>{{formdata.field | json}}</p>

@@ -3,7 +3,9 @@
         <span class="searchblockwrapper">
           <span>
     <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
-        <h2 class="headerSpan">Manage Lesson Plan Material For {{ listingData[0].lessonname}}</h2>
+       
+        <h2 class="headerSpan" >Manage Lesson Plan Material</h2>
+        <!-- <span>For {{ listingData[0].lessonname}}</span> -->
     </mat-toolbar>
           </span>
           <span>
@@ -28,6 +30,10 @@
             <ng-container matColumnDef="question">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Question </th>
                 <td mat-cell *matCellDef="let row" data-label="Question"> {{row.question}} </td>
+            </ng-container>
+            <ng-container matColumnDef="description_html">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+                <td mat-cell *matCellDef="let row" data-label="Question"> {{row.description_html}} </td>
             </ng-container>
             <ng-container matColumnDef="question_type">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Question Type </th>

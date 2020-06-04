@@ -23,9 +23,10 @@
           <mat-list-item *ngIf="item.childcat.length>=1">{{item.catagory_name}}</mat-list-item>
           <!-- <span>{{item | json}}</span> -->
           <!-- parent section -->
-          <mat-list-item *ngIf="item.childcat.length==0" (click)="clicktrcataining(item._id,item.catagory_name)">
-            <div class="categoryname" [ngClass]="paramsTrainingId ==  item._id ? 'classongoing':
-            ( item.percentage >=100 ? 'classdone' : 'classnotdone')">
+          <mat-list-item *ngIf="item.childcat.length==0" (click)="clicktrcataining(item._id,item.catagory_name)" 
+          [ngClass]="paramsTrainingId ==  item._id ? 'classongoing':
+          ( item.percentage >=100 ? 'classdone' : 'classnotdone')">
+            <div class="categoryname" >
               {{item.catagory_name}}
               <span class="countcls">
                 ({{item.done}}/{{item.count}})
@@ -113,7 +114,8 @@
                 </mat-card-content> -->
                 <div class="submitbtngroup">
                   <button mat-button type="button" class="submitbtn reviewlesson" color="primary"
-                    (click)="lessonplanpageroute(item._id)">Review Lesson Plan Material</button>
+                    (click)="lessonplanpageroute(item._id)" 
+                    *ngIf="lesson_id_flag != paramslessonId || lesson_id_flag != allLessonDataList[0]._id">Review Lesson Plan Material</button>
 
                 </div>
               </mat-card>
@@ -260,7 +262,7 @@
               <!-- banner 2 end here -->
 
               <!-- user is mentee and also lessonplan value is not purchasable then Banner 1 repeat start here -->
-              <mat-card class="banner1cls"
+              <!-- <mat-card class="banner1cls"
                 *ngIf="userType=='mentee' && item.has_lessonplan=== 0 && item.lessonplan_value=='not_purchasable' && i==0 ">
                 <mat-card-content>
                   Please review the Lesson Plan Material for this Lesson in order to understand the questionnaire that a
@@ -269,9 +271,9 @@
                 </mat-card-content>
                 <div class="submitbtngroup">
                   <button mat-button type="button" class="submitbtn submitlessonplan" color="primary"
-                    (click)="lessonplanpageroute(item._id)">Submit Lesson Plan Material</button>
+                    (click)="lessonplanpageroute(lesson_content._id)">Submit Lesson Plan Material 45 </button>
                 </div>
-              </mat-card>
+              </mat-card> -->
               <!-- user is mentee and also lessonplan value is not purchasable end here -->
 
               <!--Banner Section End Here  -->
@@ -292,7 +294,8 @@
                 </mat-card-content>
                 <div class="submitbtngroup">
                   <button mat-button type="button" class="submitbtn reviewlesson" color="primary"
-                    (click)="lessonplanpageroute(item._id)">Review Lesson Plan Material</button>
+                    (click)="lessonplanpageroute(lesson_content._id)"  
+                    *ngIf="lesson_id_flag != paramslessonId || lesson_id_flag != allLessonDataList[0]._id">Review Lesson Plan Material </button>
 
                 </div>
               </mat-card>
@@ -312,7 +315,7 @@
               <!-- banner 2 end here -->
 
               <!-- user is mentee and also lessonplan value is not purchasable then Banner 1 repeat start here -->
-              <mat-card class="banner1cls"
+              <!-- <mat-card class="banner1cls"
                 *ngIf="userType=='mentee' && item.has_lessonplan=== 0 && item.lessonplan_value=='not_purchasable' && i==0 ">
                 <mat-card-content>
                   Please review the Lesson Plan Material for this Lesson in order to understand the questionnaire that a
@@ -321,9 +324,9 @@
                 </mat-card-content>
                 <div class="submitbtngroup">
                   <button mat-button type="button" class="submitbtn submitlessonplan" color="primary"
-                    (click)="lessonplanpageroute(item._id)">Submit Lesson Plan Material</button>
+                    (click)="lessonplanpageroute(item._id)">Submit Lesson Plan Material 54</button>
                 </div>
-              </mat-card>
+              </mat-card> -->
               <!-- user is mentee and also lessonplan value is not purchasable end here -->
 
               <!--Banner Section End Here  -->
@@ -423,7 +426,8 @@
                 </mat-card-content>
                 <div class="submitbtngroup">
                   <button mat-button type="button" class="submitbtn reviewlesson" color="primary"
-                    (click)="lessonplanpageroute(item._id)">Review Lesson Plan Material</button>
+                    (click)="lessonplanpageroute(lesson_content._id)" 
+                     *ngIf="lesson_id_flag != paramslessonId || lesson_id_flag != allLessonDataList[0]._id">Review Lesson Plan Material </button>
 
                 </div>
               </mat-card>
@@ -443,7 +447,7 @@
               <!-- banner 2 end here -->
 
               <!-- user is mentee and also lessonplan value is not purchasable then Banner 1 repeat start here -->
-              <mat-card class="banner1cls"
+              <!-- <mat-card class="banner1cls"
                 *ngIf="userType=='mentee' && item.has_lessonplan=== 0 && item.lessonplan_value=='not_purchasable' && i==0">
                 <mat-card-content>
                   Please review the Lesson Plan Material for this Lesson in order to understand the questionnaire that a
@@ -452,9 +456,9 @@
                 </mat-card-content>
                 <div class="submitbtngroup">
                   <button mat-button type="button" class="submitbtn submitlessonplan" color="primary"
-                    (click)="lessonplanpageroute(item._id)">Submit Lesson Plan Material</button>
+                    (click)="lessonplanpageroute(lesson_content._id)">Submit Lesson Plan Material b67</button>
                 </div>
-              </mat-card>
+              </mat-card> -->
               <!-- user is mentee and also lessonplan value is not purchasable end here -->
 
               <!--Banner Section End Here  -->
@@ -496,19 +500,16 @@
 
           <mat-list-item *ngIf="item.childcat.length>=1">{{item.catagory_name}}</mat-list-item>
           <!-- parent section -->
-          <mat-list-item [ngClass]="{
-            'classongoing':paramsTrainingId ===  item._id , 
-            'classdone':item.done >= 100 ,
-            'classnotdone':item.done < 100
-          }" *ngIf="item.childcat.length==0" (click)="clicktrcataining(item._id,item.catagory_name)">
+          <mat-list-item [ngClass]="paramsTrainingId ==  item._id ? 'classongoing':
+          ( item.percentage >=100 ? 'classdone' : 'classnotdone')"
+           *ngIf="item.childcat.length==0" (click)="clicktrcataining(item._id,item.catagory_name)">
             <!-- <div >
               {{item.catagory_name}}
               <span class="countcls">
                 ({{item.done}}/{{item.count}})
               </span>
             </div> -->
-            <div class="categoryname" [ngClass]="paramsTrainingId ==  item._id ? 'classongoing':
-            ( item.done >=100 ? 'classdone' : 'classnotdone')">
+            <div class="categoryname" >
               {{item.catagory_name}}
               <span class="countcls">
                 ({{item.done}}/{{item.count}})

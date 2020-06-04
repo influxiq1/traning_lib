@@ -17,18 +17,21 @@
 
                     <mat-error
                         *ngIf="dataForm.controls[item.name]!=null &&  item.validationrule!=null && !dataForm.controls[item.name].valid && dataForm.controls[item.name].touched && issubmit==1">
-                        {{item.label}}
+                     {{item.label}}
+
                         {{item.validationerrormsg}}</mat-error>
                 </mat-form-field>
             </div>
             <div>
+                
                 <mat-form-field *ngIf="item.inputtype == 'textarea'">
                     <textarea matInput [placeholder]="item.placeholder" [formControlName]="[item.name]"
                         (keyup)="issubmit=0"></textarea>
 
                     <mat-error
                         *ngIf="dataForm.controls[item.name]!=null &&  item.validationrule!=null && !dataForm.controls[item.name].valid && dataForm.controls[item.name].touched && issubmit==1">
-                        {{item.label}}
+                         {{item.label}}
+
                         {{item.validationerrormsg}}</mat-error>
                 </mat-form-field>
             </div>

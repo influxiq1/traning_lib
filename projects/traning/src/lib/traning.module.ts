@@ -29,7 +29,7 @@ import { CategoryWiseReportComponent } from './category-wise-report/category-wis
 import { TrainingCenterDnaComponent } from './training-center-dna/training-center-dna.component';
 import { LessonPlanMaterialComponent } from './lesson-plan-material/lesson-plan-material.component';
 import { ListingModule } from 'listing-angular7';
-
+// import { CKEditorModule } from 'ngx-ckeditor';
 
 
 
@@ -67,7 +67,8 @@ import { ListingModule } from 'listing-angular7';
     CKEditorModule,
     FileUploadModule,
     MatCarouselModule.forRoot(),
-    ListingModule
+    ListingModule,
+    CKEditorModule
     
   ],
   exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest,TrainingreportComponent,CategoryWiseReportComponent,TrainingCenterDnaComponent,LessonPlanMaterialComponent],

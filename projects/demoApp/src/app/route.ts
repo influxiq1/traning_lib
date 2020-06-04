@@ -46,6 +46,7 @@ const appRoutes: Routes = [
     { path: 'manage-lession/list', component : ListLessionComponent,
     resolve: { lessionData: ResolveService }, 
     data: { requestcondition: { source: 'manage_lession_view', condition: {'is_trash':{$ne:1}} }, endpoint: 'datalist' }},
+    
     { path: 'manage-lession/edit/:id', component: AddEditLessionsComponent },
 
    /**Training Management**/
@@ -106,3 +107,5 @@ const appRoutes: Routes = [
 export const appRoutingProviders: any[] = [
 ];
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes, { useHash: false });
+
+

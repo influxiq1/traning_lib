@@ -37,6 +37,8 @@ export class AddEditComponent implements OnInit {
       this.manageQuizForm.controls['question'].patchValue(val[0].question);
       this.manageQuizForm.controls['priority'].patchValue(val[0].priority);
       this.manageQuizForm.controls['status'].patchValue(val[0].status);
+      this.manageQuizForm.controls['description'].patchValue(val[0].description);
+
     }
     }
   @Input()
@@ -59,7 +61,8 @@ export class AddEditComponent implements OnInit {
       question_type:[''],
       question: ["", Validators.required],
       priority: ["", Validators.required],
-      status  :[""]
+      status  :[""],
+      description:['']
     })
     this.paramId = activatedRoute.snapshot.params._id;
     if(this.paramId){
@@ -102,6 +105,7 @@ export class AddEditComponent implements OnInit {
             'question': this.manageQuizForm.value.question,
             'priority': this.manageQuizForm.value.priority,
             'status': this.manageQuizForm.value.status,
+            'description':this.manageQuizForm.value.description
           },
           "sourceobj": ["lesson_id"],
         }
