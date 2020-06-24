@@ -11,7 +11,7 @@ export class AddEditLessionsComponent implements OnInit {
   title = 'demoApp';
   public formdataval: any;
   public recid: any;
-  public listingPageRoute : any="/manage-lession/list";
+  public listingPageRoute : any="/manage-lesson/list";
   public pageName : any="Manage Lesson";
   public isitdna:any=true;
 

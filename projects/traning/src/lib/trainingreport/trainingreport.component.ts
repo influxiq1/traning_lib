@@ -39,7 +39,8 @@ export interface PeriodicTrainingElement {
 })
 
 export class TrainingreportComponent implements OnInit {
-  displayedColumns: string[] = ['no','name','type', 'email','totalTraining','trainingdone','training_percentage','lastupdated_training_percentage_at', 'lastlessonname','lasttrainingname','viewCatReport'];
+  // ,'totalTraining'
+  displayedColumns: string[] = ['no','name','type', 'email','trainingdone','training_percentage','lastupdated_training_percentage_at', 'lastlessonname','lasttrainingname','viewCatReport'];
   popularTrainingdisplayedColumns: string[] = ['no','catagory_name','parent_catagory','description_html', 'priority','status','user_done'];
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   public totalPage:any;
@@ -79,8 +80,9 @@ export class TrainingreportComponent implements OnInit {
     "page_no":1
   }
   public search:any={
-    "name":"",
-    "email":""
+    "name_s":"",
+    "email":"",
+    "type":""
   }
   @Input()
   set serverDetails(serverDetails: {}) {
@@ -122,15 +124,13 @@ export class TrainingreportComponent implements OnInit {
   constructor(public datepipe : DatePipe,public apiService : ApiService,public router:Router,public cookie:CookieService) {
     this.sort_val = 'name',
     this.sort_type='desc'
-    this.allCookiesData = cookie.getAll();
-    this.cookiesData = JSON.parse(this.allCookiesData.user_details);
-    this.userId = this.cookiesData._id;
-    this.userType=this.cookiesData.type;
+    // this.allCookiesData = cookie.getAll();
+    // this.cookiesData = JSON.parse(this.cookie.get('userid'));
+    this.userId = JSON.parse(this.cookie.get('userid'));;
+    this.userType=JSON.parse(this.cookie.get('type'));;
     setTimeout(() => {
       this.trainingCount();
      }, 500);
-  
-    
    }
 
   ngOnInit() {
@@ -142,12 +142,12 @@ export class TrainingreportComponent implements OnInit {
   trainingCount(){
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.trainingCountEndpoint;
     this.apiService.postDatawithoutTokenReportCount(link).subscribe((response:any)=>{
-        this.trainingCounts.activatedtrainingcount = response.activatedtrainingcount;
-        this.trainingCounts.activatedlessoncount = response.activatedlessoncount;
-        this.trainingCounts.trashedtrainingcount = response.trashedtrainingcount;
-        this.trainingCounts.trashedlessoncount = response.trashedlessoncount;
-        this.trainingCounts.totaltrainingcount = response.totaltrainingcount;
-        this.trainingCounts.totallessoncount = response.totallessoncount;
+        this.trainingCounts.activatedtrainingcount = response.results.activatedtrainingcount;
+        this.trainingCounts.activatedlessoncount = response.results.activatedlessoncount;
+        this.trainingCounts.trashedtrainingcount = response.results.trashedtrainingcount;
+        this.trainingCounts.trashedlessoncount = response.results.trashedlessoncount;
+        this.trainingCounts.totaltrainingcount = response.results.totaltraining;
+        this.trainingCounts.totallessoncount = response.results.totallesson;
     })
   }
  
@@ -156,18 +156,18 @@ export class TrainingreportComponent implements OnInit {
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
     let data:any={
       search : this.lastSearchCondition,
-      sort_val: "name",
+      sort_val: "name_s",
       sort_type:"desc",
       condition:{}
     }
-    if(this.cookiesData.type=='salesrep'){
-      data.condition['user_id']= this.userId;
-      this.page.page_count = 1;
-    }
-    if(this.cookiesData.type=='user'){
-      data.condition['user_id']= this.userId;
-      this.page.page_count = 1;
-    }
+    // if(this.userType=='mentor'){
+    //   data.condition['user_id']= this.userId;
+    //   this.page.page_count = 1;
+    // }
+    // if(this.userType=='mentee'){
+    //   data.condition['user_id']= this.userId;
+    //   this.page.page_count = 1;
+    // }
      this.apiService.postDatawithoutToken(link,data).subscribe((response:any)=>{
        this.reportDataCount = response.count;
        this.totalPage=Math.round(this.reportDataCount / this.page.page_count);
@@ -186,7 +186,8 @@ export class TrainingreportComponent implements OnInit {
     });
     for (let i in searchArray) {
       if(searchArray[i].val!=null && searchArray[i].val!=''){
-        searchCondition[searchArray[i].key]={$regex : searchArray[i].val};
+
+        searchCondition[searchArray[i].key]={$regex : (searchArray[i].val).toLowerCase()};
       } 
     }
     searchCondition={$and:[searchCondition]};
@@ -199,7 +200,6 @@ export class TrainingreportComponent implements OnInit {
         "skip":(parseInt(this.page.page_no)-1) * parseInt(this.page.page_count),
         "limit":parseInt(this.page.page_count),
         "search" : searchCondition
-        
       },
       sort_val:this.sort_val,
       sort_type:this.sort_type
@@ -223,11 +223,12 @@ export class TrainingreportComponent implements OnInit {
    }
    this.getPageData();
   }
+  
   categoryWiseReportPage(id:any){
      this.router.navigateByUrl(this.categoryWiseReportUrl+'/'+id);
   }
   sortPageData(item:any){
-    if(item!=this.sort_val){
+    if(item != this.sort_val){
       this.sort_type = 'asc',
       this.sort_val = item;
     }else{
@@ -240,5 +241,14 @@ export class TrainingreportComponent implements OnInit {
     }
 
     
+  }
+
+  reLoadData(){
+    this.search={
+      "name_s":"",
+      "email":"",
+      "type":""
+    };
+    this.dataSource = new MatTableDataSource(this.trainingReportData);
   }
 }

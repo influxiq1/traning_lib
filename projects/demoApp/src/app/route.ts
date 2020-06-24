@@ -41,13 +41,13 @@ const appRoutes: Routes = [
     },
     { path: 'home/:id', component: AppComponent },
     /**Lession Management **/
-    { path: 'manage-lession/add', component: AddEditLessionsComponent },
+    { path: 'manage-lesson/add', component: AddEditLessionsComponent },
 
-    { path: 'manage-lession/list', component : ListLessionComponent,
+    { path: 'manage-lesson/list', component : ListLessionComponent,
     resolve: { lessionData: ResolveService }, 
     data: { requestcondition: { source: 'manage_lession_view', condition: {'is_trash':{$ne:1}} }, endpoint: 'datalist' }},
-    
-    { path: 'manage-lession/edit/:id', component: AddEditLessionsComponent },
+
+    { path: 'manage-lesson/edit/:id', component: AddEditLessionsComponent },
 
    /**Training Management**/
     { path: 'manage-training/add', component: AddEditTrainingComponent },
@@ -98,7 +98,20 @@ const appRoutes: Routes = [
         path   : 'category-wise-report-view/:user_id',component : CategoryWiseReportComponent,
         resolve : {trainingReportData : ResolveService},
         data    : { requestcondition: { source: '',sort_val:'training_name',sort_type:'desc', condition: {"skip":0,"limit":50,"search":{}} }, endpoint: 'getcategorywisereportdata' }
-    }
+    },
+    // {
+    //     path: 'manage-appointment/mentee/book-appointment/:user_parent_id/:lesson_id_object/:associated_training',
+    //     component: AddUpdateAnswerComponent,
+    //     // canActivate: [AuthGuard],
+    //     // resolve: { eventdayarrData: CalendarServiceService },
+    //     // data: {
+    //     //   requestcondition: {
+    //     //     source: 'events_eventdayarr_view',
+    //     //     condition: {}
+    //     //   },
+    //     //   endpoint: 'view-event-eventdayarr-mentee'
+    //     // }
+    //   },
 
     
 

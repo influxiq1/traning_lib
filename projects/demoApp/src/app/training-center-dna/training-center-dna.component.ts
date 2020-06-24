@@ -21,6 +21,9 @@ public serverDetails: any = {
   "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/",
   "jwttoken": ""
 };
+
+public DnaServerUrl:any='https://x4gcdrxvbh.execute-api.us-east-1.amazonaws.com/dev/';
+
 public formSource: any = {
   "source":'manage_lession_view',
   "markedSourceName":"done_training_lesson",
@@ -35,6 +38,7 @@ public formSource: any = {
 public trainingCenterRoute:any="/training-center-dna/";
 public lessonplanmaterialRoute:any="/lesson-plan-material/";
 public jwtToken:any;
+public googleScheduleRoute:any='/manage-appointment/mentee/book-appointment/';
 
   constructor(public activatedRoute : ActivatedRoute,public cookie:CookieService) {
     this.paramsId = this.activatedRoute.snapshot.params.associated_training;

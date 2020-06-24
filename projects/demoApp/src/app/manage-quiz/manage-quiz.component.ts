@@ -10,7 +10,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class ManageQuizComponent implements OnInit {
   public quizQuestionList: any = [];
   public addPageRoute: any = "/manage-quiz/add/";
-  public lessonPageRoute: any = "/manage-lession/list";
+  public lessonPageRoute: any = "/manage-lesson/list";
   public editPageRoute:any="/manage-quiz/edit/";
   public paramsId:any;
   // public updateAnswerRoute:any="/manage-quiz/update-answer/";

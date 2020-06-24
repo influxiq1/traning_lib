@@ -13,8 +13,10 @@ export class TrainingreportComponent implements OnInit {
   public popularTrainingData:any=[];
   public allCookiesData:any;
   public cookiesData:any;
+  public userId:any;
+  public userType:any;
   public serverDetails: any = {
-    "serverUrl": "https://p6ttrc8ikc.execute-api.us-east-1.amazonaws.com/production/api/",
+    "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/",
     "jwttoken": ""
   };
   public formSource: any = {
@@ -27,9 +29,12 @@ export class TrainingreportComponent implements OnInit {
   constructor(public activatedRoute : ActivatedRoute,public cookie:CookieService,public httpService:HttpService) { 
     this.jwtToken = cookie.get('jwtToken');
     this.serverDetails.jwttoken=this.jwtToken;
-    this.allCookiesData = cookie.getAll();
-    this.cookiesData = JSON.parse(this.allCookiesData.user_details);
-    console.log("sdsdsd",this.cookiesData.type);
+    // this.allCookiesData = cookie.getAll();
+    // this.cookiesData = JSON.parse(this.allCookiesData.user_details);
+    // console.log("sdsdsd",this.cookiesData.type);
+
+    this.userId = JSON.parse(this.cookie.get('userid'));
+    this.userType=JSON.parse(this.cookie.get('type'));
    this.getPopularTrainingData();
   }
 
@@ -48,7 +53,7 @@ export class TrainingreportComponent implements OnInit {
       "limit":10,
       "skip":0,
       "condition":{
-        "type":this.cookiesData.type
+        "type":this.userType
       }
     }
     this.httpService.CustomRequest(data,endpoint).subscribe((res:any)=>{

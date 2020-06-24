@@ -390,7 +390,7 @@ geteditdata() {
      
   } else {
     console.log("edited data",res);
-    if(this.route.snapshot.url[0].path=="manage-lession"){
+    if(this.route.snapshot.url[0].path=="manage-lesson"){
      if(this.route.snapshot.url[1].path=="edit"){
       this.getMediaTypeVal(res.res[0].associated_training,'associated_training');
       this.getMediaTypeVal(res.res[0].mediaType,'mediaType');
@@ -504,7 +504,7 @@ geteditdata() {
         }
     }
     this.dataForm.addControl('id', new FormControl(this.recid, Validators.required));
-    if(this.route.snapshot.url[0].path=="manage-lession"){
+    if(this.route.snapshot.url[0].path=="manage-lesson"){
       if(this.route.snapshot.url[1].path=="edit"){
         this.dataForm.addControl('has_lessonplan', new FormControl(this.hasLessonVal, Validators.required));
 

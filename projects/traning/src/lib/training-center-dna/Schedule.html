@@ -1,0 +1,33 @@
+<div class="generalmodalcls">
+    <div class="modal-content">
+          <div class="logowrapperouter">
+              <div class="logowrapper">
+                  <!-- <img src="../../assets/images/logomain.png"> -->
+              </div>
+          </div>  
+
+          <div mat-dialog-content class="headercls">
+            <h2>Book your paid Mentor Session now!</h2>
+          </div> 
+      
+          <div>
+              <span>You have not booked your 1 hour Mentor Session for Lesson <b>{{data.data.lession_title}}</b>, yet with your Mentor <b>{{data.user_mentor_name}}</b>.</span>
+          </div>
+          <br>
+          <div>
+                <button class="btnbluecls" mat-raised-button color="primary" (click)="submitSchedule(data, 'yes')" cdkFocusInitial>BOOK NOW</button>
+          </div>
+
+          <mat-dialog-actions class="modalbtncls">
+            <button class="btncancelcls" mat-raised-button color="accent" mat-dialog-close="no" cdkFocusInitial><span class="material-icons">
+              clear
+              </span></button>
+            <!-- <button class="btnbluecls" mat-raised-button color="primary" (click)="submitLession(session_id, 'yes')" cdkFocusInitial>Submit</button> -->
+          </mat-dialog-actions>
+      </div>
+    </div>
+  
+  
+  
+  
+   

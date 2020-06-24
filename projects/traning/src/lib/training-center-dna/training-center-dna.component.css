@@ -100,7 +100,15 @@
     margin-right: 10px;
 }
 .lessontitlecls{margin-top: 10px;} 
-.banner1cls .mat-card-content,.banner2cls.mat-card-content{margin-bottom: 0;}
+.banner1cls .mat-card-content,.banner2cls{background: #1095e7;
+    border-radius: 8px;
+    padding: 25px;
+    height: 123px;}
+
+.bannercls{padding: 5px;
+    margin: 0 0 10px;
+    font-size: large;
+        }
 /* .active > .class1{background-color: #bcbce6 !important;}
 .active > .class2{background-color: #bcbce6 !important;}
 .active > .class3{background-color: #bcbce6 !important;}

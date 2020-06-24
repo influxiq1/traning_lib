@@ -8,11 +8,11 @@
   </span>
   </span>
     </span>
-    <mat-form-field>
+    <!-- <mat-form-field>
         <mat-label>Training Name</mat-label>
         <input matInput placeholder="Name" [(ngModel)]="search.training_name" />
     </mat-form-field>
-    <button mat-raised-button color="primary" (click)="getPageData()">Search</button>
+    <button mat-raised-button color="primary" (click)="getPageData()">Search</button> -->
 <ng-container *ngIf="allData.length=='0'">
 <h3>No Record Found</h3>
 </ng-container>
@@ -54,13 +54,13 @@
     <tr mat-row *matRowDef="let row; columns: displaycolvals;"></tr>
 
 </table>
-<span>
+<!-- <span>
     <h2 class="header">Showing {{ page.page_count }} result from
     <ng-container *ngIf="reportDataCount == 0">Many.</ng-container>
         <ng-container *ngIf="reportDataCount > 0">{{reportDataCount}}.</ng-container>
     </h2>
-    </span>
-<mat-toolbar class="pagination">
+    </span> -->
+<!-- <mat-toolbar class="pagination">
     
     <span class="result">
         <mat-form-field appearance="fill" class="example-full-width">
@@ -79,7 +79,7 @@
         <button mat-raised-button color="primary" (click)="nextPage('prev')">Prev</button>
 <button mat-raised-button color="primary" (click)="nextPage()">Next</button>
     </span>
-</mat-toolbar>
+</mat-toolbar> -->
 </ng-container>
 
 </mat-card>

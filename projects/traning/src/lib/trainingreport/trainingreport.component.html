@@ -1,187 +1,243 @@
 <mat-tab-group mat-align-tabs="center">
-    <mat-tab label="Training Report"> 
-<mat-card>
-    <span class="searchblock">
-        <span class="searchblockwrapper">
-            <span>
-                <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
-                    <h2 class="headerSpan">Training Report</h2>
-                </mat-toolbar>
-                <mat-card-content class="countSection">
-                    <h2>{{trainingCounts.totaltrainingcount}}</h2>
-                
-                    <span>Total Number Of <br>Training</span>
-                  </mat-card-content>
-                  <mat-card-content class="countSection">
-                    <h2>{{trainingCounts.totallessoncount}}</h2>
-                
-                    <span>Total Number Of <br>Lessons</span>
-                  </mat-card-content>
-                  <mat-card-content class="countSection">
-                    <h2>{{trainingCounts.activatedtrainingcount}}</h2>
-                
-                    <span>Total Number Of <br>Activate Training</span>
-                  </mat-card-content>
-                  <mat-card-content  class="countSection">
-                    <h2>{{trainingCounts.activatedlessoncount}}</h2>
-                
-                    <span>Total Number Of <br>Activate Lesson</span>
-                  </mat-card-content >
-                  <mat-card-content class="countSection">
-                    <h2>{{trainingCounts.trashedtrainingcount}}</h2>
-                
-                    <span>Total Number Of <br>Trashed Trainings</span>
-                  </mat-card-content>
-                  <mat-card-content class="countSection">
-                    <h2>{{trainingCounts.trashedlessoncount}}</h2>
-                    <span>Total Number Of <br>Trashed Lessons</span>
-                  </mat-card-content>
+    <mat-tab label="Training Report">
+        <mat-card>
+            <span class="searchblock">
+                <span class="searchblockwrapper">
+                    <span>
+                        <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
+                            <h2 class="headerSpan">Training Report</h2>
+                        </mat-toolbar>
+                        <mat-card-content class="countSection">
+                            <h2>{{trainingCounts.totaltrainingcount}}</h2>
+
+                            <span>Total Number Of <br>Training</span>
+                        </mat-card-content>
+                        <mat-card-content class="countSection">
+                            <h2>{{trainingCounts.totallessoncount}}</h2>
+
+                            <span>Total Number Of <br>Lessons</span>
+                        </mat-card-content>
+                        <mat-card-content class="countSection">
+                            <h2>{{trainingCounts.activatedtrainingcount}}</h2>
+
+                            <span>Total Number Of <br>Activate Training</span>
+                        </mat-card-content>
+                        <mat-card-content class="countSection">
+                            <h2>{{trainingCounts.activatedlessoncount}}</h2>
+
+                            <span>Total Number Of <br>Activate Lesson</span>
+                        </mat-card-content>
+                        <mat-card-content class="countSection">
+                            <h2>{{trainingCounts.trashedtrainingcount}}</h2>
+
+                            <span>Total Number Of <br>Trashed Trainings</span>
+                        </mat-card-content>
+                        <mat-card-content class="countSection">
+                            <h2>{{trainingCounts.trashedlessoncount}}</h2>
+                            <span>Total Number Of <br>Trashed Lessons</span>
+                        </mat-card-content>
+                    </span>
+                </span>
             </span>
-        </span>
-    </span>
-    <!-- search field start here -->
-    <ng-container *ngIf="userType=='admin'">
-    <mat-form-field>
-        <mat-label>Name</mat-label>
-        <input matInput placeholder="Name" [(ngModel)]="search.name" />
-    </mat-form-field>
+            <!-- search field start here -->
+            <ng-container *ngIf="userType=='admin'">
+                <mat-form-field>
+                    <mat-label>Search By Name</mat-label>
+                    <input matInput placeholder="Name" [(ngModel)]="search.name_s" />
+                </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>E-mail</mat-label>
-        <input matInput placeholder="E-mail" [(ngModel)]="search.email" />
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="getPageData()">Search</button>
-</ng-container>
+                <mat-form-field>
+                    <mat-label>Search By Email</mat-label>
+                    <input matInput placeholder="E-mail" [(ngModel)]="search.email" />
+                </mat-form-field>
 
-    <!-- search field start here -->
+                <mat-form-field>
+                    <mat-label>Search By Type</mat-label>
+                    <mat-select [(ngModel)]="search.type">
+                        <!-- <mat-option>Clear</mat-option> -->
+                        <mat-option value="mentor">Mentor</mat-option>
+                        <mat-option value="mentee">Mentee</mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-    <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource" matSort>
 
-            <ng-container matColumnDef="no">
-                <th mat-header-cell *matHeaderCellDef> No. </th>
-                <td mat-cell *matCellDef="let row; let i = index;" title="No">
-                    {{ (page.page_no-1) * (page.page_count) + (i+1) }}. </td>
+                <button mat-raised-button color="primary" (click)="getPageData()">Search</button> &nbsp;
+                <span class="material-icons" (click)="reLoadData()">
+                    refresh
+                </span>
             </ng-container>
+            <br>
 
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef> Name <i *ngIf="sort_type=='asc'" 
-                   (click)="sortPageData('name')" class="pointer"   class="material-icons">
-                        keyboard_arrow_down
-                    </i>
-                    <i *ngIf="sort_type=='desc'" class="pointer" (click)="sortPageData('name')" class="material-icons">
-                        keyboard_arrow_up
-                    </i> </th>
-                <td mat-cell *matCellDef="let row" title="Name"> {{row.name}} </td>
-            </ng-container>
+            <!-- search field start here -->
 
-            <ng-container matColumnDef="type">
-                <th mat-header-cell *matHeaderCellDef> Type </th>
-                <td mat-cell *matCellDef="let row" title="Type"> {{row.type}} </td>
-            </ng-container>
+            <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="dataSource" matSort>
 
-            <ng-container matColumnDef="email">
-                <th mat-header-cell *matHeaderCellDef> E-mail </th>
-                <td mat-cell *matCellDef="let row" title="E-mail"> {{row.email}} </td>
-            </ng-container>
-            <ng-container matColumnDef="totalTraining">
+                    <ng-container matColumnDef="no">
+                        <th mat-header-cell *matHeaderCellDef> No. </th>
+                        <td mat-cell *matCellDef="let row; let i = index;" title="No">
+                            {{ (page.page_no-1) * (page.page_count) + (i+1) }}. </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Name <i *ngIf="sort_type=='asc'"
+                                (click)="sortPageData('name')" class="pointer" class="material-icons">
+                                keyboard_arrow_down
+                            </i>
+                            <i *ngIf="sort_type=='desc'" class="pointer" (click)="sortPageData('name')"
+                                class="material-icons">
+                                keyboard_arrow_up
+                            </i> </th>
+                        <td mat-cell *matCellDef="let row" title="Name"> {{row.name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="type">
+                        <th mat-header-cell *matHeaderCellDef> Type</th>
+                        <td mat-cell *matCellDef="let row" title="Type"> {{row.type}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef> E-mail
+                            <i *ngIf="sort_type=='asc'" (click)="sortPageData('email')" class="pointer"
+                                class="material-icons">
+                                keyboard_arrow_down
+                            </i>
+                            <i *ngIf="sort_type=='desc'" class="pointer" (click)="sortPageData('email')"
+                                class="material-icons">
+                                keyboard_arrow_up
+                            </i>
+
+                        </th>
+                        <td mat-cell *matCellDef="let row" title="E-mail"> {{row.email}} </td>
+                    </ng-container>
+                    <!-- <ng-container matColumnDef="totalTraining">
                 <th mat-header-cell *matHeaderCellDef> Total Training </th>
                 <td mat-cell *matCellDef="let element; let i = index;">
                     {{totalTraining}}
                 </td>
-            </ng-container>
-            <ng-container matColumnDef="trainingdone">
-                <th mat-header-cell *matHeaderCellDef>Training Done</th>
-                <td mat-cell *matCellDef="let row" title="Training Done"> {{row.trainingdone}} </td>
-            </ng-container>
+            </ng-container> -->
+                    <ng-container matColumnDef="trainingdone">
+                        <th mat-header-cell *matHeaderCellDef>Training Done
+                            <i *ngIf="sort_type=='asc'" (click)="sortPageData('trainingdone')" class="pointer"
+                                class="material-icons">
+                                keyboard_arrow_down
+                            </i>
+                            <i *ngIf="sort_type=='desc'" class="pointer" (click)="sortPageData('trainingdone')"
+                                class="material-icons">
+                                keyboard_arrow_up
+                            </i>
+                        </th>
+                        <td mat-cell *matCellDef="let row" title="Training Done"> {{row.trainingdone}} </td>
+                    </ng-container>
 
-            <ng-container matColumnDef="training_percentage">
-                <th mat-header-cell *matHeaderCellDef>Training Percentage <i
-                    *ngIf="sort_type=='asc'" 
-                   (click)="sortPageData('training_percentage')"   class="material-icons">
-                        keyboard_arrow_down
-                    </i
-                    >
-                    <i *ngIf="sort_type=='desc'" (click)="sortPageData('training_percentage')" class="material-icons">
-                        keyboard_arrow_up
-                    </i></th>
-                <td mat-cell *matCellDef="let row" title="Total Training"> {{row.training_percentage}}% </td>
-            </ng-container>
-            <ng-container matColumnDef="lastupdated_training_percentage_at">
-                <th mat-header-cell *matHeaderCellDef>Last Training Percentage On<i
-                    *ngIf="sort_type=='asc'" 
-                   (click)="sortPageData('lastupdated_training_percentage_at')"   class="material-icons">
-                        keyboard_arrow_down
-                    </i
-                    >
-                    <i *ngIf="sort_type=='desc'" (click)="sortPageData('lastupdated_training_percentage_at')" class="material-icons">
-                        keyboard_arrow_up
-                    </i></th>
+                    <ng-container matColumnDef="training_percentage">
+                        <th mat-header-cell *matHeaderCellDef>Training Percentage <i *ngIf="sort_type=='asc'"
+                                (click)="sortPageData('training_percentage')" class="material-icons">
+                                keyboard_arrow_down
+                            </i>
+                            <i *ngIf="sort_type=='desc'" (click)="sortPageData('training_percentage')"
+                                class="material-icons">
+                                keyboard_arrow_up
+                            </i></th>
+                        <td mat-cell *matCellDef="let row" title="Total Training"> {{row.training_percentage}}% </td>
+                    </ng-container>
+                    <ng-container matColumnDef="lastupdated_training_percentage_at">
+                        <th mat-header-cell *matHeaderCellDef>Last Training Percentage On<i *ngIf="sort_type=='asc'"
+                                (click)="sortPageData('lastupdated_training_percentage_at')" class="material-icons">
+                                keyboard_arrow_down
+                            </i>
+                            <i *ngIf="sort_type=='desc'" (click)="sortPageData('lastupdated_training_percentage_at')"
+                                class="material-icons">
+                                keyboard_arrow_up
+                            </i></th>
 
-                <td mat-cell *matCellDef="let row" title="Lastupdated Training Percentage At">
-                    <div *ngIf="row.lastupdated_training_percentage_at!='NA'">
-                        {{row.lastupdated_training_percentage_at | date }} </div>
-                    <div *ngIf="row.lastupdated_training_percentage_at=='NA'">
-                        {{row.lastupdated_training_percentage_at}}
+                        <td mat-cell *matCellDef="let row" title="Lastupdated Training Percentage At">
+                            <div *ngIf="row.lastupdated_training_percentage_at!='NA'">
+                                {{row.lastupdated_training_percentage_at | date }} </div>
+                            <div *ngIf="row.lastupdated_training_percentage_at=='NA'">
+                                {{row.lastupdated_training_percentage_at}}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="lastlessonname">
+                        <th mat-header-cell *matHeaderCellDef> Last Lesson
+
+                            <i *ngIf="sort_type=='asc'" (click)="sortPageData('lastlessonname')" class="pointer"
+                                class="material-icons">
+                                keyboard_arrow_down
+                            </i>
+                            <i *ngIf="sort_type=='desc'" class="pointer" (click)="sortPageData('lastlessonname')"
+                                class="material-icons">
+                                keyboard_arrow_up
+                            </i>
+                        </th>
+                        <td mat-cell *matCellDef="let row" title="Last Lessonname"> {{row.lastlessonname}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="lasttrainingname">
+                        <th mat-header-cell *matHeaderCellDef> Last Training
+                            <i *ngIf="sort_type=='asc'" (click)="sortPageData('lasttrainingname')" class="pointer"
+                                class="material-icons">
+                                keyboard_arrow_down
+                            </i>
+                            <i *ngIf="sort_type=='desc'" class="pointer" (click)="sortPageData('lasttrainingname')"
+                                class="material-icons">
+                                keyboard_arrow_up
+                            </i>
+                        </th>
+                        <td mat-cell *matCellDef="let row" title="Status"> {{row.lasttrainingname}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="viewCatReport">
+                        <th mat-header-cell *matHeaderCellDef> Action </th>
+                        <td mat-cell *matCellDef="let element; let i = index;">
+                            <button mat-raised-button type="button" color="primary"
+                                (click)="categoryWiseReportPage(element._id)">View Category Wise Report</button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                    </tr>
+
+                </table>
+
+
+                <div class="paginationcls">
+
+                    <div class="showresultcls">
+                        <h2 class="header">Showing {{ page.page_count }} result from
+                            <ng-container *ngIf="reportDataCount == 0">Many.</ng-container>
+                            <ng-container *ngIf="reportDataCount > 0">{{reportDataCount}}.</ng-container>
+                        </h2>
                     </div>
-                </td>
-            </ng-container>
 
-            <ng-container matColumnDef="lastlessonname">
-                <th mat-header-cell *matHeaderCellDef> Last Lesson</th>
-                <td mat-cell *matCellDef="let row" title="Last Lessonname"> {{row.lastlessonname}} </td>
-            </ng-container>
-            <ng-container matColumnDef="lasttrainingname">
-                <th mat-header-cell *matHeaderCellDef> Last Training </th>
-                <td mat-cell *matCellDef="let row" title="Status"> {{row.lasttrainingname}} </td>
-            </ng-container>
+                    <div class="pagecls">
+                        <span class="result">
+                            <mat-form-field appearance="fill" class="example-full-width">
+                                <mat-label> Current page {{ page.page_no }} Total page {{ totalPage }}</mat-label>
+                                <input matInput type="number" placeholder="Total page {{ totalPage}}"
+                                    (keyup)="getPageData();" [(ngModel)]="page.page_no">
+                            </mat-form-field>
 
-            <ng-container matColumnDef="viewCatReport">
-                <th mat-header-cell *matHeaderCellDef> Action </th>
-                <td mat-cell *matCellDef="let element; let i = index;">
-                    <button mat-raised-button type="button" color="primary"
-                        (click)="categoryWiseReportPage(element._id)">View Category Wise Report</button>
-                </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-            </tr>
-
-        </table>
-        
-        <span>
-            <h2 class="header">Showing {{ page.page_count }} result from
-            <ng-container *ngIf="reportDataCount == 0">Many.</ng-container>
-                <ng-container *ngIf="reportDataCount > 0">{{reportDataCount}}.</ng-container>
-            </h2>
-            </span>
-        <mat-toolbar class="pagination">
-            
-            <span class="result">
-                <mat-form-field appearance="fill" class="example-full-width">
-                    <mat-label> Current page {{ page.page_no }} Total page {{ totalPage }}</mat-label>
-                    <input matInput type="number" placeholder="Total page {{ totalPage}}" (keyup)="getPageData();"
-                        [(ngModel)]="page.page_no">
-                </mat-form-field>
-    
-                <mat-form-field appearance="fill" class="example-full-width">
-                    <mat-label>Page Count</mat-label>
-                    <input matInput type="number" placeholder="Page data {{ page.page_count }}"
-                        [(ngModel)]="page.page_count">
-                </mat-form-field>
-            </span>
-            <span class="btn">
-                <button mat-raised-button color="primary" (click)="nextPage('prev')">Prev</button>
-        <button mat-raised-button color="primary" (click)="nextPage()">Next</button>
-            </span>
-        </mat-toolbar>
-    </div>
-</mat-card>
-</mat-tab>
+                            <mat-form-field appearance="fill" class="example-full-width">
+                                <mat-label>Page Count</mat-label>
+                                <input matInput type="number" placeholder="Page data {{ page.page_count }}"
+                                    [(ngModel)]="page.page_count">
+                            </mat-form-field>
+                        </span>
+                        <span class="btn">
+                            <button mat-raised-button color="primary" (click)="nextPage('prev')">Prev</button>
+                            <button mat-raised-button color="primary" (click)="nextPage()">Next</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+    </mat-tab>
 
 
-<!-- <mat-tab-group> -->
+    <!-- <mat-tab-group> -->
     <!-- popular training listing start here -->
     <mat-tab label="Popular Trainings">
         <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
@@ -189,102 +245,102 @@
         </mat-toolbar>
         <ng-container *ngIf="allPopularData.length=='0'">
             <h3>No Record Found</h3>
-            </ng-container>
+        </ng-container>
         <span class="searchblock">
             <span class="searchblockwrapper">
                 <span>
-                    
+
                     <mat-card-content class="countSection">
                         <h2>{{trainingCounts.totaltrainingcount}}</h2>
-                    
+
                         <span>Total Number Of <br>Training</span>
-                      </mat-card-content>
-                      <mat-card-content class="countSection">
+                    </mat-card-content>
+                    <mat-card-content class="countSection">
                         <h2>{{trainingCounts.totallessoncount}}</h2>
-                    
+
                         <span>Total Number Of <br>Lessons</span>
-                      </mat-card-content>
-                      <mat-card-content class="countSection">
+                    </mat-card-content>
+                    <mat-card-content class="countSection">
                         <h2>{{trainingCounts.activatedtrainingcount}}</h2>
-                    
+
                         <span>Total Number Of <br>Activate Training</span>
-                      </mat-card-content>
-                      <mat-card-content  class="countSection">
+                    </mat-card-content>
+                    <mat-card-content class="countSection">
                         <h2>{{trainingCounts.activatedlessoncount}}</h2>
-                    
+
                         <span>Total Number Of <br>Activate Lesson</span>
-                      </mat-card-content >
-                      <mat-card-content class="countSection">
+                    </mat-card-content>
+                    <mat-card-content class="countSection">
                         <h2>{{trainingCounts.trashedtrainingcount}}</h2>
-                    
+
                         <span>Total Number Of <br>Trashed Trainings</span>
-                      </mat-card-content>
-                      <mat-card-content class="countSection">
+                    </mat-card-content>
+                    <mat-card-content class="countSection">
                         <h2>{{trainingCounts.trashedlessoncount}}</h2>
                         <span>Total Number Of <br>Trashed Lessons</span>
-                      </mat-card-content>
+                    </mat-card-content>
                 </span>
             </span>
         </span>
         <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="allPopularDataSource" matSort>
+            <table mat-table [dataSource]="allPopularDataSource" matSort>
 
-            <ng-container matColumnDef="no">
-                <th mat-header-cell *matHeaderCellDef> No. </th>
-                <td mat-cell *matCellDef="let element; let i = index;" title= "No"> {{ i + 1 }} </td>
-              </ng-container>
+                <ng-container matColumnDef="no">
+                    <th mat-header-cell *matHeaderCellDef> No. </th>
+                    <td mat-cell *matCellDef="let element; let i = index;" title="No"> {{ i + 1 }} </td>
+                </ng-container>
 
-            <ng-container matColumnDef="catagory_name">
-                <th mat-header-cell *matHeaderCellDef>Training Category Name </th>
-                <td mat-cell *matCellDef="let row" title="Category Name"> {{row.catagory_name}} </td>
-            </ng-container>
+                <ng-container matColumnDef="catagory_name">
+                    <th mat-header-cell *matHeaderCellDef>Training Category Name </th>
+                    <td mat-cell *matCellDef="let row" title="Category Name"> {{row.catagory_name}} </td>
+                </ng-container>
 
-            <ng-container matColumnDef="parent_catagory">
-                <th mat-header-cell *matHeaderCellDef>Parent Catagory </th>
-                <td mat-cell *matCellDef="let row" title="Parent Catagory"> {{row.parent_catagory}} </td>
-            </ng-container>
-            
-            <ng-container matColumnDef="type">
-                <th mat-header-cell *matHeaderCellDef> Type </th>
-                <td mat-cell *matCellDef="let row" title="Type"> {{row.type}} </td>
-            </ng-container>
+                <ng-container matColumnDef="parent_catagory">
+                    <th mat-header-cell *matHeaderCellDef>Parent Catagory </th>
+                    <td mat-cell *matCellDef="let row" title="Parent Catagory"> {{row.parent_catagory}} </td>
+                </ng-container>
 
-            <ng-container matColumnDef="description_html">
-                <th mat-header-cell *matHeaderCellDef> Description </th>
-                <td mat-cell *matCellDef="let row" title="Description"> {{row.description_html}} </td>
-            </ng-container>
-           
-            <ng-container matColumnDef="priority">
-                <th mat-header-cell *matHeaderCellDef>Priority</th>
-                <td mat-cell *matCellDef="let row" title="Priority"> {{row.priority}} </td>
-            </ng-container>
+                <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef> Type </th>
+                    <td mat-cell *matCellDef="let row" title="Type"> {{row.type}} </td>
+                </ng-container>
 
-            <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef>Status </th>
-                <td mat-cell *matCellDef="let row" title="Status">
-                    <div *ngIf="row.status===1">
-                        Active </div>
-                    <div *ngIf="row.status===0">
-                        Inactive
-                    </div>
+                <ng-container matColumnDef="description_html">
+                    <th mat-header-cell *matHeaderCellDef> Description </th>
+                    <td mat-cell *matCellDef="let row" title="Description"> {{row.description_html}} </td>
+                </ng-container>
 
-                     </td>
-            </ng-container>
-            
-            <ng-container matColumnDef="user_done">
-                <th mat-header-cell *matHeaderCellDef> User Done</th>
-                <td mat-cell *matCellDef="let row" title="User Done"> {{row.user_done}} </td>
-            </ng-container>
-           
+                <ng-container matColumnDef="priority">
+                    <th mat-header-cell *matHeaderCellDef>Priority</th>
+                    <td mat-cell *matCellDef="let row" title="Priority"> {{row.priority}} </td>
+                </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="popularTrainingdisplayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: popularTrainingdisplayedColumns;">
-            </tr>
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef>Status </th>
+                    <td mat-cell *matCellDef="let row" title="Status">
+                        <div *ngIf="row.status===1">
+                            Active </div>
+                        <div *ngIf="row.status===0">
+                            Inactive
+                        </div>
 
-        </table>
-        <mat-paginator [pageSizeOptions]="[5, 10]"></mat-paginator>
-    </div>
-    <p>{{allPopularDataSource.length}}</p>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="user_done">
+                    <th mat-header-cell *matHeaderCellDef> User Done</th>
+                    <td mat-cell *matCellDef="let row" title="User Done"> {{row.user_done}} </td>
+                </ng-container>
+
+
+                <tr mat-header-row *matHeaderRowDef="popularTrainingdisplayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: popularTrainingdisplayedColumns;">
+                </tr>
+
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10]"></mat-paginator>
+        </div>
+        <p>{{allPopularDataSource.length}}</p>
     </mat-tab>
-    
-  </mat-tab-group>
+
+</mat-tab-group>

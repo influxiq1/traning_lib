@@ -1,0 +1,34 @@
+<div class="generalmodalcls">
+    <div class="modal-content">
+          <div class="logowrapperouter">
+              <div class="logowrapper">
+                  <!-- <img src="../../assets/images/logomain.png"> -->
+              </div>
+          </div>  
+
+
+          <div mat-dialog-content class="headercls">
+            <h2>Complete your Lesson Plan Material now!</h2>
+          </div> 
+      
+          <div>
+              <span>You have a purchased a Lesson <b>{{data.data.lession_title}}</b>, from your Mentor <b>{{data.user_mentor_name}}</b>, please review and fill out the Questionnaire provided in the Lesson Plan Material.</span>
+          </div>
+          <br>
+          <div>
+                <button class="btnbluecls" mat-raised-button color="primary" (click)="submitLesson(data, 'yes')" cdkFocusInitial>CONTINUE</button>
+          </div>
+
+          <mat-dialog-actions class="modalbtncls">
+            <button class="btncancelcls" mat-raised-button color="accent" mat-dialog-close="no" cdkFocusInitial><span class="material-icons">
+              clear
+              </span></button>
+            <!-- <button class="btnbluecls" mat-raised-button color="primary" (click)="submitLession(session_id, 'yes')" cdkFocusInitial>Submit</button> -->
+          </mat-dialog-actions>
+      </div>
+    </div>
+  
+  
+  
+  
+   

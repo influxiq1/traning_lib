@@ -49,8 +49,8 @@ export class CategoryWiseReportComponent implements OnInit {
     console.log("datasource",this.allData);
 
     this.displayedColumns = [
-      {key:"name", value:'Name'},
-      {key:"training_name", value:'Training Name'},
+      {key:"fullname", value:'Name'},
+      {key:"training_category_name", value:'Training Name'},
       {key:"totallesson", value:'Total Lesson'},
       {key:"done", value:'Done lessons'},
       {key:"training_percentage_cat", value: "Training Percentage"},
@@ -67,7 +67,7 @@ export class CategoryWiseReportComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.gettrainingreportdatacount();
+    // this.gettrainingreportdatacount();
   }
   //getting the total category wise report data count
   gettrainingreportdatacount(){

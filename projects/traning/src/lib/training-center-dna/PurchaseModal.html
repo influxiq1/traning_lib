@@ -1,0 +1,68 @@
+<div class="generalmodalcls">
+    <div class="modal-content">
+          <div class="logowrapperouter">
+              <div class="logowrapper">
+                  <!-- <img src="../../assets/images/logomain.png"> -->
+              </div>
+          </div>       
+       
+          <div mat-dialog-content class="headercls">
+            <h2>Buy Your Lesson Session</h2>
+          </div> 
+
+          <!-- <mat-card aria-label="Select an option" [(ngModel)]="session_id" 
+          (change)="ngOnChanges($event)" *ngFor="let item of data.product_data">
+          <mat-card-content>
+            {{item.productname}}
+          </mat-card-content>
+
+          </mat-card> -->
+        <div class="modalscrollcls">
+          <mat-card class="example-card" *ngFor="let item of data.product_data">
+            <!-- <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <mat-card-title>Product Name - {{item.productname}}</mat-card-title>
+            </mat-card-header> -->
+            <div class="productcls">
+                <span class="" *ngIf="item.productname !=null"><label>Product Name</label><p>{{item.productname}}</p></span>
+            </div>
+
+            <div class="summarycls">
+                <span class="" *ngIf="item.shortsummary !=null"><label>Summary</label><p>{{item.shortsummary}}</p></span>
+            </div>
+
+            <div class="pricecls">
+                <span class="" *ngIf="item.price !=null">Price :${{item.price}}</span>
+            </div>
+
+            <!-- <img mat-card-image *ngIf="item.image !=null" [src]="item.image" alt="Photo of a Shiba Inu"> -->
+            <!-- <mat-card-content>
+              <p>
+                The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+                A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+                bred for hunting.
+              </p>
+            </mat-card-content> -->
+            <mat-card-actions>
+              <button  mat-raised-button color="primary" (click)="submitLession(item, 'yes')" cdkFocusInitial>Buy</button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+          <br><br>
+          <div class>
+          <span style="color:red">{{message}}</span>
+          </div>
+
+          <mat-dialog-actions class="modalbtncls">
+            <button class="btncancelcls" mat-raised-button color="accent" mat-dialog-close="no" cdkFocusInitial><span class="material-icons">
+              clear
+              </span></button>
+            <!-- <button class="btnbluecls" mat-raised-button color="primary" (click)="submitLession(session_id, 'yes')" cdkFocusInitial>Submit</button> -->
+          </mat-dialog-actions>
+      </div>
+    </div>
+  
+  
+  
+  
+   
