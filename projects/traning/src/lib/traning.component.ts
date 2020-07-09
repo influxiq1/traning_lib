@@ -122,14 +122,16 @@ export class TraningComponent implements OnInit {
               formgrp[this.formdataval[c].name] = [false];
           }
           else if (this.formdataval[c].inputtype == 'dateis') {
-              formgrp[this.formdataval[c].name] = [moment().format('MM-DD-YY'), Validators.required];
+            // Validators.required
+              formgrp[this.formdataval[c].name] = [moment().format('MM-DD-YY')];
           }
            else {
               let tempdefault = '';
               
               
               if (this.formdataval[c].validationrule != null && this.formdataval[c].validationrule.required){ 
-                formgrp[this.formdataval[c].name] = [tempdefault, Validators.required];
+                // Validators.required
+                formgrp[this.formdataval[c].name] = [tempdefault];
               }
               if (this.formdataval[c].validationrule != null && this.formdataval[c].validationrule.email){
                  formgrp[this.formdataval[c].name] = [tempdefault, Validators.compose([Validators.required, Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$')])];
@@ -503,39 +505,41 @@ geteditdata() {
             // }
         }
     }
-    this.dataForm.addControl('id', new FormControl(this.recid, Validators.required));
+    // Validators.required
+    this.dataForm.addControl('id', new FormControl(this.recid));
     if(this.route.snapshot.url[0].path=="manage-lesson"){
       if(this.route.snapshot.url[1].path=="edit"){
-        this.dataForm.addControl('has_lessonplan', new FormControl(this.hasLessonVal, Validators.required));
-
-    this.dataForm.addControl('lessonplan_value', new FormControl(this.lessonplanValue, Validators.required));
+        // Validators.required
+        this.dataForm.addControl('has_lessonplan', new FormControl(this.hasLessonVal));
+        // Validators.required
+    this.dataForm.addControl('lessonplan_value', new FormControl(this.lessonplanValue));
       }
     }
     
    
     switch (res.res[0].mediaType) {
       case 'image':
-        this.dataForm.addControl('image_typeHtml', new FormControl(this.htmType, Validators.required));
-        this.dataForm.addControl('image_title', new FormControl(res.res[0].image_title, Validators.required));
-        this.dataForm.addControl('image_description', new FormControl(res.res[0].image_description, Validators.required));
+        this.dataForm.addControl('image_typeHtml', new FormControl(this.htmType));
+        this.dataForm.addControl('image_title', new FormControl(res.res[0].image_title));
+        this.dataForm.addControl('image_description', new FormControl(res.res[0].image_description));
 
         break;
       case 'video':
-        this.dataForm.addControl('video_typeHtml', new FormControl(this.htmType, Validators.required));
-        this.dataForm.addControl('video_title', new FormControl(res.res[0].video_title, Validators.required));
-        this.dataForm.addControl('video_description', new FormControl(res.res[0].video_description, Validators.required));
+        this.dataForm.addControl('video_typeHtml', new FormControl(this.htmType));
+        this.dataForm.addControl('video_title', new FormControl(res.res[0].video_title));
+        this.dataForm.addControl('video_description', new FormControl(res.res[0].video_description));
 
         break;
       case 'audio':
-        this.dataForm.addControl('audio_typeHtml', new FormControl(this.htmType, Validators.required));
-        this.dataForm.addControl('audio_title', new FormControl(res.res[0].audio_title, Validators.required));
-        this.dataForm.addControl('audio_description', new FormControl(res.res[0].audio_description, Validators.required));
+        this.dataForm.addControl('audio_typeHtml', new FormControl(this.htmType));
+        this.dataForm.addControl('audio_title', new FormControl(res.res[0].audio_title));
+        this.dataForm.addControl('audio_description', new FormControl(res.res[0].audio_description));
  
         break;
       case 'file':
-        this.dataForm.addControl('file_typeHtml', new FormControl(this.htmType, Validators.required));
-        this.dataForm.addControl('file_title', new FormControl(res.res[0].file_title, Validators.required));
-        this.dataForm.addControl('file_description', new FormControl(res.res[0].file_description, Validators.required));
+        this.dataForm.addControl('file_typeHtml', new FormControl(this.htmType));
+        this.dataForm.addControl('file_title', new FormControl(res.res[0].file_title));
+        this.dataForm.addControl('file_description', new FormControl(res.res[0].file_description));
 
         break;
     

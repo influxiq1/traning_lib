@@ -142,12 +142,12 @@ export class ListingTrainingComponent implements OnInit {
   trainingCount(){
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.trainingCountEndpoint;
     this.apiService.postDatawithoutTokenReportCount(link).subscribe((response:any)=>{
-        this.trainingCounts.activatedtrainingcount = response.activatedtrainingcount;
-        this.trainingCounts.activatedlessoncount = response.activatedlessoncount;
-        this.trainingCounts.trashedtrainingcount = response.trashedtrainingcount;
-        this.trainingCounts.trashedlessoncount = response.trashedlessoncount;
-        this.trainingCounts.totaltrainingcount = response.totaltrainingcount;
-        this.trainingCounts.totallessoncount = response.totallessoncount;
+        this.trainingCounts.activatedtrainingcount = response.results.activatedtrainingcount;
+        this.trainingCounts.activatedlessoncount = response.results.activatedlessoncount;
+        this.trainingCounts.trashedtrainingcount = response.results.trashedtrainingcount;
+        this.trainingCounts.trashedlessoncount = response.results.trashedlessoncount;
+        this.trainingCounts.totaltrainingcount = response.results.totaltraining;
+        this.trainingCounts.totallessoncount = response.results.totallesson;
     })
   }
 

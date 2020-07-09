@@ -100,7 +100,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   public training_cat_name: any;
   public training_header_text: any = 'ADVANCED MENTOR COURSE CERTIFICATION';
   public paramslessonId: any;
-  public lesson_id_flag: any;
+  public lesson_id_flag: any=true;
   public flag_id: any;
   public mentee_banner_text: any = 'Buy Now';
   public user_parent_id: any;
@@ -150,16 +150,16 @@ export class TrainingCenterDnaComponent implements OnInit {
     this.allLessonData = results.lessondata;
     this.trainingCategoryName = results.trainingname;
 
-    console.log(results, '.....>')
+    // console.log(results, '.....>')
     if (this.userType == 'mentee') {
       this.orders_data = results.orders_data;
       this.schedule_data = results.schedule_data;
 
-      console.log('schedule_data>>>', this.schedule_data, this.schedule_button)
-      console.log('orders_data>>>++', this.orders_data, this.orders_button)
-      console.log('lesson_ids>>>++', results.lesson_ids[0].lesson_ids, this.preview_button)
-      console.log('lesson_data id >>>++', results.lessondata[0].id)
-      console.log('lesson_content id >>>++', results.lesson_content[0]._id)
+      // console.log('schedule_data>>>', this.schedule_data, this.schedule_button)
+      // console.log('orders_data>>>++', this.orders_data, this.orders_button)
+      // console.log('lesson_ids>>>++', results.lesson_ids[0].lesson_ids, this.preview_button)
+      // console.log('lesson_data id >>>++', results.lessondata[0].id)
+      // console.log('lesson_content id >>>++', results.lesson_content[0]._id)
 
 
 
@@ -175,7 +175,7 @@ export class TrainingCenterDnaComponent implements OnInit {
             this.preview_button = false;
             this.schedule_button = false;
 
-        console.log('all_button  1>>>', this.orders_button, this.preview_button, this.schedule_button)
+        // console.log('all_button  1>>>', this.orders_button, this.preview_button, this.schedule_button)
         for (let i in this.orders_data) {
 
           if (this.orders_data[i].lesson_id == results.lesson_content[0]._id) {
@@ -184,7 +184,7 @@ export class TrainingCenterDnaComponent implements OnInit {
             if (this.orders_button == false && this.schedule_button == false && this.preview_button == false) {
               this.preview_button = true;
             }
-            console.log('all_button 2>>>', this.orders_button, this.preview_button, this.schedule_button)
+            // console.log('all_button 2>>>', this.orders_button, this.preview_button, this.schedule_button)
             // if(this.orders_button == false && this.preview_button == false){
             // }
           }
@@ -201,7 +201,7 @@ export class TrainingCenterDnaComponent implements OnInit {
               this.schedule_button = true;
             }
 
-            console.log('all_button 3>>>', this.orders_button, this.preview_button, this.schedule_button)
+            // console.log('all_button 3>>>', this.orders_button, this.preview_button, this.schedule_button)
 
             // console.log(this.lesson_id_flag,'flag--->',this.orders_button,this.preview_button,results.lesson_ids[0].lesson_ids[id])
 
@@ -218,7 +218,7 @@ export class TrainingCenterDnaComponent implements OnInit {
               this.preview_button = false;
               this.schedule_button = false;
 
-              console.log('all_button 4>>>', this.orders_button, this.preview_button, this.schedule_button)
+              // console.log('all_button 4>>>', this.orders_button, this.preview_button, this.schedule_button)
 
             }
           }
@@ -243,7 +243,7 @@ export class TrainingCenterDnaComponent implements OnInit {
 
 
 
-
+ 
 
   }
   @Input()
@@ -251,7 +251,21 @@ export class TrainingCenterDnaComponent implements OnInit {
     this.totalData = (data) || '<no name set>';
     this.trainingLessonCount = this.totalData.training_lesson_count;
     this.doneLessonByCatByUser = this.totalData.done_lesson_by_cat_by_user;
-    this.adminlessoncount = this.totalData.total_lesson[0].count;
+
+    if(this.userType == 'admin' || this.userType == 'affiliate' ){
+      this.adminlessoncount = this.totalData.total_lesson[0].count;
+    }
+
+    if(this.userType == 'mentor'){
+      this.adminlessoncount = this.totalData.total_lesson_mentor[0].count;
+    }
+
+
+    if(this.userType == 'mentee'){
+      this.adminlessoncount = this.totalData.total_lesson_mentee[0].count;
+    }
+
+
     // this.salesreplessoncount=this.totalData.total_lesson_salesrep[0].count;
     // this.userlessoncount=this.totalData.total_lesson_user[0].count;
     let done_lesson_by_cat_by_user: any = this.totalData.done_lesson_by_cat_by_user.length;
@@ -398,14 +412,19 @@ export class TrainingCenterDnaComponent implements OnInit {
 
 
     // console.log('less ids>>',results.results.lesson_ids[0].lesson_ids,this.activatedRoute.snapshot.params._id)
-    for (let id in results.results.lesson_ids[0].lesson_ids) {
-      if (this.activatedRoute.snapshot.params._id == results.results.lesson_ids[0].lesson_ids[id] ||
-        this.allLessonDataList[0]._id == results.results.lesson_ids[0].lesson_ids[id]) {
-        this.lesson_id_flag = results.results.lesson_ids[0].lesson_ids[id];
-        // console.log(this.lesson_id_flag,'flag--->')
 
+    if(this.userType == 'admin' || this.userType == 'mentor'){
+      this.lesson_id_flag = true;
+      for (let id in results.results.lesson_ids[0].lesson_ids) {
+
+        if (this.lesson_content._id == results.results.lesson_ids[0].lesson_ids[id]) {
+          // this.lesson_id_flag = results.results.lesson_ids[0].lesson_ids[id];
+          // console.log(this.lesson_id_flag,'flag--->',this.lesson_content._id,this.lesson_id_flag,this.userType,results.results.lesson_ids[0].lesson_ids)
+          this.lesson_id_flag = false;
+        }
       }
     }
+
 
   }
 
@@ -470,7 +489,7 @@ export class TrainingCenterDnaComponent implements OnInit {
         if (response.status == "success") {
 
           this.user_mentor_name = response.result[0].firstname + ' ' + response.result[0].lastname;
-          console.log(this.dnaServerUrl, '+++++', this.user_mentor_name, response)
+          // console.log(this.dnaServerUrl, '+++++', this.user_mentor_name, response)
 
         } else {
           this.snakBar.open('Error Occured..!', 'Try Again', {
@@ -480,6 +499,7 @@ export class TrainingCenterDnaComponent implements OnInit {
       })
 
     }
+
 
     this.divisor = this.adminlessoncount;
     this.reportPercentage = Math.floor(this.dividend / this.divisor * 100);
@@ -626,6 +646,8 @@ export class TrainingCenterDnaComponent implements OnInit {
         let data: any = {
           "user_id": this.userId
         }
+
+    
         // this.apiService.postDatawithoutToken(link, data).subscribe((response: any) => {
         //   let divisor: any;
         //   let dividend: any;
@@ -727,7 +749,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   }
 
   nochildclick(val: any) {
-    console.log(this.lesson_content, '___++++', val)
+    console.log('___++++', val)
     if (val.is_done != null && val.is_done == true || (val.prerequisite_lession == this.paramslessonId)) {
 
       setTimeout(() => {
@@ -739,7 +761,6 @@ export class TrainingCenterDnaComponent implements OnInit {
       // this.nextbutton(value,flag)
 
       this.router.navigateByUrl(this.trainingCenterRoute + this.paramsTrainingId + '/' + val._id);
-
 
       // this.addMarkedData(this.lesson_content.id, this.paramsId, this.nextdata, this.lessonDataList[this.Index].lession_title, this.nextlessondata);
 
@@ -821,12 +842,9 @@ export class TrainingCenterDnaComponent implements OnInit {
       // console.log(this.lesson_data, '+++++>>>')
 
       if (this.lesson_data.status == 'success') {
-        console.log(this.lesson_data, '+++++>>>', this.lesson_data.status)
-
+        // console.log(this.lesson_data, '+++++>>>', this.lesson_data.status)
 
         this.progress_bar = 0;
-        // console.log(this.progress_bar, '>>>>>>>>>>', this.lesson_data.status)
-
       }
 
 
@@ -841,13 +859,10 @@ export class TrainingCenterDnaComponent implements OnInit {
 
     switch (value) {
       case 'next':
-
-        // console.log(this.lessonDataList[this.Index], '>>>>>>>>>>>>')
-        // if(this.Index<this.lessonDataList.length){
-        this.addMarkedData(this.lessonDataList[0]._id, this.paramsId, this.nextdata, this.lessonDataList[this.Index].lession_title, this.nextlessondata);
+          // this.lessonDataList[this.Index].lession_title
+        this.addMarkedData(this.lessonDataList[0]._id, this.paramsId, this.nextdata, this.lesson_content.lession_title , this.nextlessondata);
         let ind: any = 0;
         setTimeout(() => {
-          // if(this.Index<this.lessonDataList.length){
           for (let b in this.lessonDataList) {
             if (this.lessonDataList[b]._id == this.lesson_content._id)
               ind = (parseInt(b) + 1);
@@ -868,7 +883,7 @@ export class TrainingCenterDnaComponent implements OnInit {
 
                 this.nochildclick(this.lessonDataList[ind]);
               }
-            }, 1000)
+            }, 500)
 
             this.progressLoader = true;
           } else {
@@ -945,7 +960,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   // button for purchase ,schedule ,submit lesson
 
   menteeLessonReviewButton(flag: any) {
-    console.log('>>>>', this.cookieService.get('parentid'))
+    // console.log('>>>>', this.cookieService.get('parentid'))
     // console.log('ls--->>', this.paramslessonId, 'tc-->', this.paramsId, 'user-->', this.userId, 'parent-id-->', this.user_parent_id, flag);
     // console.log('mentee_banner_text-->', this.mentee_banner_text)
 
@@ -981,6 +996,7 @@ export class TrainingCenterDnaComponent implements OnInit {
               cardData = {
                 product: {
                   free_shipping:1,
+                  flag:'lesson',
                   id: result.lesson_session_data._id,
                   name: result.lesson_session_data.productname,
                   price: result.lesson_session_data.price,
@@ -1014,7 +1030,7 @@ export class TrainingCenterDnaComponent implements OnInit {
     }
     if (this.user_parent_id == null || this.user_parent_id == "") {
       this.router.navigateByUrl('/mentors/' + this.paramsTrainingId + '/' + this.paramslessonId)
-      console.log('>>++', this.cookieService.get('parentid'))
+      // console.log('>>++', this.cookieService.get('parentid'))
       // this.snakBar.open('choose mentor', 'OK', {
       //   duration: 3000
       // });
@@ -1046,7 +1062,7 @@ export class TrainingCenterDnaComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
-      console.log(result);
+      // console.log(result);
       if (result.flag == 'yes') {
         this.router.navigateByUrl('/lesson-plan-material/' + this.paramsId + '/' + this.paramslessonId);
       }
@@ -1065,7 +1081,7 @@ export class TrainingCenterDnaComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
-      console.log(result);
+      // console.log(result);
       if (result.flag == 'yes') {
         this.router.navigateByUrl(this.googlescheduleroute + this.user_parent_id + '/' + this.paramslessonId + '/' + this.paramsTrainingId);
       }
@@ -1138,7 +1154,7 @@ export class ReviewLessonPlanComponent {
   }
   submitLesson(val: any, flag: string) {
     this.data.flag = flag;
-    console.log(val, flag);
+    // console.log(val, flag);
     this.dialogRef.close(this.data);
     // this.snakBar.open('Submited Successfully ..!', 'OK', {
     //   duration: 3000
@@ -1168,7 +1184,7 @@ export class ScheduleModalComponent {
 
   submitSchedule(val: any, flag: string) {
     this.data.flag = flag;
-    console.log(val, flag);
+    // console.log(val, flag);
     this.dialogRef.close(this.data);
     // this.snakBar.open('Submited Successfully ..!', 'OK', {
     //   duration: 3000

@@ -11,6 +11,7 @@ import { DialogBoxComponent } from '../../common/dialog-box/dialog-box.component
 import { Router } from '@angular/router';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Action } from 'rxjs/internal/scheduler/Action';
+
 export interface PeriodicElement {
   _id:string;
   select:string;
@@ -66,6 +67,8 @@ export class ListLessionComponent implements OnInit {
     "totaltrainingcount":" ",
     "totallessoncount":" "
   };
+public training_data_Counts:any;
+  
   public searchjson:any={
     "lession_title_search_regex":"",
     "prerequisite_lession_search_regex":"",
@@ -116,6 +119,7 @@ export class ListLessionComponent implements OnInit {
   constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router,public snakBar:MatSnackBar) {
     setTimeout(() => {
       this.trainingCount();
+
      }, 500);
    }
 
@@ -132,14 +136,18 @@ export class ListLessionComponent implements OnInit {
   trainingCount(){
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.trainingCountEndpoint;
     this.apiService.postDatawithoutTokenReportCount(link).subscribe((response:any)=>{
-        this.trainingCounts.activatedtrainingcount = response.activatedtrainingcount;
-        this.trainingCounts.activatedlessoncount = response.activatedlessoncount;
-        this.trainingCounts.trashedtrainingcount = response.trashedtrainingcount;
-        this.trainingCounts.trashedlessoncount = response.trashedlessoncount;
-        this.trainingCounts.totaltrainingcount = response.totaltrainingcount;
-        this.trainingCounts.totallessoncount = response.totallessoncount;
+      // console.log(response,'response')
+
+        this.trainingCounts.activatedtrainingcount = response.results.activatedtrainingcount;
+        this.trainingCounts.activatedlessoncount = response.results.activatedlessoncount;
+        this.trainingCounts.trashedtrainingcount = response.results.trashedtrainingcount;
+        this.trainingCounts.trashedlessoncount = response.results.trashedtrainingcount;
+        this.trainingCounts.totaltrainingcount = response.results.totaltraining;
+        this.trainingCounts.totallessoncount = response.results.totallesson;
        
     })
+
+
   }
   // for multiple select function start here
   isAllSelected() {

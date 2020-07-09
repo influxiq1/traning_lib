@@ -51,7 +51,6 @@
 
           </div> -->
 
-
         </div>
       </mat-list-item>
     </mat-list>
@@ -68,7 +67,7 @@
       <div fxLayout="row" class="rowinner" *ngFor="let item of allLessonDataList ; let i=index;">
 
         <div (click)="nochildclick(item)" [ngClass]="paramslessonId ==  item._id ? 'classlessonongoing':
-            ( item.is_done == true? 'classlessondone' : 'classlessonnotdone')">{{item.lession_title}}
+            ( item.is_done == true ? 'classlessondone' : 'classlessonnotdone')">{{item.lession_title}}
           <!-- <span>{{item  | json}}</span> -->
           <span (click)="nochildclick(item)">
             <!-- {{item.lession_title}} -->
@@ -290,7 +289,7 @@
               <mat-card class="banner1cls" *ngIf="(userType=='admin' || userType=='mentor') && i==0 && 
               lesson_content.has_lessonplan == 1">
 
-              <div class="bannerclassmentor" *ngIf="lesson_id_flag != paramslessonId || lesson_id_flag != allLessonDataList[0]._id">
+              <div class="bannerclassmentor" *ngIf="lesson_id_flag == true ">
                 <div class='reviewcls'>
                   Review the Lesson Plan Material
                 </div>
@@ -314,31 +313,61 @@
               <mat-card class="banner2cls" *ngIf="userType=='mentee' && item.lessonplan_value=='purchasable' && allLessonDataList[0].lessonplan_value == 'purchasable' && i==0 &&
               (allLessonDataList[0].has_lessonplan == 1 || lesson_content.has_lessonplan == 1)" >
 
-              <div class="bannercls">               
+              <div class="bannercls" *ngIf="orders_button == true ">  
                 <div>
-                PURCHASED MENTOR SESSION DETAILS
+                  Purchase Lesson Plan and Mentor Session Appointment
               </div>
+
               <mat-card-content>
-                <!-- {{item.lessonplan_value | json}}--->
-                Now that you have completed the Lesson, please review and fill out the Questionaire provided in the
-                Lesson Plan Material. Once completed, you can submit the Lesson Plan Material to your Mentor and book
-                an appointment for a Mentor Session.
+                Please Purchase the Lesson Plan Material and the Mentor Appointment for this Lesson. The Lesson Plan Material i.e the questionnaire submitted by you will help your Mentor understand and prepare for the Mentor Session.
+
               </mat-card-content>
+
+              <div>
+                <button mat-button type="button" class="submitbtn booknow" color="primary" 
+                (click)="menteeLessonReviewButton('buy')" *ngIf="orders_button == true ">Buy Now</button>
+              </div>
             </div>
+
+
+            <div class="bannercls" *ngIf="preview_button == true && 
+            orders_button == false">  
+              <div>
+                Submit Lesson Plan Material
+            </div>
+
+            <mat-card-content>
+              Now that you have completed the Lesson, please review and fill out the Questionaire provided in the Lesson Plan Material. Once completed, you can submit the Lesson Plan Material to your Mentor and book an appointment for a Mentor Session.
+
+            </mat-card-content>
+
+            <div>
+              <button mat-button type="button" class="submitbtn booknow" color="primary" 
+              (click)="menteeLessonReviewButton('lesson_plan')" *ngIf="preview_button == true && 
+              orders_button == false">Submit Now</button>
+            </div>
+          </div>
+
+
+          <div class="bannercls" *ngIf="schedule_button == true && 
+          preview_button == false && orders_button == false">  
+            <div>
+              Book an Appointment with your Mentor
+          </div>
+
+          <mat-card-content>
+            Congratulations!! Your Lesson Plan Material for this Lesson has been submitted to your Mentor for review. Please proceed to book your Mentor Session Appointment with your Mentor.
+
+          </mat-card-content>
+
+          <div>
+            <button mat-button type="button" class="submitbtn booknow" color="primary" 
+            (click)="menteeLessonReviewButton('schedule')" *ngIf="schedule_button == true && 
+            preview_button == false && orders_button == false" >Book Mentor Appointment</button>
+          </div>
+        </div>
  
 
-                <div class="submitbtngroup">
-                  <button mat-button type="button" class="submitbtn booknow" color="primary" 
-                  (click)="menteeLessonReviewButton('buy')" *ngIf="orders_button == true ">Buy Now</button>&nbsp;
-
-                  <button mat-button type="button" class="submitbtn booknow" color="primary" 
-                  (click)="menteeLessonReviewButton('lesson_plan')" *ngIf="preview_button == true && 
-                  orders_button == false">Review Lesson Plan Material</button>&nbsp;
-
-                  <button mat-button type="button" class="submitbtn booknow" color="primary" 
-                  (click)="menteeLessonReviewButton('schedule')" *ngIf="schedule_button == true && 
-                  preview_button == false && orders_button == false" >Schedule</button>
-                </div>
               </mat-card>
               <!-- banner 2 end here -->
 
@@ -449,7 +478,7 @@
               <mat-card class="banner1cls" *ngIf="(userType=='admin' || userType=='mentor') && i==0 &&
               lesson_content.has_lessonplan == 1">
 
-               <div class="bannerclassmentor" *ngIf="lesson_id_flag != paramslessonId || lesson_id_flag != allLessonDataList[0]._id">
+               <div class="bannerclassmentor" *ngIf="lesson_id_flag == true ">
                 <div class='reviewcls'>
                   Review the Lesson Plan Material
                 </div>
@@ -471,28 +500,64 @@
               <!-- banner 2 start here -->
               <mat-card class="banner2cls" *ngIf="userType=='mentee' && item.lessonplan_value=='purchasable' && allLessonDataList[0].lessonplan_value == 'purchasable' && i==0 &&
               (allLessonDataList[0].has_lessonplan == 1 || lesson_content.has_lessonplan == 1)" >
-                <div class="bannercls">
-                  PURCHASED MENTOR SESSION DETAILS
-                </div>
-                <mat-card-content>
-                  <!-- {{item.lessonplan_value | json}}--->
 
-                  Now that you have completed the Lesson, please review and fill out the Questionaire provided in the
-                  Lesson Plan Material. Once completed, you can submit the Lesson Plan Material to your Mentor and book
-                  an appointment for a Mentor Session.
-                </mat-card-content>
-                <div class="submitbtngroup">
-                  <button mat-button type="button" class="submitbtn booknow" color="primary" 
-                  (click)="menteeLessonReviewButton('buy')" *ngIf="orders_button == true ">Buy Now</button>&nbsp;
 
-                  <button mat-button type="button" class="submitbtn booknow" color="primary" 
-                  (click)="menteeLessonReviewButton('lesson_plan')" *ngIf="preview_button == true && 
-                  orders_button == false">Review Lesson Plan Material</button>&nbsp;
+              <div class="bannercls" *ngIf="orders_button == true ">  
+                <div>
+                  Purchase Lesson Plan and Mentor Session Appointment
+              </div>
 
-                  <button mat-button type="button" class="submitbtn booknow" color="primary" 
-                  (click)="menteeLessonReviewButton('schedule')" *ngIf="schedule_button == true && 
-                  preview_button == false && orders_button == false" >Schedule</button>
-                </div>
+              <mat-card-content>
+                Please Purchase the Lesson Plan Material and the Mentor Appointment for this Lesson. The Lesson Plan Material i.e the questionnaire submitted by you will help your Mentor understand and prepare for the Mentor Session.
+
+              </mat-card-content>
+
+              <div>
+                <button mat-button type="button" class="submitbtn booknow" color="primary" 
+                (click)="menteeLessonReviewButton('buy')" *ngIf="orders_button == true ">Buy Now</button>
+              </div>
+            </div>
+
+
+            <div class="bannercls" *ngIf="preview_button == true && 
+            orders_button == false">  
+              <div>
+                Submit Lesson Plan Material
+            </div>
+
+            <mat-card-content>
+              Now that you have completed the Lesson, please review and fill out the Questionaire provided in the Lesson Plan Material. Once completed, you can submit the Lesson Plan Material to your Mentor and book an appointment for a Mentor Session.
+
+            </mat-card-content>
+
+            <div>
+              <button mat-button type="button" class="submitbtn booknow" color="primary" 
+              (click)="menteeLessonReviewButton('lesson_plan')" *ngIf="preview_button == true && 
+              orders_button == false">Submit Now</button>
+            </div>
+          </div>
+
+
+          <div class="bannercls" *ngIf="schedule_button == true && 
+          preview_button == false && orders_button == false">  
+            <div>
+              Book an Appointment with your Mentor
+          </div>
+
+          <mat-card-content>
+            Congratulations!! Your Lesson Plan Material for this Lesson has been submitted to your Mentor for review. Please proceed to book your Mentor Session Appointment with your Mentor.
+
+          </mat-card-content>
+
+          <div>
+            <button mat-button type="button" class="submitbtn booknow" color="primary" 
+            (click)="menteeLessonReviewButton('schedule')" *ngIf="schedule_button == true && 
+            preview_button == false && orders_button == false" >Book Mentor Appointment</button>
+          </div>
+        </div>
+
+
+
               </mat-card>
               <!-- banner 2 end here -->
 

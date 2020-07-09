@@ -40,32 +40,33 @@
                 </span>
             </span>
             <!-- search field start here -->
-            <ng-container *ngIf="userType=='admin'">
-                <mat-form-field>
-                    <mat-label>Search By Name</mat-label>
-                    <input matInput placeholder="Name" [(ngModel)]="search.name_s" />
-                </mat-form-field>
+   <div class="searchcls">
+    <ng-container *ngIf="userType=='admin'">
+        <mat-form-field>
+            <mat-label>Search By Name</mat-label>
+            <input matInput placeholder="Name" [(ngModel)]="search.name_s" />
+        </mat-form-field>
 
-                <mat-form-field>
-                    <mat-label>Search By Email</mat-label>
-                    <input matInput placeholder="E-mail" [(ngModel)]="search.email" />
-                </mat-form-field>
+        <mat-form-field>
+            <mat-label>Search By Email</mat-label>
+            <input matInput placeholder="E-mail" [(ngModel)]="search.email" />
+        </mat-form-field>
 
-                <mat-form-field>
-                    <mat-label>Search By Type</mat-label>
-                    <mat-select [(ngModel)]="search.type">
-                        <!-- <mat-option>Clear</mat-option> -->
-                        <mat-option value="mentor">Mentor</mat-option>
-                        <mat-option value="mentee">Mentee</mat-option>
-                    </mat-select>
-                </mat-form-field>
+        <mat-form-field>
+            <mat-label>Search By Type</mat-label>
+            <mat-select [(ngModel)]="search.type">
+                <!-- <mat-option>Clear</mat-option> -->
+                <mat-option value="mentor">Mentor</mat-option>
+                <mat-option value="mentee">Mentee</mat-option>
+            </mat-select>
+        </mat-form-field>
 
-
-                <button mat-raised-button color="primary" (click)="getPageData()">Search</button> &nbsp;
-                <span class="material-icons" (click)="reLoadData()">
-                    refresh
-                </span>
-            </ng-container>
+        <button mat-raised-button color="primary" (click)="getPageData()">Search</button> &nbsp;
+        <span class="material-icons" (click)="reLoadData()">
+            refresh
+        </span>
+    </ng-container>
+   </div>
             <br>
 
             <!-- search field start here -->
@@ -282,6 +283,7 @@
                 </span>
             </span>
         </span>
+
         <div class="mat-elevation-z8">
             <table mat-table [dataSource]="allPopularDataSource" matSort>
 
