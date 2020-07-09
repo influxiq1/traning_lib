@@ -42,7 +42,7 @@ export class AppComponent implements OnInit{
   //     {inputtype:'radio',name:'timespan',value:["User","Rep","Admin", "All"],valuelabel:'',label:"Roll Access",placeholder:"",validationrule:{required:true},validationerrormsg:'', class:'radioclass'},
 
   //     {inputtype:'select',name:'parentcategory',label:'Parent Category',defaultchoice:'Select a Parent Category',sourceview:'users',endpoint:'datalist',selectvalue:'type',selectid:'_id'},
-  //     {inputtype:'select',name:'state',label:'State/Region',defaultchoice:'Select a State/region',sourceview:'assets/states.json',multiple:true, sourcetype:'static',selectvalue:'name',selectid:'abbreviation',validationrule:{required:true},validationerrormsg:'is required'},
+      // {inputtype:'select',name:'state',label:'State/Region',defaultchoice:'Select a State/region',sourceview:'assets/states.json',multiple:true, sourcetype:'static',selectvalue:'name',selectid:'abbreviation',validationrule:{required:true},validationerrormsg:'is required'},
   //   ];
 
 

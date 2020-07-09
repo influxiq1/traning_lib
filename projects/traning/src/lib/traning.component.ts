@@ -152,7 +152,7 @@ export class TraningComponent implements OnInit {
                  formgrp[this.formdataval[c].name] = [tempdefault, Validators.compose([Validators.required, Validators.pattern('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?|^((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$')])];
                 }
               if (this.formdataval[c].inputtype == 'select') {
-              
+                   
                   this.getselectdata(this.formdataval[c].sourceview, this.formdataval[c].endpoint, c);
               }
           }
@@ -315,14 +315,15 @@ export class TraningComponent implements OnInit {
 
         
         this.apiService.getData(link, data)
-            .subscribe(res => {
+            .subscribe((res:any) => {
+              console.log("souresh test",res);
                 let result;
-                result = res;
+                result = res.res;
                 console.log("drop down",result);
                 if (result.status == 'error') {
                     // this.router.navigate(['/']);
                 } else {
-                    this.formdataval[c].sourceval = result.res;
+                    this.formdataval[c].sourceval = result;
 
                     // this.formdataval[c].sourceval = "";
                 }

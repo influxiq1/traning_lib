@@ -2,7 +2,7 @@
     <span class="searchblock">
         <span class="searchblockwrapper">
             <span>
-    <h1 class="header">{{ headerText }}</h1>
+                <h1 class="header">{{ headerText }}</h1>
             </span>
         </span>
     </span>
@@ -17,20 +17,20 @@
 
                     <mat-error
                         *ngIf="dataForm.controls[item.name]!=null &&  item.validationrule!=null && !dataForm.controls[item.name].valid && dataForm.controls[item.name].touched && issubmit==1">
-                     {{item.label}}
+                        {{item.label}}
 
                         {{item.validationerrormsg}}</mat-error>
                 </mat-form-field>
             </div>
             <div>
-                
+
                 <mat-form-field *ngIf="item.inputtype == 'textarea'">
                     <textarea matInput [placeholder]="item.placeholder" [formControlName]="[item.name]"
                         (keyup)="issubmit=0"></textarea>
 
                     <mat-error
                         *ngIf="dataForm.controls[item.name]!=null &&  item.validationrule!=null && !dataForm.controls[item.name].valid && dataForm.controls[item.name].touched && issubmit==1">
-                         {{item.label}}
+                        {{item.label}}
 
                         {{item.validationerrormsg}}</mat-error>
                 </mat-form-field>
@@ -63,9 +63,8 @@
             </div>
             <div class="checkboxnew">
                 <mat-label *ngIf="item.inputtype!='radio'">{{item.label}}:</mat-label>
-                <mat-checkbox *ngIf="item.inputtype == 'checkbox'"  [ngClass]="item.class"
-                    [formControlName]="[item.name]" (keyup)="issubmit=0" [(ngModel)]="checked"
-                    ></mat-checkbox>
+                <mat-checkbox *ngIf="item.inputtype == 'checkbox'" [ngClass]="item.class"
+                    [formControlName]="[item.name]" (keyup)="issubmit=0" [(ngModel)]="checked"></mat-checkbox>
             </div>
 
 
@@ -79,104 +78,124 @@
                     </mat-radio-group>
                 </span>
             </div>
-            
+
             <div>
                 <!-- <p>{{item.defaultchoice}}</p> -->
                 <mat-form-field *ngIf="item.inputtype == 'select'">
-                    <mat-select [placeholder]="item.defaultchoice" [formControlName]="item.name"
-                        (selectionChange)="getMediaTypeVal($event.value,item.name);" value="">
-                        <mat-option value="" selected>{{item.defaultchoice}}</mat-option>
-                        <mat-option *ngFor="let selectval of item.sourceval" value="{{selectval[item.selectid]}}"
-                            (keyup)="issubmit=0">
-                            {{selectval[item.selectvalue]}}</mat-option>
-                    </mat-select>
+                    <span *ngIf="item.multiple!=true">
+                        <mat-select [placeholder]="item.defaultchoice" [formControlName]="item.name"
+                            (selectionChange)="getMediaTypeVal($event.value,item.name);" value="">
+                            <mat-option value="" selected>{{item.defaultchoice}}</mat-option>
+                            <mat-option *ngFor="let selectval of item.sourceval" value="{{selectval[item.selectid]}}"
+                                (keyup)="issubmit=0">
+                                {{selectval[item.selectvalue]}}</mat-option>
+                        </mat-select>
+                    </span>
+                    <span *ngIf="item.multiple==true">
+                        <mat-select [placeholder]="item.defaultchoice" [formControlName]="item.name"
+                            (selectionChange)="getMediaTypeVal($event.value,item.name);" value="" multiple>
+                            <!-- <mat-option value="" selected>{{item.defaultchoice}}</mat-option> -->
+                            <mat-option *ngFor="let selectval of item.sourceval" value="{{selectval[item.selectid]}}"
+                                (keyup)="issubmit=0">
+                                {{selectval[item.selectvalue]}}</mat-option>
+                        </mat-select>
+                    </span>
+
                     <mat-error
                         *ngIf="dataForm.controls[item.name]!=null &&  item.validationrule!=null && !dataForm.controls[item.name].valid && dataForm.controls[item.name].touched && issubmit==1">
                         {{item.label}}
                         {{item.validationerrormsg}}</mat-error>
                 </mat-form-field>
             </div>
-            <mat-progress-bar *ngIf="progressLoader && item.name =='associated_training'" mode="indeterminate"></mat-progress-bar>
+            <mat-progress-bar *ngIf="progressLoader && item.name =='associated_training'" mode="indeterminate">
+            </mat-progress-bar>
 
         </ng-container>
 
-    
 
-        <div *ngIf="mediaTypeValue == 'image' || mediaTypeValue == 'video' || mediaTypeValue == 'audio'  || mediaTypeValue == 'file' ">
-           <h4>Please Add Single File</h4>
-         <!-- file uploader start here -->
+
+        <div
+            *ngIf="mediaTypeValue == 'image' || mediaTypeValue == 'video' || mediaTypeValue == 'audio'  || mediaTypeValue == 'file' ">
+            <h4>Please Add Single File</h4>
+            <!-- file uploader start here -->
             <lib-file-upload [config]="uploadConfigData"></lib-file-upload>
-            
+
             <mat-form-field>
-                <input type="text" matInput  placeholder="Title" [(ngModel)]="title" [ngModelOptions]="{standalone: true}">
+                <input type="text" matInput placeholder="Title" [(ngModel)]="title"
+                    [ngModelOptions]="{standalone: true}">
                 <mat-icon matSuffix>title</mat-icon>
             </mat-form-field>
 
             <mat-form-field>
-                <textarea type="text" matInput 
-                    placeholder="Description" [(ngModel)]="description" [ngModelOptions]="{standalone: true}"></textarea>
+                <textarea type="text" matInput placeholder="Description" [(ngModel)]="description"
+                    [ngModelOptions]="{standalone: true}"></textarea>
                 <mat-icon matSuffix>description</mat-icon>
             </mat-form-field>
-      <!-- file uploader end here -->
+            <!-- file uploader end here -->
 
             <ng-container *ngIf="mediaTypeValue == 'image' && imagePath != null">
-                <mat-card class="example-card"  >
-                    <span class="closecard"  class="pointer" *ngIf="mediaTypeValue == 'image'" (click)="clear()"><i class="material-icons">clear</i></span>
-                    <img mat-card-image src="{{ imagePath }}"
-                       />
-                  </mat-card>
-            </ng-container>
-            <ng-container *ngIf="mediaTypeValue == 'video' && imagePath != null && audioVideoFlag==true" >
-               <div style="margin: 0 auto;display: block;">
-                <mat-card class="example-card"  >         
-                    <span class="closecard"  class="pointer" *ngIf="mediaTypeValue == 'video'" (click)="clear()"><i class="material-icons">clear</i></span>
-                 <video width="640" height="360" controls >
-                    <source src="{{ imagePath }}" type="video/mp4">
-                    Your browser does not support the video tag.
-                  </video>
+                <mat-card class="example-card">
+                    <span class="closecard" class="pointer" *ngIf="mediaTypeValue == 'image'" (click)="clear()"><i
+                            class="material-icons">clear</i></span>
+                    <img mat-card-image src="{{ imagePath }}" />
                 </mat-card>
-               </div>
-                
+            </ng-container>
+            <ng-container *ngIf="mediaTypeValue == 'video' && imagePath != null && audioVideoFlag==true">
+                <div style="margin: 0 auto;display: block;">
+                    <mat-card class="example-card">
+                        <span class="closecard" class="pointer" *ngIf="mediaTypeValue == 'video'" (click)="clear()"><i
+                                class="material-icons">clear</i></span>
+                        <video width="640" height="360" controls>
+                            <source src="{{ imagePath }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </mat-card>
+                </div>
+
             </ng-container>
             <ng-container *ngIf="mediaTypeValue == 'audio' && imagePath != null && audioVideoFlag==true">
-               
+
                 <div style="margin: 0 auto;display: block;">
-                 <mat-card class="example-card"  >
-                    <span class="closecard"  class="pointer" *ngIf="mediaTypeValue == 'audio'" (click)="clear()"><i class="material-icons">clear</i></span>
-                <audio controls >
-                   
-                    <source src="{{ imagePath }}" type="audio/ogg">
-                    <source src="{{ imagePath }}" type="audio/mpeg">
-                  Your browser does not support the audio element.
-                  </audio>
-            </mat-card>
-        </div>
+                    <mat-card class="example-card">
+                        <span class="closecard" class="pointer" *ngIf="mediaTypeValue == 'audio'" (click)="clear()"><i
+                                class="material-icons">clear</i></span>
+                        <audio controls>
+
+                            <source src="{{ imagePath }}" type="audio/ogg">
+                            <source src="{{ imagePath }}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </mat-card>
+                </div>
 
             </ng-container>
         </div>
-       
-       
-        <div *ngIf="mediaTypeValue == 'html' || mediaTypeValue == 'image' || mediaTypeValue == 'video' || mediaTypeValue == 'audio'  || mediaTypeValue == 'file' ">
-            <ck-editor [config]="editorconfig"  [(ngModel)]="htmType" [ngModelOptions]="{standalone: true}">
+
+
+        <div
+            *ngIf="mediaTypeValue == 'html' || mediaTypeValue == 'image' || mediaTypeValue == 'video' || mediaTypeValue == 'audio'  || mediaTypeValue == 'file' ">
+            <ck-editor [config]="editorconfig" [(ngModel)]="htmType" [ngModelOptions]="{standalone: true}">
             </ck-editor>
         </div>
         <ng-container *ngIf="dnaFlag==true">
             <div>
                 <span>
-                    <mat-checkbox (change)="getchkboxval($event.checked)" [(ngModel)]="chkboxval" [ngModelOptions]="{standalone: true}" >Has Lesson plan?</mat-checkbox>
+                    <mat-checkbox (change)="getchkboxval($event.checked)" [(ngModel)]="chkboxval"
+                        [ngModelOptions]="{standalone: true}">Has Lesson plan?</mat-checkbox>
                 </span>
             </div>
             <div *ngIf="hasLessonVal == true">
                 <mat-form-field>
                     <mat-label>Select A One</mat-label>
-                    <mat-select [(ngModel)]="lessonplanValue" [ngModelOptions]="{standalone: true}" >
-                      <mat-option  value="purchasable">Purchasable </mat-option>
-                      <mat-option  value="not_purchasable">Not Purchasable </mat-option>
+                    <mat-select [(ngModel)]="lessonplanValue" [ngModelOptions]="{standalone: true}">
+                        <mat-option value="purchasable">Purchasable </mat-option>
+                        <mat-option value="not_purchasable">Not Purchasable </mat-option>
                     </mat-select>
-                  </mat-form-field>
+                </mat-form-field>
             </div>
         </ng-container>
         <button class="trainingsubbtn" mat-raised-button color="primary" type="submit">{{ buttonText }}</button>
-        <button class="trainingsubbtn" mat-raised-button color="primary" type="reset" (click)="cancelButton()">Cancel</button>
+        <button class="trainingsubbtn" mat-raised-button color="primary" type="reset"
+            (click)="cancelButton()">Cancel</button>
     </form>
 </mat-card>

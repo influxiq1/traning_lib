@@ -33,7 +33,7 @@ export interface DialogData {
 })
 
 export class ListingTrainingComponent implements OnInit {
-  displayedColumns: string[] = ['select','no','catagory_name', 'description', 'priority', 
+  displayedColumns: string[] = ['select','no','catagory_name','type', 'description', 'priority', 
   'parent_catagory', 'status', 'deleteRecord'];
   public dataSource: any;
   public listingData: any = [];
@@ -98,6 +98,7 @@ export class ListingTrainingComponent implements OnInit {
   set allDataList(val: any) {
     this.listingData = (val) || 'no name set';
     this.listingData = val;
+    console.log(this.listingData);
     this.dataSource = new MatTableDataSource(this.listingData);
     // this.dataSource.paginator = this.paginator;
   }
@@ -236,7 +237,7 @@ export class ListingTrainingComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.listingData);
 
   }
-  statusUpdateModal(id:any,index:any){
+  statusUpdateModal(id:any,index:any,statusval:any){
     let modalData: any = {
       panelClass: 'dialog',
       data: {
@@ -251,23 +252,25 @@ export class ListingTrainingComponent implements OnInit {
       
         switch (result) {
           case "Inactive":
-            this.statusChange(id,index);
+            this.statusChange(id,index,statusval);
             break;
           case "Active":
-            this.statusChange(id,index);
+            this.statusChange(id,index,statusval);
             break;
         }
       });
 
   }     
-  statusChange(id:any,index:any){
+  statusChange(id:any,index:any,statusval:any){
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.statusUpdateEndpoint;
     let data:any = {
       "source" :   this.formSourceVal.statusUpdateSourceName,
-      "_id_status": id
+      "_id": id,
+      "status":statusval
+
     }
     this.apiService.postDatawithoutToken(link,data).subscribe((response: any)=>{
-      
+      console.log("status",response);
       if(response.status=true){
         if(this.listingData[index].status=="Active"){
           this.listingData[index].status = "Inactive"

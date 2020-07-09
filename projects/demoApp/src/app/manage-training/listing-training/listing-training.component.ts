@@ -14,7 +14,7 @@ public editPageRoute : any="/manage-training/edit/";
 public addPageRoute : any="/manage-training/add";
 public searchSourceName : any="training_category_management_view";
 public serverDetails: any = {
-  "serverUrl": "https://p6ttrc8ikc.execute-api.us-east-1.amazonaws.com/production/api/",
+  "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api1/",
   "jwttoken": ""
 };
 public formSource: any = {
@@ -22,7 +22,7 @@ public formSource: any = {
   "endpoint": "singledeletetrainingdata",
   "deleteManyEndpoint":"multipledeletetrainingdata",
   "searchEndpoint":"datalist",
-  "statusUpdateEndpoint":"statusChange",
+  "statusUpdateEndpoint":"trainingcatstatusupdate",
   "statusUpdateManyEndpoint":"statusupdate",
   "statusUpdateSourceName":"training_category_management",
   "trashDataSource":"training_category_management_view",
@@ -38,6 +38,7 @@ public formSource: any = {
 
   ngOnInit() {
     this.activatedRoute.data.forEach(data => {
+      console.log(data);
       let result: any;
       result = data.trainingdata.res;
       this.manageTrainingList = result;
