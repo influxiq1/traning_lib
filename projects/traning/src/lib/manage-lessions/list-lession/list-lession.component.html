@@ -60,8 +60,8 @@
 
     <mat-form-field class="searchdiv">
       <mat-select placeholder="Search by Associate Training" [(ngModel)]="searchjson.associated_training_search_regex">
-        <mat-option [value]=0>Select a Lesson</mat-option>
-        <mat-option *ngFor="let val of allLessonData;" value="{{ val.catagory_name }}">{{ val.catagory_name }}
+        <mat-option [value]=0>Select a Associated Training</mat-option>
+        <mat-option *ngFor="let val of lessonsDataArray;" value="{{ val.val }}">{{ val.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
