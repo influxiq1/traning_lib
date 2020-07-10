@@ -33,7 +33,7 @@ export interface DialogData {
 })
 
 export class ListingTrainingComponent implements OnInit {
-  displayedColumns: string[] = ['select','no','catagory_name', 'description', 'priority', 
+  displayedColumns: string[] = ['select','no','catagory_name','type', 'description', 'priority', 
   'parent_catagory', 'status', 'deleteRecord'];
   public dataSource: any;
   public listingData: any = [];
@@ -98,6 +98,7 @@ export class ListingTrainingComponent implements OnInit {
   set allDataList(val: any) {
     this.listingData = (val) || 'no name set';
     this.listingData = val;
+    console.log(this.listingData);
     this.dataSource = new MatTableDataSource(this.listingData);
     // this.dataSource.paginator = this.paginator;
   }
@@ -205,10 +206,9 @@ export class ListingTrainingComponent implements OnInit {
 
   filterByTrainingName() {
     let searchval: any = {};
-    searchval["catagory_name_search_regex"]=this.searchjson.catagory_name_search_regex.toLowerCase();
-    searchval["parent_catagory_search_regex"]=this.searchjson.parent_catagory_search_regex.toLowerCase();
-    searchval["status_search_regex"]=this.searchjson.status_search_regex.toLowerCase();
-
+    searchval["catagory_name_search"]={$regex:this.searchjson.catagory_name_search_regex.toLowerCase()}
+    searchval["parent_catagory_search"]={$regex : this.searchjson.parent_catagory_search_regex.toLowerCase()}
+    searchval["status_search"]=this.searchjson.status_search_regex;
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
     var data = {
       "source": this.searchSourceName,
@@ -247,27 +247,34 @@ export class ListingTrainingComponent implements OnInit {
       }
     }
     this.dialogRef = this.dialog.open(DialogBoxComponent, modalData);
-      this.dialogRef.afterClosed().subscribe(result => {
-      
+      this.dialogRef.afterClosed().subscribe((result:any) => {
+        let currentStatus:any;
+        if(result == 'Inactive'){
+            currentStatus = 0;
+        }else{
+          currentStatus = 1
+        }
         switch (result) {
           case "Inactive":
-            this.statusChange(id,index);
+            this.statusChange(id,index,currentStatus);
             break;
           case "Active":
-            this.statusChange(id,index);
+            this.statusChange(id,index,currentStatus);
             break;
         }
       });
 
   }     
-  statusChange(id:any,index:any){
+  statusChange(id:any,index:any,statusval:any){
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.statusUpdateEndpoint;
     let data:any = {
       "source" :   this.formSourceVal.statusUpdateSourceName,
-      "_id_status": id
+      "_id": id,
+      "status":statusval
+
     }
     this.apiService.postDatawithoutToken(link,data).subscribe((response: any)=>{
-      
+      console.log("status",response);
       if(response.status=true){
         if(this.listingData[index].status=="Active"){
           this.listingData[index].status = "Inactive"

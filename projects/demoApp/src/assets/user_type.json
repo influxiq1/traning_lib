@@ -1,0 +1,38 @@
+[
+    {
+        "name": "Doctor",
+        "val": "doctor"
+    },
+    {
+        "name": "Biller",
+        "val": "biller"
+    },
+    {
+        "name": "Tech",
+        "val": "tech"
+    },
+    {
+        "name": "Doctor Office",
+        "val": "doctor_office"
+    },
+    {
+        "name": "Diagnostic Admin",
+        "val": "diagnostic_admin"
+    },
+    {
+        "name": "Doctor Group",
+        "val": "doctor_group"
+    },
+    {
+        "name": "Distributors",
+        "val": "distributors"
+    },
+    {
+        "name": "Sales_person",
+        "val": "sales_person"
+    },
+    {
+        "name": "Admin Biller",
+        "val": "admin_biller"
+    }
+]
