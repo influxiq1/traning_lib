@@ -92,7 +92,7 @@ export class TraningComponent implements OnInit {
   @Input()
   set IsItDna(val:any){
     this.dnaFlag = val;
-    console.log("dna flag",this.dnaFlag);
+    
   }
    
 

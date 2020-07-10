@@ -206,10 +206,9 @@ export class ListingTrainingComponent implements OnInit {
 
   filterByTrainingName() {
     let searchval: any = {};
-    searchval["catagory_name_search_regex"]=this.searchjson.catagory_name_search_regex.toLowerCase();
-    searchval["parent_catagory_search_regex"]=this.searchjson.parent_catagory_search_regex.toLowerCase();
-    searchval["status_search_regex"]=this.searchjson.status_search_regex.toLowerCase();
-
+    searchval["catagory_name_search"]={$regex:this.searchjson.catagory_name_search_regex.toLowerCase()}
+    searchval["parent_catagory_search"]={$regex : this.searchjson.parent_catagory_search_regex.toLowerCase()}
+    searchval["status_search"]=this.searchjson.status_search_regex;
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
     var data = {
       "source": this.searchSourceName,
@@ -237,7 +236,7 @@ export class ListingTrainingComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.listingData);
 
   }
-  statusUpdateModal(id:any,index:any,statusval:any){
+  statusUpdateModal(id:any,index:any){
     let modalData: any = {
       panelClass: 'dialog',
       data: {
@@ -248,14 +247,19 @@ export class ListingTrainingComponent implements OnInit {
       }
     }
     this.dialogRef = this.dialog.open(DialogBoxComponent, modalData);
-      this.dialogRef.afterClosed().subscribe(result => {
-      
+      this.dialogRef.afterClosed().subscribe((result:any) => {
+        let currentStatus:any;
+        if(result == 'Inactive'){
+            currentStatus = 0;
+        }else{
+          currentStatus = 1
+        }
         switch (result) {
           case "Inactive":
-            this.statusChange(id,index,statusval);
+            this.statusChange(id,index,currentStatus);
             break;
           case "Active":
-            this.statusChange(id,index,statusval);
+            this.statusChange(id,index,currentStatus);
             break;
         }
       });

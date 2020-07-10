@@ -19,14 +19,14 @@ public serverDetails: any = {
 };
 public formSource: any = {
   "source":'training_category_management',
-  "endpoint": "singledeletetrainingdata",
-  "deleteManyEndpoint":"multipledeletetrainingdata",
-  "searchEndpoint":"datalist",
+  "endpoint": "trainingcatdelete",
+  "deleteManyEndpoint":"trainingcatdeletemany",
+  "searchEndpoint":"gettrainingcategorydata",
   "statusUpdateEndpoint":"trainingcatstatusupdate",
-  "statusUpdateManyEndpoint":"statusupdate",
+  "statusUpdateManyEndpoint":"trainingcatstatusupdate",
   "statusUpdateSourceName":"training_category_management",
   "trashDataSource":"training_category_management_view",
-  "retriveTrashDataEndpoint":"restoretrashdata",
+  "retriveTrashDataEndpoint":"trainingcatrestoredata",
   "retriveTrashDataSourceName":"training_category_management",
   "trainingCountEndpoint" : "trainingcounts"
 }

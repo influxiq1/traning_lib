@@ -35,7 +35,7 @@ export interface DialogData {
   styleUrls: ['./list-lession.component.css']
 })
 export class ListLessionComponent implements OnInit {
-  displayedColumns: string[] = ['select','no','lession_title', 'description','has_lessonplan','lessonplan_value', 'test_associate_training', 'mediaType','associated_training','prerequisite_lession','status','deleteRecord'];
+  displayedColumns: string[] = ['select','no','lession_title', 'description', 'mediaType','associated_training','prerequisite_lession','status','deleteRecord'];
   // dataSource: MatTableDataSource<PeriodicElement>;
 
   public dataSource: any;
@@ -58,6 +58,7 @@ export class ListLessionComponent implements OnInit {
   public idArray:any=[];
   public allTrashData:any=[];
   public trashFlag:any=0;
+  public dnaFlag:any;
   public trashButtonText:any="View Trash";
   public trainingCounts:any={
     "activatedtrainingcount":"",
@@ -116,6 +117,12 @@ public training_data_Counts:any;
   set ManageQuizRoute(val: any) {
     this.manageQuizRoute = (val) || '<no name set>';
   }
+  @Input()
+  set IsItDna(val:any){
+    this.dnaFlag = val;
+    console.log("dna flag",this.dnaFlag);
+    
+  }
   constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router,public snakBar:MatSnackBar) {
     setTimeout(() => {
       this.trainingCount();
@@ -130,6 +137,9 @@ public training_data_Counts:any;
 
     }, 100);
     this.getAllLessonData();
+    if(this.dnaFlag == true){
+      this.displayedColumns.push('has_lessonplan','lessonplan_value','test_associate_training');
+    }
 
   }
   
@@ -223,11 +233,11 @@ public training_data_Counts:any;
     filter(){ 
         let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
         let searchval:any={};
-         searchval["lession_title_search_regex"]=this.searchjson.lession_title_search_regex.toLowerCase();
-         searchval["prerequisite_lession_search_regex"]=this.searchjson.prerequisite_lession_search_regex.toLowerCase();
+         searchval["lession_title_search"]=this.searchjson.lession_title_search_regex.toLowerCase();
+         searchval["prerequisite_lession_search"]=this.searchjson.prerequisite_lession_search_regex.toLowerCase();
          searchval["status_search_regex"]=this.searchjson.status_search_regex.toLowerCase();
          searchval["test_associate_training_search_regex"]=this.searchjson.test_associate_training_search_regex.toLowerCase();
-         searchval["associated_training_search_regex"]=this.searchjson.associated_training_search_regex.toLowerCase();
+         searchval["associated_training_search"]=this.searchjson.associated_training_search_regex.toLowerCase();
 
          searchval["has_lessonplan_search_regex"]=this.searchjson.has_lessonplan_regex.toLowerCase();
          searchval["lessonplan_value_search_regex"]=this.searchjson.lessonplan_value_regex.toLowerCase();
@@ -287,23 +297,30 @@ public training_data_Counts:any;
     }
     this.dialogRef = this.dialog.open(DialogBoxComponent, modalData);
       this.dialogRef.afterClosed().subscribe(result => {
+        let currentStatus:any;
+        if(result == 'Inactive'){
+            currentStatus = 0;
+        }else{
+          currentStatus = 1
+        }
       
         switch (result) {
           case "Inactive":
-            this.statusChange(id,index);
+            this.statusChange(id,index,currentStatus);
             break;
           case "Active":
-            this.statusChange(id,index);
+            this.statusChange(id,index,currentStatus);
             break;
         }
       });
 
   }
-  statusChange(id:any,index:any){
+  statusChange(id:any,index:any,currentStatus:any){
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.statusUpdateEndpoint;
     let data:any = {
       "source" :   this.formSourceVal.statusUpdateSourceName,
-      "_id_status": id
+      "_id": id,
+      "status":currentStatus
     }
     this.apiService.postDatawithoutToken(link,data).subscribe((response: any)=>{
       let result :any;
