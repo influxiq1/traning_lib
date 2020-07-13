@@ -17,6 +17,7 @@ public allCookiesData:any;
 public cookiesData:any;
 public userType:any;
 public userId:any;
+public user_details:any;  
 
   constructor(private _apiService: HttpService, private router: Router,public cookiesService:CookieService ) { 
     // this.allCookiesData = cookiesService.getAll();
@@ -26,7 +27,10 @@ public userId:any;
     //   this.userId = this.cookiesData._id;
     //   this.userType=this.cookiesData.type;
       // console.log("routeee",this.acti);
-      this.userType = JSON.parse(this.cookiesService.get('type'));
+
+        this.user_details=JSON.parse(this.cookiesService.get('user_details'));
+        console.log(this.user_details,"....?")
+        this.userType = JSON.parse(this.cookiesService.get('type'));
          this.userId = JSON.parse(this.cookiesService.get('userid'));
 
   }
