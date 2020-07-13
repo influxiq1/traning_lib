@@ -51,6 +51,7 @@ export class ListLessionComponent implements OnInit {
   public searchSourceName:any;
   public manageQuizRoute:any;
   public allLessonData : any = [];
+  public lessonsDataArray:any=[];
   public lessonName:any;
   public status:any;
   public training:any;
@@ -229,18 +230,19 @@ public training_data_Counts:any;
       this.router.navigateByUrl(this.addPageRoute);
   
     }
-    
     filter(){ 
         let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
         let searchval:any={};
-         searchval["lession_title_search"]=this.searchjson.lession_title_search_regex.toLowerCase();
-         searchval["prerequisite_lession_search"]=this.searchjson.prerequisite_lession_search_regex.toLowerCase();
-         searchval["status_search_regex"]=this.searchjson.status_search_regex.toLowerCase();
-         searchval["test_associate_training_search_regex"]=this.searchjson.test_associate_training_search_regex.toLowerCase();
-         searchval["associated_training_search"]=this.searchjson.associated_training_search_regex.toLowerCase();
+        if(this.dnaFlag == true){
+         searchval["has_lessonplan_search_regex"]={$regex:this.searchjson.has_lessonplan_regex.toLowerCase()}
+         searchval["lessonplan_value_search_regex"]={$regex:this.searchjson.lessonplan_value_regex.toLowerCase()}
+         searchval["test_associate_training_search_regex"]={$regex:this.searchjson.test_associate_training_search_regex.toLowerCase()}    
+        }
+         searchval["lession_title_search"]={$regex:this.searchjson.lession_title_search_regex.toLowerCase()}
+         searchval["prerequisite_lession_search"]={$regex:this.searchjson.prerequisite_lession_search_regex.toLowerCase()}
+         searchval["status_search"]={$regex:this.searchjson.status_search_regex.toLowerCase()}
+         searchval["associated_training_search"]={$regex:this.searchjson.associated_training_search_regex.toLowerCase()}
 
-         searchval["has_lessonplan_search_regex"]=this.searchjson.has_lessonplan_regex.toLowerCase();
-         searchval["lessonplan_value_search_regex"]=this.searchjson.lessonplan_value_regex.toLowerCase();
         var data = {
           "source": this.searchSourceName,
           "condition": searchval,
@@ -275,6 +277,18 @@ public training_data_Counts:any;
       if(response.status="success"){
        result = response.res;
        this.allLessonData = result;
+       const map = new Map();
+        for (const item of this.allLessonData) {
+          if (item.associated_training != 'NA' && item.associated_training != null) {
+            if (!map.has(item.associated_training)) {
+              map.set(item.associated_training, true);    // set any value to Map
+              this.lessonsDataArray.push({
+                'val': item.associated_training,
+                'name': item.associated_training
+              });
+            }
+          }
+        }
       }
      
     })
