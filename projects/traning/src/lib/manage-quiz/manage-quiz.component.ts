@@ -124,7 +124,7 @@ export class ManageQuizComponent implements OnInit {
       let link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
       let data:any = {
         "source" : this.formSourceVal.source,
-        "id" : recordId,
+        "_id" : recordId,
         "token": this.serverDetailsVal.jwttoken
       }
       this.apiService.postData(link,data).subscribe((res: any)=>{
@@ -149,23 +149,29 @@ export class ManageQuizComponent implements OnInit {
       }
       this.dialogRef = this.dialog.open(DialogBoxComponent, modalData);
         this.dialogRef.afterClosed().subscribe(result => {
-        
+          let currentStatus:any;
+          if(result == 'Inactive'){
+              currentStatus = 0;
+          }else{
+            currentStatus = 1
+          }
           switch (result) {
             case "Inactive":
-              this.statusChange(id,index);
+              this.statusChange(id,index,currentStatus);
               break;
             case "Active":
-              this.statusChange(id,index);
+              this.statusChange(id,index,currentStatus);
               break;
           }
         });
   
     }     
-    statusChange(id:any,index:any){
+    statusChange(id:any,index:any,currentStatus:any){
       let link = this.serverDetailsVal.serverUrl + this.formSourceVal.statusUpdateEndpoint;
       let data:any = {
         "source" :   this.formSourceVal.statusUpdateSourceName,
-        "_id_status": id
+        "_id": id,
+        "status":currentStatus
       }
       this.apiService.postDatawithoutToken(link,data).subscribe((response: any)=>{
         let result :any;

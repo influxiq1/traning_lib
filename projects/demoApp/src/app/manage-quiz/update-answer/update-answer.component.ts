@@ -10,13 +10,13 @@ import { CookieService } from 'ngx-cookie-service';
 export class UpdateAnswerComponent implements OnInit {
 public quizAnswerList : any=[];
 public serverDetails: any = {
-  "serverUrl": "https://p6ttrc8ikc.execute-api.us-east-1.amazonaws.com/production/api/",
+  "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api1/",
   "jwttoken": ""
 };
 public formSource: any = {
   "source":"quiz_answer",
   "endpoint": "addorupdatedata",
-  "deleteendpoint": "deletesingledata",
+  "deleteendpoint": "lessonanswerdatadelete",
   "showEndpoint":"datalist",
   "formTitleName": 'Training'
 }
@@ -29,7 +29,6 @@ public jwtToken:any;
 
   ngOnInit() {
     this.activatedRoute.data.forEach(data => {
-      console.log("update answer",data);
       let result: any;
       result = data.quizQuestionData.res;
       this.quizAnswerList = result;
