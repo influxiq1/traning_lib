@@ -69,9 +69,9 @@ const appRoutes: Routes = [
     { path: 'manage-center/edit/:id', component: AddEditCenterComponent },
     /**Quiz Management**/
     {
-      path : 'manage-quiz/list/:lesson_id_object' , component : ManageQuizComponent,
+      path : 'manage-quiz/list/:lesson_id' , component : ManageQuizComponent,
       resolve: { trainingdata: ResolveService }, 
-        data: { requestcondition: { source: 'quiz_question_view', condition: {} }, endpoint: 'datalist' }
+        data: { requestcondition: { source: 'quiz_question_view', condition: {} }, endpoint: 'getlessonquestiondata' }
     },
     {
         path : 'manage-quiz/add/:id', component : AddEditComponent
@@ -79,15 +79,15 @@ const appRoutes: Routes = [
     {
         path : 'manage-quiz/edit/:_id/:lesson_id_object', component : AddEditComponent,
         resolve: { quizQuestionData: ResolveService }, 
-        data: { requestcondition: { source: 'quiz_question', condition: {} }, endpoint: 'datalist' }
+        data: { requestcondition: { source: 'quiz_question', condition: {} }, endpoint: 'getlessonquestiondatabyid' }
     },
     {
       path : 'manage-quiz/add-answer/:id/:lessonid' , component : AddUpdateAnswerComponent
     },
     {
-        path : 'manage-quiz/update-answer/:questionId_object',component : UpdateAnswerComponent,
+        path : 'manage-quiz/update-answer/:questionId',component : UpdateAnswerComponent,
         resolve: { quizQuestionData: ResolveService }, 
-        data: { requestcondition: { source: 'quiz_answer_view', condition: {} }, endpoint: 'datalist' }
+        data: { requestcondition: { source: 'quiz_answer_view', condition: {} }, endpoint: 'getlessonanswerdata' }
     },
     /**training-report**/
     {

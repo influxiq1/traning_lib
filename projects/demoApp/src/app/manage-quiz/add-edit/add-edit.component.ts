@@ -12,12 +12,12 @@ export class AddEditComponent implements OnInit {
   public quizQuestionSingleDataList:any=[];
   public lessonId:any
   public serverDetails: any = {
-    "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/",
+    "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api1/",
     "jwttoken": ""
   };
   public formSource: any = {
     "source":"quiz_question",
-    "endpoint": "addorupdatedata",
+    "endpoint": "addorupdatelessonquestion",
     "showEndpoint":"datalist",
     "formTitleName": 'Training'
   }

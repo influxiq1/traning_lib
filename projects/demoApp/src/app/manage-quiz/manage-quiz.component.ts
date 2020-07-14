@@ -15,14 +15,14 @@ export class ManageQuizComponent implements OnInit {
   public paramsId:any;
   // public updateAnswerRoute:any="/manage-quiz/update-answer/";
   public serverDetails: any = {
-    "serverUrl": "https://p6ttrc8ikc.execute-api.us-east-1.amazonaws.com/production/api/",
+    "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api1/",
     "jwttoken": ""
   };
   public formSource: any = {
     "source":'quiz_question',
-    "endpoint": "singledeletetrainingdata",
+    "endpoint": "lessonquestiondelete",
     "searchEndpoint":"datalist",
-    "statusUpdateEndpoint":"statusChange",
+    "statusUpdateEndpoint":"questionstatusupdate",
     "statusUpdateSourceName":"quiz_question",
   }
   public addUpdateAnswerRoute:any={
@@ -32,7 +32,8 @@ export class ManageQuizComponent implements OnInit {
   public jwtToken:any;
 
   constructor(public activatedRoute: ActivatedRoute,public cookie:CookieService) { 
-    this.paramsId = this.activatedRoute.snapshot.params.lesson_id_object;
+    this.paramsId = this.activatedRoute.snapshot.params.lesson_id;
+    console.log("lesson id",this.paramsId);
     this.jwtToken = cookie.get('jwtToken');
     this.serverDetails.jwttoken=this.jwtToken;
   }

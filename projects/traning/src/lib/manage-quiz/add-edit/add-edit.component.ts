@@ -60,7 +60,7 @@ export class AddEditComponent implements OnInit {
       lesson_id:[''],
       question_type:[''],
       question: ["", Validators.required],
-      priority: ["", Validators.required],
+      priority: [""],
       status  :[""],
       description:['']
     })
@@ -91,9 +91,13 @@ export class AddEditComponent implements OnInit {
         this.manageQuizForm.value.status = parseInt("1");
       else
         this.manageQuizForm.value.status = parseInt("0");
-           
+
+        if (this.manageQuizForm.value.priority){
+          this.manageQuizForm.value.priority = Number(this.manageQuizForm.value.priority);
+
+        }
+      
       const link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
-      // console.log("add",link);
       var data;
       if(this.paramId){
         data = {
