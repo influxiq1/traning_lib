@@ -19,6 +19,7 @@ export interface DialogData {
   lesson_session_data: any;
   flag: any;
   product_data: any;
+  index: any;
 }
 
 
@@ -100,7 +101,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   public training_cat_name: any;
   public training_header_text: any = 'ADVANCED MENTOR COURSE CERTIFICATION';
   public paramslessonId: any;
-  public lesson_id_flag: any=true;
+  public lesson_id_flag: any = true;
   public flag_id: any;
   public mentee_banner_text: any = 'Buy Now';
   public user_parent_id: any;
@@ -113,7 +114,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   public preview_button: any = false;
   public schedule_button: any = false;
   public user_mentor_name: any;
-
+  public all_orders_data: any;
 
 
 
@@ -153,13 +154,15 @@ export class TrainingCenterDnaComponent implements OnInit {
     // console.log(results, '.....>')
     if (this.userType == 'mentee') {
       this.orders_data = results.orders_data;
+      this.all_orders_data = results.all_orders_data;
+
       this.schedule_data = results.schedule_data;
 
       // console.log('schedule_data>>>', this.schedule_data, this.schedule_button)
       // console.log('orders_data>>>++', this.orders_data, this.orders_button)
       // console.log('lesson_ids>>>++', results.lesson_ids[0].lesson_ids, this.preview_button)
       // console.log('lesson_data id >>>++', results.lessondata[0].id)
-      // console.log('lesson_content id >>>++', results.lesson_content[0]._id)
+      console.log('lesson_content id >>>++', this.all_orders_data)
 
 
 
@@ -169,24 +172,40 @@ export class TrainingCenterDnaComponent implements OnInit {
       }, 1000)
 
 
-      if (this.orders_data != null && this.orders_data != '') {
+      if ((this.orders_data != null && this.orders_data != '') || (this.all_orders_data != null && this.all_orders_data != '')) {
 
-            this.orders_button = true;
-            this.preview_button = false;
-            this.schedule_button = false;
+        this.orders_button = true;
+        this.preview_button = false;
+        this.schedule_button = false;
 
-        // console.log('all_button  1>>>', this.orders_button, this.preview_button, this.schedule_button)
-        for (let i in this.orders_data) {
+        if (this.orders_data != '') {
+          for (let i in this.orders_data) {
+            // console.log('single >>>')
 
-          if (this.orders_data[i].lesson_id == results.lesson_content[0]._id) {
-            // console.log('orders_data hit', this.orders_data[i].lesson_id, this.activatedRoute.snapshot.params._id, results.lessondata[0]._id)
-            this.orders_button = false;
-            if (this.orders_button == false && this.schedule_button == false && this.preview_button == false) {
-              this.preview_button = true;
+            if (this.orders_data[i].lesson_id == results.lesson_content[0]._id) {
+              this.orders_button = false;
+              if (this.orders_button == false && this.schedule_button == false && this.preview_button == false) {
+                this.preview_button = true;
+              }
             }
-            // console.log('all_button 2>>>', this.orders_button, this.preview_button, this.schedule_button)
-            // if(this.orders_button == false && this.preview_button == false){
-            // }
+          }
+        }
+
+        if (this.all_orders_data != null && this.all_orders_data[0] != null &&
+          this.all_orders_data[0].lesson_ids != null) {
+          // console.log('all >>>')
+
+          for (let i in this.all_orders_data[0].lesson_ids) {
+
+            for (let j in this.allLessonData) {
+              if (this.all_orders_data[0].lesson_ids[i] == this.allLessonData[j]._id) {
+                // console.log('all orders_data hit', this.all_orders_data[0].lesson_ids, this.activatedRoute.snapshot.params._id, results.lessondata[0]._id)
+                this.orders_button = false;
+                if (this.orders_button == false && this.schedule_button == false && this.preview_button == false) {
+                  this.preview_button = true;
+                }
+              }
+            }
           }
         }
 
@@ -200,13 +219,6 @@ export class TrainingCenterDnaComponent implements OnInit {
             if (this.orders_button == false && this.preview_button == false && this.schedule_button == false) {
               this.schedule_button = true;
             }
-
-            // console.log('all_button 3>>>', this.orders_button, this.preview_button, this.schedule_button)
-
-            // console.log(this.lesson_id_flag,'flag--->',this.orders_button,this.preview_button,results.lesson_ids[0].lesson_ids[id])
-
-            // if(this.schedule_data != null && this.schedule_data != ''){
-            // }
           }
         }
 
@@ -217,9 +229,6 @@ export class TrainingCenterDnaComponent implements OnInit {
               this.orders_button = false;
               this.preview_button = false;
               this.schedule_button = false;
-
-              // console.log('all_button 4>>>', this.orders_button, this.preview_button, this.schedule_button)
-
             }
           }
         }
@@ -237,13 +246,11 @@ export class TrainingCenterDnaComponent implements OnInit {
           this.getScheduleModal()
         }, 500)
       }
-
-
     }
 
 
 
- 
+
 
   }
   @Input()
@@ -252,16 +259,16 @@ export class TrainingCenterDnaComponent implements OnInit {
     this.trainingLessonCount = this.totalData.training_lesson_count;
     this.doneLessonByCatByUser = this.totalData.done_lesson_by_cat_by_user;
 
-    if(this.userType == 'admin' || this.userType == 'affiliate' ){
+    if (this.userType == 'admin' || this.userType == 'affiliate') {
       this.adminlessoncount = this.totalData.total_lesson[0].count;
     }
 
-    if(this.userType == 'mentor'){
+    if (this.userType == 'mentor') {
       this.adminlessoncount = this.totalData.total_lesson_mentor[0].count;
     }
 
 
-    if(this.userType == 'mentee'){
+    if (this.userType == 'mentee') {
       this.adminlessoncount = this.totalData.total_lesson_mentee[0].count;
     }
 
@@ -413,7 +420,7 @@ export class TrainingCenterDnaComponent implements OnInit {
 
     // console.log('less ids>>',results.results.lesson_ids[0].lesson_ids,this.activatedRoute.snapshot.params._id)
 
-    if(this.userType == 'admin' || this.userType == 'mentor'){
+    if (this.userType == 'admin' || this.userType == 'mentor') {
       this.lesson_id_flag = true;
       for (let id in results.results.lesson_ids[0].lesson_ids) {
 
@@ -497,7 +504,6 @@ export class TrainingCenterDnaComponent implements OnInit {
           });
         }
       })
-
     }
 
 
@@ -647,7 +653,7 @@ export class TrainingCenterDnaComponent implements OnInit {
           "user_id": this.userId
         }
 
-    
+
         // this.apiService.postDatawithoutToken(link, data).subscribe((response: any) => {
         //   let divisor: any;
         //   let dividend: any;
@@ -749,7 +755,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   }
 
   nochildclick(val: any) {
-    console.log('___++++', val)
+    // console.log('___++++', val)
     if (val.is_done != null && val.is_done == true || (val.prerequisite_lession == this.paramslessonId)) {
 
       setTimeout(() => {
@@ -859,8 +865,8 @@ export class TrainingCenterDnaComponent implements OnInit {
 
     switch (value) {
       case 'next':
-          // this.lessonDataList[this.Index].lession_title
-        this.addMarkedData(this.lessonDataList[0]._id, this.paramsId, this.nextdata, this.lesson_content.lession_title , this.nextlessondata);
+        // this.lessonDataList[this.Index].lession_title
+        this.addMarkedData(this.lessonDataList[0]._id, this.paramsId, this.nextdata, this.lesson_content.lession_title, this.nextlessondata);
         let ind: any = 0;
         setTimeout(() => {
           for (let b in this.lessonDataList) {
@@ -986,25 +992,51 @@ export class TrainingCenterDnaComponent implements OnInit {
           });
 
           dialogRef.afterClosed().subscribe((result: any) => {
-            // console.log('>>>', result);
+            // console.log('>>>', result, result.index);
+
+            var lesson_ids: any = [];
+            var lesson_id: any;
+            var product_price:any;
 
             if (result.flag == 'yes') {
+
+              if (result.lesson_session_data.price > 100) {
+
+                for (let i in this.allLessonData) {
+
+                  if(this.orders_data != null && this.orders_data != ''){
+                    var less_price = this.orders_data.length * 65;
+                    product_price = result.lesson_session_data.price - less_price;
+                    // console.log('>>>>',this.orders_data,product_price)
+                  } else {
+                    product_price = result.lesson_session_data.price;
+                  }
+
+                  lesson_ids.push(this.allLessonData[i]._id);
+
+                }
+              } else {
+
+                lesson_id = this.paramslessonId
+              }
 
               // console.log('yes');
               let cardData: any;
               let endpoint = this.dnaServerUrl + 'api/cart';
+              // this.dnaServerUrl + 'api/cart';
               cardData = {
                 product: {
-                  free_shipping:1,
-                  flag:'lesson',
+                  free_shipping: 1,
+                  flag: 'lesson',
                   id: result.lesson_session_data._id,
                   name: result.lesson_session_data.productname,
-                  price: result.lesson_session_data.price,
+                  price: product_price,
                   quantity: 1,
                   image: result.lesson_session_data.image
                 },
                 training_id: this.paramsId,
-                lesson_id: this.paramslessonId,
+                lesson_id: lesson_id,
+                lesson_ids: lesson_ids,
                 userid: this.userId
               }
               // console.log('cardData-->', cardData);
@@ -1108,10 +1140,11 @@ export class PurchaseModalComponent {
 
 
   }
-  submitLession(val: any, flag: string) {
-    // console.log(val, flag);
+  submitLession(val: any, flag: string, index: any) {
+    // console.log(val, flag, index);
     this.data.lesson_session_data = val;
     this.data.flag = flag;
+    this.data.index = index;
     if (val != null && val !== '') {
       this.dialogRef.close(this.data);
       // this.snakBar.open('Submited Successfully ..!', 'OK', {

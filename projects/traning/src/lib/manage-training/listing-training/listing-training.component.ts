@@ -138,8 +138,8 @@ export class ListingTrainingComponent implements OnInit {
       this.dataSource.sort = this.sort;
 
     }, 100);
-
   }
+  
   trainingCount(){
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.trainingCountEndpoint;
     this.apiService.postDatawithoutTokenReportCount(link).subscribe((response:any)=>{

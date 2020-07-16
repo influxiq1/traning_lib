@@ -15,10 +15,10 @@
           <mat-card-content>
             {{item.productname}}
           </mat-card-content>
-
+zz
           </mat-card> -->
         <div class="modalscrollcls">
-          <mat-card class="example-card" *ngFor="let item of data.product_data">
+          <mat-card class="example-card" *ngFor="let item of data.product_data;let i = index;">
             <!-- <mat-card-header>
               <div mat-card-avatar class="example-header-image"></div>
               <mat-card-title>Product Name - {{item.productname}}</mat-card-title>
@@ -34,17 +34,8 @@
             <div class="pricecls">
                 <span class="priceclass" *ngIf="item.price !=null">Price :${{item.price}}</span>
             </div>
-
-            <!-- <img mat-card-image *ngIf="item.image !=null" [src]="item.image" alt="Photo of a Shiba Inu"> -->
-            <!-- <mat-card-content>
-              <p>
-                The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-                A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-                bred for hunting.
-              </p>
-            </mat-card-content> -->
             <mat-card-actions>
-              <button  mat-raised-button color="primary" (click)="submitLession(item, 'yes')" cdkFocusInitial>Buy</button>
+              <button  mat-raised-button color="primary" (click)="submitLession(item, 'yes',i)" cdkFocusInitial>Buy</button>
             </mat-card-actions>
           </mat-card>
         </div>
