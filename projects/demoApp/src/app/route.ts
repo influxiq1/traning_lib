@@ -57,6 +57,7 @@ const appRoutes: Routes = [
         resolve: { trainingdata: ResolveService }, 
         data: { requestcondition: { source: 'training_category_management_view', condition: {'is_trash':{$ne:1}} }, endpoint: 'gettrainingcategorydata' }
     },
+    
     { path: 'manage-training/edit/:id', component: AddEditTrainingComponent },
     /**Training center**/
     { 
