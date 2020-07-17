@@ -140,12 +140,7 @@ export class ListingTrainingComponent implements OnInit {
 
     }, 100);
   }
-<<<<<<< HEAD
   trainingCount() {
-=======
-  
-  trainingCount(){
->>>>>>> 30666bfb49814e953c01fe02251f854d1a2fea3b
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.trainingCountEndpoint;
     this.apiService.postDatawithoutTokenReportCount(link).subscribe((response: any) => {
       this.trainingCounts.activatedtrainingcount = response.results.activatedtrainingcount;
