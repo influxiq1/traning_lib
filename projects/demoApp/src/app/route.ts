@@ -45,7 +45,7 @@ const appRoutes: Routes = [
 
     { path: 'manage-lesson/list', component : ListLessionComponent,
     resolve: { lessionData: ResolveService }, 
-    data: { requestcondition: { source: 'manage_lession_view', condition: {'is_trash':{$ne:1}} }, endpoint: 'getlessondata' }},
+    data: { requestcondition: { source: 'manage_lession_view', condition: {'is_trash':{$ne:1}} }, endpoint: 'datalistwithouttoken' }},
 
     { path: 'manage-lesson/edit/:id', component: AddEditLessionsComponent },
 

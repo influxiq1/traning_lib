@@ -35,7 +35,7 @@ export interface DialogData {
   styleUrls: ['./list-lession.component.css']
 })
 export class ListLessionComponent implements OnInit {
-  displayedColumns: string[] = ['select','no','lession_title', 'description', 'mediaType','associated_training','prerequisite_lession','status','deleteRecord'];
+  displayedColumns: string[] = [];
   // dataSource: MatTableDataSource<PeriodicElement>;
 
   public dataSource: any;
@@ -139,7 +139,9 @@ public training_data_Counts:any;
     }, 100);
     this.getAllLessonData();
     if(this.dnaFlag == true){
-      this.displayedColumns.push('has_lessonplan','lessonplan_value','test_associate_training');
+      this.displayedColumns.push('select','no','lession_title', 'description', 'mediaType','associated_training','prerequisite_lession','has_lessonplan','lessonplan_value','test_associate_training','status','deleteRecord');
+    }else{
+      this.displayedColumns.push('select','no','lession_title', 'description', 'mediaType','associated_training','prerequisite_lession','status','deleteRecord');
     }
 
   }
@@ -152,7 +154,7 @@ public training_data_Counts:any;
         this.trainingCounts.activatedtrainingcount = response.results.activatedtrainingcount;
         this.trainingCounts.activatedlessoncount = response.results.activatedlessoncount;
         this.trainingCounts.trashedtrainingcount = response.results.trashedtrainingcount;
-        this.trainingCounts.trashedlessoncount = response.results.trashedtrainingcount;
+        this.trainingCounts.trashedlessoncount = response.results.trashedlessoncount;
         this.trainingCounts.totaltrainingcount = response.results.totaltraining;
         this.trainingCounts.totallessoncount = response.results.totallesson;
        
@@ -234,13 +236,13 @@ public training_data_Counts:any;
         let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
         let searchval:any={};
         if(this.dnaFlag == true){
-         searchval["has_lessonplan_search_regex"]={$regex:this.searchjson.has_lessonplan_regex.toLowerCase()}
-         searchval["lessonplan_value_search_regex"]={$regex:this.searchjson.lessonplan_value_regex.toLowerCase()}
-         searchval["test_associate_training_search_regex"]={$regex:this.searchjson.test_associate_training_search_regex.toLowerCase()}    
+         searchval["has_lessonplan_search"]={$regex:this.searchjson.has_lessonplan_regex.toLowerCase()}
+         searchval["lessonplan_value_search"]={$regex:this.searchjson.lessonplan_value_regex.toLowerCase()}
+         searchval["test_associate_training_search"]={$regex:this.searchjson.test_associate_training_search_regex.toLowerCase()}    
         }
          searchval["lession_title_search"]={$regex:this.searchjson.lession_title_search_regex.toLowerCase()}
          searchval["prerequisite_lession_search"]={$regex:this.searchjson.prerequisite_lession_search_regex.toLowerCase()}
-         searchval["status_search"]={$regex:this.searchjson.status_search_regex.toLowerCase()}
+         searchval["status_search"]=this.searchjson.status_search_regex
          searchval["associated_training_search"]={$regex:this.searchjson.associated_training_search_regex.toLowerCase()}
 
         var data = {
