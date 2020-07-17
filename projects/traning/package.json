@@ -1,5 +1,9 @@
 {  "name": "traning-lib-influxiq",
+<<<<<<< HEAD
+  "version": "0.0.90",
+=======
   "version": "0.0.92",
+>>>>>>> 46d330d9a191651f047133bd7526dc09446cdea2
   "bugs": "https://github.com/debasiskar-devel-007/traning-lib-influxiq/issues",
   "repository": {
     "type": "git",
