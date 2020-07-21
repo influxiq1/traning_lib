@@ -1,0 +1,36 @@
+<div class="generalmodalcls">
+    <div class="modal-content">
+          <div class="logowrapperouter">
+              <div class="logowrapper">
+                  <!-- <img src="../../assets/images/logomain.png"> -->
+              </div>
+          </div>  
+
+
+          <div mat-dialog-content class="questioncls" *ngIf="data.flag == 1">
+            <h2 style="text-align: center;" class="questiondatacls">Answer For <b>{{data.data.question}}</b></h2>
+            <span *ngFor="let item of data.data.answerdata;let i = index" class="optioncls">
+                <p>Option {{i + 1}} : {{item.answer}}</p>
+            </span>
+          </div> 
+
+          <div mat-dialog-content class="headercls" *ngIf="data.flag == 2">
+            <h2 style="text-align: center;" class="questiondatacls">Question Images</h2>
+            <span *ngFor="let item of data.data.question_img" class="imagecls">
+                <img mat-card-image [src]="item.basepath + item.image">
+            </span>
+          </div> 
+          <br>
+
+          <mat-dialog-actions class="modalbtncls">
+            <button class="btncancelcls" mat-raised-button color="accent" mat-dialog-close="no" cdkFocusInitial><span class="material-icons">
+              clear
+              </span></button>
+          </mat-dialog-actions>
+      </div>
+    </div>
+  
+  
+  
+  
+   

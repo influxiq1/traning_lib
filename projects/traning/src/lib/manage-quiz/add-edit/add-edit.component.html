@@ -2,13 +2,15 @@
     <span class="searchblock">
         <span class="searchblockwrapper">
             <span>
-    <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
-        <h2 class="headerSpan">{{ headerText }}</h2>
-    </mat-toolbar>
+                <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
+                    <h2 class="headerSpan">{{ headerText }}</h2>
+                </mat-toolbar>
             </span>
         </span>
     </span>
-    <mat-card-content>
+
+    <!-- old quiz content -->
+    <!-- <mat-card-content>
         <form class="example-form" novalidate [formGroup]="manageQuizForm" name="manageQuizForm"
             (ngSubmit)="ManageQuizFormSubmit()" autocomplete="off">
             <mat-form-field>
@@ -36,10 +38,7 @@
                           Priority field can not be blank</mat-error>
             </mat-form-field>
 
-            <!-- <mat-form-field appearance="fill">
-                <mat-label>Description</mat-label>
-                <textarea matInput [formControl]="manageQuizForm.controls['description']"></textarea>
-              </mat-form-field> -->
+
               <mat-label>Description</mat-label>
               <ck-editor name="description" [formControl]="manageQuizForm.controls['description']" skin="moono-lisa" language="en" [fullPage]="true"></ck-editor>
 
@@ -51,8 +50,141 @@
             <button mat-raised-button color="primary" mat-button class="trainingsubbtn" type="submit">{{ buttonText }}</button>
 
         </form>
+    </mat-card-content> -->
+
+
+
+
+    <!-- new quiz content  -->
+    <mat-card-content>
+        <form class="example-form" novalidate [formGroup]="manageQuizForm" name="manageQuizForm"
+            (ngSubmit)="ManageQuizFormSubmit()" autocomplete="off">
+
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Title" [formControl]="manageQuizForm.controls['title']"
+                    (blur)="inputUntouch(manageQuizForm,'title')">
+                <mat-error *ngIf="manageQuizForm.controls['title'].touched && !manageQuizForm.controls['title'].valid
+                           && manageQuizForm.controls['title'].errors.required">
+                    title field can not be blank</mat-error>
+            </mat-form-field>
+
+
+            <mat-label>Description :</mat-label>
+            <ck-editor name="description" [formControl]="manageQuizForm.controls['description']" skin="moono-lisa"
+                language="en" [fullPage]="true"></ck-editor>
+
+
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Prority" type=number [formControl]="manageQuizForm.controls['priority']"
+                    (blur)="inputUntouch(manageQuizForm,'priority')">
+                <mat-error *ngIf="manageQuizForm.controls['priority'].touched && !manageQuizForm.controls['priority'].valid
+                           && manageQuizForm.controls['priority'].errors.required">
+                    Priority field can not be blank</mat-error>
+            </mat-form-field>
+
+
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Question" [formControl]="manageQuizForm.controls['question']"
+                    (blur)="inputUntouch(manageQuizForm,'question')">
+                <mat-error *ngIf="manageQuizForm.controls['question'].touched && !manageQuizForm.controls['question'].valid
+                           && manageQuizForm.controls['question'].errors.required">
+                    Question field can not be blank</mat-error>
+            </mat-form-field>
+
+
+            Status : &nbsp;<mat-checkbox [formControl]="manageQuizForm.controls['status']" [(ngModel)]="statuschecked">
+                Active</mat-checkbox>
+
+            <br><br>
+
+
+            <mat-form-field>
+                <mat-label>Choose Question Type</mat-label>
+                <mat-select formControlName="question_type" (selectionChange)="getQuestionTypeValue($event.value)">
+                    <mat-option value="multiple_selection">Multiple Selection</mat-option>
+                    <mat-option value="yes_no">Yes / No </mat-option>
+                    <mat-option value="pick_picture">Pick a Picture </mat-option>
+                    <mat-option value="text_area">Text Area (Descriptive) </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <!-- for text area -->
+            <div *ngIf="questionTypeVal == 'text_area'">
+                <mat-label>Choose Text Box Type : </mat-label>
+                <mat-radio-group aria-label="Select an option" formControlName="text_area_type">
+                    <mat-radio-button value="small">Small</mat-radio-button>
+                    <mat-radio-button value="medium">Medium</mat-radio-button>
+                    <mat-radio-button value="large">Large</mat-radio-button>
+                </mat-radio-group>
+                <!-- <div *ngIf="textAreaTypeVal == small">
+                    <mat-form-field>
+                        <input matInput placeholder="Small Text" [formControl]="manageQuizForm.controls['small_text']"
+                    (blur)="inputUntouch(manageQuizForm,'small_text')">
+                    </mat-form-field>
+                  </div>
+
+                  <div *ngIf="textAreaTypeVal == medium">
+                    <mat-form-field>
+                        <input matInput placeholder="Medium Text" [formControl]="manageQuizForm.controls['medium_text']"
+                    (blur)="inputUntouch(manageQuizForm,'medium_text')">
+                    </mat-form-field>
+                </div>
+
+                <div *ngIf="textAreaTypeVal == large">
+                    <mat-form-field>
+                        <input matInput placeholder="Medium Text" [formControl]="manageQuizForm.controls['medium_text']"
+                    (blur)="inputUntouch(manageQuizForm,'medium_text')">
+                    </mat-form-field>
+                </div> -->
+            </div>
+
+
+            <!-- for multiple answer add -->
+            <div *ngIf="questionTypeVal == 'multiple_selection'">
+                <mat-label>Add Multiple Answer :</mat-label>
+                <div formArrayName="answerdata"
+                    *ngFor="let item of manageQuizForm.controls.answerdata?.value; let i=index ;trackBy: trackByFn"
+                    class="fromClass">
+                    <ng-container [formGroupName]="i">
+                        <mat-form-field >
+                            <input matInput formControlName="answer" placeholder="Answer">
+                            <span matSuffix>
+                                <i class="material-icons" (click)="addAnswer('')">add</i>
+                                <i *ngIf="i>0" class="material-icons" (click)="removeAnswer(i)">remove</i>
+                            </span>
+                        </mat-form-field>
+                    </ng-container>
+                </div>
+            </div>
+
+            <div *ngIf="questionTypeVal == 'pick_picture'"> 
+                <!-- file upload library start here -->
+                <lib-file-upload [config]="imageConfigData"></lib-file-upload>
+                <!-- <mat-error *ngIf="ErrCode==true">Please add just one image.</mat-error> -->
+
+                <!-- <mat-error *ngIf="ErrCode==true">Please add just one image.</mat-error> -->
+
+                <!-- CARD VIEW  -->
+                <mat-card-content class="files-view" *ngIf="img_flag==true">
+                    <mat-card class="example-card" *ngFor="let img of images_array_edit; let i2 = index">
+                        <img mat-card-image [src]="img.img_var">
+                        <mat-card-title>{{ image_name }}</mat-card-title>
+                        <mat-card-subtitle>{{ image_type }}</mat-card-subtitle>
+                        <span class="closecard" (click)="clear_image(i2)">
+                            <i class="material-icons">clear</i>
+                        </span>
+                    </mat-card>
+                </mat-card-content><br>
+            </div>
+
+            <br><br>
+
+            <button mat-raised-button color="primary" mat-button class="trainingsubbtn"
+                type="submit">{{ buttonText }}</button> &nbsp;
+
+            <button mat-raised-button color="primary" mat-button class="trainingsubbtn" type="reset">Reset</button>
+
+        </form>
     </mat-card-content>
-
-
 
 </mat-card>

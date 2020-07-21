@@ -1,32 +1,44 @@
 <mat-card>
     <span class="searchblock">
         <span class="searchblockwrapper">
-          <span>
-    <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
-       
-        <h2 class="headerSpan" >Manage Lesson Plan Material</h2>
-        <!-- <span>For {{ listingData[0].lessonname}}</span> -->
-    </mat-toolbar>
-          </span>
-          <span>
-    <mat-toolbar class="buttonsetToolbar">
-        <button class="singleButton" mat-raised-button color="primary" type="button" (click)="addButton()"><i class="material-icons">add</i> Add
-            Question</button>
-        <button class="singleButton" mat-raised-button color="primary" type="button" (click)="lessonList()">
-            <i class="material-icons">
-                keyboard_backspace
-                </i>Back To
-            Lesson List</button>
-    </mat-toolbar>
-          </span>
+            <span>
+                <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
+
+                    <h2 class="headerSpan">Manage Lesson Plan Material</h2>
+                    <!-- <span>For {{ listingData[0].lessonname}}</span> -->
+                </mat-toolbar>
+            </span>
+            <span>
+
+                <mat-form-field>
+                    <mat-label>Search By Keywords</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Filter" #input>
+                  </mat-form-field>
+
+                <mat-toolbar class="buttonsetToolbar">
+
+                    <button class="singleButton" mat-raised-button color="primary" type="button"
+                        (click)="addButton()"><i class="material-icons">add</i> Add
+                        Question</button>
+
+                    <button class="singleButton" mat-raised-button color="primary" type="button" (click)="lessonList()">
+                        <i class="material-icons">
+                            keyboard_backspace
+                        </i>Back To
+                        Lesson List</button>
+                </mat-toolbar>
+            </span>
         </span>
     </span>
-    
+
     <div class="mat-elevation-z8">
 
         <table mat-table [dataSource]="dataSource" matSort>
-            
 
+            <ng-container matColumnDef="title">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+                <td mat-cell *matCellDef="let row" data-label="Title"> {{row.title}} </td>
+            </ng-container>
             <ng-container matColumnDef="question">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Question </th>
                 <td mat-cell *matCellDef="let row" data-label="Question"> {{row.question}} </td>
@@ -37,15 +49,28 @@
             </ng-container>
             <ng-container matColumnDef="question_type">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Question Type </th>
-                <td mat-cell *matCellDef="let row" data-label="Question Type"> {{row.question_type}} </td>
+                <td mat-cell *matCellDef="let row" data-label="Question Type">
+                    <!-- {{row.question_type}} -->
+                    <span *ngIf="row.question_type == 'text_area'">Text Area</span>
+                    <span *ngIf="row.question_type == 'multiple_selection'">Multiple Selection</span>
+                    <span *ngIf="row.question_type == 'pick_picture'">Pick a Picture</span>
+                    <span *ngIf="row.question_type == 'yes_no'">Yes / No</span>
+                </td>
             </ng-container>
             <ng-container matColumnDef="priority">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Priority </th>
                 <td mat-cell *matCellDef="let row" title="Priority"> {{row.priority}} </td>
             </ng-container>
+            <ng-container matColumnDef="created_at">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+                <td mat-cell *matCellDef="let row" title="created_at"> {{row.created_at | date}} </td>
+            </ng-container>
             <ng-container matColumnDef="status">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-                <td mat-cell *matCellDef="let row" title="Status"> {{row.status}} </td>
+                <td mat-cell *matCellDef="let row" title="Status">
+                    <span *ngIf="row.status == 1">Active</span>
+                    <span *ngIf="row.status == 0">Inactive</span> </td>
+
             </ng-container>
             <ng-container matColumnDef="deleteRecord">
                 <th mat-header-cell *matHeaderCellDef> Action </th>
@@ -64,17 +89,30 @@
                         </span>
                         <span (click)="statusUpdateModal(element._id,i)">
                             <i class="material-icons">
-                              toggle_on
-                              </i>
-                           </span>
-                           <span *ngIf="element.question_type!='Text Box'">
+                                toggle_on
+                            </i>
+                        </span>
+
+                        <span *ngIf="element.question_type == 'multiple_selection'">
+
+                            <button mat-raised-button type="button" color="primary"
+                                (click)="viewAnswerData(element,1)">View
+                                Answer</button>
+                        </span>
+
+                        <span *ngIf="element.question_type == 'pick_picture'">
+                            <button mat-raised-button type="button" color="primary" (click)="viewImages(element,2)">View
+                                Images</button>
+                        </span>
+
+                        <!-- <span *ngIf="element.question_type!='Text Box'">
                             
                             <button  mat-button type="button" color="primary" (click)="goToAnswerPage 
                             (element._id)">Add Answer</button>
 
-                           </span>
-                        
-                        <button mat-button type="button" color="primary" (click)="goToUpdateAnswerPage(element._id)">View Answer</button>
+                           </span> -->
+                        <!--                         
+                        <button mat-button type="button" color="primary" (click)="goToUpdateAnswerPage(element._id)">View Answer</button> -->
                     </span>
                 </td>
 

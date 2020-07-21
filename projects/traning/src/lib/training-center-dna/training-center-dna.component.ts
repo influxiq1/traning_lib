@@ -1011,12 +1011,10 @@ export class TrainingCenterDnaComponent implements OnInit {
                   } else {
                     product_price = result.lesson_session_data.price;
                   }
-
                   lesson_ids.push(this.allLessonData[i]._id);
-
                 }
               } else {
-
+                product_price= result.lesson_session_data.price;
                 lesson_id = this.paramslessonId
               }
 

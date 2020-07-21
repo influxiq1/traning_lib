@@ -12,15 +12,29 @@ export class AddEditComponent implements OnInit {
   public quizQuestionSingleDataList:any=[];
   public lessonId:any
   public serverDetails: any = {
-    "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api1/",
+    "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/",
     "jwttoken": ""
   };
   public formSource: any = {
-    "source":"quiz_question",
-    "endpoint": "addorupdatelessonquestion",
+    "source":"manage_quiz_question",
+    "endpoint": "addorupdatedata",
     "showEndpoint":"datalist",
     "formTitleName": 'Training'
   }
+
+  public configData: any = {
+    baseUrl: "https://fileupload.influxhostserver.com/",
+    endpoint: "uploads",
+    size: "51200", // kb
+    format:["jpg", "jpeg", "png"],  // use all small font
+    type: "question-picture",
+    path: "training-question",
+    prefix: "question-picture_",
+    formSubmit: false,
+    conversionNeeded: 0,
+    bucketName:"crmfiles.influxhostserver"
+  }
+
   public listingPageRoute : any="/manage-quiz/list/";
   public jwtToken:any
   constructor(public activatedRoute : ActivatedRoute,public cookie:CookieService) { 

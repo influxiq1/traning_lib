@@ -15,15 +15,15 @@ export class ManageQuizComponent implements OnInit {
   public paramsId:any;
   // public updateAnswerRoute:any="/manage-quiz/update-answer/";
   public serverDetails: any = {
-    "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api1/",
+    "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/",
     "jwttoken": ""
   };
   public formSource: any = {
-    "source":'quiz_question',
-    "endpoint": "lessonquestiondelete",
+    "source":'manage_quiz_question',
+    "endpoint": "datalist",
     "searchEndpoint":"datalist",
     "statusUpdateEndpoint":"questionstatusupdate",
-    "statusUpdateSourceName":"quiz_question",
+    "statusUpdateSourceName":"manage_quiz_question",
   }
   public addUpdateAnswerRoute:any={
     "addAnswerRoute":"/manage-quiz/add-answer/",
@@ -32,7 +32,7 @@ export class ManageQuizComponent implements OnInit {
   public jwtToken:any;
 
   constructor(public activatedRoute: ActivatedRoute,public cookie:CookieService) { 
-    this.paramsId = this.activatedRoute.snapshot.params.lesson_id;
+    this.paramsId = this.activatedRoute.snapshot.params.lesson_id_object;
     console.log("lesson id",this.paramsId);
     this.jwtToken = cookie.get('jwtToken');
     this.serverDetails.jwttoken=this.jwtToken;

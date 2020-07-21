@@ -16,7 +16,7 @@ import { ListLessionComponent } from './manage-lessions/list-lession/list-lessio
 import { CKEditorModule } from 'ngx-ckeditor';
 import { FileUploadModule} from 'file-upload-lib-influxiq';
 import { ListComponent,Dialogtest } from './training-center/list/list.component';
-import { ManageQuizComponent } from './manage-quiz/manage-quiz.component';
+import { ManageQuizComponent, questionDataModalComponent } from './manage-quiz/manage-quiz.component';
 import { AddEditComponent } from './manage-quiz/add-edit/add-edit.component';
 import { AddUpdateAnswerComponent } from './manage-quiz/add-update-answer/add-update-answer.component';
 import { UpdateAnswerComponent } from './manage-quiz/update-answer/update-answer.component';
@@ -56,7 +56,8 @@ import { ListingModule } from 'listing-angular7';
     LessonPlanMaterialComponent,
     PurchaseModalComponent,
     ReviewLessonPlanComponent,
-    ScheduleModalComponent
+    ScheduleModalComponent,
+    questionDataModalComponent
   ],
   imports: [
     HttpClientModule,
@@ -76,6 +77,6 @@ import { ListingModule } from 'listing-angular7';
   exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest,TrainingreportComponent,CategoryWiseReportComponent,TrainingCenterDnaComponent,LessonPlanMaterialComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [CookieService, ApiService,DatePipe],
-  entryComponents:[DialogBoxComponent,Dialogtest,PurchaseModalComponent,ReviewLessonPlanComponent,ScheduleModalComponent]
+  entryComponents:[DialogBoxComponent,Dialogtest,PurchaseModalComponent,ReviewLessonPlanComponent,ScheduleModalComponent,questionDataModalComponent]
 })
 export class TraningModule { }
