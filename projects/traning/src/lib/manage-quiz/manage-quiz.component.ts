@@ -41,7 +41,7 @@ export class ManageQuizComponent implements OnInit {
   public lessonId: any;
   public dataSource: any;
   public listingData: any = [];
-  displayedColumns: string[] = ['title', 'question', 'description_html', 'question_type', 'priority', 'status', 'created_at', 'deleteRecord'];
+  displayedColumns: string[] = ['title', 'question', 'description_html', 'question_type', 'skippable','priority', 'status', 'created_at', 'deleteRecord'];
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 

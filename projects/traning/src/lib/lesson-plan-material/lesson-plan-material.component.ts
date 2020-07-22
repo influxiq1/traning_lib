@@ -43,6 +43,9 @@ export class LessonPlanMaterialComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    console.log(this.allData,'??')
+
     this.formdata = {
       successmessage: "Added Successfully !!",
       // redirectpath: this.redirectPath+'/'+this.associated_training_id,
@@ -72,7 +75,6 @@ export class LessonPlanMaterialComponent implements OnInit {
             val: this.allData[loop].answerdata[key].answer,
             name: this.allData[loop].answerdata[key].answer
           });
-          // this.answerData=this.allData[loop].answerdata[key].answer;
         }
       }
       let jsonObj: any = {
@@ -86,14 +88,43 @@ export class LessonPlanMaterialComponent implements OnInit {
         label: this.allData[loop].question,
         name: this.allData[loop].question,
         type: this.allData[loop].question_type,
-        disabled: true,
-        // value: this.answerData
+        disabled: true
       };
 
       // console.log('this.allData[loop]', '>>>>++++', jsonObj)
+      //------------------------ old code ------------------------------------//
+      // switch (this.allData[loop].question_type) {
+      //   case 'checkbox':
+      //     jsonObj.type = 'checkbox';
+      //     if (this.allData[loop].answerdata != null && this.allData[loop].answerdata.length > 0) {
+      //       jsonObj.multiple = true;
+      //       jsonObj.val = answer;
+      //       jsonObj.value = [];
+      //     }
+      //     break;
+      //   case 'dropdown':
+      //     jsonObj.type = 'select';
+      //     jsonObj.val = this.selectValue;
+      //     jsonObj.val = answerForSelect
+      //     break;
+      //   case 'radio_button':
+      //     jsonObj.type = 'radio';
+      //     jsonObj.val = answer;
+
+      //     break;
+      //   case 'text_box':
+      //     jsonObj.type = 'text';
+      //     break;
+
+      //   default:
+      //     break;
+      // }
+
+
+    //------------------------ new code ------------------------------------//
 
       switch (this.allData[loop].question_type) {
-        case 'checkbox':
+        case 'text_area':
           jsonObj.type = 'checkbox';
           if (this.allData[loop].answerdata != null && this.allData[loop].answerdata.length > 0) {
             jsonObj.multiple = true;
@@ -101,23 +132,24 @@ export class LessonPlanMaterialComponent implements OnInit {
             jsonObj.value = [];
           }
           break;
-        case 'dropdown':
+        case 'pick_picture':
           jsonObj.type = 'select';
           jsonObj.val = this.selectValue;
           jsonObj.val = answerForSelect
           break;
-        case 'radio_button':
+        case 'yes_no':
           jsonObj.type = 'radio';
           jsonObj.val = answer;
 
           break;
-        case 'text_box':
+        case 'multiple_selection':
           jsonObj.type = 'text';
           break;
 
         default:
           break;
       }
+
       let traininghiddenfield: any = {
         label: "associated_training",
         name: "associated_training",

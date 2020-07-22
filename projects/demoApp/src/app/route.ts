@@ -32,7 +32,7 @@ const appRoutes: Routes = [
     {
         path : 'lesson-plan-material/:associated_training/:lesson_id_object',component :  LessonPlanMaterialComponent,
         resolve: { lessonplandata: ResolveService }, 
-        data: { requestcondition: { source: 'quiz_question_answer_data', condition: {} }, endpoint: 'datalist' }
+        data: { requestcondition: { source: 'manage_quiz_question', condition: {} }, endpoint: 'datalist' }
         
     },
     { path: 'home', component: AppComponent },

@@ -18,6 +18,7 @@ export class AddEditComponent implements OnInit {
   public buttonText: any = "Submit"
   public lessonId: any;
   public statuschecked: boolean = true;
+  public skippablechecked:boolean = false;
   public lessonidineditForm: any;
   public imageConfigData: any = '';
   public img_var: any;
@@ -56,6 +57,9 @@ export class AddEditComponent implements OnInit {
       this.manageQuizForm.controls['title'].patchValue(val[0].title);
       this.manageQuizForm.controls['text_area_type'].patchValue(val[0].text_area_type);
       this.manageQuizForm.controls['question_img'].patchValue(val[0].question_img);
+      this.manageQuizForm.controls['skippable'].patchValue(val[0].skippable);
+
+
 
       // for answer
       for (const i in this.listingData[0].answerdata) {
@@ -102,7 +106,8 @@ export class AddEditComponent implements OnInit {
       title: ['', Validators.required],
       text_area_type: [''],
       answerdata: this.fb.array([]), 
-      question_img:['']
+      question_img:[''],
+      skippable:['']
     })
     this.paramId = activatedRoute.snapshot.params._id;
     if (this.paramId) {
@@ -178,6 +183,12 @@ export class AddEditComponent implements OnInit {
       else
         this.manageQuizForm.value.status = parseInt("0");
 
+        if (this.manageQuizForm.value.skippable)
+        this.manageQuizForm.value.skippable = parseInt("1");
+      else
+        this.manageQuizForm.value.skippable = parseInt("0");
+
+
       if (this.manageQuizForm.value.priority) {
         this.manageQuizForm.value.priority = Number(this.manageQuizForm.value.priority);
 
@@ -200,6 +211,8 @@ export class AddEditComponent implements OnInit {
             'text_area_type': this.manageQuizForm.value.text_area_type,
             'answerdata': this.manageQuizForm.value.answerdata,
             'question_img': this.manageQuizForm.value.question_img,
+            'skippable': this.manageQuizForm.value.skippable,
+
           },
           "sourceobj": ["lesson_id"],
         }
