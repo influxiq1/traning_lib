@@ -29,12 +29,25 @@ const appRoutes: Routes = [
         resolve: { trainingdata: ResolveService }, 
         data: { requestcondition: { source: '', condition: {} }, endpoint: 'gettrainingcenterlist' }
     },
+
+
     {
         path : 'lesson-plan-material/:associated_training/:lesson_id_object',component :  LessonPlanMaterialComponent,
         resolve: { lessonplandata: ResolveService }, 
         data: { requestcondition: { source: 'manage_quiz_question', condition: {} }, endpoint: 'datalist' }
         
     },
+
+    {
+        path : 'lesson-plan-material/:associated_training/:lesson_id_object/:_id',component :  LessonPlanMaterialComponent,
+        resolve: { lessonplandata: ResolveService }, 
+        data: { requestcondition: { source: 'manage_quiz_question', condition: {} }, endpoint: 'datalist' }
+        
+    },
+
+
+
+
     { path: 'home', component: AppComponent },
     {
         path :'training-login',component: LoginfortrainingComponent

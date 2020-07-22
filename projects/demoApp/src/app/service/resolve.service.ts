@@ -46,8 +46,10 @@ public user_details:any;
 
     // lesson plan 
     if(route.url[0].path == "lesson-plan-material") {
-      // requestData.condition['lesson_id'] = this.userId;
+      requestData.condition['lesson_id_object'] = route.params.lesson_id_object;
       delete requestData.condition.associated_training;
+      delete requestData.condition._id;
+
       // requestData.condition['type'] = "admin";
     }
 

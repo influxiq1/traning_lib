@@ -1,10 +1,24 @@
-<lib-showform *ngIf="formdata != null && formdata.fields != null && formdata.fields.length > 0"
-[formdata]="formdata"
-[formfieldrefresh]="formfieldrefresh"
-[formfieldrefreshdata]="formfieldrefreshdata"
- (onFormFieldChange)="listenFormFieldChange($event)"
-> </lib-showform>
+<div class="">
+    <h2>Title : {{formDataVal.title}}</h2>
+    <h2>Description : {{formDataVal.description_html}}</h2>
+    <h2>Question : {{formDataVal.question}}</h2>
+</div>
+
+<br>
+<div>
+    <mat-progress-bar mode="indeterminate" *ngIf="progress_bar == 1"></mat-progress-bar>
+</div>
+<br>
+<lib-showform *ngIf="formdata != null && formdata.fields != null && formdata.fields.length > 0" [formdata]="formdata"
+    [formfieldrefresh]="formfieldrefresh" [formfieldrefreshdata]="formfieldrefreshdata"
+    (onFormFieldChange)="listenFormFieldChange($event)"> </lib-showform>
 <!-- <h1>{{formdata | json}}</h1> -->
-
-
 <p>{{formdata.field | json}}</p>
+<!-- {{formDataVal | json}} -->
+
+<div class="buttoncls">
+    <button mat-raised-button color="primary" type="button" class="btncls"
+        (click)="nextButton('prev')" *ngIf="prevButton == true">Previous</button> &nbsp;
+
+    <button mat-raised-button color="primary" type="button" class="btncls" (click)="nextButton('next')">Next</button>
+</div>
