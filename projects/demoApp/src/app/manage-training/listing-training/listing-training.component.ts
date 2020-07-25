@@ -14,14 +14,14 @@ public editPageRoute : any="/manage-training/edit/";
 public addPageRoute : any="/manage-training/add";
 public searchSourceName : any="training_category_management_view";
 public serverDetails: any = {
-  "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api1/",
+  "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/",
   "jwttoken": ""
 };
 public formSource: any = {
   "source":'training_category_management',
   "endpoint": "trainingcatdelete",
   "deleteManyEndpoint":"trainingcatdeletemany",
-  "searchEndpoint":"gettrainingcategorydata",
+  "searchEndpoint":"datalistwithouttoken",
   "statusUpdateEndpoint":"trainingcatstatusupdate",
   "statusUpdateManyEndpoint":"trainingcatstatusupdate",
   "statusUpdateSourceName":"training_category_management",

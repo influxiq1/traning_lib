@@ -9,7 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class ListLessionComponent implements OnInit {
 public manageLessionList : any=[];
-public isitdna:any=false;
+public isitdna:any=true;
 public manageTrainingList : any = [];
 public editPageRoute : any="/manage-lesson/edit/";
 public addPageRoute : any="/manage-lesson/add";

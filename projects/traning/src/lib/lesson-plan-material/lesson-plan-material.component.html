@@ -15,10 +15,13 @@
 <!-- <h1>{{formdata | json}}</h1> -->
 <p>{{formdata.field | json}}</p>
 <!-- {{formDataVal | json}} -->
-
+<!-- *ngIf="prevButton == true" -->
 <div class="buttoncls">
-    <button mat-raised-button color="primary" type="button" class="btncls"
-        (click)="nextButton('prev')" *ngIf="prevButton == true">Previous</button> &nbsp;
+    <!-- <button mat-raised-button color="primary" type="button" class="btncls"
+        (click)="nextButton('prev')" >Previous</button> &nbsp; -->
 
     <button mat-raised-button color="primary" type="button" class="btncls" (click)="nextButton('next')">Next</button>
+</div><br>
+<div style="cursor:pointer">
+<span (click)="skipButton()"><u>Skip Now</u></span>
 </div>

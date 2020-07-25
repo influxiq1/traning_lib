@@ -3,3 +3,12 @@
     text-align: center;
     background: cyan
 }
+
+.buttoncls {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+/* .btncls{
+    
+} */

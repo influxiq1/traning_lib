@@ -52,6 +52,7 @@ export class LessonPlanMaterialComponent implements OnInit {
     if (this.activatedroute.snapshot.params._id == null) {
       this.displayQuestionData(this.allData[0]);
       this.formDataVal = this.allData[0];
+      this.prevButton = false;
       console.log('>> param null', this.formDataVal)
     } else {
       for (let a in this.allData) {
@@ -178,20 +179,25 @@ export class LessonPlanMaterialComponent implements OnInit {
         for (let a in this.allData) {
           if (this.allData[a]._id == this.activatedroute.snapshot.params._id) {
             ind = (parseInt(a) + 1);
-            this.formDataVal = this.allData[a];
+            // this.formDataVal = this.allData[a];
             // this.displayQuestionData(this.allData[ind]);
-            console.log(this.formDataVal, '??', this.activatedroute.snapshot.params._id, ind, this.allData[ind])
+            // console.log(ind)
           }
         }
 
         if (this.allData[ind] != null) {
           this.prevButton = true;
-          this.displayQuestionData(this.allData[ind]);
+
+          console.log(ind)
+
           this.router.navigateByUrl(this.routerPath + this.activatedroute.snapshot.params.associated_training + '/' + this.activatedroute.snapshot.params.lesson_id_object + '/' + this.allData[ind]._id);
 
+          this.displayQuestionData(this.allData[ind]);
+
+
         } else {
-          this.prevButton = false;
-          this.formDataVal = this.allData[0];
+          this.prevButton = true;
+          // this.formDataVal = this.allData[0];
           this.displayQuestionData(this.allData[0]);
 
           this.router.navigateByUrl(this.routerPath + this.activatedroute.snapshot.params.associated_training + '/' + this.activatedroute.snapshot.params.lesson_id_object + '/' + this.allData[0]._id)
@@ -206,8 +212,8 @@ export class LessonPlanMaterialComponent implements OnInit {
         for (let b in this.allData) {
           if (this.allData[b]._id == this.activatedroute.snapshot.params._id) {
             ind1 = (parseInt(b) - 1);
-            this.formDataVal = this.allData[b];
-            console.log(this.formDataVal, '??', this.activatedroute.snapshot.params._id, ind1, this.allData[ind1])
+            // this.formDataVal = this.allData[b];
+            console.log(this.allData[ind1])
           }
         }
 
@@ -218,7 +224,7 @@ export class LessonPlanMaterialComponent implements OnInit {
         } else {
           this.prevButton = false;
 
-          this.formDataVal = this.allData[0];
+          // this.formDataVal = this.allData[0];
           this.displayQuestionData(this.allData[0]);
 
           this.router.navigateByUrl(this.routerPath + this.activatedroute.snapshot.params.associated_training + '/' + this.activatedroute.snapshot.params.lesson_id_object + '/' + this.allData[0]._id)
@@ -231,9 +237,24 @@ export class LessonPlanMaterialComponent implements OnInit {
   }
 
 
+  skipButton(){
+    let ind: any = 0;
+    for (let a in this.allData) {
+      if (this.allData[a]._id == this.activatedroute.snapshot.params._id) {
+        ind = (parseInt(a) + 1);
+        // this.formDataVal = this.allData[a];
+        // this.displayQuestionData(this.allData[ind]);
+        console.log(this.allData[a])
+      }
+    }
+  }
+
+
   displayQuestionData(value: any) {
 
     console.log(value)
+
+    this.formDataVal = value;
 
     this.formdata = {
       successmessage: "Added Successfully !!",
@@ -256,7 +277,7 @@ export class LessonPlanMaterialComponent implements OnInit {
     answer = [];
     answerForSelect = [];
 
-    if (value.answerdata != null && value.answerdata != '' && value.question_type =='multiple_selection') {
+    if (value.answerdata != null && value.answerdata != '' && value.question_type == 'multiple_selection') {
       for (const key in value.answerdata) {
         answer.push({ key: value.answerdata[key].answer, val: value.answerdata[key].answer });
         answerForSelect.push({
@@ -267,26 +288,29 @@ export class LessonPlanMaterialComponent implements OnInit {
     }
 
     let pictureSelect: any = [];
-    let picture: any =[];
+    let picture: any = [];
 
-    if (value.question_img != null && value.question_img != '' && value.question_type =='pick_picture') {
+    if (value.question_img != null && value.question_img != '' && value.question_type == 'pick_picture') {
       for (const key in value.question_img) {
-        picture.push({ key: value.question_img[key].basepath + value.question_img[key].image, val: value.question_img[key].basepath + value.question_img[key].image });
+        // picture.push({ key: value.question_img[key].basepath + value.question_img[key].image, val: value.question_img[key].basepath + value.question_img[key].image });
+
         pictureSelect.push({
-          key: value.question_img[key].basepath + value.question_img[key].image,
-          val: value.question_img[key].basepath + value.question_img[key].image
+          heading: '<div><img src="value.question_img[key].basepath + value.question_img[key].image"></div>',
+          val: value.question_img[key].basepath + value.question_img[key].image,
+
         });
+
       }
     }
 
 
-    let checkSelected:any=[]
+    let checkSelected: any = []
 
-    if (value.question_type =='yes_no') {
-      checkSelected.push({  
+    if (value.question_type == 'yes_no') {
+      checkSelected.push({
         key: 'Yes',
-          val: 'Yes'
-        },
+        val: 'Yes'
+      },
         {
           key: 'No',
           val: 'No'
@@ -304,7 +328,7 @@ export class LessonPlanMaterialComponent implements OnInit {
         break;
       case 'pick_picture':
         jsonObj.type = 'radio';
-        jsonObj.val =pictureSelect;
+        jsonObj.val = pictureSelect;
         break;
       case 'yes_no':
         jsonObj.type = 'radio';
@@ -312,16 +336,19 @@ export class LessonPlanMaterialComponent implements OnInit {
 
         break;
       case 'multiple_selection':
-        console.log('M')
+        // console.log('M')
         jsonObj.type = 'select';
-        jsonObj.val = answerForSelect;  
-        jsonObj.multiple = true;     
+        jsonObj.val = answerForSelect;
+        jsonObj.multiple = true;
+        jsonObj.validations= [
+          { rule: 'required' }
+      ]
         break;
 
       default:
         break;
     }
-    console.log('jsonObj',jsonObj)
+    console.log('jsonObj', jsonObj)
 
 
     tempfrondata.push(jsonObj);

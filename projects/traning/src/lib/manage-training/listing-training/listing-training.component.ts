@@ -53,7 +53,7 @@ export class ListingTrainingComponent implements OnInit {
   public idArray: any = [];
   public allTrashData: any = [];
   public trashFlag: any = 0;
-
+  public status_search_regex:any;
 
   public trashButtonText: any = "View Trash";
   public trainingCounts: any = {
@@ -66,8 +66,7 @@ export class ListingTrainingComponent implements OnInit {
   };
   public searchjson: any = {
     "catagory_name_search_regex": "",
-    "parent_catagory_search_regex": "",
-    "status_search_regex": ""
+    "parent_catagory_search_regex": ""
   }
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -212,14 +211,26 @@ export class ListingTrainingComponent implements OnInit {
     console.log(this.searchjson);
     let searchval: any = {};
 
-    if (this.searchjson.status_search_regex != "") {
-      console.log("hitted")
-      searchval["status_search"] = this.searchjson.status_search_regex;
-    }else if(this.searchjson.catagory_name_search_regex != "" ){   
-       searchval["catagory_name_search"] = { $regex: this.searchjson.catagory_name_search_regex.toLowerCase() }
-    }else if(this.searchjson.parent_catagory_search_regex!=""){
-      searchval["parent_catagory_search"] = { $regex: this.searchjson.parent_catagory_search_regex.toLowerCase() }
-    }
+    // if (this.searchjson.status_search_regex != "") {
+    //   // console.log("hitted")
+    //   searchval["status_search"] = this.searchjson.status_search_regex;
+    // }else if(this.searchjson.catagory_name_search_regex != "" ){   
+    //    searchval["catagory_name_search"] = { $regex: this.searchjson.catagory_name_search_regex.toLowerCase() }
+    // }else if(this.searchjson.parent_catagory_search_regex!=""){
+    //   searchval["parent_catagory_search"] = { $regex: this.searchjson.parent_catagory_search_regex.toLowerCase() }
+    // }
+
+    if(this.status_search_regex !=null && this.status_search_regex !='undefined' && this.status_search_regex !=''){
+      // this.searchjson.status_search_regex = 1;
+     searchval["status_search"]=this.status_search_regex;
+     } else {
+      searchval["status_search"]=1;
+
+     }
+
+    searchval["catagory_name_search"] = { $regex: this.searchjson.catagory_name_search_regex.toLowerCase() }
+    searchval["parent_catagory_search"] = { $regex: this.searchjson.parent_catagory_search_regex.toLowerCase() }
+
 
     
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
@@ -245,7 +256,11 @@ export class ListingTrainingComponent implements OnInit {
 
   }
   resetSearch() {
-    this.searchjson = "";
+    this.status_search_regex='';
+    this.searchjson = {
+      "catagory_name_search_regex": "",
+      "parent_catagory_search_regex": ""
+    }
     this.dataSource = new MatTableDataSource(this.listingData);
 
   }

@@ -70,11 +70,10 @@ export class ListLessionComponent implements OnInit {
     "totallessoncount":" "
   };
 public training_data_Counts:any;
-  
+  public status_search_regex:any;
   public searchjson:any={
     "lession_title_search_regex":"",
     "prerequisite_lession_search_regex":"",
-    "status_search_regex":"",
     "test_associate_training_search_regex":"",
     "associated_training_search_regex":"",
     "has_lessonplan_regex":"",
@@ -235,15 +234,32 @@ public training_data_Counts:any;
     filter(){ 
         let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
         let searchval:any={};
+
+        //  console.log(typeof(this.status_search_regex),this.trashFlag)
+
+        if(this.status_search_regex !=null && this.status_search_regex !='undefined' && this.status_search_regex !=''){
+          // this.searchjson.status_search_regex = 1;
+         searchval["status_search"]=this.status_search_regex;
+         } else {
+          searchval["status_search"]=1;
+
+         }
+
         if(this.dnaFlag == true){
+
+
+
          searchval["has_lessonplan_search"]={$regex:this.searchjson.has_lessonplan_regex.toLowerCase()}
          searchval["lessonplan_value_search"]={$regex:this.searchjson.lessonplan_value_regex.toLowerCase()}
          searchval["test_associate_training_search"]={$regex:this.searchjson.test_associate_training_search_regex.toLowerCase()}    
         }
+
+
          searchval["lession_title_search"]={$regex:this.searchjson.lession_title_search_regex.toLowerCase()}
          searchval["prerequisite_lession_search"]={$regex:this.searchjson.prerequisite_lession_search_regex.toLowerCase()}
-         searchval["status_search"]=this.searchjson.status_search_regex
+
          searchval["associated_training_search"]={$regex:this.searchjson.associated_training_search_regex.toLowerCase()}
+
 
         var data = {
           "source": this.searchSourceName,
@@ -295,9 +311,19 @@ public training_data_Counts:any;
      
     })
   }
+
+
   resetSearch(){
-   
- this.searchjson = "";
+    this.searchjson = {
+      "lession_title_search_regex":"",
+      "prerequisite_lession_search_regex":"",
+      "status_search_regex":"",
+      "test_associate_training_search_regex":"",
+      "associated_training_search_regex":"",
+      "has_lessonplan_regex":"",
+      "lessonplan_value_regex":""
+    }
+    this.status_search_regex='';
   this.dataSource = new MatTableDataSource(this.listingData);
 
   }
@@ -329,7 +355,6 @@ public training_data_Counts:any;
             break;
         }
       });
-
   }
   statusChange(id:any,index:any,currentStatus:any){
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.statusUpdateEndpoint;
@@ -341,12 +366,12 @@ public training_data_Counts:any;
     this.apiService.postDatawithoutToken(link,data).subscribe((response: any)=>{
       let result :any;
       if(response.status=true){
-        if(this.listingData[index].status=="Active"){
-          this.listingData[index].status = "Inactive"
-        }else{
-          this.listingData[index].status = "Active"
+        // if(this.listingData[index].status=="Active"){
+        //   this.listingData[index].status = "Inactive"
+        // }else{
+        //   this.listingData[index].status = "Active"
 
-        }
+        // }
         let allData: PeriodicElement[] = this.listingData;
         this.dataSource = new MatTableDataSource(allData);     
        }
@@ -467,7 +492,7 @@ public training_data_Counts:any;
       })
 
       });
-    
+
   }
   viewTrash(){
     switch (this.trashButtonText) {
