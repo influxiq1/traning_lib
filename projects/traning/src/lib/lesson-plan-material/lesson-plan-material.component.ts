@@ -2,6 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../api.service';
 import { CookieService } from 'ngx-cookie-service';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSnackBar } from "@angular/material";
+
+
 @Component({
   selector: 'lib-lesson-plan-material',
   templateUrl: './lesson-plan-material.component.html',
@@ -40,7 +43,7 @@ export class LessonPlanMaterialComponent implements OnInit {
   }
 
 
-  constructor(public activatedroute: ActivatedRoute, public apiService: ApiService, public cookieService: CookieService, public router: Router) {
+  constructor(public activatedroute: ActivatedRoute, public apiService: ApiService, public cookieService: CookieService, public router: Router,public snackBar:MatSnackBar) {
     this.userId = JSON.parse(this.cookieService.get('userid'));
 
     this.associated_training_id = this.activatedroute.snapshot.params.associated_training;
@@ -122,7 +125,7 @@ export class LessonPlanMaterialComponent implements OnInit {
 
   listenFormFieldChange(val: any) {
 
-    // console.log(val);
+    console.log(val);
     // if (val.field == 'fromsubmit') {
     //   // console.log('val', 1);
 
@@ -244,6 +247,26 @@ export class LessonPlanMaterialComponent implements OnInit {
         ind = (parseInt(a) + 1);
         // this.formDataVal = this.allData[a];
         // this.displayQuestionData(this.allData[ind]);
+        if(this.allData[a].skippable == 1){
+          
+        if (this.allData[ind] != null) {
+          this.prevButton = true;
+
+          this.router.navigateByUrl(this.routerPath + this.activatedroute.snapshot.params.associated_training + '/' + this.activatedroute.snapshot.params.lesson_id_object + '/' + this.allData[ind]._id);
+
+          this.displayQuestionData(this.allData[ind]);
+
+
+        }  else {
+          this.displayQuestionData(this.allData[0]);
+
+          this.router.navigateByUrl(this.routerPath + this.activatedroute.snapshot.params.associated_training + '/' + this.activatedroute.snapshot.params.lesson_id_object + '/' + this.allData[0]._id)
+        }
+        } else {
+          this.snackBar.open('Can Not Skip This Question..!', 'Ok', {
+            duration: 1000
+          });
+        }
         console.log(this.allData[a])
       }
     }
@@ -295,11 +318,9 @@ export class LessonPlanMaterialComponent implements OnInit {
         // picture.push({ key: value.question_img[key].basepath + value.question_img[key].image, val: value.question_img[key].basepath + value.question_img[key].image });
 
         pictureSelect.push({
-          heading: '<div><img src="value.question_img[key].basepath + value.question_img[key].image"></div>',
-          val: value.question_img[key].basepath + value.question_img[key].image,
-
+          key: key,
+          image: value.question_img[key].basepath + value.question_img[key].image,
         });
-
       }
     }
 
@@ -325,14 +346,24 @@ export class LessonPlanMaterialComponent implements OnInit {
     switch (value.question_type) {
       case 'text_area':
         jsonObj.type = 'textarea';
+        jsonObj.validations= [
+          { rule: 'required' }
+      ]
         break;
       case 'pick_picture':
-        jsonObj.type = 'radio';
+        jsonObj.type = 'image';
         jsonObj.val = pictureSelect;
+        jsonObj.name='image';
+        jsonObj.validations= [
+          { rule: 'required' }
+      ]
         break;
       case 'yes_no':
         jsonObj.type = 'radio';
         jsonObj.val = checkSelected;
+        jsonObj.validations= [
+          { rule: 'required' }
+      ]
 
         break;
       case 'multiple_selection':

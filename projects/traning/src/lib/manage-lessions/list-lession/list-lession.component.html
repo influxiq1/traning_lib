@@ -6,33 +6,28 @@
     <span class="searchblockwrapper">
       <span>
         <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
-          <h2 class="headerSpan">List Lesson Management</h2>
+          <h2 class="headerSpan">List of Lesson Management</h2>
         </mat-toolbar>
-        <mat-card-content class="countSection">
+        <!-- <mat-card-content class="countSection">
           <h2>{{trainingCounts.totaltrainingcount}}</h2>
-
           <span>Total Number Of <br>Training</span>
-        </mat-card-content>
+        </mat-card-content> -->
         <mat-card-content class="countSection">
           <h2>{{trainingCounts.totallessoncount}}</h2>
-
           <span>Total Number Of <br>Lessons</span>
         </mat-card-content>
-        <mat-card-content class="countSection">
+        <!-- <mat-card-content class="countSection">
           <h2>{{trainingCounts.activatedtrainingcount}}</h2>
-
           <span>Total Number Of <br>Activate Training</span>
-        </mat-card-content>
+        </mat-card-content> -->
         <mat-card-content class="countSection">
           <h2>{{trainingCounts.activatedlessoncount}}</h2>
-
           <span>Total Number Of <br>Activate Lesson</span>
         </mat-card-content>
-        <mat-card-content class="countSection">
+        <!-- <mat-card-content class="countSection">
           <h2>{{trainingCounts.trashedtrainingcount}}</h2>
-
           <span>Total Number Of <br>Trashed Trainings</span>
-        </mat-card-content>
+        </mat-card-content> -->
         <mat-card-content class="countSection">
           <h2>{{trainingCounts.trashedlessoncount}}</h2>
           <span>Total Number Of <br>Trashed Lessons</span>
@@ -215,7 +210,7 @@
                   toggle_on
                 </i>
               </span>
-              <span *ngIf="element.is_trash != null && element.is_trash==1" (click)="restoreTrashData(element._id,i)">
+              <span class="pointer" *ngIf="element.is_trash != null && element.is_trash==1" (click)="restoreTrashData(element._id,i)">
                 <i class="material-icons">
                   restore_page
                 </i>

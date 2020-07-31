@@ -8,8 +8,9 @@
     </span>
     <form novalidate (ngSubmit)="formsubmit()" class="formclass">
         <ng-container [formGroup]="dataForm" *ngFor="let item of formdataval; let i=index;">
-            <div>
-                <!-- <mat-label *ngIf="item.inputtype!='radio'">{{item.label}} </mat-label> -->
+
+            <div *ngIf="item.inputtype == 'text'">
+                <mat-label *ngIf="item.inputtype == 'text'">{{item.label}} : </mat-label> 
 
                 <mat-form-field *ngIf="item.inputtype == 'text' || item.inputtype == 'password'">
                     <input matInput [type]="item.inputtype" [placeholder]="item.placeholder"
@@ -22,12 +23,13 @@
                         {{item.validationerrormsg}}</mat-error>
                 </mat-form-field>
             </div>
-            <div>
+
+            <div *ngIf="item.inputtype == 'textarea'">
+                <mat-label *ngIf="item.inputtype == 'textarea'">{{item.label}} : </mat-label> 
 
                 <mat-form-field *ngIf="item.inputtype == 'textarea'">
                     <textarea matInput [placeholder]="item.placeholder" [formControlName]="[item.name]"
                         (keyup)="issubmit=0"></textarea>
-
                     <mat-error
                         *ngIf="dataForm.controls[item.name]!=null &&  item.validationrule!=null && !dataForm.controls[item.name].valid && dataForm.controls[item.name].touched && issubmit==1">
                         {{item.label}}
@@ -35,20 +37,20 @@
                         {{item.validationerrormsg}}</mat-error>
                 </mat-form-field>
             </div>
-            <div>
+
+            <div *ngIf="item.inputtype == 'email'">
                 <mat-form-field *ngIf="item.inputtype == 'email'">
                     <input matInput pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [name]="item.name"
                         [type]="item.inputtype" [placeholder]="item.placeholder" [formControlName]="[item.name]"
                         (keyup)="issubmit=0">
-
-
                     <mat-error
                         *ngIf="dataForm.controls[item.name]!=null &&  item.validationrule!=null && !dataForm.controls[item.name].valid && dataForm.controls[item.name].touched && issubmit==1">
                         {{item.label}}
                         {{item.validationerrormsg}}</mat-error>
                 </mat-form-field>
             </div>
-            <div>
+
+            <div *ngIf="item.inputtype == 'url'">
                 <mat-form-field *ngIf="item.inputtype == 'url'">
                     <input matInput
                         pattern="^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?|^((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
@@ -61,26 +63,26 @@
                         {{item.validationerrormsg}}</mat-error>
                 </mat-form-field>
             </div>
-            <div class="checkboxnew">
-                <mat-label *ngIf="item.inputtype!='radio'">{{item.label}}:</mat-label>
+
+            <div class="checkboxnew"  *ngIf="item.inputtype =='checkbox'">
+                <mat-label *ngIf="item.inputtype =='checkbox'">{{item.label}}:</mat-label>
                 <mat-checkbox *ngIf="item.inputtype == 'checkbox'" [ngClass]="item.class"
                     [formControlName]="[item.name]" (keyup)="issubmit=0" [(ngModel)]="checked"></mat-checkbox>
-            </div>
+            </div><br>
 
 
 
-            <div>
-                <span *ngIf="item.inputtype=='radio'">
-                    <label>{{item.label}}: </label>
-                    <mat-radio-group [formControlName]="[item.name]">
+            <div *ngIf="item.inputtype =='radio'">
+                <span *ngIf="item.inputtype =='radio'">
+                    <mat-label *ngIf="item.inputtype=='radio'">{{item.label}}:</mat-label>                    <mat-radio-group [formControlName]="[item.name]">
                         <mat-radio-button type="radio" *ngFor="let val of item.value" [name]="item.name" [value]="val"
                             (keyup)="issubmit=0" [ngClass]="item.class">{{val}} {{item.valuelabel}}</mat-radio-button>
                     </mat-radio-group>
                 </span>
             </div>
 
-            <div>
-                <!-- <p>{{item.defaultchoice}}</p> -->
+            <div *ngIf="item.inputtype == 'select'">
+                <!-- <mat-label *ngIf="item.inputtype == 'select'">{{item.label}}:</mat-label> -->
                 <mat-form-field *ngIf="item.inputtype == 'select'">
                     <span *ngIf="item.multiple!=true">
                         <mat-select [placeholder]="item.defaultchoice" [formControlName]="item.name"
@@ -107,6 +109,7 @@
                         {{item.validationerrormsg}}</mat-error>
                 </mat-form-field>
             </div>
+
             <mat-progress-bar *ngIf="progressLoader && item.name =='associated_training'" mode="indeterminate">
             </mat-progress-bar>
 
@@ -184,6 +187,7 @@
                         [ngModelOptions]="{standalone: true}">Has Lesson plan?</mat-checkbox>
                 </span>
             </div>
+            
             <div *ngIf="hasLessonVal == true">
                 <mat-form-field>
                     <mat-label>Select A One</mat-label>

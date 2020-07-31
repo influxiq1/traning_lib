@@ -186,8 +186,8 @@ public training_data_Counts:any;
     let modalData: any = {
       panelClass: 'delete-dialog',
       data: {
-        header: "Message",
-        message: "Are you want to delete these record ?",
+        header: "Are you want to delete these record ?",
+        message: "",
         button1: { text: "No" },
         button2: { text: "Yes" },
       }
@@ -235,14 +235,12 @@ public training_data_Counts:any;
         let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
         let searchval:any={};
 
-        //  console.log(typeof(this.status_search_regex),this.trashFlag)
+         console.log(this.status_search_regex,this.trashFlag)
 
-        if(this.status_search_regex !=null && this.status_search_regex !='undefined' && this.status_search_regex !=''){
-          // this.searchjson.status_search_regex = 1;
+        if(typeof(this.status_search_regex) !='undefined'){
          searchval["status_search"]=this.status_search_regex;
          } else {
           searchval["status_search"]=1;
-
          }
 
         if(this.dnaFlag == true){
@@ -317,7 +315,6 @@ public training_data_Counts:any;
     this.searchjson = {
       "lession_title_search_regex":"",
       "prerequisite_lession_search_regex":"",
-      "status_search_regex":"",
       "test_associate_training_search_regex":"",
       "associated_training_search_regex":"",
       "has_lessonplan_regex":"",
@@ -331,7 +328,7 @@ public training_data_Counts:any;
     let modalData: any = {
       panelClass: 'delete-dialog',
       data: {
-        header: "",
+        header: "You are about to change status of these record(s)",
         message: "",
         button1: { text: "Inactive" },
         button2: { text: "Active" },
@@ -383,8 +380,8 @@ public training_data_Counts:any;
     let modalData: any = {
       panelClass: 'delete-dialog',
       data: {
-        header: "Message",
-        message: "Are you want to delete these all record ?",
+        header: "Are you want to delete these all record ?",
+        message: "",
         button1: { text: "No" },
         button2: { text: "Yes" },
       }
@@ -448,7 +445,7 @@ public training_data_Counts:any;
     let modalData: any = {
       panelClass: 'statusupdate-dialog',
       data: {
-        header: "",
+        header: "You are about to change status of these record(s)",
         message: "",
         button1: { text: "Inactive" },
         button2: { text: "Active" },
@@ -457,11 +454,12 @@ public training_data_Counts:any;
     this.dialogRef = this.dialog.open(DialogBoxComponent, modalData);
       this.dialogRef.afterClosed().subscribe(result => {
       let resval=result;
-      if (result == "Active")
-        result = parseInt("1");
-      else
-        result = parseInt("0");
-
+      if (result == "Active") {
+        result = 1;
+      }
+      if (result == "Inactive") {
+        result = 0;
+      }
       let link = this.serverDetailsVal.serverUrl + this.formSourceVal.statusUpdateManyEndpoint;
       let source :any= this.formSourceVal.source;
       let token:any= this.serverDetailsVal.jwttoken;
@@ -476,8 +474,18 @@ public training_data_Counts:any;
          })
          for(let c in this.selection.selected){
           for(let b in this.listingData){
-            if(this.listingData[b]._id==this.selection.selected[c]._id){
-              this.listingData[b].status=resval;
+            if (this.selection.selected[c]._id == this.listingData[b]._id) {
+              // console.log(this.selection.selected[c],result, '>>', this.listingData[b])
+
+              if (result == 1) {
+                this.listingData[b].status = 1;
+                // console.log(this.listingData[b].status, '??')
+              }
+              if (result == 0) {
+                this.listingData[b].status = 0;
+                // console.log(this.listingData[b].status, '?_?')
+
+              }
             }
           }
         }

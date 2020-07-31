@@ -320,7 +320,7 @@ export class TraningComponent implements OnInit {
                 let result;
                 result = res.res;
                 console.log("drop down",result);
-                if (result.status == 'error') {
+                if (res.status == 'error' ) {
                     // this.router.navigate(['/']);
                 } else {
                     this.formdataval[c].sourceval = result;

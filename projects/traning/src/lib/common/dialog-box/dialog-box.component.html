@@ -1,9 +1,16 @@
 <div class="modal">
-    <h1 mat-dialog-title>{{ data.header }}</h1>
+    <!-- <span class="heycls"> Hey !</span><br> -->
+    <h1 mat-dialog-title class="headercls">{{ data.header }}</h1>
     <div mat-dialog-content>
-        <p>{{ data.message }}</p>
+        <!-- <p class="msgcls">Hey !</p> -->
     </div>
 </div>
+
+<!-- <div>
+    <span>Hey !</span><br>
+    <span>{{data.header}}</span>
+</div> -->
+
 <div mat-dialog-actions>
     <button mat-button (click)="button1()">{{ data.button1.text }}</button>
     <button mat-button (click)="button2()" cdkFocusInitial>{{ data.button2.text }}</button>

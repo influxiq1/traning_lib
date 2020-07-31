@@ -53,7 +53,7 @@ export class ListingTrainingComponent implements OnInit {
   public idArray: any = [];
   public allTrashData: any = [];
   public trashFlag: any = 0;
-  public status_search_regex:any;
+  public status_search_regex: any;
 
   public trashButtonText: any = "View Trash";
   public trainingCounts: any = {
@@ -97,7 +97,7 @@ export class ListingTrainingComponent implements OnInit {
   set allDataList(val: any) {
     this.listingData = (val) || 'no name set';
     this.listingData = val;
-    console.log(this.listingData);
+    // console.log(this.listingData);
     this.dataSource = new MatTableDataSource(this.listingData);
     // this.dataSource.paginator = this.paginator;
   }
@@ -108,7 +108,7 @@ export class ListingTrainingComponent implements OnInit {
   @Input()
   set formSource(formSource: any) {
     this.formSourceVal = (formSource) || '<no name set>';
-    console.log("formsourceval", this.formSourceVal);
+    // console.log("formsourceval", this.formSourceVal);
   }
   @Input()
   set EditPageRoute(val: any) {
@@ -157,8 +157,8 @@ export class ListingTrainingComponent implements OnInit {
     let modalData: any = {
       panelClass: 'delete-dialog',
       data: {
-        header: "Message",
-        message: "Are you want to delete these record ?",
+        header: "Are you want to delete these record ?",
+        message: "",
         button1: { text: "No" },
         button2: { text: "Yes" },
       }
@@ -177,7 +177,7 @@ export class ListingTrainingComponent implements OnInit {
 
   }
   deleteFunction(recordId: any, index: number) {
-    console.log("single delete fUNCTION", recordId, index);
+    // console.log("single delete fUNCTION", recordId, index);
 
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
     let data: any = {
@@ -186,10 +186,10 @@ export class ListingTrainingComponent implements OnInit {
       "token": this.serverDetailsVal.jwttoken,
       "associated_training": recordId
     }
-    console.log("singledel link and data", data, link);
+    // console.log("singledel link and data", data, link);
 
     this.apiService.postData(link, data).subscribe((res: any) => {
-      console.log("delete response", res);
+      // console.log("delete response", res);
       if (res.status = "success") {
         this.listingData.splice(index, 1);
         let allData: PeriodicElement[] = this.listingData;
@@ -208,7 +208,7 @@ export class ListingTrainingComponent implements OnInit {
   }
 
   filterByTrainingName() {
-    console.log(this.searchjson);
+    // console.log(this.searchjson);
     let searchval: any = {};
 
     // if (this.searchjson.status_search_regex != "") {
@@ -220,19 +220,17 @@ export class ListingTrainingComponent implements OnInit {
     //   searchval["parent_catagory_search"] = { $regex: this.searchjson.parent_catagory_search_regex.toLowerCase() }
     // }
 
-    if(this.status_search_regex !=null && this.status_search_regex !='undefined' && this.status_search_regex !=''){
-      // this.searchjson.status_search_regex = 1;
-     searchval["status_search"]=this.status_search_regex;
-     } else {
-      searchval["status_search"]=1;
-
-     }
+    if (typeof(this.status_search_regex) !='undefined') {
+      searchval["status_search"] = this.status_search_regex;
+    } else {
+      searchval["status_search"] = 1;
+    }
 
     searchval["catagory_name_search"] = { $regex: this.searchjson.catagory_name_search_regex.toLowerCase() }
     searchval["parent_catagory_search"] = { $regex: this.searchjson.parent_catagory_search_regex.toLowerCase() }
 
 
-    
+
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
     var data = {
       "source": this.searchSourceName,
@@ -256,7 +254,7 @@ export class ListingTrainingComponent implements OnInit {
 
   }
   resetSearch() {
-    this.status_search_regex='';
+    this.status_search_regex = '';
     this.searchjson = {
       "catagory_name_search_regex": "",
       "parent_catagory_search_regex": ""
@@ -268,7 +266,7 @@ export class ListingTrainingComponent implements OnInit {
     let modalData: any = {
       panelClass: 'dialog',
       data: {
-        header: "",
+        header: "You are about to change status of these record(s)",
         message: "",
         button1: { text: "Inactive" },
         button2: { text: "Active" },
@@ -321,8 +319,8 @@ export class ListingTrainingComponent implements OnInit {
     let modalData: any = {
       panelClass: 'delete-dialog',
       data: {
-        header: "Message",
-        message: "Are you want to delete these all record ?",
+        header: "Are you want to delete these all record ?",
+        message: "",
         button1: { text: "No" },
         button2: { text: "Yes" },
       }
@@ -390,7 +388,7 @@ export class ListingTrainingComponent implements OnInit {
     let modalData: any = {
       panelClass: 'statusupdate-dialog',
       data: {
-        header: "",
+        header: "You are about to change status of these record(s)",
         message: "",
         button1: { text: "Inactive" },
         button2: { text: "Active" },
@@ -398,11 +396,15 @@ export class ListingTrainingComponent implements OnInit {
     }
     this.dialogRef = this.dialog.open(DialogBoxComponent, modalData);
     this.dialogRef.afterClosed().subscribe(result => {
-      let resval = result;
-      if (result == "Active")
-        result = parseInt("1");
-      else
-        result = parseInt("0");
+      // console.log('>>', result)
+
+      var resval = result;
+      if (result == "Active") {
+        result = 1;
+      }
+      if (result == "Inactive") {
+        result = 0;
+      }
 
       let link = this.serverDetailsVal.serverUrl + this.formSourceVal.statusUpdateManyEndpoint;
       let source: any = this.formSourceVal.source;
@@ -416,10 +418,21 @@ export class ListingTrainingComponent implements OnInit {
           this.snakBar.open(message, action, {
             duration: 3000
           })
+
           for (let c in this.selection.selected) {
             for (let b in this.listingData) {
-              if (this.listingData[b]._id == this.selection.selected[c]._id) {
-                this.listingData[b].status = resval;
+              if (this.selection.selected[c]._id == this.listingData[b]._id) {
+                // console.log(this.selection.selected[c],result, '>>', this.listingData[b])
+
+                if (result == 1) {
+                  this.listingData[b].status = 1;
+                  // console.log(this.listingData[b].status, '??')
+                }
+                if (result == 0) {
+                  this.listingData[b].status = 0;
+                  // console.log(this.listingData[b].status, '?_?')
+
+                }
               }
             }
           }

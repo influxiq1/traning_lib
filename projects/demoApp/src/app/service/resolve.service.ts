@@ -29,7 +29,10 @@ public user_details:any;
       // console.log("routeee",this.acti);
 
         // this.user_details=JSON.parse(this.cookiesService.get('user_details'));
-        console.log(this.user_details,"....?")
+        // console.log(this.user_details,"....?")
+
+        // this.userType=this.user_details.user_type;
+        // this.userId=this.user_details._id;
         this.userType = JSON.parse(this.cookiesService.get('type'));
          this.userId = JSON.parse(this.cookiesService.get('userid'));
 

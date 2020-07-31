@@ -58,17 +58,16 @@ const appRoutes: Routes = [
 
     { path: 'manage-lesson/list', component : ListLessionComponent,
     resolve: { lessionData: ResolveService }, 
-    data: { requestcondition: { source: 'manage_lession_view', condition: {'is_trash':{$ne:1}} }, endpoint: 'datalistwithouttoken' }},
+    data: { requestcondition: { source: 'manage_lession_view', condition: {'is_trash':{$ne:1}} }, endpoint: 'getlessondata' }},
 
     { path: 'manage-lesson/edit/:id', component: AddEditLessionsComponent },
 
    /**Training Management**/
-    { path: 'manage-training/add', component: AddEditTrainingComponent },
-
+    { path: 'manage-training/add', component: AddEditTrainingComponent },                                                                                                                                                                                                                                                                                                                                             
     {
         path: 'manage-training/list', component: ListingTrainingComponent,
         resolve: { trainingdata: ResolveService }, 
-        data: { requestcondition: { source: 'training_category_management_view', condition: {'is_trash':{$ne:1}} }, endpoint: 'datalist' }
+        data: { requestcondition: { source: 'training_category_management_view', condition: {'is_trash':{$ne:1}} }, endpoint: 'gettrainingcategorydata' }
     },
     
     { path: 'manage-training/edit/:id', component: AddEditTrainingComponent },

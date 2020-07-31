@@ -7,38 +7,33 @@
     <span class="searchblockwrapper">
       <span>
           <mat-toolbar color="primary" style="justify-content: center; align-items: center;" >
-    <h2 class="headerSpan">List Training Management</h2>
+    <h2 class="headerSpan">List Of Training Management</h2>
   </mat-toolbar>
 
   <mat-card-content class="countSection">
     <h2>{{trainingCounts.totaltrainingcount}}</h2>
-
     <span>Total Number Of <br>Training</span>
   </mat-card-content>
-  <mat-card-content class="countSection">
+  <!-- <mat-card-content class="countSection">
     <h2>{{trainingCounts.totallessoncount}}</h2>
-
     <span>Total Number Of <br>Lessons</span>
-  </mat-card-content>
+  </mat-card-content> -->
   <mat-card-content class="countSection">
     <h2>{{trainingCounts.activatedtrainingcount}}</h2>
-
-    <span>Total Number Of <br>Activate Training</span>
+    <span>Total Number Of <br>Active Training</span>
   </mat-card-content>
-  <mat-card-content  class="countSection">
+  <!-- <mat-card-content  class="countSection">
     <h2>{{trainingCounts.activatedlessoncount}}</h2>
-
     <span>Total Number Of <br>Activate Lesson</span>
-  </mat-card-content >
+  </mat-card-content > -->
   <mat-card-content class="countSection">
     <h2>{{trainingCounts.trashedtrainingcount}}</h2>
-
     <span>Total Number Of <br>Trashed Trainings</span>
   </mat-card-content>
-  <mat-card-content class="countSection">
+  <!-- <mat-card-content class="countSection">
     <h2>{{trainingCounts.trashedlessoncount}}</h2>
     <span>Total Number Of <br>Trashed Lessons</span>
-  </mat-card-content>
+  </mat-card-content> -->
 
 </span>
 
@@ -141,9 +136,9 @@
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef>Status </th>
         <td mat-cell *matCellDef="let row" title="Status">
-            <div *ngIf="row.status===1">
+            <div *ngIf="row.status == 1">
                 Active </div>
-            <div *ngIf="row.status===0">
+            <div *ngIf="row.status == 0">
                 Inactive
             </div>
 
