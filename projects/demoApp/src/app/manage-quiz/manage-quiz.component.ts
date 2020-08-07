@@ -20,9 +20,9 @@ export class ManageQuizComponent implements OnInit {
   };
   public formSource: any = {
     "source":'manage_quiz_question',
-    "endpoint": "datalist",
+    "endpoint": "deletesingledata",
     "searchEndpoint":"datalist",
-    "statusUpdateEndpoint":"questionstatusupdate",
+    "statusUpdateEndpoint":"statusupdate",
     "statusUpdateSourceName":"manage_quiz_question",
   }
   public addUpdateAnswerRoute:any={

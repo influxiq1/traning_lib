@@ -133,7 +133,7 @@ export class ManageQuizComponent implements OnInit {
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
     let data: any = {
       "source": this.formSourceVal.source,
-      "_id": recordId,
+      "id": recordId,
       "token": this.serverDetailsVal.jwttoken
     }
     this.apiService.postData(link, data).subscribe((res: any) => {
@@ -177,19 +177,22 @@ export class ManageQuizComponent implements OnInit {
   }
   statusChange(id: any, index: any, currentStatus: any) {
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.statusUpdateEndpoint;
-    let data: any = {
+    let data1: any = {
       "source": this.formSourceVal.statusUpdateSourceName,
-      "_id": id,
-      "status": currentStatus
+      data:{"id": id,
+      "status": currentStatus}
     }
-    this.apiService.postDatawithoutToken(link, data).subscribe((response: any) => {
+    this.apiService.postDatawithoutToken(link, data1).subscribe((response: any) => {
       let result: any;
       if (response.status = true) {
         if (this.listingData[index].status == "Active") {
           this.listingData[index].status = "Inactive"
         } else {
           this.listingData[index].status = "Active"
+        }
 
+        for(let i in this.listingData){
+          this.listingData[i].status=currentStatus;
         }
 
         let allData: PeriodicElement[] = this.listingData;

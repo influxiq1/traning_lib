@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../api.service';
 import { CookieService } from 'ngx-cookie-service';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSnackBar } from "@angular/material";
+// import { type } from 'os';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSnackBar } from "@angular/
   styleUrls: ['./lesson-plan-material.component.css']
 })
 export class LessonPlanMaterialComponent implements OnInit {
-  public jsonObj1: any;
+  public jsonObj1: any = {};
   public answerData: any
   public valFormData: any = [];
   public allData: any = [];
@@ -26,13 +27,37 @@ export class LessonPlanMaterialComponent implements OnInit {
   public userId: any;
   public redirectPath: any;
   public progress_bar = 0;
-  public formDataVal: any;
+  public formDataVal: any = {};
+  public flag: boolean = false;
   public routerPath: any = '/lesson-plan-material/';
   public prevButton: boolean = false;
+  public formVal: any = [];
+  public selectVal: any = [];
+  public pictureSelect: any = [];
+
+
   @Input()
   set lessonplandata(val: any) {
+    this.formDataVal = {};
+    this.jsonObj1={};
+    this.valFormData = [];
+    this.selectVal = [];
+    this.pictureSelect = [];
+
     this.allData = val;
+    this.flag = false;
+    for (let a in this.allData) {
+      if (this.allData[a]._id == this.activatedroute.snapshot.params._id) {
+        this.progress_bar = 1;
+        setTimeout(() => {
+          this.formDataVal = this.allData[a];
+          this.displayQuestionData(this.allData[a]);
+        }, 100);
+
+      }
+    }
   }
+
   @Input()
   set serverDetails(val: {}) {
     this.serverdata = val;
@@ -43,7 +68,7 @@ export class LessonPlanMaterialComponent implements OnInit {
   }
 
 
-  constructor(public activatedroute: ActivatedRoute, public apiService: ApiService, public cookieService: CookieService, public router: Router,public snackBar:MatSnackBar) {
+  constructor(public activatedroute: ActivatedRoute, public apiService: ApiService, public cookieService: CookieService, public router: Router, public snackBar: MatSnackBar) {
     this.userId = JSON.parse(this.cookieService.get('userid'));
 
     this.associated_training_id = this.activatedroute.snapshot.params.associated_training;
@@ -51,24 +76,38 @@ export class LessonPlanMaterialComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.formDataVal = {};
+    this.jsonObj1={};
+    this.valFormData = [];
+    this.selectVal = [];
+    this.pictureSelect = [];
+
+    // console.log('>> param id data', this.allData)
 
     if (this.activatedroute.snapshot.params._id == null) {
       this.displayQuestionData(this.allData[0]);
       this.formDataVal = this.allData[0];
       this.prevButton = false;
-      console.log('>> param null', this.formDataVal)
-    } else {
+      // console.log('>> param null', this.formDataVal)
+    }
+    if (this.activatedroute.snapshot.params._id != null) {
+      // console.log('>> param id data', this.activatedroute.snapshot.params._id)
+
       for (let a in this.allData) {
         if (this.allData[a]._id == this.activatedroute.snapshot.params._id) {
           this.formDataVal = this.allData[a];
           this.progress_bar = 0;
+          // setTimeout(() => {
+          // this.flag = false;/
+
           this.displayQuestionData(this.allData[a]);
-          console.log(this.formDataVal, '??', this.activatedroute.snapshot.params._id)
+          // }, 200);
+          // console.log(this.formDataVal, '>>>>>>>>>??', this.activatedroute.snapshot.params._id)
         }
       }
     }
 
-    console.log('>> param id data', this.formDataVal)
+    // console.log('>> param id data',this.activatedroute.snapshot.params._id)
 
 
 
@@ -124,166 +163,244 @@ export class LessonPlanMaterialComponent implements OnInit {
 
 
   listenFormFieldChange(val: any) {
+    this.jsonObj1={};
+    this.valFormData=[];
+    console.log(val)
 
-    console.log(val);
-    // if (val.field == 'fromsubmit') {
-    //   // console.log('val', 1);
+    if (val.field == 'fromsubmit') {
+    this.jsonObj1={};
+    this.valFormData=[];
 
-    //   // if(val.fromval.message!=null && val.fromval.message!=''){
-    //   // this.jsonObj1.value=val.fromval;
-    //   // this.valFormData.push(this.jsonObj1);
-    //   // console.log('vf', 'val', val, 'formval', val.fromval.item.data, 'valFormData', this.valFormData);
-    //   // console.log('valFormData', this.valFormData);
-    //   // console.log('val.fromval.item.data', val.fromval.item);
-    //   // this.answerData=val.fromval;
-    //   for (let n in this.valFormData) {
-    //     // console.log('n', n);
-    //     for (let m in val.fromval.item) {
-    //       // console.log(m, 'm');
-    //       if (this.valFormData[n].name == m) {
-    //         console.log(this.valFormData[n].name, 'm');
+      this.progress_bar = 1;
+      this.jsonObj1 = {
+        heading:  'Title : ' + this.formDataVal.title +'<br>'+ 
+                  'Description : ' + this.formDataVal.description +'<br>'+ 
+                  'Question : ' + this.formDataVal.question +'<br>',
+        // label: this.formDataVal.description,
+        // name: this.formDataVal.question,
+        disabled: true,
+      };
 
-    //         this.valFormData[n].value = val.fromval.item[m];
-    //       }
-    //     }
-    //   }
-    //   // console.log('valFormData >>>>', this.valFormData);
-    //   let endpoint = this.serverdata.serverUrl + 'addlessonplandata'
-    //   let data: any = {
-    //     'lesson_id': this.lessonId,
-    //     'associated_training_id': this.associated_training_id,
-    //     'user_id': this.userId,
-    //     'training_from_data': this.valFormData
-    //   }
+      if (this.formDataVal.question_type == 'multiple_selection') {
+        this.selectVal = [];
 
-    //   let dataval: any = { data };
+        for (let a in this.formDataVal.answerdata) {
+          this.selectVal.push(
+            { val: parseInt(a), name: this.formDataVal.answerdata[a].answer }
+          );
+        }
+        this.jsonObj1.type = 'select';
+        this.jsonObj1.value = val.fromval.item.itemVal;
+        this.jsonObj1.val = this.selectVal;
+        this.jsonObj1.name = 'itemVal';
+        this.jsonObj1.multiple = true;
+        this.valFormData.push(this.jsonObj1);
+      };
 
-    //   // console.log(data, '>>>>');
-    //   this.apiService.getData(endpoint, dataval).subscribe(res => {
-    //     let result: any;
-    //     result = res;
-    //     if (result.status == 'success') {
-    //       this.router.navigateByUrl(this.redirectPath + '/' + this.associated_training_id);
-    //     }
-    //     // console.log('+++++>>>>', res)
-    //   })
+      if (this.formDataVal.question_type == 'text_area') {
+        this.jsonObj1.type = 'textarea';
+        this.jsonObj1.name = 'desc1';
+        this.jsonObj1.value = val.fromval.item.itemVal;
+        this.valFormData.push(this.jsonObj1);
+      };
 
-    // }
 
-  }
+      if (this.formDataVal.question_type == 'pick_picture') {
+        this.pictureSelect = [];
 
-  nextButton(flag: any) {
-    console.log(flag)
-    this.progress_bar = 1;
+        for (const b in this.formDataVal.question_img) {
+            this.pictureSelect.push({
+              key: parseInt(b),
+              image: this.formDataVal.question_img[b].basepath + this.formDataVal.question_img[b].image,
+            });
+        }
+        this.jsonObj1.name = 'img';
+        this.jsonObj1.type = 'image';
+        this.jsonObj1.val = this.pictureSelect;
+        this.jsonObj1.value = parseInt(val.fromval.item.image);
+        this.valFormData.push(this.jsonObj1);
+      };
 
-    switch (flag) {
-      case 'next':
+
+      if (this.formDataVal.question_type == 'yes_no') {
+        this.jsonObj1.type = 'radio';
+        let radioval: any = [{ key: 0, val: 'Yes' }, { key: 1, val: 'No' }]
+        this.jsonObj1.name = 'yes/no';
+        this.jsonObj1.value = parseInt(val.fromval.item.itemVal);
+        this.jsonObj1.val = radioval;
+        this.valFormData.push(this.jsonObj1);
+      };
+
+
+
+
+      let endpoint = this.serverdata.serverUrl + 'addlessonplandata'
+      let data: any = {
+        'lesson_id': this.lessonId,
+        'associated_training_id': this.associated_training_id,
+        'user_id': this.userId,
+        'training_from_data': this.valFormData
+      }
+
+      let dataval: any = { data };
+
+      this.apiService.getData(endpoint, dataval).subscribe(res => {
+        let result: any;
+        result = res;
         let ind: any = 0;
-        for (let a in this.allData) {
-          if (this.allData[a]._id == this.activatedroute.snapshot.params._id) {
-            ind = (parseInt(a) + 1);
-            // this.formDataVal = this.allData[a];
-            // this.displayQuestionData(this.allData[ind]);
-            // console.log(ind)
+
+        if (result.status == 'success') {
+          if (this.activatedroute.snapshot.params._id != null && typeof (this.activatedroute.snapshot.params._id) != "undefined") {
+            for (let a in this.allData) {
+              if (this.allData[a]._id == this.activatedroute.snapshot.params._id) {
+                this.flag = false;
+                ind = (parseInt(a) + 1);
+                if (typeof (this.allData[ind]) != "undefined" && this.allData[ind] != null) {
+                  this.router.navigateByUrl(this.routerPath + this.activatedroute.snapshot.params.associated_training + '/' + this.activatedroute.snapshot.params.lesson_id_object + '/' + this.allData[ind]._id);
+
+                } else {
+                  this.router.navigateByUrl(this.redirectPath + '/' + this.associated_training_id);
+                }
+              }
+            }
+          }
+          if (this.activatedroute.snapshot.params._id == null || typeof (this.activatedroute.snapshot.params._id) == "undefined") {
+            this.router.navigateByUrl(this.routerPath + this.activatedroute.snapshot.params.associated_training + '/' + this.activatedroute.snapshot.params.lesson_id_object + '/' + this.allData[1]._id);
           }
         }
+      })
 
-        if (this.allData[ind] != null) {
-          this.prevButton = true;
-
-          console.log(ind)
-
-          this.router.navigateByUrl(this.routerPath + this.activatedroute.snapshot.params.associated_training + '/' + this.activatedroute.snapshot.params.lesson_id_object + '/' + this.allData[ind]._id);
-
-          this.displayQuestionData(this.allData[ind]);
-
-
-        } else {
-          this.prevButton = true;
-          // this.formDataVal = this.allData[0];
-          this.displayQuestionData(this.allData[0]);
-
-          this.router.navigateByUrl(this.routerPath + this.activatedroute.snapshot.params.associated_training + '/' + this.activatedroute.snapshot.params.lesson_id_object + '/' + this.allData[0]._id)
-        }
-        setTimeout(() => {
-          this.progress_bar = 0;
-        }, 1000);
-        break;
-      case 'prev':
-        let ind1: number = 0;
-
-        for (let b in this.allData) {
-          if (this.allData[b]._id == this.activatedroute.snapshot.params._id) {
-            ind1 = (parseInt(b) - 1);
-            // this.formDataVal = this.allData[b];
-            console.log(this.allData[ind1])
-          }
-        }
-
-        if (this.allData[ind1] > 0) {
-          this.displayQuestionData(this.allData[ind1]);
-          this.prevButton = true;
-          this.router.navigateByUrl(this.routerPath + this.activatedroute.snapshot.params.associated_training + '/' + this.activatedroute.snapshot.params.lesson_id_object + '/' + this.allData[ind1]._id)
-        } else {
-          this.prevButton = false;
-
-          // this.formDataVal = this.allData[0];
-          this.displayQuestionData(this.allData[0]);
-
-          this.router.navigateByUrl(this.routerPath + this.activatedroute.snapshot.params.associated_training + '/' + this.activatedroute.snapshot.params.lesson_id_object + '/' + this.allData[0]._id)
-        }
-        setTimeout(() => {
-          this.progress_bar = 0;
-        }, 1000);
-        break;
     }
+
   }
 
+  // nextButton(flag: any) {
+  //   console.log(flag)
+  //   this.progress_bar = 1;
 
-  skipButton(){
+  //   switch (flag) {
+  //     case 'next':
+  //       let ind: any = 0;
+  //       for (let a in this.allData) {
+  //         if (this.allData[a]._id == this.activatedroute.snapshot.params._id) {
+  //           ind = (parseInt(a) + 1);
+  //         }
+  //       }
+
+  //       if (this.allData[ind] != null) {
+  //         this.prevButton = true;
+
+  //         console.log(ind)
+
+  //         this.router.navigateByUrl(this.routerPath + this.activatedroute.snapshot.params.associated_training + '/' + this.activatedroute.snapshot.params.lesson_id_object + '/' + this.allData[ind]._id);
+
+  //         // this.displayQuestionData(this.allData[ind]);e
+
+
+  //       } else {
+  //         this.prevButton = true;
+  //         // this.formDataVal = this.allData[0];
+  //         // this.displayQuestionData(this.allData[0]);
+
+  //         this.router.navigateByUrl(this.routerPath + this.activatedroute.snapshot.params.associated_training + '/' + this.activatedroute.snapshot.params.lesson_id_object + '/' + this.allData[0]._id)
+  //       }
+  //       setTimeout(() => {
+  //         this.progress_bar = 0;
+  //       }, 1000);
+  //       break;
+  //     case 'prev':
+  //       let ind1: number = 0;
+
+  //       for (let b in this.allData) {
+  //         if (this.allData[b]._id == this.activatedroute.snapshot.params._id) {
+  //           ind1 = (parseInt(b) - 1);
+  //           // this.formDataVal = this.allData[b];
+  //           console.log(this.allData[ind1])
+  //         }
+  //       }
+
+  //       if (this.allData[ind1] > 0) {
+  //         // this.displayQuestionData(this.allData[ind1]);
+  //         this.prevButton = true;
+  //         this.router.navigateByUrl(this.routerPath + this.activatedroute.snapshot.params.associated_training + '/' + this.activatedroute.snapshot.params.lesson_id_object + '/' + this.allData[ind1]._id)
+  //       } else {
+  //         this.prevButton = false;
+
+  //         // this.formDataVal = this.allData[0];
+  //         // this.displayQuestionData(this.allData[0]);
+
+  //         this.router.navigateByUrl(this.routerPath + this.activatedroute.snapshot.params.associated_training + '/' + this.activatedroute.snapshot.params.lesson_id_object + '/' + this.allData[0]._id)
+  //       }
+  //       setTimeout(() => {
+  //         this.progress_bar = 0;
+  //       }, 1000);
+  //       break;
+  //   }
+  // }
+
+
+  skipButton() {
+    // console.log('>>1')
     let ind: any = 0;
     for (let a in this.allData) {
       if (this.allData[a]._id == this.activatedroute.snapshot.params._id) {
+
         ind = (parseInt(a) + 1);
         // this.formDataVal = this.allData[a];
         // this.displayQuestionData(this.allData[ind]);
-        if(this.allData[a].skippable == 1){
-          
-        if (this.allData[ind] != null) {
-          this.prevButton = true;
+        if (this.allData[a].skippable == 1) {
 
-          this.router.navigateByUrl(this.routerPath + this.activatedroute.snapshot.params.associated_training + '/' + this.activatedroute.snapshot.params.lesson_id_object + '/' + this.allData[ind]._id);
+          if (this.allData[ind] != null) {
+            this.prevButton = true;
 
-          this.displayQuestionData(this.allData[ind]);
+            this.router.navigateByUrl(this.routerPath + this.activatedroute.snapshot.params.associated_training + '/' + this.activatedroute.snapshot.params.lesson_id_object + '/' + this.allData[ind]._id);
+
+            // this.displayQuestionData(this.allData[ind]);
 
 
-        }  else {
-          this.displayQuestionData(this.allData[0]);
+          } else {
+            // this.displayQuestionData(this.allData[0]);
 
-          this.router.navigateByUrl(this.routerPath + this.activatedroute.snapshot.params.associated_training + '/' + this.activatedroute.snapshot.params.lesson_id_object + '/' + this.allData[0]._id)
-        }
+            this.router.navigateByUrl(this.routerPath + this.activatedroute.snapshot.params.associated_training + '/' + this.activatedroute.snapshot.params.lesson_id_object + '/' + this.allData[0]._id)
+          }
         } else {
           this.snackBar.open('Can Not Skip This Question..!', 'Ok', {
             duration: 1000
           });
         }
-        console.log(this.allData[a])
+        // console.log(this.allData[a])
       }
+
+      if (this.activatedroute.snapshot.params._id == null) {
+        // console.log('>>3')
+        if (this.allData[0].skippable == 0) {
+          this.snackBar.open('Can Not Skip This Question..!', 'Ok', {
+            duration: 1000
+          });
+        }
+      }
+
     }
   }
 
 
   displayQuestionData(value: any) {
+    this.progress_bar = 1;
 
-    console.log(value)
+    this.flag = true;
+
+    this.formDataVal = {};
+
+    let checkSelected: any = []
+
 
     this.formDataVal = value;
 
     this.formdata = {
-      successmessage: "Added Successfully !!",
+      successmessage: "Submitted Successfully !!",
       // redirectpath: this.redirectPath+'/'+this.associated_training_id,
       // redirectpath: '',
-      // submittext: "Submit",
+      submittext: "Next",
       // canceltext:"Cancel Now",
       // resettext: "Reset",
       submitactive: true, //optional, default true
@@ -304,7 +421,7 @@ export class LessonPlanMaterialComponent implements OnInit {
       for (const key in value.answerdata) {
         answer.push({ key: value.answerdata[key].answer, val: value.answerdata[key].answer });
         answerForSelect.push({
-          val: value.answerdata[key].answer,
+          val: parseInt(key),
           name: value.answerdata[key].answer
         });
       }
@@ -325,17 +442,9 @@ export class LessonPlanMaterialComponent implements OnInit {
     }
 
 
-    let checkSelected: any = []
 
     if (value.question_type == 'yes_no') {
-      checkSelected.push({
-        key: 'Yes',
-        val: 'Yes'
-      },
-        {
-          key: 'No',
-          val: 'No'
-        });
+      checkSelected.push({ key: 0, val: 'Yes' }, { key: 1, val: 'No' });
     }
 
     let jsonObj: any = {
@@ -346,40 +455,48 @@ export class LessonPlanMaterialComponent implements OnInit {
     switch (value.question_type) {
       case 'text_area':
         jsonObj.type = 'textarea';
-        jsonObj.validations= [
-          { rule: 'required' }
-      ]
+        jsonObj.name = 'itemVal';
+        jsonObj.validations = [
+          { rule: 'required', message: 'Text Field is required' }
+        ]
+        this.progress_bar = 0;
+
         break;
       case 'pick_picture':
         jsonObj.type = 'image';
         jsonObj.val = pictureSelect;
-        jsonObj.name='image';
-        jsonObj.validations= [
-          { rule: 'required' }
-      ]
+        jsonObj.name = 'image';
+        jsonObj.validations = [
+          { rule: 'required', message: 'Please Select One Image' }
+        ]
+        this.progress_bar = 0;
+
         break;
       case 'yes_no':
         jsonObj.type = 'radio';
         jsonObj.val = checkSelected;
-        jsonObj.validations= [
-          { rule: 'required' }
-      ]
-
+        jsonObj.name = 'itemVal';
+        jsonObj.validations = [
+          { rule: 'required', message: 'Please Choose One Option' }
+        ]
+        this.progress_bar = 0;
         break;
       case 'multiple_selection':
         // console.log('M')
         jsonObj.type = 'select';
         jsonObj.val = answerForSelect;
         jsonObj.multiple = true;
-        jsonObj.validations= [
-          { rule: 'required' }
-      ]
+        jsonObj.name = 'itemVal';
+        jsonObj.validations = [
+          { rule: 'required', message: 'Please Select at Least One Option' }
+        ]
+        this.progress_bar = 0;
         break;
 
       default:
         break;
     }
-    console.log('jsonObj', jsonObj)
+    // console.log('jsonObj', jsonObj)
 
 
     tempfrondata.push(jsonObj);
@@ -389,8 +506,6 @@ export class LessonPlanMaterialComponent implements OnInit {
     }
 
   }
-
-
 
 }
 

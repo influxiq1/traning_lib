@@ -1,17 +1,20 @@
-<div class="">
+<div class="questioncls" *ngIf="flag == true">
     <h2>Title : {{formDataVal.title}}</h2>
     <h2>Description : {{formDataVal.description_html}}</h2>
     <h2>Question : {{formDataVal.question}}</h2>
 </div>
-
 <br>
 <div>
     <mat-progress-bar mode="indeterminate" *ngIf="progress_bar == 1"></mat-progress-bar>
 </div>
 <br>
-<lib-showform *ngIf="formdata != null && formdata.fields != null && formdata.fields.length > 0" [formdata]="formdata"
+
+<ng-container *ngIf="flag == true">
+    <lib-showform [formdata]="formdata"
     [formfieldrefresh]="formfieldrefresh" [formfieldrefreshdata]="formfieldrefreshdata"
     (onFormFieldChange)="listenFormFieldChange($event)"> </lib-showform>
+</ng-container>
+
 <!-- <h1>{{formdata | json}}</h1> -->
 <p>{{formdata.field | json}}</p>
 <!-- {{formDataVal | json}} -->
@@ -20,8 +23,11 @@
     <!-- <button mat-raised-button color="primary" type="button" class="btncls"
         (click)="nextButton('prev')" >Previous</button> &nbsp; -->
 
-    <button mat-raised-button color="primary" type="button" class="btncls" (click)="nextButton('next')">Next</button>
+    <!-- <button mat-raised-button color="primary" type="button" class="btncls" (click)="nextButton('next')">Next 1</button> -->
+
+    <!-- <button mat-raised-button color="primary" type="button" class="btncls" >Submit</button> -->
+
 </div><br>
 <div style="cursor:pointer">
-<span (click)="skipButton()"><u>Skip Now</u></span>
+<span class="skipbuttoncls" (click)="skipButton()"><u>Skip Now</u></span>
 </div>
