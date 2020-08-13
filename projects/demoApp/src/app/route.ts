@@ -34,14 +34,14 @@ const appRoutes: Routes = [
     {
         path : 'lesson-plan-material/:associated_training/:lesson_id_object',component :  LessonPlanMaterialComponent,
         resolve: { lessonplandata: ResolveService }, 
-        data: { requestcondition: { source: 'manage_quiz_question', condition: {} }, endpoint: 'datalist' }
+        data: { requestcondition: { source: 'manage_quiz_question', condition: {status:1} }, endpoint: 'datalist' }
         
     },
 
     {
         path : 'lesson-plan-material/:associated_training/:lesson_id_object/:_id',component :  LessonPlanMaterialComponent,
         resolve: { lessonplandata: ResolveService }, 
-        data: { requestcondition: { source: 'manage_quiz_question', condition: {} }, endpoint: 'datalist' }
+        data: { requestcondition: { source: 'manage_quiz_question', condition: {status:1} }, endpoint: 'datalist' }
         
     },
 
@@ -83,7 +83,7 @@ const appRoutes: Routes = [
     {
       path : 'manage-quiz/list/:lesson_id_object' , component : ManageQuizComponent,
       resolve: { trainingdata: ResolveService }, 
-        data: { requestcondition: { source: 'manage_quiz_question', condition: {} }, endpoint: 'datalist' }
+        data: { requestcondition: { source: 'manage_quiz_question', condition: {} }, endpoint: 'datalistwithouttoken' }
     },
     {
         path : 'manage-quiz/add/:id', component : AddEditComponent
@@ -91,7 +91,7 @@ const appRoutes: Routes = [
     {
         path : 'manage-quiz/edit/:_id/:lesson_id_object', component : AddEditComponent,
         resolve: { quizQuestionData: ResolveService }, 
-        data: { requestcondition: { source: 'manage_quiz_question', condition: {} }, endpoint: 'datalist' }
+        data: { requestcondition: { source: 'manage_quiz_question', condition: {} }, endpoint: 'datalistwithouttoken' }
     },
     {
       path : 'manage-quiz/add-answer/:id/:lessonid' , component : AddUpdateAnswerComponent

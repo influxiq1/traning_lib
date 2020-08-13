@@ -102,7 +102,7 @@ export class AddEditComponent implements OnInit {
       question: ["", Validators.required],
       priority: [""],
       status: [""],
-      description: [''],
+      description: ['',Validators.required],
       title: ['', Validators.required],
       text_area_type: [''],
       answerdata: this.fb.array([]), 
@@ -243,6 +243,10 @@ export class AddEditComponent implements OnInit {
   getQuestionTypeValue(val: any) {
     console.log(val, '??');
     this.questionTypeVal = val;
+
+    if(this.questionTypeVal == 'text_area'){
+      this.manageQuizForm.controls['text_area_type'].patchValue('medium');
+    }
   }
 
   // get text area value(s,m,l)
@@ -270,6 +274,15 @@ export class AddEditComponent implements OnInit {
   clear_image(index) {
     this.images_array.pop(this.listingData[0].question_img[index]);
     this.images_array_edit.splice(index, 1);
+  }
+
+  cancelroute(){
+    if (this.paramId) {
+      this.router.navigateByUrl(this.listingPageRoute + this.lessonidineditForm);
+
+    } else {
+      this.router.navigateByUrl(this.listingPageRoute + this.lessonId);
+    }
   }
 
 }

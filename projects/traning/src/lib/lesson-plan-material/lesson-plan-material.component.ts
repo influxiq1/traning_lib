@@ -39,7 +39,7 @@ export class LessonPlanMaterialComponent implements OnInit {
   @Input()
   set lessonplandata(val: any) {
     this.formDataVal = {};
-    this.jsonObj1={};
+    this.jsonObj1 = {};
     this.valFormData = [];
     this.selectVal = [];
     this.pictureSelect = [];
@@ -53,7 +53,6 @@ export class LessonPlanMaterialComponent implements OnInit {
           this.formDataVal = this.allData[a];
           this.displayQuestionData(this.allData[a]);
         }, 100);
-
       }
     }
   }
@@ -77,7 +76,7 @@ export class LessonPlanMaterialComponent implements OnInit {
 
   ngOnInit() {
     this.formDataVal = {};
-    this.jsonObj1={};
+    this.jsonObj1 = {};
     this.valFormData = [];
     this.selectVal = [];
     this.pictureSelect = [];
@@ -108,74 +107,32 @@ export class LessonPlanMaterialComponent implements OnInit {
     }
 
     // console.log('>> param id data',this.activatedroute.snapshot.params._id)
-
-
-
-
-    // let answer: any = [];
-    // let tempfrondata: any = [];
-    // let answerForSelect: any = [];
-    // for (let loop = 0; loop < this.allData.length; loop++) {
-    //   answer = [];
-    //   answerForSelect = [];
-
-    //   let jsonObj: any = {
-    //     heading: this.allData[loop].description,
-    //     label: this.allData[loop].question,
-    //     name: this.allData[loop].question,
-    //     type: this.allData[loop].question_type
-    //   };
-
-    //   //------------------------ new code ------------------------------------//
-
-    //   let traininghiddenfield: any = {
-    //     label: "associated_training",
-    //     name: "associated_training",
-    //     type: 'hidden',
-    //     value: this.associated_training_id
-    //   };
-    //   let lessonhiddenfields: any = {
-    //     label: "lesson_id",
-    //     name: "lesson_id",
-    //     type: 'hidden',
-    //     value: this.lessonId
-    //   }
-    //   let userhiddenfields: any = {
-    //     label: "user_id",
-    //     name: "user_id",
-    //     type: 'hidden',
-    //     value: this.userId
-    //   }
-    //   let descriptionhiddenfields: any = {
-    //     label: "description",
-    //     name: "description",
-    //     type: 'hidden',
-    //     value: this.allData[loop].description
-    //   }
-
-    // }
-
-
-    // if (tempfrondata.length > 0) {
-    //   this.formdata.fields = tempfrondata;
-    // }
   }
 
 
   listenFormFieldChange(val: any) {
-    this.jsonObj1={};
-    this.valFormData=[];
+    this.jsonObj1 = {};
+    this.valFormData = [];
     console.log(val)
 
     if (val.field == 'fromsubmit') {
-    this.jsonObj1={};
-    this.valFormData=[];
-
+      this.jsonObj1 = {};
+      this.valFormData = [];
       this.progress_bar = 1;
+      var question_id:any;
+
+      if(this.activatedroute.snapshot.params._id != null){
+        question_id = this.activatedroute.snapshot.params._id;
+      } else{
+        question_id = this.allData[0]._id;
+      }
+
+
       this.jsonObj1 = {
-        heading:  'Title : ' + this.formDataVal.title +'<br>'+ 
-                  'Description : ' + this.formDataVal.description +'<br>'+ 
-                  'Question : ' + this.formDataVal.question +'<br>',
+        quiz_id:question_id,
+        heading: 'Title : ' + this.formDataVal.title + '<br>' +
+          'Description : ' + this.formDataVal.description + '<br>' +
+          'Question : ' + this.formDataVal.question + '<br>',
         // label: this.formDataVal.description,
         // name: this.formDataVal.question,
         disabled: true,
@@ -209,10 +166,10 @@ export class LessonPlanMaterialComponent implements OnInit {
         this.pictureSelect = [];
 
         for (const b in this.formDataVal.question_img) {
-            this.pictureSelect.push({
-              key: parseInt(b),
-              image: this.formDataVal.question_img[b].basepath + this.formDataVal.question_img[b].image,
-            });
+          this.pictureSelect.push({
+            key: parseInt(b),
+            image: this.formDataVal.question_img[b].basepath + this.formDataVal.question_img[b].image,
+          });
         }
         this.jsonObj1.name = 'img';
         this.jsonObj1.type = 'image';
@@ -250,7 +207,9 @@ export class LessonPlanMaterialComponent implements OnInit {
         let ind: any = 0;
 
         if (result.status == 'success') {
-          if (this.activatedroute.snapshot.params._id != null && typeof (this.activatedroute.snapshot.params._id) != "undefined") {
+
+          if (this.activatedroute.snapshot.params._id != null && typeof (this.activatedroute.snapshot.params._id) != "undefined"
+            && this.allData.length >= 2) {
             for (let a in this.allData) {
               if (this.allData[a]._id == this.activatedroute.snapshot.params._id) {
                 this.flag = false;
@@ -264,8 +223,12 @@ export class LessonPlanMaterialComponent implements OnInit {
               }
             }
           }
-          if (this.activatedroute.snapshot.params._id == null || typeof (this.activatedroute.snapshot.params._id) == "undefined") {
+          if ((this.activatedroute.snapshot.params._id == null || typeof (this.activatedroute.snapshot.params._id) == "undefined") && (this.allData.length >= 2)) {
             this.router.navigateByUrl(this.routerPath + this.activatedroute.snapshot.params.associated_training + '/' + this.activatedroute.snapshot.params.lesson_id_object + '/' + this.allData[1]._id);
+          }
+
+          if ((this.activatedroute.snapshot.params._id == null && this.allData.length < 2)) {
+            this.router.navigateByUrl(this.redirectPath + '/' + this.associated_training_id);
           }
         }
       })

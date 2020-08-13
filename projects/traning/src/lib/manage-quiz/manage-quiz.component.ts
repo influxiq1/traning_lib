@@ -41,7 +41,7 @@ export class ManageQuizComponent implements OnInit {
   public lessonId: any;
   public dataSource: any;
   public listingData: any = [];
-  displayedColumns: string[] = ['title', 'question', 'description_html', 'question_type', 'skippable','priority', 'status', 'created_at', 'deleteRecord'];
+  displayedColumns: string[] = ['No','title', 'question', 'description_html', 'question_type', 'skippable','priority', 'status', 'created_at', 'deleteRecord'];
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
@@ -109,8 +109,8 @@ export class ManageQuizComponent implements OnInit {
     let modalData: any = {
       panelClass: 'delete-dialog',
       data: {
-        header: "Message",
-        message: "Are you want to delete these record ?",
+        header: "Are you want to delete these record ?",
+        message: "",
         button1: { text: "No" },
         button2: { text: "Yes" },
       }
@@ -150,7 +150,7 @@ export class ManageQuizComponent implements OnInit {
     let modalData: any = {
       panelClass: 'dialog',
       data: {
-        header: "",
+        header: "You are about to change status of these record(s)",
         message: "",
         button1: { text: "Inactive" },
         button2: { text: "Active" },
@@ -184,16 +184,18 @@ export class ManageQuizComponent implements OnInit {
     }
     this.apiService.postDatawithoutToken(link, data1).subscribe((response: any) => {
       let result: any;
-      if (response.status = true) {
-        if (this.listingData[index].status == "Active") {
-          this.listingData[index].status = "Inactive"
-        } else {
-          this.listingData[index].status = "Active"
-        }
+      if (response.status = 'success') {
+        this.listingData[index].status=currentStatus;
+        // if (this.listingData[index].status == "Active") {
+        //   this.listingData[index].status = "Inactive"
+        // } else {
+        //   this.listingData[index].status = "Active"
+        // }
 
-        for(let i in this.listingData){
-          this.listingData[i].status=currentStatus;
-        }
+        // for(let i in this.listingData){
+        //   if(this.listingData[i]._id == id){
+        //   }
+        // }
 
         let allData: PeriodicElement[] = this.listingData;
         this.dataSource = new MatTableDataSource(allData);

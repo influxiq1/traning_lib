@@ -35,6 +35,11 @@
 
         <table mat-table [dataSource]="dataSource" matSort>
 
+            <ng-container matColumnDef="No">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+                <td mat-cell *matCellDef="let row;let i = index" data-label="No"> {{i + 1}} </td>
+            </ng-container>
+
             <ng-container matColumnDef="title">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
                 <td mat-cell *matCellDef="let row" data-label="Title"> {{row.title}} </td>

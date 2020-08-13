@@ -58,7 +58,7 @@
     <!-- new quiz content  -->
     <mat-card-content>
         <form class="example-form" novalidate [formGroup]="manageQuizForm" name="manageQuizForm"
-            (ngSubmit)="ManageQuizFormSubmit()" autocomplete="off">
+             autocomplete="off">
 
             <mat-form-field class="example-full-width">
                 <input matInput placeholder="Title" [formControl]="manageQuizForm.controls['title']"
@@ -72,6 +72,9 @@
             <mat-label>Description :</mat-label>
             <ck-editor name="description" [formControl]="manageQuizForm.controls['description']" skin="moono-lisa"
                 language="en" [fullPage]="true"></ck-editor>
+                <mat-error *ngIf="manageQuizForm.controls['description'].touched && !manageQuizForm.controls['description'].valid
+                           && manageQuizForm.controls['description'].errors.required">
+                           Description field can not be blank</mat-error>
 
 
             <mat-form-field class="example-full-width">
@@ -181,10 +184,13 @@
 
             <br><br>
 
-            <button mat-raised-button color="primary" mat-button class="trainingsubbtn"
-                type="submit">{{ buttonText }}</button> &nbsp;
+            <button mat-raised-button color="primary" mat-button class="trainingsubbtn" (click)="ManageQuizFormSubmit()"
+                type="button" >{{ buttonText }}</button> &nbsp;
 
-            <button mat-raised-button color="primary" mat-button class="trainingsubbtn" type="reset">Reset</button>
+            <button mat-raised-button color="primary" mat-button class="trainingsubbtn" type="reset">Reset</button>&nbsp;
+
+            <button mat-raised-button color="primary" mat-button class="trainingsubbtn" type="button" (click)="cancelroute()">Cancel</button>
+
 
         </form>
     </mat-card-content>
