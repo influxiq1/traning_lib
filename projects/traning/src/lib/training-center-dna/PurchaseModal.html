@@ -15,7 +15,6 @@
           <mat-card-content>
             {{item.productname}}
           </mat-card-content>
-zz
           </mat-card> -->
         <div class="modalscrollcls">
           <mat-card class="example-card" *ngFor="let item of data.product_data;let i = index;">
@@ -35,7 +34,10 @@ zz
                 <span class="priceclass" *ngIf="item.price !=null">Price :${{item.price}}</span>
             </div>
             <mat-card-actions>
-              <button  mat-raised-button color="primary" (click)="submitLession(item, 'yes',i)" cdkFocusInitial>Buy</button>
+              <button  mat-raised-button color="primary" (click)="submitLession(item, 'yes','single')" cdkFocusInitial>Single Lesson Buy</button>
+
+              <button  mat-raised-button color="primary" (click)="submitLession(item, 'yes','all')" cdkFocusInitial>All Lesson Buy</button>
+
             </mat-card-actions>
           </mat-card>
         </div>

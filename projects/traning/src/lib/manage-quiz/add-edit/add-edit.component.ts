@@ -27,6 +27,8 @@ export class AddEditComponent implements OnInit {
   public images_array: any = [];
   public images_array_edit:any=[];
   public img_flag: boolean = false;
+  public editorconfig:any={};
+
 
   public questionTypeVal: any;
   public textAreaTypeVal: any;
@@ -114,6 +116,8 @@ export class AddEditComponent implements OnInit {
       this.headerText = "Edit Question";
       this.buttonText = "Update";
     }
+
+    this.editorconfig.extraAllowedContent = '*[class](*),span;ul;li;table;td;style;*[id];*(*);*{*}';
   }
 
   ngOnInit() {

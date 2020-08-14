@@ -71,7 +71,7 @@
 
             <mat-label>Description :</mat-label>
             <ck-editor name="description" [formControl]="manageQuizForm.controls['description']" skin="moono-lisa"
-                language="en" [fullPage]="true"></ck-editor>
+                language="en" [fullPage]="true" [config]="editorconfig"></ck-editor>
                 <mat-error *ngIf="manageQuizForm.controls['description'].touched && !manageQuizForm.controls['description'].valid
                            && manageQuizForm.controls['description'].errors.required">
                            Description field can not be blank</mat-error>

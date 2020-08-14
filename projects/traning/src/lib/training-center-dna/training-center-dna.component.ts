@@ -19,7 +19,7 @@ export interface DialogData {
   lesson_session_data: any;
   flag: any;
   product_data: any;
-  index: any;
+  flaglesson: any;
 }
 
 
@@ -162,20 +162,20 @@ export class TrainingCenterDnaComponent implements OnInit {
       // console.log('orders_data>>>++', this.orders_data, this.orders_button)
       // console.log('lesson_ids>>>++', results.lesson_ids[0].lesson_ids, this.preview_button)
       // console.log('lesson_data id >>>++', results.lessondata[0].id)
-      console.log('lesson_content id >>>++', this.all_orders_data)
+      // console.log('lesson_content id >>>++', this.all_orders_data)
 
       setTimeout(() => {
         this.addMarkedData(this.lesson_content.id, this.paramsId, this.nextdata, this.lesson_content.lession_title, this.nextlessondata);
       }, 1000)
 
 
-      if ((this.orders_data != null && this.orders_data != '') || (this.all_orders_data != null && this.all_orders_data != '')) {
+      if (this.orders_data != null && this.orders_data != '') {
 
         this.orders_button = true;
         this.preview_button = false;
         this.schedule_button = false;
 
-        if (this.orders_data != '' && this.all_orders_data == '') {
+        if (this.orders_data != '') {
           for (let i in this.orders_data) {
             console.log('single order >>>')
 
@@ -188,23 +188,23 @@ export class TrainingCenterDnaComponent implements OnInit {
           }
         }
 
-        if (this.all_orders_data != null && this.all_orders_data[0] != null &&
-          this.all_orders_data[0].lesson_ids != null) {
-          console.log('all order >>>')
+        // if (this.all_orders_data != null && this.all_orders_data[0] != null &&
+        //   this.all_orders_data[0].lesson_ids != null) {
+        //   console.log('all order >>>')
 
-          for (let i in this.all_orders_data[0].lesson_ids) {
+        //   for (let i in this.all_orders_data[0].lesson_ids) {
 
-            for (let j in this.allLessonData) {
-              if (this.all_orders_data[0].lesson_ids[i] == this.allLessonData[j]._id) {
-                // console.log('all orders_data hit', this.all_orders_data[0].lesson_ids, this.activatedRoute.snapshot.params._id, results.lessondata[0]._id)
-                this.orders_button = false;
-                if (this.orders_button == false && this.schedule_button == false && this.preview_button == false) {
-                  this.preview_button = true;
-                }
-              }
-            }
-          }
-        }
+        //     for (let j in this.allLessonData) {
+        //       if (this.all_orders_data[0].lesson_ids[i] == this.allLessonData[j]._id) {
+        //         // console.log('all orders_data hit', this.all_orders_data[0].lesson_ids, this.activatedRoute.snapshot.params._id, results.lessondata[0]._id)
+        //         this.orders_button = false;
+        //         if (this.orders_button == false && this.schedule_button == false && this.preview_button == false) {
+        //           this.preview_button = true;
+        //         }
+        //       }
+        //     }
+        //   }
+        // }
 
         for (let id in results.lesson_ids[0].lesson_ids) {
 
@@ -976,12 +976,11 @@ export class TrainingCenterDnaComponent implements OnInit {
       let product_data: any;
       let endpointa = this.serverDetailsVal.serverUrl + 'getproductsbycatid'
       product_data = {
-        category: '5eddd5401acf66000738be19'
+        category: '5eddd5401acf66000738be19',
       }
       this.apiService.postDatawithoutToken(endpointa, product_data).subscribe((response: any) => {
         // console.log('>>>>>', response)
         this.product_data = response.results;
-        // console.log('>>>>> ++', this.product_data)
         if (response.status == 'success') {
           const dialogRef = this.dialog.open(PurchaseModalComponent, {
             panelClass: 'blogdetail_videomodal',
@@ -989,72 +988,104 @@ export class TrainingCenterDnaComponent implements OnInit {
           });
 
           dialogRef.afterClosed().subscribe((result: any) => {
-            // console.log('>>>', result, result.index);
+            // console.log('>>>', result);
 
-            var lesson_ids: any = [];
-            var lesson_id: any;
-            var product_price:any;
 
             if (result.flag == 'yes') {
 
+              var lesson_data: any = [];
+              var lesson_id: any;
+              var product_price: any;
               let cardData: any;
 
-              if (result.lesson_session_data.price > 100) {
+              if (result.flaglesson == 'single') {
 
-                // for (let i in this.allLessonData) {
+                var lessondataobj = [];
 
-                //   if(this.orders_data != null && this.orders_data != ''){
-                //     var less_price = this.orders_data.length * 65;
-                //     product_price = result.lesson_session_data.price - less_price;
-                //     // console.log('>>>>',this.orders_data,product_price)
-                //   } else {
-                //     product_price = result.lesson_session_data.price;
-                //   }
-                  
-                //   lesson_ids.push(this.allLessonData[i]._id);
-                // }
-
-              } else {
-                product_price= result.lesson_session_data.price;
+                for (let c in this.allLessonData) {
+                  if (this.allLessonData[c]._id == this.paramslessonId) {
+                    // console.log(this.allLessonData[c],'????++++')
+                    lessondataobj.push(this.allLessonData[c]);
+                  }
+                }
+                product_price = result.lesson_session_data.price;
                 lesson_id = this.paramslessonId
 
-                cardData = {
-                  product: {
-                    free_shipping: 1,
-                    flag: 'lesson',
-                    id: result.lesson_session_data._id,
-                    name: result.lesson_session_data.productname,
-                    price: product_price,
-                    quantity: 1,
-                    image: result.lesson_session_data.image
-                  },
-                  training_id: this.paramsId,
-                  lesson_id: lesson_id,
-                  userid: this.userId
+                if (lessondataobj != null) {
+                  // console.log(lessondataobj, '>>>>lessondataobj')
+                  cardData = {
+                    product: {
+                      free_shipping: 1,
+                      flag: 'lesson',
+                      id: result.lesson_session_data._id,
+                      name: 'Lesson Plan For -' + '( ' + lessondataobj[0].lession_title + ' )',
+                      price: product_price,
+                      quantity: 1,
+                      image: result.lesson_session_data.image,
+                      training_id: this.paramsId,
+                      lesson_id: lesson_id,
+                    },
+                    userid: this.userId
+                  }
                 }
               }
 
-              // console.log('yes');
-              // let cardData: any;
-              let endpoint = this.dnaServerUrl + 'api/cart';
-              // this.dnaServerUrl + 'api/cart';
-              // cardData = {
-              //   product: {
-              //     free_shipping: 1,
-              //     flag: 'lesson',
-              //     id: result.lesson_session_data._id,
-              //     name: result.lesson_session_data.productname,
-              //     price: product_price,
-              //     quantity: 1,
-              //     image: result.lesson_session_data.image
-              //   },
-              //   training_id: this.paramsId,
-              //   lesson_id: lesson_id,
-              //   lesson_ids: lesson_ids,
-              //   userid: this.userId
-              // }
+              if (result.flaglesson == 'all') {
 
-              // console.log('cardData-->', cardData);
+                var lesson_ids_data: any = [];
+                product_price = result.lesson_session_data.price;
+
+                // console.log(this.orders_data, '+++>>>>orders_data')
+
+                // for (let a in this.allLessonData) {
+                //   lesson_ids_data.push({ _id: this.allLessonData[a]._id, lession_title: this.allLessonData[a].lession_title });
+                // }
+
+                // if(this.orders_data != null){
+                for (let i in this.allLessonData) {
+                  for (let j in this.orders_data) {
+                    if (this.allLessonData[i]._id == this.orders_data[j].lesson_id) {
+                      lesson_data.push(this.allLessonData[i]);
+                    }
+                  }
+                }
+                // }
+
+                // console.log(lesson_data, '+++>>>>lesson_data')
+
+                this.allLessonData = this.allLessonData.filter(function (el) {
+                  return !lesson_data.includes(el);
+                });
+
+                // console.log(lesson_data, '>>>>lesson_data', this.allLessonData)
+
+                for (let i in this.allLessonData) {
+                  let data: any = {};
+                  data = {
+                      free_shipping: 1,
+                      flag: 'lesson',
+                      id: result.lesson_session_data._id,
+                      name: 'Lesson Plan For -' + '( ' + this.allLessonData[i].lession_title + ' )',
+                      price: product_price,
+                      quantity: 1,
+                      image: result.lesson_session_data.image,
+                      training_id: this.paramsId,
+                      lesson_id: this.allLessonData[i]._id,
+                  }
+                  lesson_ids_data.push(data);
+                }
+
+                // console.log(lesson_ids_data,'lesson_ids_data')
+
+
+                cardData ={
+                  product : lesson_ids_data,
+                  userid: this.userId
+                }
+
+              }
+              let endpoint = this.dnaServerUrl + 'api/cart1';
+
               this.apiService.postDatawithoutToken(endpoint, cardData).subscribe((response: any) => {
                 if (response.status == "success") {
                   this.getTrainingCenterlistFunction(this.paramsId, this.userType, this.userId)
@@ -1071,9 +1102,7 @@ export class TrainingCenterDnaComponent implements OnInit {
             }
           });
         }
-
       })
-
     }
     if (this.user_parent_id == null || this.user_parent_id == "") {
       this.router.navigateByUrl('/mentors/' + this.paramsTrainingId + '/' + this.paramslessonId)
@@ -1138,8 +1167,6 @@ export class TrainingCenterDnaComponent implements OnInit {
 }
 
 
-
-
 //purchase modal
 
 @Component({
@@ -1155,11 +1182,11 @@ export class PurchaseModalComponent {
 
 
   }
-  submitLession(val: any, flag: string, index: any) {
+  submitLession(val: any, flag: string, flaglesson: any) {
     // console.log(val, flag, index);
     this.data.lesson_session_data = val;
     this.data.flag = flag;
-    this.data.index = index;
+    this.data.flaglesson = flaglesson;
     if (val != null && val !== '') {
       this.dialogRef.close(this.data);
       // this.snakBar.open('Submited Successfully ..!', 'OK', {
