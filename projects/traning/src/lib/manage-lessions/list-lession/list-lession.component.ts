@@ -134,8 +134,8 @@ public training_data_Counts:any;
     setTimeout(() => {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-
     }, 100);
+    
     this.getAllLessonData();
     if(this.dnaFlag == true){
       this.displayedColumns.push('select','no','lession_title', 'description', 'mediaType','associated_training','prerequisite_lession','has_lessonplan','lessonplan_value','test_associate_training','status','deleteRecord');

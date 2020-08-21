@@ -155,7 +155,6 @@ export class TrainingCenterDnaComponent implements OnInit {
     if (this.userType == 'mentee') {
       this.orders_data = results.orders_data;
       this.all_orders_data = results.all_orders_data;
-
       this.schedule_data = results.schedule_data;
 
       // console.log('schedule_data>>>', this.schedule_data, this.schedule_button)
@@ -1014,7 +1013,7 @@ export class TrainingCenterDnaComponent implements OnInit {
                 if (lessondataobj != null) {
                   // console.log(lessondataobj, '>>>>lessondataobj')
                   cardData = {
-                    product: {
+                    product: [{
                       free_shipping: 1,
                       flag: 'lesson',
                       id: result.lesson_session_data._id,
@@ -1022,9 +1021,9 @@ export class TrainingCenterDnaComponent implements OnInit {
                       price: product_price,
                       quantity: 1,
                       image: result.lesson_session_data.image,
-                      training_id: this.paramsId,
+                      training_id: this.paramsTrainingId,
                       lesson_id: lesson_id,
-                    },
+                    }],
                     userid: this.userId
                   }
                 }
@@ -1069,7 +1068,7 @@ export class TrainingCenterDnaComponent implements OnInit {
                       price: product_price,
                       quantity: 1,
                       image: result.lesson_session_data.image,
-                      training_id: this.paramsId,
+                      training_id: this.paramsTrainingId,
                       lesson_id: this.allLessonData[i]._id,
                   }
                   lesson_ids_data.push(data);
@@ -1084,7 +1083,7 @@ export class TrainingCenterDnaComponent implements OnInit {
                 }
 
               }
-              let endpoint = this.dnaServerUrl + 'api/cart1';
+              let endpoint = this.dnaServerUrl + 'api/cart';
 
               this.apiService.postDatawithoutToken(endpoint, cardData).subscribe((response: any) => {
                 if (response.status == "success") {
