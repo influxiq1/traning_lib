@@ -1023,6 +1023,8 @@ export class TrainingCenterDnaComponent implements OnInit {
                       image: result.lesson_session_data.image,
                       training_id: this.paramsTrainingId,
                       lesson_id: lesson_id,
+                      description:result.lesson_session_data.description,
+                      shortsummary:result.lesson_session_data.shortsummary
                     }],
                     userid: this.userId
                   }
@@ -1070,6 +1072,8 @@ export class TrainingCenterDnaComponent implements OnInit {
                       image: result.lesson_session_data.image,
                       training_id: this.paramsTrainingId,
                       lesson_id: this.allLessonData[i]._id,
+                      description:result.lesson_session_data.description,
+                      shortsummary:result.lesson_session_data.shortsummary
                   }
                   lesson_ids_data.push(data);
                 }
