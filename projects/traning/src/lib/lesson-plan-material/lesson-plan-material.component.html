@@ -1,19 +1,26 @@
-
 <div class="questioncls" *ngIf="flag == true">
     <h2 class="questiontitlecls">Title : {{formDataVal.title}}</h2>
-    <h2 class="questiondesccls">Description : <span [innerHTML]="formDataVal.description"></span></h2>
+    <h2 class="questiondesccls">Description : <span class="descclass" [innerHTML]="formDataVal.description"></span></h2>
     <h2 class="questionnamecls">Question : {{formDataVal.question}}</h2>
 </div>
 <br>
 <!-- {{formDataVal.description_html}} -->
-<div class="progressbarcls"> 
+<div class="progressbarcls">
     <mat-progress-bar mode="indeterminate" *ngIf="progress_bar == 1"></mat-progress-bar>
 </div>
 
+<div class="questionlabelcls" *ngIf="flag == true">
+    <h2 class="questionfieldscls" *ngIf="this.formdata.fields[0].type == 'textarea'">Enter Your Answer :</h2>
+    <h2 class="questionfieldscls" *ngIf="this.formdata.fields[0].type == 'image'">Choose Your Answer :</h2>
+    <h2 class="questionfieldscls" *ngIf="this.formdata.fields[0].type == 'radio'"> Choose Your Answer :</h2>
+    <h2 class="questionfieldscls" *ngIf="this.formdata.fields[0].type == 'select'"> Select Your Answer :</h2>
+
+</div>
+
 <ng-container *ngIf="flag == true" class="formdatacls">
-    <lib-showform [formdata]="formdata"
-    [formfieldrefresh]="formfieldrefresh" [formfieldrefreshdata]="formfieldrefreshdata"
-    (onFormFieldChange)="listenFormFieldChange($event)"> </lib-showform>
+    <lib-showform [formdata]="formdata" [formfieldrefresh]="formfieldrefresh"
+        [formfieldrefreshdata]="formfieldrefreshdata" (onFormFieldChange)="listenFormFieldChange($event)">
+    </lib-showform>
 </ng-container>
 
 <!-- <h1>{{formdata | json}}</h1> -->
@@ -29,6 +36,6 @@
     <!-- <button mat-raised-button color="primary" type="button" class="btncls" >Submit</button> -->
 
 </div><br>
-<div style="cursor:pointer" *ngIf="flag == true"> 
-<span class="skipbuttoncls" (click)="skipButton()"><u>Skip Now</u></span>
+<div style="cursor:pointer" *ngIf="flag == true">
+    <span class="skipbuttoncls" (click)="skipButton()"><u>Skip Now</u></span>
 </div>

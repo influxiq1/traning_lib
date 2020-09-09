@@ -417,25 +417,28 @@ export class LessonPlanMaterialComponent implements OnInit {
 
     switch (value.question_type) {
       case 'text_area':
+        // jsonObj.label='Enter Your Answer';
         jsonObj.type = 'textarea';
         jsonObj.name = 'itemVal';
         jsonObj.validations = [
-          { rule: 'required', message: 'Text Field is required' }
+          { rule: 'required', message: 'Please Enter Your Answer' }
         ]
         this.progress_bar = 0;
 
         break;
       case 'pick_picture':
+        // jsonObj.label='Choose Your Answer'
         jsonObj.type = 'image';
         jsonObj.val = pictureSelect;
         jsonObj.name = 'image';
         jsonObj.validations = [
-          { rule: 'required', message: 'Please Select One Image' }
+          { rule: 'required', message: 'Please Select One Picture' }
         ]
         this.progress_bar = 0;
 
         break;
       case 'yes_no':
+        // jsonObj.label='Choose Your Answer';
         jsonObj.type = 'radio';
         jsonObj.val = checkSelected;
         jsonObj.name = 'itemVal';
@@ -446,12 +449,13 @@ export class LessonPlanMaterialComponent implements OnInit {
         break;
       case 'multiple_selection':
         // console.log('M')
+        // jsonObj.label='Your Answer';
         jsonObj.type = 'select';
         jsonObj.val = answerForSelect;
         jsonObj.multiple = true;
         jsonObj.name = 'itemVal';
         jsonObj.validations = [
-          { rule: 'required', message: 'Please Select at Least One Option' }
+          { rule: 'required', message: 'Please Select One Option' }
         ]
         this.progress_bar = 0;
         break;
