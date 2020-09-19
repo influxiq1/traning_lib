@@ -1,13 +1,13 @@
 <div class="questioncls" *ngIf="flag == true">
 
     <h2 class="questiontitlecls">
-        <label>Title : <span class="titlecls">{{formDataVal.title}}</span></label>
+        <label><span class="titleclsspan"> TITLE </span><span class="titlecls">{{formDataVal.title}}</span></label>
     </h2>
 
-    <h2 class="questiondesccls"><label> Description : </label><span class="descclass" [innerHTML]="formDataVal.description"></span></h2>
+    <h2 class="questiondesccls"><label> DESCRIPTION </label><span class="descclass" [innerHTML]="formDataVal.description"></span></h2>
     
     <h2 class="questionnamecls">
-        <label>Question : <span class="quscls">{{formDataVal.question}}</span></label>
+        <label><span class="qusclsspan"> QUESTION </span><span class="quscls">{{formDataVal.question}}</span></label>
      </h2>
 
 </div>
