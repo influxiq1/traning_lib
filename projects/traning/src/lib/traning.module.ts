@@ -26,7 +26,7 @@ import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { TrainingreportComponent } from './trainingreport/trainingreport.component';
 import { DatePipe } from '@angular/common';
 import { CategoryWiseReportComponent } from './category-wise-report/category-wise-report.component';
-import { TrainingCenterDnaComponent, PurchaseModalComponent, ReviewLessonPlanComponent, ScheduleModalComponent } from './training-center-dna/training-center-dna.component';
+import { TrainingCenterDnaComponent, PurchaseModalComponent, ReviewLessonPlanComponent, ScheduleModalComponent, UnlockLessonModalComponent } from './training-center-dna/training-center-dna.component';
 import { LessonPlanMaterialComponent } from './lesson-plan-material/lesson-plan-material.component';
 import { ListingModule } from 'listing-angular7';
 // import { CKEditorModule } from 'ngx-ckeditor';
@@ -57,7 +57,8 @@ import { ListingModule } from 'listing-angular7';
     PurchaseModalComponent,
     ReviewLessonPlanComponent,
     ScheduleModalComponent,
-    questionDataModalComponent
+    questionDataModalComponent,
+    UnlockLessonModalComponent
   ],
   imports: [
     HttpClientModule,
@@ -77,6 +78,6 @@ import { ListingModule } from 'listing-angular7';
   exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest,TrainingreportComponent,CategoryWiseReportComponent,TrainingCenterDnaComponent,LessonPlanMaterialComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [CookieService, ApiService,DatePipe],
-  entryComponents:[DialogBoxComponent,Dialogtest,PurchaseModalComponent,ReviewLessonPlanComponent,ScheduleModalComponent,questionDataModalComponent]
+  entryComponents:[DialogBoxComponent,Dialogtest,PurchaseModalComponent,ReviewLessonPlanComponent,ScheduleModalComponent,questionDataModalComponent,UnlockLessonModalComponent]
 })
 export class TraningModule { }

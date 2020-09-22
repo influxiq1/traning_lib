@@ -180,7 +180,16 @@
             <ck-editor [config]="editorconfig" [(ngModel)]="htmType" [ngModelOptions]="{standalone: true}">
             </ck-editor>
         </div>
+
+
         <ng-container *ngIf="dnaFlag==true">
+
+            <div>
+                <span>
+                    <mat-checkbox  [(ngModel)]="has_skip_lesson"
+                        [ngModelOptions]="{standalone: true}"> Skip Lesson ?</mat-checkbox>
+                </span>
+            </div>
             <div>
                 <span>
                     <mat-checkbox (change)="getchkboxval($event.checked)" [(ngModel)]="chkboxval"
@@ -197,7 +206,11 @@
                     </mat-select>
                 </mat-form-field>
             </div>
+
+
         </ng-container>
+
+
         <button class="trainingsubbtn" mat-raised-button color="primary" type="submit">{{ buttonText }}</button>
         <button class="trainingsubbtn" mat-raised-button color="primary" type="reset"
             (click)="cancelButton()">Cancel</button>

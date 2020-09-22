@@ -13,13 +13,16 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 
 
-
 export interface DialogData {
   data: any;
   lesson_session_data: any;
   flag: any;
   product_data: any;
   flaglesson: any;
+}
+
+export interface DialogData3 {
+  data: Number;
 }
 
 
@@ -111,13 +114,15 @@ export class TrainingCenterDnaComponent implements OnInit {
   public schedule_data: any;
   public orders_data: any;
   public orders_button: any = true;
-  public preview_button: any = false;
+  public preview_button: any = true;
   public schedule_button: any = false;
   public user_mentor_name: any;
   public all_orders_data: any;
-
-
-
+  public next_button_access: any = false;
+  public AllTrainingData: any = [];
+  public isLockedLesson: any = true;
+  public access_flag: any = false;
+  public lesson_locked_by_user: any = 1;
 
   @Input()
   set lessonplanmaterialRoute(route: any) {
@@ -134,7 +139,12 @@ export class TrainingCenterDnaComponent implements OnInit {
     let parentcount: any;
     this.trainingCategoryList = results.trainingcenterlist;
 
-
+    this.AllTrainingData = results;
+    if(results.lesson_locked_by_user != null && results.lesson_locked_by_user != 'undefined'){
+      this.lesson_locked_by_user = results.lesson_locked_by_user;
+    } else {
+      this.lesson_locked_by_user = 1;
+    }
 
     for (let i in this.trainingCategoryList) {
 
@@ -150,6 +160,10 @@ export class TrainingCenterDnaComponent implements OnInit {
 
     this.allLessonData = results.lessondata;
     this.trainingCategoryName = results.trainingname;
+
+    // if(this.lesson_locked_by_user == 0){
+    //   this.next_button_access = true;
+    // }
 
     // console.log(results, '.....>')
     if (this.userType == 'mentee') {
@@ -168,67 +182,79 @@ export class TrainingCenterDnaComponent implements OnInit {
       }, 1000)
 
 
-      if (this.orders_data != null && this.orders_data != '') {
+      // if ((this.orders_data != null && this.orders_data != '') || (results.lesson_ids[0].lesson_ids != null)) {
 
-        this.orders_button = true;
-        this.preview_button = false;
-        this.schedule_button = false;
+      this.orders_button = true;
+      this.preview_button = true;
+      this.schedule_button = false;
 
-        if (this.orders_data != '') {
-          for (let i in this.orders_data) {
-            console.log('single order >>>')
 
-            if (this.orders_data[i].lesson_id == results.lesson_content[0]._id) {
-              this.orders_button = false;
-              if (this.orders_button == false && this.schedule_button == false && this.preview_button == false) {
-                this.preview_button = true;
-              }
-            }
-          }
-        }
+      if (this.orders_data != null && this.orders_data) {
+        for (let i in this.orders_data) {
 
-        // if (this.all_orders_data != null && this.all_orders_data[0] != null &&
-        //   this.all_orders_data[0].lesson_ids != null) {
-        //   console.log('all order >>>')
-
-        //   for (let i in this.all_orders_data[0].lesson_ids) {
-
-        //     for (let j in this.allLessonData) {
-        //       if (this.all_orders_data[0].lesson_ids[i] == this.allLessonData[j]._id) {
-        //         // console.log('all orders_data hit', this.all_orders_data[0].lesson_ids, this.activatedRoute.snapshot.params._id, results.lessondata[0]._id)
-        //         this.orders_button = false;
-        //         if (this.orders_button == false && this.schedule_button == false && this.preview_button == false) {
-        //           this.preview_button = true;
-        //         }
-        //       }
-        //     }
-        //   }
-        // }
-
-        for (let id in results.lesson_ids[0].lesson_ids) {
-
-          if (results.lesson_content[0]._id == results.lesson_ids[0].lesson_ids[id]) {
-            this.lesson_id_flag = results.lesson_ids[0].lesson_ids[id];
+          if (this.orders_data[i].lesson_id == results.lesson_content[0]._id) {
             this.orders_button = false;
-            this.preview_button = false;
-
-            if (this.orders_button == false && this.preview_button == false && this.schedule_button == false) {
-              this.schedule_button = true;
-            }
-          }
-        }
-
-        if (this.orders_button == false && this.preview_button == false && this.schedule_button == true && results.lesson_ids[0].lesson_ids != null) {
-
-          for (let j in this.schedule_data) {
-            if (this.schedule_data[j].lesson_id == results.lesson_content[0]._id) {
-              this.orders_button = false;
-              this.preview_button = false;
-              this.schedule_button = false;
-            }
+            // this.preview_button = true;
+            // if (this.orders_button == false && this.schedule_button == true && this.preview_button == false) {
+            //   this.preview_button = true;
+            // }
           }
         }
       }
+
+      if (results.lesson_ids[0].lesson_ids != null) {
+        for (let id in results.lesson_ids[0].lesson_ids) {
+
+          if ( this.lesson_locked_by_user == 1 && (results.lesson_content[0]._id == results.lesson_ids[0].lesson_ids[id] && results.lesson_question_submited_by_user != null && results.lesson_question_submited_by_user[0] != null && results.lesson_question_submited_by_user[0].training_from_data > 0 && results.lesson_question <= results.lesson_question_submited_by_user[0].training_from_data && results.lesson_content[0].has_lessonplan == 1) || (results.lesson_content[0]._id == results.lesson_ids[0].lesson_ids[id] && results.lesson_content[0].has_lessonplan == 0) ) {
+            this.lesson_id_flag = results.lesson_ids[0].lesson_ids[id];
+            // this.orders_button = true;
+            this.preview_button = false;
+            this.next_button_access = true;
+            console.log(this.next_button_access, 'next_button_access')
+            // if (this.orders_button == false && this.preview_button == false && this.schedule_button == false) {
+            //   this.schedule_button = true;
+            // }
+          }
+        }
+      }
+
+   
+
+      console.log(this.lesson_locked_by_user, 'lesson_locked_by_user', 'single order >>>', results.lesson_question, results.lesson_question_submited_by_user)
+
+      if (this.preview_button == true && this.lesson_locked_by_user == 1) {
+        this.next_button_access = false;
+        console.log(this.next_button_access, 'next_button_access', this.preview_button)
+
+      }
+
+      if (this.lesson_locked_by_user == 0) {
+        this.next_button_access = true;
+      }
+
+      console.log(this.lesson_locked_by_user,'lesson_locked_by_user',this.next_button_access)
+
+      if (results.lesson_question_submited_by_user != null && results.lesson_question_submited_by_user[0] != null && results.lesson_question_submited_by_user[0].training_from_data > 0 && results.lesson_question_submited_by_user[0].training_from_data < results.lesson_question.length && this.orders_button == true && results.lesson_content[0].has_lessonplan == 1) {
+        this.snakBar.open('Please Submit Your All Lesson Questions...!', 'OK', {
+          duration: 5000
+        });
+      }
+
+      if (this.orders_button == false && this.preview_button == false) {
+        this.schedule_button = true;
+      }
+
+      if (this.orders_button == false && this.preview_button == false && this.schedule_button == true) {
+
+        for (let j in this.schedule_data) {
+          if (this.schedule_data[j].lesson_id == results.lesson_content[0]._id) {
+            this.orders_button = false;
+            this.preview_button = false;
+            this.schedule_button = false;
+          }
+        }
+      }
+      // }
 
 
       if (this.orders_button == false && this.preview_button == true && this.schedule_button == false) {
@@ -244,8 +270,42 @@ export class TrainingCenterDnaComponent implements OnInit {
       }
     }
 
+    if (this.userType == 'mentor') {
+
+      this.next_button_access = false;
+      // this.lesson_locked_by_user = 1;
+      // this.lesson_locked_by_user= results.lesson_locked_by_user
+
+      console.log(this.lesson_locked_by_user,'results.lesson_locked_by_user',this.next_button_access)
+      if (results.lesson_locked_by_user == 0) {
+        this.next_button_access = true;
+      } else {
+        this.next_button_access = false;
+      }
+      if (results.lesson_ids[0].lesson_ids != null ) {
+        for (let id in results.lesson_ids[0].lesson_ids) {
+
+          if ( results.lesson_locked_by_user == 1 && (results.lesson_content[0]._id == results.lesson_ids[0].lesson_ids[id] && results.lesson_question_submited_by_user != null && results.lesson_question_submited_by_user[0] != null && results.lesson_question_submited_by_user[0].training_from_data > 0 && results.lesson_question <= results.lesson_question_submited_by_user[0].training_from_data && results.lesson_content[0].has_lessonplan == 1) || (results.lesson_content[0]._id == results.lesson_ids[0].lesson_ids[id] && results.lesson_content[0].has_lessonplan == 0)) {
+            this.next_button_access = true;
+            console.log(this.next_button_access, 'next_button_access', results.lesson_content[0])
+          }
+        }
+      }
+
+      console.log(this.next_button_access, 'next_button_access', results.lesson_content[0])
+
+      if (results.lesson_content[0].has_lessonplan == 0 || results.lesson_locked_by_user == 0) {
+        this.next_button_access = true;
+      }
+
+      if (results.lesson_question_submited_by_user != null && results.lesson_question_submited_by_user[0] != null && results.lesson_question.length > results.lesson_question_submited_by_user[0].training_from_data) {
+        this.snakBar.open('Please Submit Your All Lesson Questions...!', 'OK', {
+          duration: 5000
+        });
+      }
 
 
+    }
 
 
   }
@@ -418,6 +478,10 @@ export class TrainingCenterDnaComponent implements OnInit {
 
     if (this.userType == 'admin' || this.userType == 'mentor') {
       this.lesson_id_flag = true;
+      // this.lesson_locked_by_user=1;
+      // this.lesson_locked_by_user = results.lesson_locked_by_user
+
+
       for (let id in results.results.lesson_ids[0].lesson_ids) {
 
         if (this.lesson_content._id == results.results.lesson_ids[0].lesson_ids[id]) {
@@ -751,35 +815,64 @@ export class TrainingCenterDnaComponent implements OnInit {
   }
 
   nochildclick(val: any) {
-    // console.log('___++++', val)
-    if (val.is_done != null && val.is_done == true || (val.prerequisite_lession == this.paramslessonId)) {
+    console.log(this.next_button_access, '___++++', val)
 
-      setTimeout(() => {
-        this.progress_bar = 1;
-      }, 100);
-
-      // let flag:any;
-      // let value:any='next';
-      // this.nextbutton(value,flag)
-
+    if (val.has_lessonplan == 0 || this.AllTrainingData.lesson_locked_by_user == 0) {
+      this.next_button_access = true;
+        this.access_flag= true;
       this.router.navigateByUrl(this.trainingCenterRoute + this.paramsTrainingId + '/' + val._id);
-
-      // this.addMarkedData(this.lesson_content.id, this.paramsId, this.nextdata, this.lessonDataList[this.Index].lession_title, this.nextlessondata);
-
-      // setTimeout(() => {
-      //   document.getElementById("lessonContentData").scrollIntoView();
-      // }, 1000);
-
     } else {
-      this.snakBar.open('You Can Not Access This Lesson Until Done...!', 'OK', {
-        duration: 3000
-      });
+
+      // if (this.AllTrainingData.lesson_locked_by_user == 0) {
+      //   this.router.navigateByUrl(this.trainingCenterRoute + this.paramsTrainingId + '/' + val._id);
+      //   this.next_button_access = true;
+      //   this.access_flag= true;
+      // }
+
+      // var lesson_submit_data = [];
+      this.access_flag = false;
+      // lesson_submit_data = this.AllTrainingData.lesson_ids[0].lesson_ids;
+
+      if (this.AllTrainingData.lesson_ids[0].lesson_ids != null) {
+
+        for (let i in this.AllTrainingData.lesson_ids[0].lesson_ids) {
+          if (  this.AllTrainingData.lesson_locked_by_user  == 1 && (this.AllTrainingData.lesson_ids[0].lesson_ids[i] == val.prerequisite_lession || this.AllTrainingData.lesson_ids[0].lesson_ids[i] == val.paramslessonId) && (this.AllTrainingData.lesson_question_submited_by_user != null && this.AllTrainingData.lesson_question_submited_by_user[0] != null && this.AllTrainingData.lesson_question_submited_by_user[0].training_from_data > 0 && this.AllTrainingData.lesson_question <= this.AllTrainingData.lesson_question_submited_by_user[0].training_from_data) && this.next_button_access == true ) {
+            this.access_flag = true;
+          }
+        }
+      }
+
+
+      if ((val.is_done != null && val.is_done == true && this.access_flag == true) || (val.prerequisite_lession == this.paramslessonId && this.access_flag == true ) ||  this.AllTrainingData.lesson_locked_by_user  == 0) {
+
+        setTimeout(() => {
+          this.progress_bar = 1;
+        }, 100);
+
+        // let flag:any;
+        // let value:any='next';
+        // this.nextbutton(value,flag)
+
+        this.router.navigateByUrl(this.trainingCenterRoute + this.paramsTrainingId + '/' + val._id);
+
+        // this.addMarkedData(this.lesson_content.id, this.paramsId, this.nextdata, this.lessonDataList[this.Index].lession_title, this.nextlessondata);
+
+        // setTimeout(() => {
+        //   document.getElementById("lessonContentData").scrollIntoView();
+        // }, 1000);
+
+      } else {
+        this.snakBar.open('You Can Not Access This Lesson Until Submit Current Lesson Plan...!', 'OK', {
+          duration: 5000
+        });
+      }
+
     }
+
 
     if (this.lesson_data != null)
       this.lesson_content = this.lesson_data.results.lesson_content[0];
     // console.log(this.lesson_content,'___++++')
-
 
 
   }
@@ -851,8 +944,6 @@ export class TrainingCenterDnaComponent implements OnInit {
 
 
     });
-
-
   }
 
   //next prev button work
@@ -1017,14 +1108,14 @@ export class TrainingCenterDnaComponent implements OnInit {
                       free_shipping: 1,
                       flag: 'lesson',
                       id: result.lesson_session_data._id,
-                      name: 'Lesson Plan For -' + '( ' + lessondataobj[0].lession_title + ' )',
+                      name: 'Lesson Plan For - ' + '( ' + lessondataobj[0].lession_title + ' )',
                       price: product_price,
                       quantity: 1,
                       image: result.lesson_session_data.image,
                       training_id: this.paramsTrainingId,
                       lesson_id: lesson_id,
-                      description:result.lesson_session_data.description,
-                      shortsummary:result.lesson_session_data.shortsummary
+                      description: result.lesson_session_data.description,
+                      shortsummary: result.lesson_session_data.shortsummary
                     }],
                     userid: this.userId
                   }
@@ -1063,17 +1154,17 @@ export class TrainingCenterDnaComponent implements OnInit {
                 for (let i in this.allLessonData) {
                   let data: any = {};
                   data = {
-                      free_shipping: 1,
-                      flag: 'lesson',
-                      id: result.lesson_session_data._id,
-                      name: 'Lesson Plan For -' + '( ' + this.allLessonData[i].lession_title + ' )',
-                      price: product_price,
-                      quantity: 1,
-                      image: result.lesson_session_data.image,
-                      training_id: this.paramsTrainingId,
-                      lesson_id: this.allLessonData[i]._id,
-                      description:result.lesson_session_data.description,
-                      shortsummary:result.lesson_session_data.shortsummary
+                    free_shipping: 1,
+                    flag: 'lesson',
+                    id: result.lesson_session_data._id,
+                    name: 'Lesson Plan For -' + '( ' + this.allLessonData[i].lession_title + ' )',
+                    price: product_price,
+                    quantity: 1,
+                    image: result.lesson_session_data.image,
+                    training_id: this.paramsTrainingId,
+                    lesson_id: this.allLessonData[i]._id,
+                    description: result.lesson_session_data.description,
+                    shortsummary: result.lesson_session_data.shortsummary
                   }
                   lesson_ids_data.push(data);
                 }
@@ -1081,8 +1172,8 @@ export class TrainingCenterDnaComponent implements OnInit {
                 // console.log(lesson_ids_data,'lesson_ids_data')
 
 
-                cardData ={
-                  product : lesson_ids_data,
+                cardData = {
+                  product: lesson_ids_data,
                   userid: this.userId
                 }
 
@@ -1144,6 +1235,8 @@ export class TrainingCenterDnaComponent implements OnInit {
       // console.log(result);
       if (result.flag == 'yes') {
         this.router.navigateByUrl('/lesson-plan-material/' + this.paramsId + '/' + this.paramslessonId);
+      } else {
+        return;
       }
     })
   }
@@ -1166,6 +1259,66 @@ export class TrainingCenterDnaComponent implements OnInit {
       }
     })
   }
+
+
+  // Unlock Lesson 
+  UnlockLesson(val) {
+    console.log('UnlockLesson', this.access_flag)
+    this.access_flag = true;
+
+    const dialogRef = this.dialog.open(UnlockLessonModalComponent, {
+      panelClass: 'schedule_modal',
+      data: {data:val}
+    });
+    dialogRef.disableClose = true;
+    dialogRef.afterClosed().subscribe((result: any) => {
+      console.log(result, '+++++====', val)
+      var lockVal: any;
+      var snackText: any = '';
+      if (val == 1) {
+        snackText = 'Locked All The Lessons...!';
+      } else {
+        snackText = 'Unlocked All The Lessons...!';
+      }
+      // switch (result) {
+      //   case 'yes':
+      //     lockVal = 0;
+      //     snackText = 'Unlocked All The Lessons...!';
+      //     break;
+      //   case 'no':
+      //     lockVal = 1;
+      //     snackText = 'locked All The Lessons...!';
+      //     break;
+      // }
+      if (result == 'yes') {
+        let endpoint: any = this.serverDetailsVal.serverUrl + 'updateuserforunlockedlesson';
+
+        var data: any = {
+          user_id: this.userId,
+          haslessonlocked: val
+        }
+        this.apiService.postDatawithoutToken(endpoint, data).subscribe((response: any) => {
+          if (response.status == "success") {
+            this.lesson_locked_by_user = val;
+            this.snakBar.open(snackText, 'OK', {
+              duration: 5000
+            });
+
+            if (this.lesson_locked_by_user == 0) {
+              this.next_button_access = true;
+              this.access_flag= true;
+            } else {
+              this.next_button_access = false;
+              this.access_flag= false;
+            }
+      
+          }
+        })
+      }
+    })
+
+  }
+
 
 }
 
@@ -1268,4 +1421,25 @@ export class ScheduleModalComponent {
     //   duration: 3000
     // })
   }
+}
+
+
+
+
+@Component({
+  selector: 'unlockLesson',
+  templateUrl: './unlockLesson.html'
+})
+export class UnlockLessonModalComponent {
+
+  constructor(public dialogRef: MatDialogRef<UnlockLessonModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData3, public snakBar: MatSnackBar, public apiService: ApiService, public router: Router) {
+
+  }
+
+  lockedLesson(val: any) {
+    console.log(val)
+    this.dialogRef.close(val)
+  }
+
 }

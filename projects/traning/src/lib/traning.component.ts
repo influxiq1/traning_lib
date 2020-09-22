@@ -55,6 +55,8 @@ export class TraningComponent implements OnInit {
   public hasLessonVal:any;
   public dnaFlag:any;
   public lessonplanValue:any;
+  public has_skip_lesson:any;
+
   public  
   @Input()
     set formdata(formdata: string) {
@@ -234,7 +236,12 @@ export class TraningComponent implements OnInit {
         if(this.hasLessonVal==0){
           delete this.dataForm.value.lessonplan_value;
         }
-          
+
+        if(this.has_skip_lesson == true){
+          data.data['has_skip_lesson'] = 1;
+        } else {
+          data.data['has_skip_lesson'] = 0;
+        }
         }
         
         
@@ -405,6 +412,9 @@ geteditdata() {
       this.htmType = res.res[0].typeHtml;
       // this.hasLessonVal=res.res[0].has_lessonplan;
       this.chkboxval=res.res[0].has_lessonplan;
+
+      this.has_skip_lesson= res[0].has_skip_lesson;
+
       this.getchkboxval(this.chkboxval);
       this.lessonplanValue=res.res[0].lessonplan_value;
       switch (res.res[0].mediaType) {

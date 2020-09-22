@@ -1,0 +1,27 @@
+<div class="generalmodalcls">
+    <div class="modal-content">
+          <div class="logowrapperouter">
+              <div class="logowrapper">
+                  <mat-card>we highly suggest you follow the lesson in sequence</mat-card>
+              </div>
+          </div>  
+
+          <div mat-dialog-content class="headercls">
+            <!-- {{data}} -->
+            <h2 *ngIf="data?.data == 1">Are you sure to lock all the lessons ?</h2>
+            <h2 *ngIf="data?.data == 0">Are you sure to unlock all the lessons ?</h2>
+          </div> 
+
+
+
+          <mat-dialog-actions class="modalbtncls">
+            <button class="btncancelcls" mat-raised-button color="accent" type="button" (click)="lockedLesson('yes')">Yes</button>
+            <button class="btnbluecls" mat-raised-button color="primary" type="button" (click)="lockedLesson('no')" cdkFocusInitial>No</button>
+          </mat-dialog-actions>
+      </div>
+    </div>
+  
+  
+  
+  
+   
