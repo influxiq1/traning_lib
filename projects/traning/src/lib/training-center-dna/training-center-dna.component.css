@@ -150,3 +150,16 @@
     .lessontitleclass_0 ,.lessoncontent0 {
         display: block;
         }
+
+
+      .btncancelcls{
+        position: absolute;
+        right: -20px;
+        top: -17px;
+        padding: 4px;
+        background: #0eadff!important;
+        line-height: inherit;
+        min-width: inherit;
+        border-radius: 100px;
+        outline: none;
+      } 

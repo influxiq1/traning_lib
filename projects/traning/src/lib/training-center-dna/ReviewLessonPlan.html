@@ -8,23 +8,26 @@
 
 
           <div mat-dialog-content class="headercls">
-            <h2>Complete your Lesson Plan Material now!</h2>
+            <h2>Complete Your Lesson Plan Material Now!</h2>
           </div> 
       
           <div>
               <span>You have a purchased a Lesson <b>{{data.data.lession_title}}</b>, from your Mentor <b>{{data.user_mentor_name}}</b>, please review and fill out the Questionnaire provided in the Lesson Plan Material.</span>
           </div>
           <br>
-          <div>
-                <button class="btnbluecls" mat-raised-button color="primary" (click)="submitLesson(data, 'yes')" cdkFocusInitial>CONTINUE</button>
-          </div>
+          <div class="modalbtncls">
+                <button class="btnbluecls" mat-raised-button color="primary" (click)="submitLesson(data, 'yes')" cdkFocusInitial>CONTINUE</button>&nbsp;
 
-          <mat-dialog-actions class="modalbtncls">
-            <button class="btncancelcls" mat-raised-button color="accent" mat-dialog-close="no" cdkFocusInitial><span class="material-icons">
-              clear
-              </span></button>
-            <!-- <button class="btnbluecls" mat-raised-button color="primary" (click)="submitLession(session_id, 'yes')" cdkFocusInitial>Submit</button> -->
-          </mat-dialog-actions>
+                <button class="btnbluecls" mat-raised-button color="accent" mat-dialog-close="no" cdkFocusInitial>No</button>&nbsp;
+
+                <button class="btncancelcls" mat-raised-button color="accent" mat-dialog-close="no" cdkFocusInitial><span class="material-icons">
+                  clear
+                  </span></button>
+          </div>
+<!-- 
+          <mat-dialog-actions class="btncancelcls">
+           
+          </mat-dialog-actions> -->
       </div>
     </div>
   

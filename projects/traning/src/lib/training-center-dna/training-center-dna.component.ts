@@ -140,7 +140,7 @@ export class TrainingCenterDnaComponent implements OnInit {
     this.trainingCategoryList = results.trainingcenterlist;
 
     this.AllTrainingData = results;
-    if(results.lesson_locked_by_user != null && results.lesson_locked_by_user != 'undefined'){
+    if (results.lesson_locked_by_user != null && results.lesson_locked_by_user != 'undefined') {
       this.lesson_locked_by_user = results.lesson_locked_by_user;
     } else {
       this.lesson_locked_by_user = 1;
@@ -188,6 +188,11 @@ export class TrainingCenterDnaComponent implements OnInit {
       this.preview_button = true;
       this.schedule_button = false;
 
+      if (results.lesson_locked_by_user != null && results.lesson_locked_by_user != 'undefined') {
+        this.lesson_locked_by_user = results.lesson_locked_by_user;
+      } else {
+        this.lesson_locked_by_user = 1;
+      }
 
       if (this.orders_data != null && this.orders_data) {
         for (let i in this.orders_data) {
@@ -202,15 +207,17 @@ export class TrainingCenterDnaComponent implements OnInit {
         }
       }
 
+      // && results.lesson_question_submited_by_user != null && results.lesson_question_submited_by_user[0] != null && results.lesson_question_submited_by_user[0].training_from_data > 0 && results.lesson_question <= results.lesson_question_submited_by_user[0].training_from_data
+
       if (results.lesson_ids[0].lesson_ids != null) {
         for (let id in results.lesson_ids[0].lesson_ids) {
 
-          if ( this.lesson_locked_by_user == 1 && (results.lesson_content[0]._id == results.lesson_ids[0].lesson_ids[id] && results.lesson_question_submited_by_user != null && results.lesson_question_submited_by_user[0] != null && results.lesson_question_submited_by_user[0].training_from_data > 0 && results.lesson_question <= results.lesson_question_submited_by_user[0].training_from_data && results.lesson_content[0].has_lessonplan == 1) || (results.lesson_content[0]._id == results.lesson_ids[0].lesson_ids[id] && results.lesson_content[0].has_lessonplan == 0) ) {
+          if ( (results.lesson_content[0]._id == results.lesson_ids[0].lesson_ids[id] && results.lesson_content[0].has_lessonplan == 1) || (results.lesson_content[0]._id == results.lesson_ids[0].lesson_ids[id])) {
             this.lesson_id_flag = results.lesson_ids[0].lesson_ids[id];
             // this.orders_button = true;
             this.preview_button = false;
             this.next_button_access = true;
-            console.log(this.next_button_access, 'next_button_access')
+            // console.log(this.next_button_access, 'next_button_access')
             // if (this.orders_button == false && this.preview_button == false && this.schedule_button == false) {
             //   this.schedule_button = true;
             // }
@@ -218,23 +225,25 @@ export class TrainingCenterDnaComponent implements OnInit {
         }
       }
 
-   
 
-      console.log(this.lesson_locked_by_user, 'lesson_locked_by_user', 'single order >>>', results.lesson_question, results.lesson_question_submited_by_user)
+
+      // console.log(this.lesson_locked_by_user, 'lesson_locked_by_user', 'single order >>>', results.lesson_question, results.lesson_question_submited_by_user)
 
       if (this.preview_button == true && this.lesson_locked_by_user == 1) {
         this.next_button_access = false;
-        console.log(this.next_button_access, 'next_button_access', this.preview_button)
+        // console.log(this.next_button_access, 'next_button_access', this.preview_button)
 
       }
 
-      if (this.lesson_locked_by_user == 0) {
-        this.next_button_access = true;
-      }
+      // if (this.lesson_locked_by_user == 0) {
+      //   this.next_button_access = true;
+      // }
 
-      console.log(this.lesson_locked_by_user,'lesson_locked_by_user',this.next_button_access)
+      // && results.lesson_question_submited_by_user[0] != null && results.lesson_question_submited_by_user[0].training_from_data > 0 && results.lesson_question_submited_by_user[0].training_from_data < results.lesson_question.length
 
-      if (results.lesson_question_submited_by_user != null && results.lesson_question_submited_by_user[0] != null && results.lesson_question_submited_by_user[0].training_from_data > 0 && results.lesson_question_submited_by_user[0].training_from_data < results.lesson_question.length && this.orders_button == true && results.lesson_content[0].has_lessonplan == 1) {
+      // console.log(this.lesson_locked_by_user, 'lesson_locked_by_user', this.next_button_access)
+
+      if (results.lesson_question_submited_by_user != null && this.orders_button == true && results.lesson_content[0].has_lessonplan == 1) {
         this.snakBar.open('Please Submit Your All Lesson Questions...!', 'OK', {
           duration: 5000
         });
@@ -272,37 +281,46 @@ export class TrainingCenterDnaComponent implements OnInit {
 
     if (this.userType == 'mentor') {
 
+      if (results.lesson_locked_by_user != null && results.lesson_locked_by_user != 'undefined') {
+        this.lesson_locked_by_user = results.lesson_locked_by_user;
+      } else {
+        this.lesson_locked_by_user = 1;
+      }
+
+
       this.next_button_access = false;
       // this.lesson_locked_by_user = 1;
       // this.lesson_locked_by_user= results.lesson_locked_by_user
 
-      console.log(this.lesson_locked_by_user,'results.lesson_locked_by_user',this.next_button_access)
+      // console.log(this.lesson_locked_by_user, 'results.lesson_locked_by_user', this.next_button_access)
       if (results.lesson_locked_by_user == 0) {
         this.next_button_access = true;
       } else {
         this.next_button_access = false;
       }
-      if (results.lesson_ids[0].lesson_ids != null ) {
+      if (results.lesson_ids[0].lesson_ids != null) {
         for (let id in results.lesson_ids[0].lesson_ids) {
 
-          if ( results.lesson_locked_by_user == 1 && (results.lesson_content[0]._id == results.lesson_ids[0].lesson_ids[id] && results.lesson_question_submited_by_user != null && results.lesson_question_submited_by_user[0] != null && results.lesson_question_submited_by_user[0].training_from_data > 0 && results.lesson_question <= results.lesson_question_submited_by_user[0].training_from_data && results.lesson_content[0].has_lessonplan == 1) || (results.lesson_content[0]._id == results.lesson_ids[0].lesson_ids[id] && results.lesson_content[0].has_lessonplan == 0)) {
+          // && results.lesson_question_submited_by_user != null && results.lesson_question_submited_by_user[0] != null && results.lesson_question_submited_by_user[0].training_from_data > 0 && results.lesson_question <= results.lesson_question_submited_by_user[0].training_from_data
+
+          if ((results.lesson_content[0]._id == results.lesson_ids[0].lesson_ids[id] && results.lesson_content[0].has_lessonplan == 1) || (results.lesson_content[0]._id == results.lesson_ids[0].lesson_ids[id])) {
             this.next_button_access = true;
-            console.log(this.next_button_access, 'next_button_access', results.lesson_content[0])
+            // console.log(this.next_button_access, 'next_button_access', results.lesson_content[0])
           }
         }
       }
 
-      console.log(this.next_button_access, 'next_button_access', results.lesson_content[0])
+      // console.log(this.next_button_access, 'next_button_access', results.lesson_content[0])
 
-      if (results.lesson_content[0].has_lessonplan == 0 || results.lesson_locked_by_user == 0) {
-        this.next_button_access = true;
-      }
+      // if (results.lesson_content[0].has_lessonplan == 0 || this.lesson_locked_by_user == 0) {
+      //   this.next_button_access = true;
+      // }
 
-      if (results.lesson_question_submited_by_user != null && results.lesson_question_submited_by_user[0] != null && results.lesson_question.length > results.lesson_question_submited_by_user[0].training_from_data) {
-        this.snakBar.open('Please Submit Your All Lesson Questions...!', 'OK', {
-          duration: 5000
-        });
-      }
+      // if (results.lesson_question_submited_by_user != null && results.lesson_question_submited_by_user[0] != null && results.lesson_question.length > results.lesson_question_submited_by_user[0].training_from_data) {
+      //   this.snakBar.open('Please Submit Your All Lesson Questions...!', 'OK', {
+      //     duration: 5000
+      //   });
+      // }
 
 
     }
@@ -811,15 +829,33 @@ export class TrainingCenterDnaComponent implements OnInit {
   childcatclick(childId: any, catName: any) {
     this.trainingCategoryName = catName;
     this.router.navigateByUrl(this.trainingCenterRoute + childId);
-
   }
 
   nochildclick(val: any) {
-    console.log(this.next_button_access, '___++++', val)
+    // console.log(this.next_button_access, '___++++', val)
 
-    if (val.has_lessonplan == 0 || this.AllTrainingData.lesson_locked_by_user == 0) {
-      this.next_button_access = true;
-        this.access_flag= true;
+    if (this.AllTrainingData.lesson_locked_by_user != null && this.AllTrainingData.lesson_locked_by_user != 'undefined') {
+      // console.log('+++=========++ if')
+      if (this.AllTrainingData.lesson_locked_by_user == 1) {
+        // this.next_button_access = false;
+        this.access_flag = false;
+      }
+
+      if (this.AllTrainingData.lesson_locked_by_user == 0) {
+        // this.next_button_access = true;
+        this.access_flag = true;
+      }
+
+      this.lesson_locked_by_user = this.AllTrainingData.lesson_locked_by_user
+    } else {
+      // console.log('+++=========++ else')
+
+      this.lesson_locked_by_user = 1;
+    }
+
+    if (val.has_lessonplan == 0 || this.lesson_locked_by_user == 0 ) {
+      // this.next_button_access = true;
+      // this.access_flag = true;
       this.router.navigateByUrl(this.trainingCenterRoute + this.paramsTrainingId + '/' + val._id);
     } else {
 
@@ -833,17 +869,19 @@ export class TrainingCenterDnaComponent implements OnInit {
       this.access_flag = false;
       // lesson_submit_data = this.AllTrainingData.lesson_ids[0].lesson_ids;
 
+      // && (this.AllTrainingData.lesson_question_submited_by_user != null && this.AllTrainingData.lesson_question_submited_by_user[0] != null && this.AllTrainingData.lesson_question_submited_by_user[0].training_from_data > 0 && this.AllTrainingData.lesson_question <= this.AllTrainingData.lesson_question_submited_by_user[0].training_from_data)
+
       if (this.AllTrainingData.lesson_ids[0].lesson_ids != null) {
 
         for (let i in this.AllTrainingData.lesson_ids[0].lesson_ids) {
-          if (  this.AllTrainingData.lesson_locked_by_user  == 1 && (this.AllTrainingData.lesson_ids[0].lesson_ids[i] == val.prerequisite_lession || this.AllTrainingData.lesson_ids[0].lesson_ids[i] == val.paramslessonId) && (this.AllTrainingData.lesson_question_submited_by_user != null && this.AllTrainingData.lesson_question_submited_by_user[0] != null && this.AllTrainingData.lesson_question_submited_by_user[0].training_from_data > 0 && this.AllTrainingData.lesson_question <= this.AllTrainingData.lesson_question_submited_by_user[0].training_from_data) && this.next_button_access == true ) {
+          if ((this.AllTrainingData.lesson_ids[0].lesson_ids[i] == val.prerequisite_lession || this.AllTrainingData.lesson_ids[0].lesson_ids[i] == val.paramslessonId) && this.next_button_access == true) {
             this.access_flag = true;
           }
         }
       }
 
 
-      if ((val.is_done != null && val.is_done == true && this.access_flag == true) || (val.prerequisite_lession == this.paramslessonId && this.access_flag == true ) ||  this.AllTrainingData.lesson_locked_by_user  == 0) {
+      if ((val.is_done != null && val.is_done == true && this.access_flag == true ) || (val.prerequisite_lession == this.paramslessonId && this.access_flag == true )) {
 
         setTimeout(() => {
           this.progress_bar = 1;
@@ -1268,7 +1306,7 @@ export class TrainingCenterDnaComponent implements OnInit {
 
     const dialogRef = this.dialog.open(UnlockLessonModalComponent, {
       panelClass: 'schedule_modal',
-      data: {data:val}
+      data: { data: val }
     });
     dialogRef.disableClose = true;
     dialogRef.afterClosed().subscribe((result: any) => {
@@ -1276,9 +1314,9 @@ export class TrainingCenterDnaComponent implements OnInit {
       var lockVal: any;
       var snackText: any = '';
       if (val == 1) {
-        snackText = 'Locked All The Lessons...!';
+        snackText = 'Applied sequential lessons...!';
       } else {
-        snackText = 'Unlocked All The Lessons...!';
+        snackText = 'Unlocked sequential lessons...!';
       }
       // switch (result) {
       //   case 'yes':
@@ -1299,6 +1337,8 @@ export class TrainingCenterDnaComponent implements OnInit {
         }
         this.apiService.postDatawithoutToken(endpoint, data).subscribe((response: any) => {
           if (response.status == "success") {
+            console.log(this.trainingCenterRoute + this.paramsTrainingId)
+            this.router.navigateByUrl(this.trainingCenterRoute + this.paramsTrainingId)
             this.lesson_locked_by_user = val;
             this.snakBar.open(snackText, 'OK', {
               duration: 5000
@@ -1306,12 +1346,12 @@ export class TrainingCenterDnaComponent implements OnInit {
 
             if (this.lesson_locked_by_user == 0) {
               this.next_button_access = true;
-              this.access_flag= true;
+              this.access_flag = true;
             } else {
               this.next_button_access = false;
-              this.access_flag= false;
+              this.access_flag = false;
             }
-      
+
           }
         })
       }

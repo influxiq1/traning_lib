@@ -7,13 +7,13 @@
       <h3>{{ reportPercentage }}%</h3>
       <!-- lock/unlock all session  -->
     <div class="togglebtncls">
-      <button color="accent" type="button" *ngIf="lesson_locked_by_user == 1" (click)="UnlockLesson(0)" mat-raised-button matTooltip="Click Here to Unlock The All Lessons"
+      <button color="accent" type="button" *ngIf="lesson_locked_by_user == 0" (click)="UnlockLesson(1)" mat-raised-button matTooltip="We highly suggest you to follow the lessons in sequence!"
         aria-label="Button that displays a tooltip when focused or hovered over">
-        locked All the lesson
+        Apply sequential lessons lock
       </button>
-      <button color="accent" type="button" *ngIf="lesson_locked_by_user == 0" (click)="UnlockLesson(1)" mat-raised-button matTooltip="Click Here to Lock The All Lessons"
+      <button color="accent" type="button" *ngIf="lesson_locked_by_user == 1" (click)="UnlockLesson(0)" mat-raised-button matTooltip="We highly suggest you to follow the lessons in sequence!"
         aria-label="Button that displays a tooltip when focused or hovered over">
-        Unlocked All the lesson
+        Unlock sequential  lessons
       </button>
     </div>
     </div>
