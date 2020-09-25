@@ -121,7 +121,7 @@ export class AddEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.addAnswer('');
+    // this.addAnswer('');
 
     if(this.paramId){
       if(this.listingData[0].question_type == 'text_area'){

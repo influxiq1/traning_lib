@@ -16,7 +16,7 @@ export class AddEditLessionsComponent implements OnInit {
   public isitdna:any=true;
 
   public serverDetails: any = {
-    "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api11/",
+    "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/",
     "jwttoken": ""
   };
   // public formSource: any = {
@@ -29,16 +29,16 @@ export class AddEditLessionsComponent implements OnInit {
   // }
 
   public formSource: any = {
-    "source": 'manage_lession',
-    "endpoint": "addorupdatedata",
-    "showEndpoint": "datalist",
-    "AddheaderText": "Add Lesson",
-    "EditheaderText": "Edit Lesson",
-    "lessonDataEndpoint":"getlessondatabytrainingid"
-  }
+    source: 'manage_lession',
+    endpoint: 'addorupdatedata',
+    showEndpoint: 'datalist',
+    AddheaderText: 'Add Lesson',
+    EditheaderText: 'Edit Lesson',
+    lessonDataEndpoint: 'getlessondatabytrainingid'
+  };
   public additionalData: any = {
-    "objectId": "associated_training",
-    "objectId2": "prerequisite_lession"
+    objectId: 'associated_training',
+    objectId2: 'prerequisite_lession'
   };
   public configFileUpload:any={
     baseUrl: "https://fileupload.influxhostserver.com/",
@@ -69,13 +69,13 @@ export class AddEditLessionsComponent implements OnInit {
     });
 
     this.formdataval = [
-      { inputtype: 'text', name: 'lession_title', label: 'Title', placeholder: 'Enter Lession Title', validationrule: { required: true }, validationerrormsg: 'is required' },
+      { inputtype: 'text', name: 'lession_title', label: 'Title', placeholder: 'Enter Lesson Title', validationrule: { required: true }, validationerrormsg: 'is required' },
       
       { inputtype: 'textarea', name: 'description', label: 'Description', placeholder: 'Enter Description' },
       
       { inputtype: 'select', name: 'associated_training', label: 'Associated Training', defaultchoice: 'Select a Training', sourceview: 'training_category_management_view', endpoint: 'datalist', selectvalue: 'catagory_name', selectid: '_id', validationrule:{required:true},validationerrormsg:'is required'},
       
-      { inputtype: 'select', name: 'prerequisite_lession', label: 'Prerequisite Lesson', defaultchoice: 'Select a Prerequisite Lession', sourceview: 'manage_lession_null', endpoint: 'datalist', selectvalue: 'lession_title', selectid: '_id' },
+      { inputtype: 'select', name: 'prerequisite_lession', label: 'Prerequisite Lesson', defaultchoice: 'Select a Prerequisite Lesson', sourceview: 'manage_lession_null', endpoint: 'datalist', selectvalue: 'lession_title', selectid: '_id' },
       
       // { inputtype: 'radio', name: 'test_associate_training', value: ["Yes", "No"], valuelabel: '', label: "Is there a test associated with training ", placeholder: "", validationrule: { required: true }, validationerrormsg: '', class: 'radioclass' },
         

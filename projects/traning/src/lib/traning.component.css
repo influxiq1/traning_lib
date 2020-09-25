@@ -29,7 +29,17 @@
     flex-direction: column;
   }
   
-  
+  .formclass .mat-form-field{width: 100%;}
+  .adddeletecls{cursor: pointer;}
+  .adddeletecls i.material-icons{font-size: 32px;}
+  .addvideocls{display: flex;align-items: center; justify-content: flex-start;}
+  .addvideoblock{background: #e2e2e2;padding: 15px;margin-top: 10px;}
+  .addvideoblock:nth-child(1){margin-top: 0;}
+  .addbtn{color:#4CAF50}
+  .delbtn{color:#ff0000}
+  .clickable{
+    cursor: pointer;
+  }
   .formclass input[type=text], .formclass select, .formclass textarea {
     width: 100%;
     padding: 0;
@@ -41,6 +51,13 @@
   .formclass mat-label {
     padding: 12px 12px 12px 0;
     display: inline-block;
+  }
+  .formclass .formvideoclass mat-form-field{
+    width: 100%;
+    padding: 0;
+    border: 0px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
   }
 
  

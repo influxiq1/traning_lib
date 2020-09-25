@@ -146,16 +146,24 @@
 
             <!-- for multiple answer add -->
             <div *ngIf="questionTypeVal == 'multiple_selection'">
-                <mat-label>Add Multiple Answer :</mat-label>
+
+                <span class="addvideocls">
+                    <mat-label>Add Multiple Answer :</mat-label>
+                    <span class="adddeletecls">
+                    <i class="material-icons addbtn" (click)="addAnswer('')">add_box</i>
+                    </span>
+    
+                </span>
+                
                 <div formArrayName="answerdata"
                     *ngFor="let item of manageQuizForm.controls.answerdata?.value; let i=index ;trackBy: trackByFn"
                     class="fromClass">
                     <ng-container [formGroupName]="i">
                         <mat-form-field >
                             <input matInput formControlName="answer" placeholder="Answer">
-                            <span matSuffix>
-                                <i class="material-icons" (click)="addAnswer('')">add</i>
-                                <i *ngIf="i>0" class="material-icons" (click)="removeAnswer(i)">remove</i>
+                            <span matSuffix class="adddeletecls">
+                                <i class="material-icons addbtn" (click)="addAnswer('')">add_box</i>
+                                <i class="material-icons delbtn" (click)="removeAnswer(i)">delete</i>
                             </span>
                         </mat-form-field>
                     </ng-container>

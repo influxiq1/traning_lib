@@ -32,3 +32,14 @@ table {
     background: #3f50b5 !important;
     color: #fff;
   }
+
+  .adddeletecls{cursor: pointer;}
+  .adddeletecls i.material-icons{font-size: 32px;}
+  .addvideocls{display: flex;align-items: center; justify-content: flex-start;}
+  .addvideoblock{background: #e2e2e2;padding: 15px;margin-top: 10px;}
+  .addvideoblock:nth-child(1){margin-top: 0;}
+  .addbtn{color:#4CAF50}
+  .delbtn{color:#ff0000}
+  .clickable{
+    cursor: pointer;
+  }

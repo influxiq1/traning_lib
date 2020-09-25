@@ -1,6 +1,6 @@
 // import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, Component } from '@angular/core';
-import { TraningComponent } from './traning.component';
+import { TraningComponent, videoDialogComponent } from './traning.component';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -58,7 +58,8 @@ import { ListingModule } from 'listing-angular7';
     ReviewLessonPlanComponent,
     ScheduleModalComponent,
     questionDataModalComponent,
-    UnlockLessonModalComponent
+    UnlockLessonModalComponent,
+    videoDialogComponent
   ],
   imports: [
     HttpClientModule,
@@ -78,6 +79,6 @@ import { ListingModule } from 'listing-angular7';
   exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest,TrainingreportComponent,CategoryWiseReportComponent,TrainingCenterDnaComponent,LessonPlanMaterialComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [CookieService, ApiService,DatePipe],
-  entryComponents:[DialogBoxComponent,Dialogtest,PurchaseModalComponent,ReviewLessonPlanComponent,ScheduleModalComponent,questionDataModalComponent,UnlockLessonModalComponent]
+  entryComponents:[DialogBoxComponent,Dialogtest,PurchaseModalComponent,ReviewLessonPlanComponent,ScheduleModalComponent,questionDataModalComponent,UnlockLessonModalComponent,videoDialogComponent]
 })
 export class TraningModule { }

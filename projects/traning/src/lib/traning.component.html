@@ -10,7 +10,7 @@
         <ng-container [formGroup]="dataForm" *ngFor="let item of formdataval; let i=index;">
 
             <div *ngIf="item.inputtype == 'text'">
-                <mat-label *ngIf="item.inputtype == 'text'">{{item.label}} : </mat-label> 
+                <mat-label *ngIf="item.inputtype == 'text'">{{item.label}} : </mat-label>
 
                 <mat-form-field *ngIf="item.inputtype == 'text' || item.inputtype == 'password'">
                     <input matInput [type]="item.inputtype" [placeholder]="item.placeholder"
@@ -25,7 +25,7 @@
             </div>
 
             <div *ngIf="item.inputtype == 'textarea'">
-                <mat-label *ngIf="item.inputtype == 'textarea'">{{item.label}} : </mat-label> 
+                <mat-label *ngIf="item.inputtype == 'textarea'">{{item.label}} : </mat-label>
 
                 <mat-form-field *ngIf="item.inputtype == 'textarea'">
                     <textarea matInput [placeholder]="item.placeholder" [formControlName]="[item.name]"
@@ -64,7 +64,7 @@
                 </mat-form-field>
             </div>
 
-            <div class="checkboxnew"  *ngIf="item.inputtype =='checkbox'">
+            <div class="checkboxnew" *ngIf="item.inputtype =='checkbox'">
                 <mat-label *ngIf="item.inputtype =='checkbox'">{{item.label}}:</mat-label>
                 <mat-checkbox *ngIf="item.inputtype == 'checkbox'" [ngClass]="item.class"
                     [formControlName]="[item.name]" (keyup)="issubmit=0" [(ngModel)]="checked"></mat-checkbox>
@@ -74,7 +74,8 @@
 
             <div *ngIf="item.inputtype =='radio'">
                 <span *ngIf="item.inputtype =='radio'">
-                    <mat-label *ngIf="item.inputtype=='radio'">{{item.label}}:</mat-label>                    <mat-radio-group [formControlName]="[item.name]">
+                    <mat-label *ngIf="item.inputtype=='radio'">{{item.label}}:</mat-label>
+                    <mat-radio-group [formControlName]="[item.name]">
                         <mat-radio-button type="radio" *ngFor="let val of item.value" [name]="item.name" [value]="val"
                             (keyup)="issubmit=0" [ngClass]="item.class">{{val}} {{item.valuelabel}}</mat-radio-button>
                     </mat-radio-group>
@@ -119,12 +120,68 @@
 
         <div
             *ngIf="mediaTypeValue == 'image' || mediaTypeValue == 'video' || mediaTypeValue == 'audio'  || mediaTypeValue == 'file' ">
-            <h4>Please Add Single File</h4>
             <!-- file uploader start here -->
-            <lib-file-upload [config]="uploadConfigData"></lib-file-upload>
+            <div *ngIf="mediaTypeValue == 'image' || mediaTypeValue == 'audio'  || mediaTypeValue == 'file' ">
+                <h4>Please Add Single File</h4>
+
+                <lib-file-upload [config]="uploadConfigData"></lib-file-upload>
+            </div>
+
+
+            <div *ngIf=" mediaTypeValue == 'video'" class="fromClass">
+
+                <div class="addvideocls"> 
+                    <mat-label><b>Add Multiple Video : </b></mat-label>
+                    <span class="adddeletecls">
+                        <i class="material-icons addbtn" (click)="addVideo(vid_url,vid_tit,vid_desc)">add_box</i>
+                    </span>
+                </div>
+               
+                
+                <div *ngFor="let item of video_array; let i=index;trackBy: trackByFn"
+                class="fromClass addvideoblock">
+                <ng-container >
+                    <mat-form-field>
+                        <span matPrefix>https://www.youtube.com/watch?v= &nbsp;</span>
+                        <input matInput  placeholder="Enter Video ID" [(ngModel)]="video_array[i].video_url"  [ngModelOptions]="{standalone: true}">
+                        <mat-icon matSuffix class="clickable" (click)="preview_video(video_array[i].video_url)">remove_red_eye</mat-icon>
+                    </mat-form-field>  <br>
+
+                    <mat-form-field >
+                        <input matInput placeholder="Video Title" [(ngModel)]="video_array[i].video_title"  [ngModelOptions]="{standalone: true}">
+                      </mat-form-field><br>
+
+                    <mat-form-field  >
+                        <textarea matInput placeholder="Video Description" [(ngModel)]="video_array[i].video_description"  [ngModelOptions]="{standalone: true}"></textarea>
+                      </mat-form-field> &nbsp;
+                    <span  class="adddeletecls">
+                        <i class="material-icons addbtn" (click)="addVideo(vid_url,vid_tit,vid_desc)">add_box</i>
+                        <i class="material-icons delbtn" (click)="removevideo(i)">delete</i>
+                    </span>
+                </ng-container>
+                    
+                </div>
+               
+
+                <!-- <div formArrayName="video_array"
+                    *ngFor="let item of video_array; let i=index ;trackBy: trackByFn"
+                    class="fromClass">
+                    <ng-container [formGroupName]="i">
+                        <mat-form-field >
+                            <input matInput formControlName="answer" placeholder="Answer">
+                            <span matSuffix>
+                                <i class="material-icons" (click)="addAnswer('')">add</i>
+                                <i *ngIf="i>0" class="material-icons" (click)="removeAnswer(i)">remove</i>
+                            </span>
+                        </mat-form-field>
+                    </ng-container>
+                </div> -->
+            </div>
+
+
 
             <mat-form-field>
-                <input type="text" matInput placeholder="Title" [(ngModel)]="title"
+                <input type="text" matInput placeholder="Title" [(ngModel)]="title" 
                     [ngModelOptions]="{standalone: true}">
                 <mat-icon matSuffix>title</mat-icon>
             </mat-form-field>
@@ -143,7 +200,8 @@
                     <img mat-card-image src="{{ imagePath }}" />
                 </mat-card>
             </ng-container>
-            <ng-container *ngIf="mediaTypeValue == 'video' && imagePath != null && audioVideoFlag==true">
+
+            <!-- <ng-container *ngIf="mediaTypeValue == 'video' && imagePath != null && audioVideoFlag==true">
                 <div style="margin: 0 auto;display: block;">
                     <mat-card class="example-card">
                         <span class="closecard" class="pointer" *ngIf="mediaTypeValue == 'video'" (click)="clear()"><i
@@ -155,7 +213,8 @@
                     </mat-card>
                 </div>
 
-            </ng-container>
+            </ng-container> -->
+
             <ng-container *ngIf="mediaTypeValue == 'audio' && imagePath != null && audioVideoFlag==true">
 
                 <div style="margin: 0 auto;display: block;">
@@ -186,8 +245,8 @@
 
             <div>
                 <span>
-                    <mat-checkbox  [(ngModel)]="has_skip_lesson"
-                        [ngModelOptions]="{standalone: true}"> Skip Lesson ?</mat-checkbox>
+                    <mat-checkbox [(ngModel)]="has_skip_lesson" [ngModelOptions]="{standalone: true}"> Skip Lesson ?
+                    </mat-checkbox>
                 </span>
             </div>
             <div>
@@ -196,7 +255,7 @@
                         [ngModelOptions]="{standalone: true}">Has Lesson plan?</mat-checkbox>
                 </span>
             </div>
-            
+
             <div *ngIf="hasLessonVal == true">
                 <mat-form-field>
                     <mat-label>Select A One</mat-label>
