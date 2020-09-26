@@ -6,16 +6,18 @@
       </mat-progress-bar>
       <h3>{{ reportPercentage }}%</h3>
       <!-- lock/unlock all session  -->
-    <div class="togglebtncls">
-      <button color="accent" type="button" *ngIf="lesson_locked_by_user == 0" (click)="UnlockLesson(1)" mat-raised-button matTooltip="We highly suggest you to follow the lessons in sequence!"
-        aria-label="Button that displays a tooltip when focused or hovered over">
-        Apply sequential lessons lock
-      </button>
-      <button color="accent" type="button" *ngIf="lesson_locked_by_user == 1" (click)="UnlockLesson(0)" mat-raised-button matTooltip="We highly suggest you to follow the lessons in sequence!"
-        aria-label="Button that displays a tooltip when focused or hovered over">
-        Unlock sequential  lessons
-      </button>
-    </div>
+      <div class="togglebtncls">
+        <button color="accent" type="button" *ngIf="lesson_locked_by_user == 0" (click)="UnlockLesson(1)"
+          mat-raised-button matTooltip="We highly suggest you to follow the lessons in sequence!"
+          aria-label="Button that displays a tooltip when focused or hovered over">
+          Apply sequential lessons lock
+        </button>
+        <button color="accent" type="button" *ngIf="lesson_locked_by_user == 1" (click)="UnlockLesson(0)"
+          mat-raised-button matTooltip="We highly suggest you to follow the lessons in sequence!"
+          aria-label="Button that displays a tooltip when focused or hovered over">
+          Unlock sequential lessons
+        </button>
+      </div>
     </div>
 
     <!-- <h1 class="trainingheadercls">{{ trainingCategoryName }}</h1> -->
@@ -86,13 +88,13 @@
           <span (click)="nochildclick(item)">
             <!-- {{item.lession_title}} -->
           </span>
-          
+
         </div>
         <!-- [ngClass]="{'class5': (item._id == currentLesson),
         'class7':(item._id==completedLessons)}"  -->
-        <span class="material-icons" *ngIf="lesson_locked_by_user == 1" >
+        <span class="material-icons" *ngIf="lesson_locked_by_user == 1">
           lock
-          </span>
+        </span>
       </div>
 
       <!-- start content for lesson data -->
@@ -186,17 +188,19 @@
                   <img mat-card-image src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}"
                     alt="{{item.lession_title}}" />
                   <span>{{ item.image_description }}</span>
-
                 </div> -->
               </mat-card>
-              <mat-card class="example-card" *ngIf="item.mediaType=='video'">
+
+              <mat-card class="example-card" *ngIf="lesson_content.mediaType =='video'">
                 <!-- <div class="paragraphwrapper">
                   <p [innerHtml]="item.video_typeHtml" class="paragraphcls"></p>
                 </div> -->
                 <div class="videoWrapper">
-                  <span>{{ item.video_title }}</span>
+                  <span>{{ item.video_title }}wwww</span>
+                  <span>{{item}}</span>
+
                   <video width="640" height="360" autoplay (ended)="videoended(item,i,1)">
-                    <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="video/mp4">
+                    <!-- <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="video/mp4"> -->
                     Your browser does not support the video tag.
                   </video>
                   <span>{{ item.video_description }}</span>
@@ -456,68 +460,87 @@
                   <p [innerHtml]="lesson_content.typeHtml" class="paragraphcls"></p>
                 </div>
               </div>
+              <div *ngIf="i == 1">
+                <mat-card class="example-card" *ngIf="item.mediaType=='image'">
+                  <!-- <div class="paragraphwrapper">
+                    <p [innerHtml]="item.image_typeHtml" class="paragraphcls"></p>
+                  </div> -->
+                  <div class="imgwrappercls">
+                    <span>{{ item.image_title }}</span>
+                    <img mat-card-image src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}"
+                      alt="{{item.lession_title}}" />
+                    <span>{{ item.image_description }}</span>
 
-              <mat-card class="example-card" *ngIf="item.mediaType=='image'">
-                <!-- <div class="paragraphwrapper">
-                  <p [innerHtml]="item.image_typeHtml" class="paragraphcls"></p>
-                </div> -->
-                <div class="imgwrappercls">
-                  <span>{{ item.image_title }}</span>
-                  <img mat-card-image src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}"
-                    alt="{{item.lession_title}}" />
-                  <span>{{ item.image_description }}</span>
+                  </div>
+                </mat-card>
 
-                </div>
-              </mat-card>
-              <mat-card class="example-card" *ngIf="item.mediaType=='video'">
-                <!-- <div class="paragraphwrapper">
-                  <p [innerHtml]="item.video_typeHtml" class="paragraphcls"></p>
-                </div> -->
-                <div class="videoWrapper">
-                  <span>{{ item.video_title }}</span>
-                  <video width="640" height="360" autoplay (ended)="videoended(item,i,1)">
-                    <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="video/mp4">
-                    Your browser does not support the video tag.
-                  </video>
-                  <span>{{ item.video_description }}</span>
+                <mat-card class="example-card" *ngIf="lesson_content.mediaType=='video'">
+                  <!-- <div class="paragraphwrapper">
+                    <p [innerHtml]="item.video_typeHtml" class="paragraphcls"></p>
+                  </div> -->
+                  <div class="videoWrapper">
+                    <span class="video_titlecls">{{ lesson_content.video_title }}</span> <br>
+                    <!-- <video width="640" height="360" autoplay (ended)="videoended(item,i,1)"> -->
+                    <!-- <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="video/mp4"> -->
+                    <!-- Your browser does not support the video tag. -->
+                    <!-- </video> -->
+                    <span class="video_descriptioncls" [innerHTML]="lesson_content.video_description"></span><br>
 
-                </div>
+                    <div class="video_arraycls"
+                      *ngIf="lesson_content.video_array !=null && lesson_content.video_array !=''">
+                      <div *ngFor="let item of lesson_content.video_array" class="video_titlecls">
+                        <div class="videocls">
+                          <img src="https://img.youtube.com/vi/{{item.video_url}}/0.jpg"
+                            (click)="openLessonVideo(item)">
+
+                          <!-- <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY" frameborder="0"
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe> -->
+                          <p class="videotitlecls">{{item.video_title}}</p>
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </mat-card>
+
+                <mat-card class="example-card" *ngIf="item.mediaType=='audio' ">
+                  <!-- <div class="paragraphwrapper">
+                    <p [innerHtml]="item.audio_typeHtml" class="paragraphcls"></p>
+                  </div> -->
+                  <div class="audioWrapper">
+                    <span>{{ item.audio_title }}</span>
+
+                    <audio width="640" height="360" (ended)="audioended(item,i,1)" controls>
+                      <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="audio/mpeg">
+                      Your browser does not support the audio tag.
+                    </audio>
+                    <span>{{ item.audio_description }}</span>
+
+                  </div>
+
+                </mat-card>
+                <mat-card class="example-card" *ngIf="item.mediaType=='file' ">
+                  <!-- <div class="paragraphwrapper">
+                    <p [innerHtml]="item.file_typeHtml" class="paragraphcls"></p>
+                  </div> -->
+                  <div class="carouselWrapper">
+                    <span>{{ item.file_title }}</span>
+                    <mat-carousel timings="250ms ease-in" [autoplay]="true" interval="15000" [loop]="true"
+                      [maintainAspectRatio]="true" [hideArrows]="false" [hideIndicators]="false" [useKeyboard]="true"
+                      [useMouseWheel]="false" orientation="ltr">
+                      <mat-carousel-slide #matCarouselSlide *ngFor="let slide of item.convertedimages; let i1 = index"
+                        [image]="slide" overlayColor="#00000040" [hideOverlay]="false">
+                      </mat-carousel-slide>
+                    </mat-carousel>
+                    <span>{{ item.file_description }}</span>
+                  </div>
+
+                </mat-card>
+              </div>
 
 
-              </mat-card>
-              <mat-card class="example-card" *ngIf="item.mediaType=='audio' ">
-                <!-- <div class="paragraphwrapper">
-                  <p [innerHtml]="item.audio_typeHtml" class="paragraphcls"></p>
-                </div> -->
-                <div class="audioWrapper">
-                  <span>{{ item.audio_title }}</span>
-
-                  <audio width="640" height="360" (ended)="audioended(item,i,1)" controls>
-                    <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="audio/mpeg">
-                    Your browser does not support the audio tag.
-                  </audio>
-                  <span>{{ item.audio_description }}</span>
-
-                </div>
-
-              </mat-card>
-              <mat-card class="example-card" *ngIf="item.mediaType=='file' ">
-                <!-- <div class="paragraphwrapper">
-                  <p [innerHtml]="item.file_typeHtml" class="paragraphcls"></p>
-                </div> -->
-                <div class="carouselWrapper">
-                  <span>{{ item.file_title }}</span>
-                  <mat-carousel timings="250ms ease-in" [autoplay]="true" interval="15000" [loop]="true"
-                    [maintainAspectRatio]="true" [hideArrows]="false" [hideIndicators]="false" [useKeyboard]="true"
-                    [useMouseWheel]="false" orientation="ltr">
-                    <mat-carousel-slide #matCarouselSlide *ngFor="let slide of item.convertedimages; let i1 = index"
-                      [image]="slide" overlayColor="#00000040" [hideOverlay]="false">
-                    </mat-carousel-slide>
-                  </mat-carousel>
-                  <span>{{ item.file_description }}</span>
-                </div>
-
-              </mat-card>
               <ng-container
                 *ngIf="item.test_associate_training=='No' && item.mediaType != 'audio' && item.mediaType != 'video'">
                 <!-- <button mat-button type="button" class="submitbtn" color="primary"
@@ -705,16 +728,21 @@
 
 
     <!-- start content for lesson data -->
-    <div class="rowinrgrp">
-      <div fxLayout="row" class="rowinner" *ngFor="let item of allLessonDataList ; let i=index;">
-        <div (click)="nochildclick(item)" [ngClass]="paramslessonId ==  item._id ? 'classlessonongoing':
-          ( item.is_done == true? 'classlessondone' : 'classlessonnotdone')">{{item.lession_title}}
-          <!-- <span>{{item  | json}}</span> -->
-          <span (click)="nochildclick(item)">
-            <!-- {{item.lession_title}} -->
-          </span>
-        </div>
+    <div fxLayout="row" class="rowinner" *ngFor="let item of allLessonDataList ; let i=index;">
+
+      <div (click)="nochildclick(item)" [ngClass]="paramslessonId ==  item._id ? 'classlessonongoing':
+          ( item.is_done == true ? 'classlessondone' : 'classlessonnotdone')">{{item.lession_title}}
+        <!-- <span>{{item  | json}}</span> -->
+        <span (click)="nochildclick(item)">
+          <!-- {{item.lession_title}} -->
+        </span>
+
       </div>
+      <!-- [ngClass]="{'class5': (item._id == currentLesson),
+      'class7':(item._id==completedLessons)}"  -->
+      <span class="material-icons" *ngIf="lesson_locked_by_user == 1">
+        lock
+      </span>
     </div>
     <!--end  content for lesson data -->
 

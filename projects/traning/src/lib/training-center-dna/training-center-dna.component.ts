@@ -10,6 +10,7 @@ import { count } from 'rxjs/operators';
 import { MatProgressBarModule, MatRadioModule, MatSliderModule } from '@angular/material'
 // import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 import { Pipe, PipeTransform } from '@angular/core';
+import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 
 
 
@@ -38,6 +39,11 @@ export interface DialogData2 {
   user_mentor_name: any;
   flag: any;
   // product_data: any;
+}
+
+export interface DialogData4{
+  data:any;
+  safe_url:any;
 }
 
 @Component({
@@ -123,6 +129,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   public isLockedLesson: any = true;
   public access_flag: any = false;
   public lesson_locked_by_user: any = 1;
+  public video_base_url: any = 'https://www.youtube.com/embed/';
 
   @Input()
   set lessonplanmaterialRoute(route: any) {
@@ -542,7 +549,7 @@ export class TrainingCenterDnaComponent implements OnInit {
     this.dnaServerUrl = (val) || '<no name set>';
   }
   constructor(public dialog: MatDialog, public apiService: ApiService, public router: Router,
-    public cookieService: CookieService, public snakBar: MatSnackBar, public activatedRoute: ActivatedRoute) {
+    public cookieService: CookieService, public snakBar: MatSnackBar, public activatedRoute: ActivatedRoute,public sanitizer:DomSanitizer) {
 
     this.userId = JSON.parse(this.cookieService.get('userid'));
     this.userType = JSON.parse(this.cookieService.get('type'));
@@ -1277,7 +1284,24 @@ export class TrainingCenterDnaComponent implements OnInit {
         return;
       }
     })
-  }
+  };
+
+  // open Lesson Video
+  openLessonVideo(val:any){
+    console.log(val,'openLessonVideo')
+
+      var url = this.video_base_url + val.video_url + '?autoplay=1';
+
+      const safe_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+      // console.log(safe_url,val)
+
+      const dialogRef = this.dialog.open(LessonVideoModalComponent, {
+        panelClass: 'lesson_videomodal',
+        width: '800px',
+        height: 'auto',
+        data: { 'safe_url': safe_url,data:val }
+      });
+    } 
 
 
 
@@ -1474,6 +1498,25 @@ export class UnlockLessonModalComponent {
 
   constructor(public dialogRef: MatDialogRef<UnlockLessonModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData3, public snakBar: MatSnackBar, public apiService: ApiService, public router: Router) {
+
+  }
+
+  lockedLesson(val: any) {
+    console.log(val)
+    this.dialogRef.close(val)
+  }
+
+}
+
+
+@Component({
+  selector: 'LessonVideo',
+  templateUrl: './LessonVideo.html'
+})
+export class LessonVideoModalComponent {
+
+  constructor(public dialogRef: MatDialogRef<LessonVideoModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData4, public snakBar: MatSnackBar, public apiService: ApiService, public router: Router) {
 
   }
 

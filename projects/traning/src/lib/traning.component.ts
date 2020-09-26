@@ -436,7 +436,7 @@ export class TraningComponent implements OnInit {
       // console.log(safe_url,val)
 
       const dialogRef = this.dialog.open(videoDialogComponent, {
-        panelClass: 'blogdetail_videomodal',
+        panelClass: 'lesson_videomodal',
         width: '800px',
         height: '500px',
         data: { 'safe_url': safe_url }
