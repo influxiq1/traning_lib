@@ -7,21 +7,29 @@
 
         <div mat-dialog-content class="videocls">
             <div class="mainvdcls">
-                <iframe width="700" height="400" [src]="data.safe_url" frameborder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen></iframe>
+                <!-- <iframe width="700" height="400" [src]="data.safe_url" frameborder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe> -->
+                        <youtube-player
+                          [videoId]="data.data.video_url"
+                          (ready)="savePlayer($event)"
+                          (change)="onStateChange($event)"
+                          [playerVars]="playerVars" 
+                          [height]=500 
+                          [width]=850>
+                        </youtube-player>
             </div>
-            
-            <span class="titledesccls">
+
+            <div class="videocls">
                 <p class="videotitlecls">{{data.data.video_title}}</p>
 
                 <span class="video_descriptioncls" [innerHTML]="data.data.video_description"></span>
-            </span>
+            </div>
         </div>
 
 
         <mat-dialog-actions class="modalbtncls">
-            <button class="btncancelcls" mat-raised-button color="accent" mat-dialog-close="no" cdkFocusInitial><span
+            <button class="btncancelcls" mat-raised-button color="accent" (click)="closedModal()"><span
                     class="material-icons">
                     clear
                 </span></button>

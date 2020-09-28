@@ -30,7 +30,7 @@ import { TrainingCenterDnaComponent, PurchaseModalComponent, ReviewLessonPlanCom
 import { LessonPlanMaterialComponent } from './lesson-plan-material/lesson-plan-material.component';
 import { ListingModule } from 'listing-angular7';
 // import { CKEditorModule } from 'ngx-ckeditor';
-
+import { NgxYoutubePlayerModule } from 'ngx-youtube-player';
 
 
 
@@ -74,8 +74,8 @@ import { ListingModule } from 'listing-angular7';
     FileUploadModule,
     MatCarouselModule.forRoot(),
     ListingModule,
-    CKEditorModule
-    
+    CKEditorModule,
+    NgxYoutubePlayerModule.forRoot()
   ],
   exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest,TrainingreportComponent,CategoryWiseReportComponent,TrainingCenterDnaComponent,LessonPlanMaterialComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],

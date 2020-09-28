@@ -446,9 +446,6 @@ export class TraningComponent implements OnInit {
         duration: 3000
       })
     }
-
-
-
   }
 
   geteditdata() {
