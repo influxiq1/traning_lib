@@ -177,18 +177,14 @@ export class TrainingCenterDnaComponent implements OnInit {
     //   this.next_button_access = true;
     // }
 
-    if(results.lesson_content[0].mediaType == 'video'){
-      console.log(results.lesson_content[0].video_array,'++',results.complete_lesson_video)
+    if (results.lesson_content[0].mediaType == 'video' && results.complete_lesson_video != null) {
+      // console.log(results.lesson_content[0].video_array, '++', results.complete_lesson_video)
 
-      var lesson_video:any=results.lesson_content[0].video_array
-      var complete_lesson_video:any=results.complete_lesson_video;
-      if(results.complete_lesson_video != null){
+      var lesson_video: any = results.lesson_content[0].video_array
+      var complete_lesson_video: any = results.complete_lesson_video;
 
-        // for(let i in lesson_video){
-        //   for(let j in complete_lesson_video){
-        //   }
-        // }
-        if(lesson_video.length == complete_lesson_video.length){
+      if (this.userType == 'mentee' || this.userType == 'mentor') {
+        if (lesson_video.length == complete_lesson_video.length) {
           this.next_button_access = true;
         } else {
           this.next_button_access = false;
@@ -864,6 +860,22 @@ export class TrainingCenterDnaComponent implements OnInit {
   }
 
   nochildclick(val: any) {
+
+    if (this.AllTrainingData.lesson_content[0].mediaType == 'video' && this.AllTrainingData.complete_lesson_video != null) {
+      // console.log(results.lesson_content[0].video_array, '++', results.complete_lesson_video)
+
+      var lesson_video: any = this.AllTrainingData.lesson_content[0].video_array
+      var complete_lesson_video: any = this.AllTrainingData.complete_lesson_video;
+
+      if (this.userType == 'mentee' || this.userType == 'mentor') {
+        if (lesson_video.length == complete_lesson_video.length) {
+          this.next_button_access = true;
+        } else {
+          this.next_button_access = false;
+        }
+      }
+    }
+
     // console.log(this.next_button_access, '___++++', val)
 
     if (this.AllTrainingData.lesson_locked_by_user != null && this.AllTrainingData.lesson_locked_by_user != 'undefined') {
@@ -1397,7 +1409,7 @@ export class TrainingCenterDnaComponent implements OnInit {
 
   // Unlock Lesson 
   UnlockLesson(val) {
-    console.log('UnlockLesson', this.access_flag)
+    // console.log('UnlockLesson', this.access_flag)
     this.access_flag = true;
 
     const dialogRef = this.dialog.open(UnlockLessonModalComponent, {
@@ -1406,7 +1418,7 @@ export class TrainingCenterDnaComponent implements OnInit {
     });
     dialogRef.disableClose = true;
     dialogRef.afterClosed().subscribe((result: any) => {
-      console.log(result, '+++++====', val)
+      // console.log(result, '+++++====', val)
       var lockVal: any;
       var snackText: any = '';
       if (val == 1) {
@@ -1433,9 +1445,9 @@ export class TrainingCenterDnaComponent implements OnInit {
         }
         this.apiService.postDatawithoutToken(endpoint, data).subscribe((response: any) => {
           if (response.status == "success") {
-            console.log(this.trainingCenterRoute + this.paramsTrainingId)
+            // console.log(this.trainingCenterRoute + this.paramsTrainingId)
             // this.router.navigateByUrl(this.trainingCenterRoute + this.paramsTrainingId)
-              this.getTrainingCenterlistFunctionwithLessonId(this.paramsId, this.userType, this.userId, this.paramslessonId)
+            this.getTrainingCenterlistFunctionwithLessonId(this.paramsId, this.userType, this.userId, this.paramslessonId)
             // 
             this.lesson_locked_by_user = val;
             this.snakBar.open(snackText, 'OK', {
@@ -1594,11 +1606,11 @@ export class LessonVideoModalComponent {
 
   constructor(public dialogRef: MatDialogRef<LessonVideoModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData4, public snakBar: MatSnackBar, public apiService: ApiService, public router: Router, public activatedRoute: ActivatedRoute) {
-    console.log(data, 'data')
+    // console.log(data, 'data')
   }
 
   closedModal() {
-    console.log()
+    // console.log()
     this.snakBar.open('Video Lesson Has Not Been Completed ...!', 'OK', {
       duration: 4000
     })
@@ -1606,14 +1618,14 @@ export class LessonVideoModalComponent {
   }
 
   savePlayer(event) {
-    console.log(event, 'save', this.playerVars)
+    // console.log(event, 'save', this.playerVars)
   }
 
   onStateChange(event) {
-    console.log(event.target.playerInfo, 'change 1', event.data)
+    // console.log(event.target.playerInfo, 'change 1', event.data)
     if (event.data == 0 && event.target.playerInfo.duration == event.target.playerInfo.currentTime) {
 
-      console.log(event.data, 'data 0', event.target.playerInfo)
+      // console.log(event.data, 'data 0', event.target.playerInfo)
 
       var endpoint = this.data.endpoint;
       var video_data: any = {
@@ -1624,9 +1636,9 @@ export class LessonVideoModalComponent {
         video_url: event.target.playerInfo.videoUrl,
         flag: 1,
       }
-      console.log(video_data, 'data===++')
+      // console.log(video_data, 'data===++')
       this.apiService.postDatawithoutToken(endpoint, video_data).subscribe(res => {
-        console.log(res)
+        // console.log(res)
         let result: any = res;
         if (result.status == 'success') {
           this.data.flag = 'yes';

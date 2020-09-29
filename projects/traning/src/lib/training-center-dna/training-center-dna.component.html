@@ -727,26 +727,29 @@
     </mat-card-content>
 
 
-    <!-- start content for lesson data -->
-    <div fxLayout="row" class="rowinner" *ngFor="let item of allLessonDataList ; let i=index;">
 
-      <div (click)="nochildclick(item)" [ngClass]="paramslessonId ==  item._id ? 'classlessonongoing':
-          ( item.is_done == true ? 'classlessondone' : 'classlessonnotdone')">{{item.lession_title}}
-        <!-- <span>{{item  | json}}</span> -->
-        <span (click)="nochildclick(item)">
-          <!-- {{item.lession_title}} -->
-        </span>
-
-      </div>
-      <!-- [ngClass]="{'class5': (item._id == currentLesson),
-      'class7':(item._id==completedLessons)}"  -->
-      <span class="material-icons" *ngIf="lesson_locked_by_user == 1">
-        lock
-      </span>
-    </div>
-    <!--end  content for lesson data -->
 
     <mat-card-content class="trainingcentercls trainingcenterclsupdate">
+
+          <!-- start content for lesson data -->
+      <div fxLayout="row" class="rowinner" *ngFor="let item of allLessonDataList ; let i=index;">
+
+        <div (click)="nochildclick(item)" [ngClass]="paramslessonId ==  item._id ? 'classlessonongoing':
+            ( item.is_done == true ? 'classlessondone' : 'classlessonnotdone')">{{item.lession_title}}
+          <!-- <span>{{item  | json}}</span> -->
+          <span (click)="nochildclick(item)">
+            <!-- {{item.lession_title}} -->
+          </span>
+  
+        </div>
+        <!-- [ngClass]="{'class5': (item._id == currentLesson),
+        'class7':(item._id==completedLessons)}"  -->
+        <span class="material-icons" *ngIf="lesson_locked_by_user == 1">
+          lock
+        </span>
+    </div>
+ 
+    <!--end  content for lesson data -->
 
       <mat-card-title class="mentortitle">{{training_cat_name}}</mat-card-title>
 

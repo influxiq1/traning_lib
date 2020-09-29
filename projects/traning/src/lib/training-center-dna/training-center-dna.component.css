@@ -175,4 +175,15 @@
         min-width: inherit;
         border-radius: 100px;
         outline: none;
-      } 
+      }
+
+
+      .lowerlessoncls{
+        padding: 5px;
+        display: inherit;
+        width: inherit;
+        background-color: #dfdfdf;
+        margin-top: 3px;
+        cursor: pointer;
+        margin: 5px 0px 5px 0px;
+      }
