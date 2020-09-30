@@ -6,16 +6,22 @@
         </div>
 
         <div mat-dialog-content class="videocls">
+            <div class="video_timecls" *ngIf="video_time != null">
+                Video Duration : {{video_time}}
+            </div>
             <div class="mainvdcls">
+                <div class="mt-1" id="player"></div>
+
                 <!-- <iframe width="700" height="400" [src]="data.safe_url" frameborder="0"
                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe> -->
                         <youtube-player
-                          [videoId]="data.data.video_url"
+                          [videoId]="data.video_url"
                           (ready)="savePlayer($event)"
                           (change)="onStateChange($event)"
                           [playerVars]="playerVars" 
                           [height]=500 
+                          [autoplay]=true
                           [width]=850>
                         </youtube-player>
             </div>
@@ -23,7 +29,7 @@
             <div class="videocls">
                 <p class="videotitlecls">{{data.data.video_title}}</p>
 
-                <span class="video_descriptioncls" [innerHTML]="data.data.video_description"></span>
+                <div class="video_descriptioncls" [innerHTML]="data.data.video_description"></div>
             </div>
         </div>
 

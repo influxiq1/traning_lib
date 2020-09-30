@@ -166,10 +166,13 @@ export class LessonPlanMaterialComponent implements OnInit {
         this.pictureSelect = [];
 
         for (const b in this.formDataVal.question_img) {
-          this.pictureSelect.push({
-            key: parseInt(b),
-            image: this.formDataVal.question_img[b].basepath + this.formDataVal.question_img[b].image,
-          });
+
+          if(parseInt(val.fromval.item.image) ==  parseInt(b)){
+            this.pictureSelect.push({
+              key: parseInt(b),
+              image: this.formDataVal.question_img[b].basepath + this.formDataVal.question_img[b].image,
+            });
+          }
         }
         this.jsonObj1.name = 'img';
         this.jsonObj1.type = 'image';

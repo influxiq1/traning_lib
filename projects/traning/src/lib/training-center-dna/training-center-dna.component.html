@@ -488,11 +488,12 @@
 
                     <div class="video_arraycls"
                       *ngIf="lesson_content.video_array !=null && lesson_content.video_array !=''">
-                      <div *ngFor="let item of lesson_content.video_array" class="video_titlecls">
+                      <div *ngFor="let item of lesson_content.video_array" class="video_wrapcls">
                         <div class="videocls">
                           <img src="https://img.youtube.com/vi/{{item.video_url}}/0.jpg"
-                            (click)="openLessonVideo(item)">
-
+                            >
+                          <img class="video_iconcls" (click)="openLessonVideo(item)"
+                            src="https://awsbackend-dev-patient-files-test.s3.amazonaws.com/youtube.png">
                           <!-- <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY" frameborder="0"
                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen></iframe> -->
@@ -731,7 +732,7 @@
 
     <mat-card-content class="trainingcentercls trainingcenterclsupdate">
 
-          <!-- start content for lesson data -->
+      <!-- start content for lesson data -->
       <div fxLayout="row" class="rowinner" *ngFor="let item of allLessonDataList ; let i=index;">
 
         <div (click)="nochildclick(item)" [ngClass]="paramslessonId ==  item._id ? 'classlessonongoing':
@@ -740,16 +741,16 @@
           <span (click)="nochildclick(item)">
             <!-- {{item.lession_title}} -->
           </span>
-  
+
         </div>
         <!-- [ngClass]="{'class5': (item._id == currentLesson),
         'class7':(item._id==completedLessons)}"  -->
         <span class="material-icons" *ngIf="lesson_locked_by_user == 1">
           lock
         </span>
-    </div>
- 
-    <!--end  content for lesson data -->
+      </div>
+
+      <!--end  content for lesson data -->
 
       <mat-card-title class="mentortitle">{{training_cat_name}}</mat-card-title>
 

@@ -413,7 +413,8 @@ export class TraningComponent implements OnInit {
     this.video_array.push({
       video_url: '',
       video_title: '',
-      video_description: ''
+      video_description: '',
+      video_skippable:false
     })
 
     console.log(this.video_array, 'this.video_array')
@@ -430,7 +431,7 @@ export class TraningComponent implements OnInit {
   preview_video(val) {
 
     if (val != null && val != '') {
-      var url = this.video_base_url + val + '?autoplay=1';
+      var url = this.video_base_url + val + '?rel=0&modestbranding=1&autoplay=1';
 
       const safe_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
       // console.log(safe_url,val)

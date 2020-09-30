@@ -130,38 +130,50 @@
 
             <div *ngIf=" mediaTypeValue == 'video'" class="fromClass">
 
-                <div class="addvideocls"> 
+                <div class="addvideocls">
                     <mat-label><b>Add Multiple Video : </b></mat-label>
                     <span class="adddeletecls">
                         <i class="material-icons addbtn" (click)="addVideo(vid_url,vid_tit,vid_desc)">add_box</i>
                     </span>
                 </div>
-               
-                
-                <div *ngFor="let item of video_array; let i=index;trackBy: trackByFn"
-                class="fromClass addvideoblock">
-                <ng-container >
-                    <mat-form-field>
-                        <span matPrefix>https://www.youtube.com/watch?v= &nbsp;</span>
-                        <input matInput  placeholder="Enter Video ID" [(ngModel)]="video_array[i].video_url"  [ngModelOptions]="{standalone: true}">
-                        <mat-icon matSuffix class="clickable" (click)="preview_video(video_array[i].video_url)">remove_red_eye</mat-icon>
-                    </mat-form-field>  <br>
 
-                    <mat-form-field >
-                        <input matInput placeholder="Video Title" [(ngModel)]="video_array[i].video_title"  [ngModelOptions]="{standalone: true}">
-                      </mat-form-field><br>
 
-                    <mat-form-field  >
-                        <textarea matInput placeholder="Video Description" [(ngModel)]="video_array[i].video_description"  [ngModelOptions]="{standalone: true}"></textarea>
-                      </mat-form-field> &nbsp;
-                    <span  class="adddeletecls">
-                        <i class="material-icons addbtn" (click)="addVideo(vid_url,vid_tit,vid_desc)">add_box</i>
-                        <i class="material-icons delbtn" (click)="removevideo(i)">delete</i>
-                    </span>
-                </ng-container>
-                    
+                <div *ngFor="let item of video_array; let i=index;trackBy: trackByFn" class="fromClass addvideoblock">
+                    <ng-container>
+                        <mat-form-field>
+                            <span matPrefix>https://www.youtube.com/watch?v= &nbsp;</span>
+                            <input matInput placeholder="Enter Video ID" [(ngModel)]="video_array[i].video_url"
+                                [ngModelOptions]="{standalone: true}">
+                            <mat-icon matSuffix class="clickable" (click)="preview_video(video_array[i].video_url)">
+                                remove_red_eye</mat-icon>
+                        </mat-form-field> <br>
+
+                        <mat-form-field>
+                            <input matInput placeholder="Video Title" [(ngModel)]="video_array[i].video_title"
+                                [ngModelOptions]="{standalone: true}">
+                        </mat-form-field><br>
+
+                        <mat-form-field>
+                            <textarea matInput placeholder="Video Description"
+                                [(ngModel)]="video_array[i].video_description"
+                                [ngModelOptions]="{standalone: true}"></textarea>
+                        </mat-form-field>
+
+                        <section class="example-section">
+                            <mat-checkbox matInput [(ngModel)]="video_array[i].video_skippable"
+                                [ngModelOptions]="{standalone: true}">Is This Mandatory video ?
+                            </mat-checkbox>
+                        </section><br>
+                        <!-- Is this mandatory video? -->
+
+                        <span class="adddeletecls">
+                            <i class="material-icons addbtn" (click)="addVideo(vid_url,vid_tit,vid_desc)">add_box</i>
+                            <i class="material-icons delbtn" (click)="removevideo(i)">delete</i>
+                        </span>
+                    </ng-container>
+
                 </div>
-               
+
 
                 <!-- <div formArrayName="video_array"
                     *ngFor="let item of video_array; let i=index ;trackBy: trackByFn"
@@ -181,7 +193,7 @@
 
 
             <mat-form-field>
-                <input type="text" matInput placeholder="Title" [(ngModel)]="title" 
+                <input type="text" matInput placeholder="Title" [(ngModel)]="title"
                     [ngModelOptions]="{standalone: true}">
                 <mat-icon matSuffix>title</mat-icon>
             </mat-form-field>

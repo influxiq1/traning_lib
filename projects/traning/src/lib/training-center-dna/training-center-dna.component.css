@@ -71,6 +71,16 @@
     margin-top: -4px;
     height: auto;
 }
+.video_iconcls{
+    height: 107px;
+    width: 107px;
+    position: absolute;
+    bottom: 189px;
+    display: block;
+    margin-left: 180px !important;
+    cursor: pointer;
+    align-items: center;
+}
 /* Skin Theme 2 */
 .trainingcenterclsnew{display:flex;align-items:stretch;justify-content:space-between;flex-direction:column;flex-wrap:wrap;padding-top: 0;}
 .trainingcenterclsnew .trainingCategoryList{ display: flex;flex-direction: row;flex-wrap: wrap;justify-content: space-between;height: auto;}

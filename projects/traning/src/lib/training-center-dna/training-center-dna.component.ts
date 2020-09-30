@@ -11,7 +11,8 @@ import { MatProgressBarModule, MatRadioModule, MatSliderModule } from '@angular/
 // import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
-
+import { Observable, interval, Subscription } from 'rxjs';
+import { style } from '@angular/animations';
 
 
 
@@ -50,6 +51,7 @@ export interface DialogData4 {
   endpoint: any;
   user_id: any;
   flag: any;
+  video_url: any;
 }
 
 @Component({
@@ -184,7 +186,7 @@ export class TrainingCenterDnaComponent implements OnInit {
       var complete_lesson_video: any = results.complete_lesson_video;
 
       if (this.userType == 'mentee' || this.userType == 'mentor') {
-        if (lesson_video.length == complete_lesson_video.length) {
+        if (lesson_video.length <= complete_lesson_video.length) {
           this.next_button_access = true;
         } else {
           this.next_button_access = false;
@@ -1359,28 +1361,39 @@ export class TrainingCenterDnaComponent implements OnInit {
 
   // open Lesson Video
   openLessonVideo(val: any) {
-    console.log(val, 'openLessonVideo')
 
-    var url = this.video_base_url + val.video_url + '?autoplay=1';
+    // console.log(val, 'openLessonVideo')
+
+
+    var url = this.video_base_url + val.video_url + '?modestbranding=1&autohide=0&showinfo=0&controls=0&listType=playlist&rel=0';
 
     var server_url = this.serverDetailsVal.serverUrl + "updateusercompletelessonvideo"
 
     const safe_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
     // console.log(safe_url,val)
 
+    if (val.video_skippable == true) {
+      var video_url = val.video_url + '?rel=0&modestbranding=1&autoplay=1&showinfo=0&controls=1&listType=playlist';
+    } else {
+      var video_url = val.video_url + '?rel=0&modestbranding=1&autoplay=1&showinfo=0&controls=0&listType=playlist';
+    }
+
+
+
+
     const dialogRef = this.dialog.open(LessonVideoModalComponent, {
       panelClass: 'lesson_videomodal',
       width: '900px',
       height: 'auto',
-      data: { 'safe_url': safe_url, data: val, training_id: this.paramsId, lesson_id: this.paramslessonId, endpoint: server_url, user_id: this.userId }
+      data: { 'safe_url': safe_url, data: val, training_id: this.paramsId, lesson_id: this.paramslessonId, endpoint: server_url, user_id: this.userId, video_url: video_url }
     });
     dialogRef.disableClose = true;
 
     dialogRef.afterClosed().subscribe((result: any) => {
 
-      console.log(result, 'result')
+      // console.log(result, 'result')
       if (result != null && result == 'yes') {
-        console.log()
+        // console.log()
         this.getTrainingCenterlistFunctionwithLessonId(this.paramsId, this.userType, this.userId, this.paramslessonId)
       }
     })
@@ -1597,12 +1610,16 @@ export class UnlockLessonModalComponent {
 // lesson video modal 
 @Component({
   selector: 'LessonVideo',
-  templateUrl: './LessonVideo.html'
+  templateUrl: './LessonVideo.html',
+  styleUrls: ['./LessonVideo.css']
 })
 export class LessonVideoModalComponent {
   playerVars = {
     cc_lang_pref: 'en'
   };
+  public video_time:any;
+
+  public video_Count_time:any;
 
   constructor(public dialogRef: MatDialogRef<LessonVideoModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData4, public snakBar: MatSnackBar, public apiService: ApiService, public router: Router, public activatedRoute: ActivatedRoute) {
@@ -1622,10 +1639,25 @@ export class LessonVideoModalComponent {
   }
 
   onStateChange(event) {
-    // console.log(event.target.playerInfo, 'change 1', event.data)
+
+    //duration calculation
+    var sec_num = parseInt(event.target.playerInfo.duration, 10);
+    var hours: any = Math.floor(sec_num / 3600);
+    var minutes: any = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds: any = sec_num - (hours * 3600) - (minutes * 60);
+
+    if (hours < 10) { hours = "0" + hours; }
+    if (minutes < 10) { minutes = "0" + minutes; }
+    if (seconds < 10) { seconds = "0" + seconds; }
+    console.log(hours + ':' + minutes + ':' + seconds);
+    this.video_time=hours + ':' + minutes + ':' + seconds;
+
+    // this.startTimer(event.target.playerInfo.duration);
+
+    console.log(event.target.playerInfo, 'change 1', event.data)
     if (event.data == 0 && event.target.playerInfo.duration == event.target.playerInfo.currentTime) {
 
-      // console.log(event.data, 'data 0', event.target.playerInfo)
+      console.log(event.data, 'data 0', event.target.playerInfo)
 
       var endpoint = this.data.endpoint;
       var video_data: any = {
@@ -1648,14 +1680,36 @@ export class LessonVideoModalComponent {
           })
         }
       })
-
     }
-    if (event.data == 3) {
-      // event.target.playerInfo.currentTime=0;
-      this.snakBar.open('Please Watch The Full Video To Complete..!', 'OK', {
-        duration: 4000
-      })
-    }
+    // if (event.data == 3) {
+    //   // event.target.playerInfo.currentTime=0;
+    //   return false
+    //   this.snakBar.open('Please Watch The Full Video To Complete..!', 'OK', {
+    //     duration: 4000
+    //   })
+    // }
 
   }
+
+  // startTimer(duration) {
+  //   let countDownTimer;
+  //   let timer:any = duration;
+  //   let minutes:any;
+  //   let seconds:any;
+  //   countDownTimer = setInterval(() => {
+  //     minutes = parseInt(timer / 60, 10)
+  //     seconds = parseInt(timer % 60, 10);
+  
+  //     minutes = minutes < 10 ? "0" + minutes : minutes;
+  //     seconds = seconds < 10 ? "0" + seconds : seconds;
+  
+  //     this.video_Count_time = minutes + ":" + seconds;
+  
+  //     if (--timer < 0) {
+  //       timer = duration;
+  //     }
+  //   }, 1000);
+
+  //   console.log( this.video_Count_time,'vv')
+  // }
 }

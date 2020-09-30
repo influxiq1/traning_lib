@@ -92,6 +92,16 @@
   .pointer{
     cursor: pointer;
   }
+  .ytp-watermark{
+    position: absolute;
+    width: 110px;
+    height: 26px;
+    bottom: 49px;
+    right: 16px;
+    z-index: 27;
+    opacity: .9;
+    display: none;
+  }
 
 
 
