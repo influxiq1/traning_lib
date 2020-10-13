@@ -13,36 +13,36 @@ import { ManageQuizComponent } from './manage-quiz/manage-quiz.component';
 import { AddEditComponent } from './manage-quiz/add-edit/add-edit.component';
 import { AddUpdateAnswerComponent } from './manage-quiz/add-update-answer/add-update-answer.component';
 import { UpdateAnswerComponent } from './manage-quiz/update-answer/update-answer.component';
-import { LoginfortrainingComponent} from './loginfortraining/loginfortraining.component';
+import { LoginfortrainingComponent } from './loginfortraining/loginfortraining.component';
 import { TrainingreportComponent } from './trainingreport/trainingreport.component';
 import { CategoryWiseReportComponent } from './category-wise-report/category-wise-report.component';
 import { TrainingCenterDnaComponent } from './training-center-dna/training-center-dna.component';
 import { LessonPlanMaterialComponent } from './lesson-plan-material/lesson-plan-material.component';
+import { ListQuizComponent } from './manage-quiz/list-quiz/list-quiz.component';
+
 const appRoutes: Routes = [
     {
-        path : 'training-center-dna/:associated_training/:_id',component :  TrainingCenterDnaComponent,
-        resolve: { trainingdata: ResolveService }, 
+        path: 'training-center-dna/:associated_training/:_id', component: TrainingCenterDnaComponent,
+        resolve: { trainingdata: ResolveService },
         data: { requestcondition: { source: '', condition: {} }, endpoint: 'gettrainingcenterlist' }
     },
     {
-        path : 'training-center-dna/:associated_training',component :  TrainingCenterDnaComponent,
-        resolve: { trainingdata: ResolveService }, 
+        path: 'training-center-dna/:associated_training', component: TrainingCenterDnaComponent,
+        resolve: { trainingdata: ResolveService },
         data: { requestcondition: { source: '', condition: {} }, endpoint: 'gettrainingcenterlist' }
     },
 
-
     {
-        path : 'lesson-plan-material/:associated_training/:lesson_id_object',component :  LessonPlanMaterialComponent,
-        resolve: { lessonplandata: ResolveService }, 
-        data: { requestcondition: { source: 'manage_quiz_question', condition: {status:1} }, endpoint: 'datalist' }
-        
+        path: 'lesson-plan-material/:associated_training/:lesson_id_object', component: LessonPlanMaterialComponent,
+        resolve: { lessonplandata: ResolveService },
+        data: { requestcondition: { source: 'manage_quiz_question', condition: { status: 1 } }, endpoint: 'datalist' }
     },
 
     {
-        path : 'lesson-plan-material/:associated_training/:lesson_id_object/:_id',component :  LessonPlanMaterialComponent,
-        resolve: { lessonplandata: ResolveService }, 
-        data: { requestcondition: { source: 'manage_quiz_question', condition: {status:1} }, endpoint: 'datalist' }
-        
+        path: 'lesson-plan-material/:associated_training/:lesson_id_object/:_id', component: LessonPlanMaterialComponent,
+        resolve: { lessonplandata: ResolveService },
+        data: { requestcondition: { source: 'manage_quiz_question', condition: { status: 1 } }, endpoint: 'datalist' }
+
     },
 
 
@@ -50,67 +50,91 @@ const appRoutes: Routes = [
 
     { path: 'home', component: AppComponent },
     {
-        path :'training-login',component: LoginfortrainingComponent
+        path: 'training-login', component: LoginfortrainingComponent
     },
     { path: 'home/:id', component: AppComponent },
     /**Lession Management **/
     { path: 'manage-lesson/add', component: AddEditLessionsComponent },
 
-    { path: 'manage-lesson/list', component : ListLessionComponent,
-    resolve: { lessionData: ResolveService }, 
-    data: { requestcondition: { source: 'manage_lession_view', condition: {'is_trash':{$ne:1}} }, endpoint: 'datalistwithouttoken' }},
+    {
+        path: 'manage-lesson/list', component: ListLessionComponent,
+        resolve: { lessionData: ResolveService },
+        data: { requestcondition: { source: 'manage_lession_view', condition: { 'is_trash': { $ne: 1 } } }, endpoint: 'datalistwithouttoken' }
+    },
 
     { path: 'manage-lesson/edit/:id', component: AddEditLessionsComponent },
 
-   /**Training Management**/
-    { path: 'manage-training/add', component: AddEditTrainingComponent },                                                                                                                                                                                                                                                                                                                                             
+    /**Training Management**/
+    { path: 'manage-training/add', component: AddEditTrainingComponent },
     {
         path: 'manage-training/list', component: ListingTrainingComponent,
-        resolve: { trainingdata: ResolveService }, 
-        data: { requestcondition: { source: 'training_category_management_view', condition: {'is_trash':{$ne:1}} }, endpoint: 'gettrainingcategorydata' }
+        resolve: { trainingdata: ResolveService },
+        data: { requestcondition: { source: 'training_category_management_view', condition: { 'is_trash': { $ne: 1 } } }, endpoint: 'gettrainingcategorydata' }
     },
-    
+
     { path: 'manage-training/edit/:id', component: AddEditTrainingComponent },
     /**Training center**/
-    { 
-        path : 'training-center/list/:associated_training' , component : ListComponent,
-        resolve: { trainingdata: ResolveService }, 
+    {
+        path: 'training-center/list/:associated_training', component: ListComponent,
+        resolve: { trainingdata: ResolveService },
         data: { requestcondition: { source: '', condition: {} }, endpoint: 'gettrainingcenterlist' }
     },
     { path: 'manage-center/add', component: AddEditCenterComponent },
     { path: 'manage-center/edit/:id', component: AddEditCenterComponent },
     /**Quiz Management**/
+
     {
-      path : 'manage-quiz/list/:lesson_id_object' , component : ManageQuizComponent,
-      resolve: { trainingdata: ResolveService }, 
+        path: 'manage-quiz/list/:lesson_id_object', component: ManageQuizComponent,
+        resolve: { trainingdata: ResolveService },
         data: { requestcondition: { source: 'manage_quiz_question', condition: {} }, endpoint: 'datalistwithouttoken' }
     },
     {
-        path : 'manage-quiz/add/:id', component : AddEditComponent
+        path: 'manage-quiz/add/:id', component: AddEditComponent
     },
     {
-        path : 'manage-quiz/edit/:_id/:lesson_id_object', component : AddEditComponent,
-        resolve: { quizQuestionData: ResolveService }, 
+        path: 'manage-quiz/edit/:_id/:lesson_id_object', component: AddEditComponent,
+        resolve: { quizQuestionData: ResolveService },
         data: { requestcondition: { source: 'manage_quiz_question', condition: {} }, endpoint: 'datalistwithouttoken' }
     },
+    
+    // {
+    //     path: 'manage-quiz/add-answer/:id/:lessonid', component: AddUpdateAnswerComponent
+    // },
+
     {
-      path : 'manage-quiz/add-answer/:id/:lessonid' , component : AddUpdateAnswerComponent
+        path: 'quiz/add/:lessonid', component: AddUpdateAnswerComponent
     },
+
     {
-        path : 'manage-quiz/update-answer/:questionId',component : UpdateAnswerComponent,
-        resolve: { quizQuestionData: ResolveService }, 
+        path: 'quiz/edit/:id/:lesson_id_object', component: AddUpdateAnswerComponent
+    },
+
+    {
+        path: 'manage-quiz/update-answer/:questionId', component: UpdateAnswerComponent,
+        resolve: { quizQuestionData: ResolveService },
         data: { requestcondition: { source: 'quiz_answer_view', condition: {} }, endpoint: 'getlessonanswerdata' }
     },
+
+
+
+    {
+        path: 'quiz/list/:lesson_id_object', component: ListQuizComponent,
+        resolve: { quizData: ResolveService },
+        data: { requestcondition: { source: 'manage_quiz', condition: {} }, endpoint: 'datalistwithouttoken' }
+    },
+
+
+
     /**training-report**/
     {
-        path    : 'training-report',component : TrainingreportComponent,
-        resolve : {trainingReportData : ResolveService},
-        data    : { requestcondition: { source: '',sort_val:'name',sort_type:'desc', condition: {"skip":0,"limit":50,"search":{}} }, endpoint: 'gettrainingreportdata' }
+        path: 'training-report', component: TrainingreportComponent,
+        resolve: { trainingReportData: ResolveService },
+        data: { requestcondition: { source: '', sort_val: 'name', sort_type: 'desc', condition: { "skip": 0, "limit": 50, "search": {} } }, endpoint: 'gettrainingreportdata' }
     },
     {
-        path   : 'category-wise-report-view/:user_id',component : CategoryWiseReportComponent,
-        resolve : {trainingReportData : ResolveService},
-        data    : { requestcondition: { source: '',sort_val:'training_name',sort_type:'desc', condition: {"skip":0,"limit":50,"search":{}} }, endpoint: 'getcategorywisereportdata' }
+        path: 'category-wise-report-view/:user_id', component: CategoryWiseReportComponent,
+        resolve: { trainingReportData: ResolveService },
+        data: { requestcondition: { source: '', sort_val: 'training_name', sort_type: 'desc', condition: { "skip": 0, "limit": 50, "search": {} } }, endpoint: 'getcategorywisereportdata' }
     },
     // {
     //     path: 'manage-appointment/mentee/book-appointment/:user_parent_id/:lesson_id_object/:associated_training',
@@ -126,7 +150,7 @@ const appRoutes: Routes = [
     //     // }
     //   },
 
-    
+
 
 ]
 

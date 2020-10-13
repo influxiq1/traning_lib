@@ -13,7 +13,7 @@
                 <mat-form-field>
                     <mat-label>Search By Keywords</mat-label>
                     <input matInput (keyup)="applyFilter($event)" placeholder="Filter" #input>
-                  </mat-form-field>
+                </mat-form-field>
 
                 <mat-toolbar class="buttonsetToolbar">
 
@@ -117,14 +117,19 @@
                                 Images</button>
                         </span>
 
-                        <!-- <span *ngIf="element.question_type!='Text Box'">
-                            
-                            <button  mat-button type="button" color="primary" (click)="goToAnswerPage 
+                        <!--                         
+                        <span *ngIf="element.question_type!='Text Box'">
+
+                            <button mat-button type="button" color="primary" (click)="goToAnswerPage 
                             (element._id)">Add Answer</button>
 
-                           </span> -->
-                        <!--                         
-                        <button mat-button type="button" color="primary" (click)="goToUpdateAnswerPage(element._id)">View Answer</button> -->
+                        </span>
+
+                        <button mat-button type="button" color="primary"
+                            (click)="goToUpdateAnswerPage(element._id)">View Answer</button> -->
+
+
+
                     </span>
                 </td>
 

@@ -63,7 +63,7 @@ export class TraningComponent implements OnInit {
   public hasLessonVal: any;
   public dnaFlag: any;
   public lessonplanValue: any;
-  public has_skip_lesson: any;
+  public has_test_lesson: any=false;
   public video_array: any = [
     // {
     //   video_url: '',
@@ -260,10 +260,10 @@ export class TraningComponent implements OnInit {
           delete this.dataForm.value.lessonplan_value;
         }
 
-        if (this.has_skip_lesson == true) {
-          data.data['has_skip_lesson'] = 1;
+        if (this.has_test_lesson == true) {
+          data.data['has_test_lesson'] = 1;
         } else {
-          data.data['has_skip_lesson'] = 0;
+          data.data['has_test_lesson'] = 0;
         }
       }
 
@@ -414,7 +414,7 @@ export class TraningComponent implements OnInit {
       video_url: '',
       video_title: '',
       video_description: '',
-      video_skippable:false
+      video_skippable: false
     })
 
     console.log(this.video_array, 'this.video_array')
@@ -472,15 +472,16 @@ export class TraningComponent implements OnInit {
             let imageBasepath: any;
             let fileserverName: any;
             this.fileArray = res.res[0].fileType;
-            // console.log("dingle data",res.res[0]);
+            console.log("dingle data", res.res[0]);
 
             this.htmType = res.res[0].typeHtml;
             // this.hasLessonVal=res.res[0].has_lessonplan;
             this.chkboxval = res.res[0].has_lessonplan;
 
-            // if(res[0].has_skip_lesson != null){
-            //   // this.has_skip_lesson = res[0].has_skip_lesson;
-            // }
+            if (res.res[0] != null && res.res[0].has_test_lesson != null && res.res[0].has_test_lesson != 'undefined') {
+              console.log(res.res[0].has_test_lesson, 'res.res[0].has_test_lesson')
+              this.has_test_lesson = res.res[0].has_test_lesson;
+            }
 
             this.getchkboxval(this.chkboxval);
             this.lessonplanValue = res.res[0].lessonplan_value;

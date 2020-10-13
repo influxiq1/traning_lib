@@ -9,11 +9,12 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class ListLessionComponent implements OnInit {
 public manageLessionList : any=[];
-public isitdna:any=false;
+public isitdna:any=true;
 public manageTrainingList : any = [];
 public editPageRoute : any="/manage-lesson/edit/";
 public addPageRoute : any="/manage-lesson/add";
 public manageQuizRoute:any="/manage-quiz/list/";
+public QuizPageRoute:any='/quiz/list/';
 public serverDetails: any = {
   "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/",
   "jwttoken": ""

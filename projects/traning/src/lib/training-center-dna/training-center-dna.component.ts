@@ -1601,7 +1601,7 @@ export class UnlockLessonModalComponent {
   }
 
   lockedLesson(val: any) {
-    console.log(val)
+    // console.log(val)
     this.dialogRef.close(val)
   }
 }
@@ -1649,15 +1649,15 @@ export class LessonVideoModalComponent {
     if (hours < 10) { hours = "0" + hours; }
     if (minutes < 10) { minutes = "0" + minutes; }
     if (seconds < 10) { seconds = "0" + seconds; }
-    console.log(hours + ':' + minutes + ':' + seconds);
+    // console.log(hours + ':' + minutes + ':' + seconds);
     this.video_time=hours + ':' + minutes + ':' + seconds;
 
     // this.startTimer(event.target.playerInfo.duration);
 
-    console.log(event.target.playerInfo, 'change 1', event.data)
+    // console.log(event.target.playerInfo, 'change 1', event.data)
     if (event.data == 0 && event.target.playerInfo.duration == event.target.playerInfo.currentTime) {
 
-      console.log(event.data, 'data 0', event.target.playerInfo)
+      // console.log(event.data, 'data 0', event.target.playerInfo)
 
       var endpoint = this.data.endpoint;
       var video_data: any = {

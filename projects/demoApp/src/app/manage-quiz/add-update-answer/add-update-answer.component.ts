@@ -17,7 +17,7 @@ public serverDetails: any = {
 };
 public formSource: any = {
   "source":'quiz_answer',
-  "endpoint": "addorupdatelessonanswer",
+  "endpoint": "addorupdatedata",
   "showEndpoint":"datalist",
   "AddheaderText": "Add Training",
   "EditheaderText": "Edit Training",

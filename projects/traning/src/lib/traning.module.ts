@@ -31,6 +31,7 @@ import { LessonPlanMaterialComponent } from './lesson-plan-material/lesson-plan-
 import { ListingModule } from 'listing-angular7';
 // import { CKEditorModule } from 'ngx-ckeditor';
 import { NgxYoutubePlayerModule } from 'ngx-youtube-player';
+import { ListQuizComponent } from './manage-quiz/list-quiz/list-quiz.component';
 
 
 
@@ -60,7 +61,8 @@ import { NgxYoutubePlayerModule } from 'ngx-youtube-player';
     questionDataModalComponent,
     UnlockLessonModalComponent,
     videoDialogComponent,
-    LessonVideoModalComponent
+    LessonVideoModalComponent,
+    ListQuizComponent
   ],
   imports: [
     HttpClientModule,
@@ -77,7 +79,9 @@ import { NgxYoutubePlayerModule } from 'ngx-youtube-player';
     CKEditorModule,
     NgxYoutubePlayerModule.forRoot()
   ],
-  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest,TrainingreportComponent,CategoryWiseReportComponent,TrainingCenterDnaComponent,LessonPlanMaterialComponent],
+  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest,TrainingreportComponent,CategoryWiseReportComponent,TrainingCenterDnaComponent,LessonPlanMaterialComponent,ListQuizComponent
+  ],
+  
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [CookieService, ApiService,DatePipe],
   entryComponents:[DialogBoxComponent,Dialogtest,PurchaseModalComponent,ReviewLessonPlanComponent,ScheduleModalComponent,questionDataModalComponent,UnlockLessonModalComponent,videoDialogComponent,LessonVideoModalComponent]

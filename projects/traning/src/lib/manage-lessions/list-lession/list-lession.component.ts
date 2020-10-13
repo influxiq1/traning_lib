@@ -50,6 +50,7 @@ export class ListLessionComponent implements OnInit {
   public addPageRoute : any;
   public searchSourceName:any;
   public manageQuizRoute:any;
+  public quizPageRoute:any;
   public allLessonData : any = [];
   public lessonsDataArray:any=[];
   public lessonName:any;
@@ -74,7 +75,7 @@ public training_data_Counts:any;
   public searchjson:any={
     "lession_title_search_regex":"",
     "prerequisite_lession_search_regex":"",
-    "test_associate_training_search_regex":"",
+    "has_test_lesson":"",
     "associated_training_search_regex":"",
     "has_lessonplan_regex":"",
     "lessonplan_value_regex":""
@@ -117,6 +118,11 @@ public training_data_Counts:any;
   set ManageQuizRoute(val: any) {
     this.manageQuizRoute = (val) || '<no name set>';
   }
+  // QuizPageRoute
+  @Input()
+  set QuizPageRoute(val: any) {
+    this.quizPageRoute = (val) || '<no name set>';
+  }
   @Input()
   set IsItDna(val:any){
     this.dnaFlag = val;
@@ -138,7 +144,7 @@ public training_data_Counts:any;
     
     this.getAllLessonData();
     if(this.dnaFlag == true){
-      this.displayedColumns.push('select','no','lession_title', 'description', 'mediaType','associated_training','prerequisite_lession','has_lessonplan','lessonplan_value','test_associate_training','status','deleteRecord');
+      this.displayedColumns.push('select','no','lession_title', 'description', 'mediaType','associated_training','prerequisite_lession','has_lessonplan','lessonplan_value','has_test_lesson','status','deleteRecord');
     }else{
       this.displayedColumns.push('select','no','lession_title', 'description', 'mediaType','associated_training','prerequisite_lession','status','deleteRecord');
     }
@@ -245,11 +251,12 @@ public training_data_Counts:any;
 
         if(this.dnaFlag == true){
 
-
-
          searchval["has_lessonplan_search"]={$regex:this.searchjson.has_lessonplan_regex.toLowerCase()}
          searchval["lessonplan_value_search"]={$regex:this.searchjson.lessonplan_value_regex.toLowerCase()}
-         searchval["test_associate_training_search"]={$regex:this.searchjson.test_associate_training_search_regex.toLowerCase()}    
+
+         if(this.searchjson.has_test_lesson != null && this.searchjson.has_test_lesson !=''){
+          searchval["has_test_lesson"]=parseInt(this.searchjson.has_test_lesson);    
+         }
         }
 
 
@@ -279,9 +286,20 @@ public training_data_Counts:any;
           }); 
   }
   
-  manageQuiz(id:any){
+
+//for go To Manage lesson plan material page
+
+  manageLessonPlan(id:any){
     this.router.navigateByUrl(this.manageQuizRoute + id);
   }
+
+//for go To Manage Quiz Page
+  goToManageQuizPage(id:any){
+    console.log(id,this.quizPageRoute)
+    this.router.navigateByUrl(this.quizPageRoute + id);
+  }
+
+
   getAllLessonData(){
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
     let data:any = {
@@ -315,7 +333,7 @@ public training_data_Counts:any;
     this.searchjson = {
       "lession_title_search_regex":"",
       "prerequisite_lession_search_regex":"",
-      "test_associate_training_search_regex":"",
+      "has_test_lesson":"",
       "associated_training_search_regex":"",
       "has_lessonplan_regex":"",
       "lessonplan_value_regex":""

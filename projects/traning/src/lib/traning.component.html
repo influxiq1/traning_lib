@@ -257,10 +257,16 @@
 
             <div>
                 <span>
-                    <mat-checkbox [(ngModel)]="has_skip_lesson" [ngModelOptions]="{standalone: true}"> Skip Lesson ?
+                    <mat-checkbox [(ngModel)]="has_test_lesson" [ngModelOptions]="{standalone: true}">Has Test Lesson ?
                     </mat-checkbox>
                 </span>
             </div>
+            <!-- <div>
+                <span>
+                    <mat-checkbox [(ngModel)]="has_test_lesson" [ngModelOptions]="{standalone: true}"> Skip Lesson ?
+                    </mat-checkbox>
+                </span>
+            </div> -->
             <div>
                 <span>
                     <mat-checkbox (change)="getchkboxval($event.checked)" [(ngModel)]="chkboxval"
