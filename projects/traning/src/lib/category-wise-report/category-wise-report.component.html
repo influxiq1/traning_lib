@@ -13,9 +13,9 @@
         <input matInput placeholder="Name" [(ngModel)]="search.training_name" />
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="getPageData()">Search</button> -->
-<ng-container *ngIf="allData.length=='0'" class="trainingnorecordcls">
+<!-- <ng-container *ngIf="allData.length=='0'" class="trainingnorecordcls">
 <h3 class="nocatrecordcls">No Record Found</h3>
-</ng-container>
+</ng-container> -->
 <ng-container *ngIf="allData.length >'0'">
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">

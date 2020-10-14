@@ -10,21 +10,23 @@ import { CookieService } from 'ngx-cookie-service';
 export class UpdateAnswerComponent implements OnInit {
 public quizAnswerList : any=[];
 public serverDetails: any = {
-  "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api1/",
+  "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/",
   "jwttoken": ""
 };
 public formSource: any = {
   "source":"quiz_answer",
   "endpoint": "addorupdatedata",
-  "deleteendpoint": "lessonanswerdatadelete",
+  "deleteendpoint": "deletesingledata",
   "showEndpoint":"datalist",
   "formTitleName": 'Training'
 }
 public jwtToken:any;
-
+public lessonId:any;
+public ListingPageRoute:any='/quiz/list/'
   constructor(public activatedRoute : ActivatedRoute,public cookie:CookieService) { 
     this.jwtToken = cookie.get('jwtToken');
     this.serverDetails.jwttoken=this.jwtToken;
+    this.lessonId = activatedRoute.snapshot.params.lessonid;
   }
 
   ngOnInit() {

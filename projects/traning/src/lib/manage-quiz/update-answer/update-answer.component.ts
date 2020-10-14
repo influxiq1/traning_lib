@@ -1,10 +1,12 @@
-import { Component, OnInit ,Input} from '@angular/core';
+import { Component, OnInit ,Input,ViewChild} from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material/table';
 import { DialogBoxComponent } from '../../common/dialog-box/dialog-box.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSort } from '@angular/material';
 import { ApiService } from '../../api.service';
 import { Router } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
+
 
 export interface PeriodicElement {
   position: string;
@@ -28,9 +30,10 @@ export class UpdateAnswerComponent implements OnInit {
   public listingPageRoute : any;
   public lessonId:any;
 
-  displayedColumns: string[] = ['position','checked','deleteAction'];
+  displayedColumns: string[] = ['No','answers','Correct','action'];
   dataSource: MatTableDataSource<PeriodicElement>;
-
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   @Input()
   set serverDetails(serverDetails: {}) {
@@ -44,8 +47,9 @@ export class UpdateAnswerComponent implements OnInit {
   @Input()
   set DataList(val: any) {
     this.quizAnswerData = (val) || '<no name set>';
-    
-    this.dataSource = this.quizAnswerData;
+    // this.dataSource = this.quizAnswerData;
+    this.dataSource = new MatTableDataSource(this.quizAnswerData);
+
   }
   @Input()
   set ListingPageRoute(val: any) {
@@ -55,21 +59,37 @@ export class UpdateAnswerComponent implements OnInit {
   set LessonId(val: any) {
     this.lessonId = (val) || '<no name set>';
   }
+
+  
   constructor(public dialog : MatDialog,public apiService:ApiService,public router : Router) { 
 
   }
 
   ngOnInit() {
+    setTimeout(() => {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }, 200);
   }
   
+
+  goToquizList() {
+    console.log(this.listingPageRoute + this.lessonId,'++==')
+    this.router.navigateByUrl(this.listingPageRoute + this.lessonId);
+  }
+
+  // addButton() {
+    // this.router.navigateByUrl(this.addPageRoute + this.lessonId);
+  // }
+
   delete(id:any,index){
     this.deleteId = id;
     this.deleteIndex = index;
     let modalData: any = {
       panelClass: 'delete-dialog',
       data: {
-        header: "Message",
-        message: "Are you want to delete these record ?",
+        header: "Are you want to delete these record ?",
+        // message: "Are you want to delete these record ?",
         button1: { text: "No" },
         button2: { text: "Yes" },
       }
@@ -91,8 +111,9 @@ export class UpdateAnswerComponent implements OnInit {
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.deleteendpoint;
     let data:any = {
       "source" : this.formSourceVal.source,
+      "token": this.serverDetailsVal.jwttoken,
       "id" : id,
-      "token": this.serverDetailsVal.jwttoken
+      
     }
     this.apiService.postData(link,data).subscribe((res: any)=>{
       if(res.status="success"){
@@ -102,6 +123,10 @@ export class UpdateAnswerComponent implements OnInit {
       }
      
     })
+  }
+
+  edit(id:any){
+    // this.router.navigateByUrl(this.editUrl);
   }
  
 }

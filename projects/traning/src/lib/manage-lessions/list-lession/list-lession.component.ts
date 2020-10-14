@@ -144,7 +144,7 @@ public training_data_Counts:any;
     
     this.getAllLessonData();
     if(this.dnaFlag == true){
-      this.displayedColumns.push('select','no','lession_title', 'description', 'mediaType','associated_training','prerequisite_lession','has_lessonplan','lessonplan_value','has_test_lesson','status','deleteRecord');
+      this.displayedColumns.push('select','no','lession_title', 'description', 'mediaType','associated_training','prerequisite_lession','has_lessonplan','lessonplan_value','has_test_lesson','test_percentage','status','deleteRecord');
     }else{
       this.displayedColumns.push('select','no','lession_title', 'description', 'mediaType','associated_training','prerequisite_lession','status','deleteRecord');
     }

@@ -1,3 +1,8 @@
+.formcls mat-form-field{
+    display: block;
+    width: 100%;
+}
+
 table {
     width: 100%;
   }
@@ -24,11 +29,4 @@ table {
   .singleButton{
     margin: 5px; 
     float: right;
-  }
-  .singleButton button{
-    margin: 5px; 
-    float: right;
-  }
-  .cursor{
-    cursor: pointer;
   }

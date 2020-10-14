@@ -32,6 +32,7 @@ import { ListingModule } from 'listing-angular7';
 // import { CKEditorModule } from 'ngx-ckeditor';
 import { NgxYoutubePlayerModule } from 'ngx-youtube-player';
 import { ListQuizComponent } from './manage-quiz/list-quiz/list-quiz.component';
+import { AddEditQuizComponent } from './manage-quiz/add-edit-quiz/add-edit-quiz.component';
 
 
 
@@ -62,7 +63,8 @@ import { ListQuizComponent } from './manage-quiz/list-quiz/list-quiz.component';
     UnlockLessonModalComponent,
     videoDialogComponent,
     LessonVideoModalComponent,
-    ListQuizComponent
+    ListQuizComponent,
+    AddEditQuizComponent
   ],
   imports: [
     HttpClientModule,
@@ -79,7 +81,7 @@ import { ListQuizComponent } from './manage-quiz/list-quiz/list-quiz.component';
     CKEditorModule,
     NgxYoutubePlayerModule.forRoot()
   ],
-  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest,TrainingreportComponent,CategoryWiseReportComponent,TrainingCenterDnaComponent,LessonPlanMaterialComponent,ListQuizComponent
+  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest,TrainingreportComponent,CategoryWiseReportComponent,TrainingCenterDnaComponent,LessonPlanMaterialComponent,ListQuizComponent,AddEditQuizComponent
   ],
   
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],

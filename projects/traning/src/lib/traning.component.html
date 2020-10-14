@@ -259,6 +259,15 @@
                 <span>
                     <mat-checkbox [(ngModel)]="has_test_lesson" [ngModelOptions]="{standalone: true}">Has Test Lesson ?
                     </mat-checkbox>
+
+                    <div *ngIf="has_test_lesson == true">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Enter Complete Test Percentage (%)" 
+                            [(ngModel)]="test_percentage"
+                                [ngModelOptions]="{standalone: true}">
+                        </mat-form-field>
+                    </div>
+
                 </span>
             </div>
             <!-- <div>

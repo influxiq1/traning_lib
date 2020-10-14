@@ -11,6 +11,7 @@ declare var $: any;
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSnackBar } from '@angular/material';
 import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 import { duration } from 'moment';
+import { resolve } from 'url';
 
 export interface DialogData {
   data: any;
@@ -63,7 +64,7 @@ export class TraningComponent implements OnInit {
   public hasLessonVal: any;
   public dnaFlag: any;
   public lessonplanValue: any;
-  public has_test_lesson: any=false;
+  public has_test_lesson: any = false;
   public video_array: any = [
     // {
     //   video_url: '',
@@ -75,6 +76,8 @@ export class TraningComponent implements OnInit {
   public vid_url: any = '';
   public vid_tit: any = '';
   public vid_desc: any = '';
+
+  public test_percentage: any=80;
 
   public
   @Input()
@@ -262,6 +265,7 @@ export class TraningComponent implements OnInit {
 
         if (this.has_test_lesson == true) {
           data.data['has_test_lesson'] = 1;
+          data.data['test_percentage'] = this.test_percentage;
         } else {
           data.data['has_test_lesson'] = 0;
         }
@@ -481,6 +485,7 @@ export class TraningComponent implements OnInit {
             if (res.res[0] != null && res.res[0].has_test_lesson != null && res.res[0].has_test_lesson != 'undefined') {
               console.log(res.res[0].has_test_lesson, 'res.res[0].has_test_lesson')
               this.has_test_lesson = res.res[0].has_test_lesson;
+              this.test_percentage=res.res[0].test_percentage
             }
 
             this.getchkboxval(this.chkboxval);

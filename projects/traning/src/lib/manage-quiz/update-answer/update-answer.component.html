@@ -2,39 +2,77 @@
 
   <span class="searchblock">
     <span class="searchblockwrapper">
-        <span>
-    <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
-        <h2 class="headerSpan">Update Answer</h2>
-    </mat-toolbar>
-        </span>
+      <span>
+        <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
+          <h2 class="headerSpan">List Of Quiz Answer</h2>
+        </mat-toolbar>
+
+        <mat-toolbar class="buttonsetToolbar">
+
+          <button class="singleButton" mat-raised-button color="primary" type="button" (click)="goToquizList()">
+            <i class="material-icons">
+              keyboard_backspace
+            </i>Back To
+            Quiz List</button>
+
+          <!-- <button class="singleButton" mat-raised-button color="primary" (click)="addButton()">
+            <i class="material-icons">add</i> Add Answer</button> -->
+        </mat-toolbar>
+
+      </span>
     </span>
   </span>
- 
-<span class="questioncls"> Question : {{ quizAnswerData[0].question}}</span>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-    <ng-container matColumnDef="checked">
-        <mat-header-cell *matHeaderCellDef>Answers</mat-header-cell>
-        <mat-cell *matCellDef="let element"> 
-          <mat-checkbox *ngIf="element.isCorrect ==1" [checked]= "myModel" ></mat-checkbox>
-          <mat-checkbox *ngIf="element.isCorrect ==0" ></mat-checkbox>
-        </mat-cell>
+
+  <div class="questioncls" *ngIf="quizAnswerData != '' && quizAnswerData != null">
+    <h2 > Question : {{ quizAnswerData[0]?.question}}</h2>
+  </div>
+
+  <div class="mat-elevation-z8" *ngIf="quizAnswerData != '' && quizAnswerData != null">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="No">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+        <td mat-cell *matCellDef="let element;let i =index"> {{i+1}} </td>
       </ng-container>
-      <ng-container matColumnDef="position">
-        <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.answer}} </mat-cell>
-      </ng-container>
-  
-    <ng-container cdkColumnDef="deleteAction">
-        <th mat-header-cell *matHeaderCellDef> Delete </th>
-          <td mat-cell *matCellDef="let element ;let i = index;">
-              <i class="material-icons" (click)="delete(element._id,i)">delete</i>
-    </ng-container>     
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-       >
-    </tr>
-  </table>
 
+      <ng-container matColumnDef="answers">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Answer</th>
+        <td mat-cell *matCellDef="let element"> {{element.answer}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Correct">
+        <th mat-header-cell *matHeaderCellDef>Is Correct?</th>
+        <td mat-cell *matCellDef="let element">
+          <span *ngIf="element.isCorrect ==1"><span class="material-icons">
+              check
+            </span></span>
+          <span *ngIf="element.isCorrect ==0"><span class="material-icons">
+              clear
+            </span></span>
+        </td>
+      </ng-container>
+
+      <ng-container cdkColumnDef="action">
+        <th mat-header-cell th *matHeaderCellDef> Action </th>
+        <td mat-cell td *matCellDef="let element ;let i = index;">
+
+          <!-- <span class="cursor">
+            <i class="material-icons" (click)="edit(element._id,i)">edit</i>
+          </span> -->
+
+          <span class="cursor">
+            <i class="material-icons" (click)="delete(element._id,i)">delete</i>
+          </span>
+
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+      </tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25]"></mat-paginator>
+
+  </div>
 </mat-card>

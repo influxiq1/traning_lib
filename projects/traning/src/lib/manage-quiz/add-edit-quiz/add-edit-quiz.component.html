@@ -1,0 +1,65 @@
+
+<mat-card>
+    <span class="searchblock">
+        <span class="searchblockwrapper">
+
+            <span>
+
+                <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
+                    <h2 class="headerSpan">{{headerText}}</h2>
+                </mat-toolbar>
+            </span>
+        </span>
+    </span>
+</mat-card>
+
+<div class="formcls">
+    <mat-card-content>
+        <form class="example-form" novalidate [formGroup]="manageQuizForm" name="manageQuizForm" autocomplete="off">
+            <!-- <mat-form-field>
+            <mat-label>Choose Question Type</mat-label>
+            <mat-select formControlName="question_type" >
+              <mat-option  value="checkbox">Checkbox </mat-option>
+              <mat-option  value="dropdown">Dropdown </mat-option>
+              <mat-option  value="radio_button">Radio Button </mat-option>
+              <mat-option  value="text_box">Text Box </mat-option>
+            </mat-select>
+          </mat-form-field> -->
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Question" [formControl]="manageQuizForm.controls['question']"
+                    (blur)="inputUntouch(manageQuizForm,'question')">
+                <mat-error *ngIf="manageQuizForm.controls['question'].touched && !manageQuizForm.controls['question'].valid
+                       && manageQuizForm.controls['question'].errors.required">
+                    Question field can not be blank</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <input type="number" matInput placeholder="Prority" [formControl]="manageQuizForm.controls['priority']"
+                    (blur)="inputUntouch(manageQuizForm,'priority')">
+                <mat-error *ngIf="manageQuizForm.controls['priority'].touched && !manageQuizForm.controls['priority'].valid
+                       && manageQuizForm.controls['priority'].errors.required">
+                    Priority field can not be blank</mat-error>
+            </mat-form-field>
+
+             <mat-label>Description</mat-label>
+          <ck-editor name="description" [formControl]="manageQuizForm.controls['description']" skin="moono-lisa" language="en" [fullPage]="true"></ck-editor>
+
+
+            <mat-checkbox [formControl]="manageQuizForm.controls['status']" [(ngModel)]="statuschecked">Active
+            </mat-checkbox>
+
+            <br>
+
+            <button mat-raised-button color="primary" mat-button class="trainingsubbtn" type="button"
+                (click)="ManageQuizFormSubmit()">{{ buttonText }}</button>&nbsp;
+
+                <button mat-raised-button color="primary" mat-button class="trainingsubbtn" type="reset"
+                >Reset</button>&nbsp;
+
+            <button mat-raised-button color="primary" mat-button class="trainingsubbtn" type="button"
+                (click)="cancelRoute()">Cancel</button>
+
+        </form>
+    </mat-card-content>
+
+</div>

@@ -19,6 +19,7 @@ import { CategoryWiseReportComponent } from './category-wise-report/category-wis
 import { TrainingCenterDnaComponent } from './training-center-dna/training-center-dna.component';
 import { LessonPlanMaterialComponent } from './lesson-plan-material/lesson-plan-material.component';
 import { ListQuizComponent } from './manage-quiz/list-quiz/list-quiz.component';
+import { AddEditQuizComponent } from './manage-quiz/add-edit-quiz/add-edit-quiz.component';
 
 const appRoutes: Routes = [
     {
@@ -96,33 +97,46 @@ const appRoutes: Routes = [
         resolve: { quizQuestionData: ResolveService },
         data: { requestcondition: { source: 'manage_quiz_question', condition: {} }, endpoint: 'datalistwithouttoken' }
     },
-    
+
+
     // {
-    //     path: 'manage-quiz/add-answer/:id/:lessonid', component: AddUpdateAnswerComponent
+    //     path: 'quiz/edit/:id/:lesson_id_object', component: AddUpdateAnswerComponent
     // },
 
-    {
-        path: 'quiz/add/:lessonid', component: AddUpdateAnswerComponent
-    },
 
-    {
-        path: 'quiz/edit/:id/:lesson_id_object', component: AddUpdateAnswerComponent
-    },
-
-    {
-        path: 'manage-quiz/update-answer/:questionId', component: UpdateAnswerComponent,
-        resolve: { quizQuestionData: ResolveService },
-        data: { requestcondition: { source: 'quiz_answer_view', condition: {} }, endpoint: 'getlessonanswerdata' }
-    },
-
-
-
+    //new quiz section
     {
         path: 'quiz/list/:lesson_id_object', component: ListQuizComponent,
         resolve: { quizData: ResolveService },
         data: { requestcondition: { source: 'manage_quiz', condition: {} }, endpoint: 'datalistwithouttoken' }
     },
 
+    {
+        path: 'quiz/add/:lesson_id_object', component: AddEditQuizComponent
+    },
+
+    {
+        path: 'quiz/edit/:_id/:lesson_id_object', component: AddEditQuizComponent,
+        resolve: { quizData: ResolveService },
+        data: { requestcondition: { source: 'manage_quiz', condition: {} }, endpoint: 'datalistwithouttoken' }
+    },
+
+
+    {
+        path: 'quiz/add-answer/:id/:lessonid', component: AddUpdateAnswerComponent
+    },
+
+    {
+        path: 'quiz/edit-answer/:_id/:lessonid', component: AddUpdateAnswerComponent,
+        resolve: { quizQuestionData: ResolveService },
+        data: { requestcondition: { source: 'quiz_answer', condition: {} }, endpoint: 'datalistwithouttoken' }
+    },
+
+    {
+        path: 'quiz/update-answer/:questionId/:lessonid', component: UpdateAnswerComponent,
+        resolve: { quizQuestionData: ResolveService },
+        data: { requestcondition: { source: 'quiz_answer_view', condition: {} }, endpoint: 'getquizanswerdatabyquestionid' }
+    },
 
 
     /**training-report**/

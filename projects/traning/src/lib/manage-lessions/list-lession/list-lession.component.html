@@ -146,7 +146,7 @@
         </ng-container>
         <ng-container matColumnDef="lessonplan_value">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Purchasable </th>
-          <td mat-cell *matCellDef="let row" title="Has Test"> {{row.lessonplan_value}} </td>
+          <td mat-cell *matCellDef="let row" title="Purchasable"> {{row.lessonplan_value}} </td>
         </ng-container>
 
         <ng-container matColumnDef="has_test_lesson">
@@ -154,6 +154,15 @@
           <td mat-cell *matCellDef="let row" title="Has Test">
           <span *ngIf="row.has_test_lesson ==1">Yes</span>  
           <span *ngIf="row.has_test_lesson ==0">No</span>  
+
+          </td>
+        </ng-container>
+        <!-- test_percentage -->
+        <ng-container matColumnDef="test_percentage">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Test Percentage</th>
+          <td mat-cell *matCellDef="let row" title="Test Percentage">
+          <span *ngIf="row?.test_percentage !=null">{{row.test_percentage}}%</span>  
+          <span *ngIf="row?.test_percentage == null">NA</span>  
 
           </td>
         </ng-container>

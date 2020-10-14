@@ -26,6 +26,7 @@ import { CategoryWiseReportComponent } from './category-wise-report/category-wis
 import { TrainingCenterDnaComponent } from './training-center-dna/training-center-dna.component';
 import { LessonPlanMaterialComponent } from './lesson-plan-material/lesson-plan-material.component';
 import { ListQuizComponent } from './manage-quiz/list-quiz/list-quiz.component';
+import { AddEditQuizComponent } from './manage-quiz/add-edit-quiz/add-edit-quiz.component';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { ListQuizComponent } from './manage-quiz/list-quiz/list-quiz.component';
     TrainingCenterDnaComponent,
     LessonPlanMaterialComponent,
     ListQuizComponent,
+    AddEditQuizComponent,
   ],
   imports: [
     routing,

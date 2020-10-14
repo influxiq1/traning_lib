@@ -74,15 +74,20 @@ export class AddUpdateAnswerComponent implements OnInit {
         sourceobj: ["questionId"],
         token: this.serverDetailsVal.jwttoken
       }
-      if (this.dnaFlag == true) {
-        delete this.addUpdateAnswerForm.value.isCorrect;
-      }
+      // if (this.dnaFlag == true) {
+      //   delete this.addUpdateAnswerForm.value.isCorrect;
+      // }
       this.apiService.postData(link, data).subscribe((res: any) => {
         if (res.status = "success") {
           this.router.navigateByUrl(this.listingPageRoute + this.lessonId);
         }
       })
     }
+  }
+
+  cancelRoute(){
+    console.log(this.listingPageRoute + this.lessonId,'this.listingPageRoute + this.lessonId')
+    this.router.navigateByUrl(this.listingPageRoute + this.lessonId);
   }
 
 }

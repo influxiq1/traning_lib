@@ -10,9 +10,9 @@ import { CookieService } from 'ngx-cookie-service';
 export class AddUpdateAnswerComponent implements OnInit {
 public paramsId:any;
 public lessonId:any;
-public listingPageRoute:any="/manage-quiz/list/";
+public listingPageRoute:any="/quiz/list/";
 public serverDetails: any = {
-  "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api1/",
+  "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/",
   "jwttoken": ""
 };
 public formSource: any = {
