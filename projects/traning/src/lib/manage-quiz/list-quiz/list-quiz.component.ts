@@ -42,7 +42,7 @@ export class ListQuizComponent implements OnInit {
     this.listingData = (val) || 'no name set';
     this.listingData = val;
     this.dataSource = new MatTableDataSource(this.listingData);
-    console.log(this.listingData, 'listingData')
+    // console.log(this.listingData, 'listingData')
   }
   @Input()
   set AddPageRoute(val: any) {
@@ -95,7 +95,7 @@ export class ListQuizComponent implements OnInit {
   }
 
   goTolessonList() {
-    console.log(this.lessonPageRoute,'lessonList')
+    // console.log(this.lessonPageRoute,'lessonList')
     this.router.navigateByUrl(this.lessonPageRoute);
   }
 

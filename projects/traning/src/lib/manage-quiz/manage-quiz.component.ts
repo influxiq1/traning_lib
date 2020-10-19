@@ -219,7 +219,7 @@ export class ManageQuizComponent implements OnInit {
 
   // view Answer Data 
   viewAnswerData(val:any,flag:any) {
-    console.log(val,flag);
+    // console.log(val,flag);
     const dialogRef = this.dialog.open(questionDataModalComponent, {
       panelClass: 'question_modal',
       data: { 'data': val, 'flag':flag }
@@ -232,7 +232,7 @@ export class ManageQuizComponent implements OnInit {
 
   // view Images
   viewImages(val:any,flag:any){
-    console.log(val,flag);
+    // console.log(val,flag);
     const dialogRef = this.dialog.open(questionDataModalComponent, {
       panelClass: 'question_modal',
       data: { 'data': val, 'flag':flag }

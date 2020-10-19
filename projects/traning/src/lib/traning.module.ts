@@ -26,7 +26,7 @@ import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { TrainingreportComponent } from './trainingreport/trainingreport.component';
 import { DatePipe } from '@angular/common';
 import { CategoryWiseReportComponent } from './category-wise-report/category-wise-report.component';
-import { TrainingCenterDnaComponent, PurchaseModalComponent, ReviewLessonPlanComponent, ScheduleModalComponent, UnlockLessonModalComponent, LessonVideoModalComponent } from './training-center-dna/training-center-dna.component';
+import { TrainingCenterDnaComponent, PurchaseModalComponent, ReviewLessonPlanComponent, ScheduleModalComponent, UnlockLessonModalComponent, LessonVideoModalComponent, LessonQuizModalComponent } from './training-center-dna/training-center-dna.component';
 import { LessonPlanMaterialComponent } from './lesson-plan-material/lesson-plan-material.component';
 import { ListingModule } from 'listing-angular7';
 // import { CKEditorModule } from 'ngx-ckeditor';
@@ -64,7 +64,8 @@ import { AddEditQuizComponent } from './manage-quiz/add-edit-quiz/add-edit-quiz.
     videoDialogComponent,
     LessonVideoModalComponent,
     ListQuizComponent,
-    AddEditQuizComponent
+    AddEditQuizComponent,
+    LessonQuizModalComponent
   ],
   imports: [
     HttpClientModule,
@@ -86,6 +87,6 @@ import { AddEditQuizComponent } from './manage-quiz/add-edit-quiz/add-edit-quiz.
   
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [CookieService, ApiService,DatePipe],
-  entryComponents:[DialogBoxComponent,Dialogtest,PurchaseModalComponent,ReviewLessonPlanComponent,ScheduleModalComponent,questionDataModalComponent,UnlockLessonModalComponent,videoDialogComponent,LessonVideoModalComponent]
+  entryComponents:[DialogBoxComponent,Dialogtest,PurchaseModalComponent,ReviewLessonPlanComponent,ScheduleModalComponent,questionDataModalComponent,UnlockLessonModalComponent,videoDialogComponent,LessonVideoModalComponent,LessonQuizModalComponent]
 })
 export class TraningModule { }

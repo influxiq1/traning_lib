@@ -113,7 +113,7 @@ export class LessonPlanMaterialComponent implements OnInit {
   listenFormFieldChange(val: any) {
     this.jsonObj1 = {};
     this.valFormData = [];
-    console.log(val)
+    // console.log(val)/
 
     if (val.field == 'fromsubmit') {
       this.jsonObj1 = {};

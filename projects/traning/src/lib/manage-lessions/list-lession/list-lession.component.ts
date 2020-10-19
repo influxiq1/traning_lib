@@ -126,7 +126,7 @@ public training_data_Counts:any;
   @Input()
   set IsItDna(val:any){
     this.dnaFlag = val;
-    console.log("dna flag",this.dnaFlag);
+    // console.log("dna flag",this.dnaFlag);
     
   }
   constructor(public dialog: MatDialog,public apiService : ApiService,public router :Router,public snakBar:MatSnackBar) {
@@ -241,7 +241,7 @@ public training_data_Counts:any;
         let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
         let searchval:any={};
 
-         console.log(this.status_search_regex,this.trashFlag)
+        //  console.log(this.status_search_regex,this.trashFlag)
 
         if(typeof(this.status_search_regex) !='undefined'){
          searchval["status_search"]=this.status_search_regex;
@@ -295,7 +295,7 @@ public training_data_Counts:any;
 
 //for go To Manage Quiz Page
   goToManageQuizPage(id:any){
-    console.log(id,this.quizPageRoute)
+    // console.log(id,this.quizPageRoute)
     this.router.navigateByUrl(this.quizPageRoute + id);
   }
 

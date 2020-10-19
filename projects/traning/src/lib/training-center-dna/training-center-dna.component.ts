@@ -12,7 +12,6 @@ import { MatProgressBarModule, MatRadioModule, MatSliderModule } from '@angular/
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable, interval, Subscription } from 'rxjs';
-import { style } from '@angular/animations';
 
 
 
@@ -52,6 +51,15 @@ export interface DialogData4 {
   user_id: any;
   flag: any;
   video_url: any;
+}
+
+export interface DialogData5 {
+  data: any;
+  flag: any;
+  quiz_data: any;
+  lesson_data: any;
+  server_url: any;
+  user_id: any;
 }
 
 @Component({
@@ -1483,6 +1491,31 @@ export class TrainingCenterDnaComponent implements OnInit {
   }
 
 
+
+  // lesson_quiz LessonQuizModalComponent
+  lessonQuiz(val: any) {
+    if (this.AllTrainingData != null && typeof (this.AllTrainingData.quiz_data) != 'undefined') {
+      // console.log(val, '++', this.AllTrainingData.quiz_data)
+      var server_url: any = this.serverDetailsVal.serverUrl + 'addlessonquizdata';
+
+      const dialogRef = this.dialog.open(LessonQuizModalComponent, {
+        panelClass: 'schedule_modal',
+        width: '900px',
+        height: 'auto',
+        data: { quiz_data: this.AllTrainingData.quiz_data, lesson_data: val, user_id: this.userId, server_url: server_url }
+      });
+      dialogRef.disableClose = true;
+      dialogRef.afterClosed().subscribe((result: any) => {
+        // console.log(result, 'result')
+        if(result == 'yes'){
+          this.getTrainingCenterlistFunctionwithLessonId(this.paramsId, this.userType, this.userId, this.paramslessonId)
+        }
+      }
+      )
+    }
+  }
+
+
 }
 
 
@@ -1617,9 +1650,9 @@ export class LessonVideoModalComponent {
   playerVars = {
     cc_lang_pref: 'en'
   };
-  public video_time:any;
+  public video_time: any;
 
-  public video_Count_time:any;
+  public video_Count_time: any;
 
   constructor(public dialogRef: MatDialogRef<LessonVideoModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData4, public snakBar: MatSnackBar, public apiService: ApiService, public router: Router, public activatedRoute: ActivatedRoute) {
@@ -1650,7 +1683,7 @@ export class LessonVideoModalComponent {
     if (minutes < 10) { minutes = "0" + minutes; }
     if (seconds < 10) { seconds = "0" + seconds; }
     // console.log(hours + ':' + minutes + ':' + seconds);
-    this.video_time=hours + ':' + minutes + ':' + seconds;
+    this.video_time = hours + ':' + minutes + ':' + seconds;
 
     // this.startTimer(event.target.playerInfo.duration);
 
@@ -1699,12 +1732,12 @@ export class LessonVideoModalComponent {
   //   countDownTimer = setInterval(() => {
   //     minutes = parseInt(timer / 60, 10)
   //     seconds = parseInt(timer % 60, 10);
-  
+
   //     minutes = minutes < 10 ? "0" + minutes : minutes;
   //     seconds = seconds < 10 ? "0" + seconds : seconds;
-  
+
   //     this.video_Count_time = minutes + ":" + seconds;
-  
+
   //     if (--timer < 0) {
   //       timer = duration;
   //     }
@@ -1712,4 +1745,146 @@ export class LessonVideoModalComponent {
 
   //   console.log( this.video_Count_time,'vv')
   // }
+}
+
+
+
+
+
+@Component({
+  selector: 'lessonquiz',
+  templateUrl: './lesson_quiz.html'
+})
+export class LessonQuizModalComponent {
+  public quizData: any = '';
+  public CheckedAnswer: any = [];
+  public lessonData: any;
+  public quizVal: any = '';
+  public correctQuizVal: any = [];
+  public resultVal: any;
+  public resultStatus: any = 'Failed';
+
+  constructor(public dialogRef: MatDialogRef<LessonQuizModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData5, public snakBar: MatSnackBar, public apiService: ApiService, public router: Router) {
+    // console.log(data, 'data')
+    this.quizData = data.quiz_data[0];
+    this.lessonData = data.lesson_data;
+
+    // console.log(this.quizData, '++')
+  }
+
+  closedModal() {
+    this.data.flag = 'no';
+    this.dialogRef.close(this.data.flag);
+    this.snakBar.open(' Your Lesson Quiz is Incomplete..!', 'OK', {
+      duration: 5000
+    })
+  }
+
+
+
+  //next quiz 
+  nextQuizRecord(val: any) {
+
+    // console.log(this.CheckedAnswer, 'CheckedAnswer', this.quizVal)
+    if (this.quizVal != '') {
+      this.CheckedAnswer.push(this.quizVal)
+      this.quizVal = '';
+    }
+
+    // console.log(this.quizData, '++')
+    // for (let i = 0; i < this.data.quiz_data.length; i++) {
+    //   if (this.data.quiz_data[i + 1] != null && this.data.quiz_data[i]._id == val._id) {
+    //     this.quizData = this.data.quiz_data[i + 1];
+    //     console.log(this.quizData, '++==')
+    //   }
+    // }
+    let ind: any = 0;
+
+    for (let i in this.data.quiz_data) {
+      if (this.data.quiz_data[i]._id == val._id) {
+        ind = (parseInt(i) + 1);
+        if (this.data.quiz_data[ind] != null && typeof (this.data.quiz_data[ind]) != 'undefined') {
+          this.quizData = this.data.quiz_data[ind];
+        } else {
+          this.quizData = '';
+
+          // console.log(this.CheckedAnswer, '++== else ')
+          if (this.CheckedAnswer.length > 0) {
+            for (let i in this.CheckedAnswer) {
+              if (this.CheckedAnswer[i].isCorrect == 1) {
+                // console.log(this.CheckedAnswer[i], '????chk')
+                this.correctQuizVal.push(this.CheckedAnswer[i]);
+              }
+            }
+          }
+
+          if (this.correctQuizVal.length > 0) {
+            var result = (this.correctQuizVal.length / this.data.quiz_data.length) * 100
+            this.resultVal = parseFloat(result.toFixed(2));
+            if (this.resultVal >= this.data.lesson_data.test_percentage) {
+              this.resultStatus = 'Success';
+            } else {
+              this.resultStatus = 'Failed';
+            }
+          } else {
+            this.resultVal = 0;
+            this.resultStatus = 'Failed';
+          }
+        }
+      }
+    }
+  }
+
+
+
+  // chooseQuizAns(val: any, event: any, index) {
+  //   if (event.checked == true) {
+  //     this.CheckedAnswer.push(val)
+  //     console.log(val, 'val', event, 'key', index)
+  //   } else {
+  //     console.log(val, 'val')
+  //     if (this.CheckedAnswer.length > 0) {
+  //       for (let i in this.CheckedAnswer) {
+  //         if (this.CheckedAnswer[i]._id == val._id) {
+  //           console.log(this.CheckedAnswer[i])
+  //           this.CheckedAnswer.splice(i, 1)
+  //         }
+  //       }
+  //     };
+  //   }
+  // }
+
+  saveQuizRecord(val) {
+    // console.log(this.resultVal, 'resultVal')
+
+    let user_result: any = {
+      resultVal: this.resultVal,
+      CheckedAnswer: this.CheckedAnswer,
+      resultStatus: this.resultStatus,
+      target_percentage: this.data.lesson_data.test_percentage,
+      user_id: this.data.user_id,
+      lesson_id: this.lessonData._id
+    }
+    // console.log(user_result, 'user_result')
+    this.apiService.postDatawithoutToken(this.data.server_url, user_result).subscribe(res => {
+      let result: any = res;
+      if (result.status == 'success') {
+        this.data.flag = 'yes';
+        this.dialogRef.close(this.data.flag);
+        this.snakBar.open('Successfully Completed Your Lesson Quiz..!', 'OK', {
+          duration: 5000
+        })
+      }
+    })
+  }
+
+  startQuizAgain(val) {
+    this.CheckedAnswer = [];
+    this.correctQuizVal = [];
+    this.resultVal = 0
+    this.resultStatus = 'Failed';
+    this.quizData = '';
+    this.quizData = this.data.quiz_data[0];
+  }
 }

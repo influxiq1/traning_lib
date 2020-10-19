@@ -229,7 +229,7 @@
                 </i>
               </span>
 
-              <span class="pointer" matTooltip="Manage Quiz" *ngIf="element.has_test_lesson == 1" >
+              <span class="pointer" *ngIf="element.has_test_lesson == 1" >
                 <button class="singleButton" mat-raised-button color="primary" (click)="goToManageQuizPage(element._id)">
                   Manage Quiz
                 </button>

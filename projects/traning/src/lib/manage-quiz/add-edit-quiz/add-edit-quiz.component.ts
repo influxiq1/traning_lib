@@ -80,7 +80,7 @@ export class AddEditQuizComponent implements OnInit {
 
     this.manageQuizForm = this.fb.group({
       lesson_id: [''],
-      question_type: ['checkbox'],
+      question_type: ['radio_button'],
       question: ["", Validators.required],
       priority: ["",Validators.required],
       status: [""],

@@ -46,7 +46,7 @@ export class CategoryWiseReportComponent implements OnInit {
   @Input()
   set AllData(data: any) {
     this.allData = (data) || '<no name set>';
-    console.log("datasource",this.allData);
+    // console.log("datasource",this.allData);
 
     this.displayedColumns = [
       {key:"fullname", value:'Name'},

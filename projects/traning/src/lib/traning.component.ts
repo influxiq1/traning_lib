@@ -199,7 +199,7 @@ export class TraningComponent implements OnInit {
   formsubmit() {
 
 
-    console.log("data value", this.dataForm.value);
+    // console.log("data value", this.dataForm.value);
     // return;
     this.issubmit = 1;
     for (let y in this.dataForm.controls) {
@@ -351,10 +351,10 @@ export class TraningComponent implements OnInit {
 
       this.apiService.getData(link, data)
         .subscribe((res: any) => {
-          console.log("souresh test", res);
+          // console.log("souresh test", res);
           let result;
           result = res.res;
-          console.log("drop down", result);
+          // console.log("drop down", result);
           if (res.status == 'error') {
             // this.router.navigate(['/']);
           } else {
@@ -421,7 +421,7 @@ export class TraningComponent implements OnInit {
       video_skippable: false
     })
 
-    console.log(this.video_array, 'this.video_array')
+    // console.log(this.video_array, 'this.video_array')
   }
 
   removevideo(index) {
@@ -468,7 +468,7 @@ export class TraningComponent implements OnInit {
       if (res.status == 'error') {
 
       } else {
-        console.log("edited data", res);
+        // console.log("edited data", res);
         if (this.route.snapshot.url[0].path == "manage-lesson") {
           if (this.route.snapshot.url[1].path == "edit") {
             this.getMediaTypeVal(res.res[0].associated_training, 'associated_training');
@@ -476,14 +476,14 @@ export class TraningComponent implements OnInit {
             let imageBasepath: any;
             let fileserverName: any;
             this.fileArray = res.res[0].fileType;
-            console.log("dingle data", res.res[0]);
+            // console.log("dingle data", res.res[0]);
 
             this.htmType = res.res[0].typeHtml;
             // this.hasLessonVal=res.res[0].has_lessonplan;
             this.chkboxval = res.res[0].has_lessonplan;
 
             if (res.res[0] != null && res.res[0].has_test_lesson != null && res.res[0].has_test_lesson != 'undefined') {
-              console.log(res.res[0].has_test_lesson, 'res.res[0].has_test_lesson')
+              // console.log(res.res[0].has_test_lesson, 'res.res[0].has_test_lesson')
               this.has_test_lesson = res.res[0].has_test_lesson;
               this.test_percentage=res.res[0].test_percentage
             }
@@ -747,7 +747,7 @@ export class videoDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<videoDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-    console.log(data)
+    // console.log(data)
   }
 
   onNoClick(): void {

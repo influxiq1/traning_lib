@@ -132,7 +132,7 @@ export class AddEditComponent implements OnInit {
       }
       if(this.listingData[0].question_type == 'pick_picture'){
         this.questionTypeVal=this.listingData[0].question_type;
-        console.log(this.images_array_edit)
+        // console.log(this.images_array_edit)
       }
     }
 

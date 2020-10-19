@@ -127,6 +127,8 @@
 
               <!--Banner Section Start Here  -->
               <!-- banner 1 start here -->
+
+
               <mat-card class="banner1cls" *ngIf="userType=='admin' || userType=='mentor'">
                 <!-- <mat-card-content [innerHtml]="lesson_content.typeHtml">
 
@@ -309,6 +311,29 @@
               <!--Banner Section Start Here  -->
               <!-- banner 1 start here -->
 
+
+              <div *ngIf=" lesson_content!=null && lesson_content.has_test_lesson == 1 ">
+                <mat-card class="banner1cls" *ngIf="(userType=='admin' || userType=='mentor' || userType=='mentee') && i==0 && 
+                lesson_content.has_test_lesson == 1">
+
+                  <div class="bannerclassmentor">
+                    <div class='reviewcls'>
+                      Review Quiz
+                    </div>
+
+                    <mat-card-content>
+                      Please review the Lesson Quiz for this Lesson.
+                    </mat-card-content>
+                    <div class="submitbtngroup">
+                      <button mat-button type="button" class="submitbtn reviewlesson" color="primary"
+                        (click)="lessonQuiz(lesson_content)">Take Quiz</button>
+
+                    </div>
+                  </div>
+
+                </mat-card>
+              </div><br>
+
               <div *ngIf=" lesson_content!=null && lesson_content.has_lessonplan == 1 && lesson_id_flag == true ">
                 <mat-card class="banner1cls" *ngIf="(userType=='admin' || userType=='mentor') && i==0 && 
                 lesson_content.has_lessonplan == 1">
@@ -333,6 +358,8 @@
 
                 </mat-card>
               </div>
+
+         
 
 
               <!-- banner 1 end here -->
@@ -475,28 +502,19 @@
                 </mat-card>
 
                 <mat-card class="example-card" *ngIf="lesson_content.mediaType=='video'">
-                  <!-- <div class="paragraphwrapper">
-                    <p [innerHtml]="item.video_typeHtml" class="paragraphcls"></p>
-                  </div> -->
+            
                   <div class="videoWrapper">
                     <span class="video_titlecls">{{ lesson_content.video_title }}</span> <br>
-                    <!-- <video width="640" height="360" autoplay (ended)="videoended(item,i,1)"> -->
-                    <!-- <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="video/mp4"> -->
-                    <!-- Your browser does not support the video tag. -->
-                    <!-- </video> -->
+                 
                     <span class="video_descriptioncls" [innerHTML]="lesson_content.video_description"></span><br>
 
                     <div class="video_arraycls"
                       *ngIf="lesson_content.video_array !=null && lesson_content.video_array !=''">
                       <div *ngFor="let item of lesson_content.video_array" class="video_wrapcls">
                         <div class="videocls">
-                          <img src="https://img.youtube.com/vi/{{item.video_url}}/0.jpg"
-                            >
+                          <img src="https://img.youtube.com/vi/{{item.video_url}}/0.jpg">
                           <img class="video_iconcls" (click)="openLessonVideo(item)"
-                            src="https://awsbackend-dev-patient-files-test.s3.amazonaws.com/youtube.png">
-                          <!-- <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY" frameborder="0"
-                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe> -->
+                            src="https://awsbackend-dev-patient-files-test.s3.amazonaws.com/icon-videoplay.png">
                           <p class="videotitlecls">{{item.video_title}}</p>
 
                         </div>
