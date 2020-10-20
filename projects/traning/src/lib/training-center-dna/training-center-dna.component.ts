@@ -1507,7 +1507,7 @@ export class TrainingCenterDnaComponent implements OnInit {
       dialogRef.disableClose = true;
       dialogRef.afterClosed().subscribe((result: any) => {
         // console.log(result, 'result')
-        if(result == 'yes'){
+        if (result == 'yes') {
           this.getTrainingCenterlistFunctionwithLessonId(this.paramsId, this.userType, this.userId, this.paramslessonId)
         }
       }
@@ -1763,13 +1763,14 @@ export class LessonQuizModalComponent {
   public correctQuizVal: any = [];
   public resultVal: any;
   public resultStatus: any = 'Failed';
+  public indexVal: any = 1;
 
   constructor(public dialogRef: MatDialogRef<LessonQuizModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData5, public snakBar: MatSnackBar, public apiService: ApiService, public router: Router) {
     // console.log(data, 'data')
     this.quizData = data.quiz_data[0];
     this.lessonData = data.lesson_data;
-
+    this.indexVal = 1;
     // console.log(this.quizData, '++')
   }
 
@@ -1785,7 +1786,7 @@ export class LessonQuizModalComponent {
 
   //next quiz 
   nextQuizRecord(val: any) {
-
+    this.indexVal = this.indexVal + 1;
     // console.log(this.CheckedAnswer, 'CheckedAnswer', this.quizVal)
     if (this.quizVal != '') {
       this.CheckedAnswer.push(this.quizVal)
@@ -1806,6 +1807,8 @@ export class LessonQuizModalComponent {
         ind = (parseInt(i) + 1);
         if (this.data.quiz_data[ind] != null && typeof (this.data.quiz_data[ind]) != 'undefined') {
           this.quizData = this.data.quiz_data[ind];
+          // this.indexVal = ind;
+
         } else {
           this.quizData = '';
 
@@ -1886,5 +1889,6 @@ export class LessonQuizModalComponent {
     this.resultStatus = 'Failed';
     this.quizData = '';
     this.quizData = this.data.quiz_data[0];
+    this.indexVal=1;
   }
 }
