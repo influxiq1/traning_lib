@@ -11,7 +11,8 @@
 
                 <mat-toolbar class="buttonsetToolbar">
 
-                    <button class="singleButton" mat-raised-button color="primary" type="button" (click)="goTolessonList()">
+                    <button class="singleButton" mat-raised-button color="primary" type="button"
+                        (click)="goTolessonList()">
                         <i class="material-icons">
                             keyboard_backspace
                         </i>Back To
@@ -27,8 +28,8 @@
     <mat-form-field>
         <mat-label>Search By Keywords</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Filter" #input>
-      </mat-form-field>
-      
+    </mat-form-field>
+
     <div class="mat-elevation-z8">
 
         <table mat-table [dataSource]="dataSource" matSort>
@@ -45,7 +46,8 @@
 
             <ng-container matColumnDef="description_html">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-                <td mat-cell *matCellDef="let row" data-label="Question"> {{row.description_html}} </td>
+                <td mat-cell *matCellDef="let row" data-label="Question">
+                    <span [innerHTML]="row.description_html"></span> </td>
             </ng-container>
 
             <ng-container matColumnDef="question_type">
@@ -92,15 +94,15 @@
                                 toggle_on
                             </i>
                         </span>
-                        
-                       
-                        <span class="singleButton" >
+
+
+                        <span class="singleButton">
 
                             <button mat-raised-button type="button" color="primary" (click)="goToAnswerPage 
                             (element._id)">Add Answer</button>
 
                             <button mat-raised-button type="button" color="primary"
-                            (click)="goToUpdateAnswerPage(element._id)">View Answer</button>
+                                (click)="goToUpdateAnswerPage(element._id)">View Answer</button>
 
                         </span>
 

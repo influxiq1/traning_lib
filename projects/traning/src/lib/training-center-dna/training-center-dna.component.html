@@ -312,7 +312,7 @@
               <!-- banner 1 start here -->
 
 
-              <div *ngIf=" lesson_content!=null && lesson_content.has_test_lesson == 1 ">
+              <div *ngIf=" lesson_content!=null && lesson_content.has_test_lesson == 1 && quizflag == false">
                 <mat-card class="banner1cls" *ngIf="(userType=='admin' || userType=='mentor' || userType=='mentee') && i==0 && 
                 lesson_content.has_test_lesson == 1">
 
@@ -359,7 +359,7 @@
                 </mat-card>
               </div>
 
-         
+
 
 
               <!-- banner 1 end here -->
@@ -502,10 +502,10 @@
                 </mat-card>
 
                 <mat-card class="example-card" *ngIf="lesson_content.mediaType=='video'">
-            
+
                   <div class="videoWrapper">
                     <span class="video_titlecls">{{ lesson_content.video_title }}</span> <br>
-                 
+
                     <span class="video_descriptioncls" [innerHTML]="lesson_content.video_description"></span><br>
 
                     <div class="video_arraycls"
@@ -596,6 +596,28 @@
                 </div>
 
               </mat-card> -->
+
+              <div *ngIf=" lesson_content!=null && lesson_content.has_test_lesson == 1 && quizflag == false">
+                <mat-card class="banner1cls" *ngIf="(userType=='admin' || userType=='mentor' || userType=='mentee') && i==0 && 
+                lesson_content.has_test_lesson == 1">
+
+                  <div class="bannerclassmentor">
+                    <div class='reviewcls'>
+                      Review Quiz
+                    </div>
+
+                    <mat-card-content>
+                      Please review the Lesson Quiz for this Lesson.
+                    </mat-card-content>
+                    <div class="submitbtngroup">
+                      <button mat-button type="button" class="submitbtn reviewlesson" color="primary"
+                        (click)="lessonQuiz(lesson_content)">Take Quiz</button>
+
+                    </div>
+                  </div>
+
+                </mat-card>
+              </div><br>
               <div *ngIf=" lesson_content!=null && lesson_content.has_lessonplan == 1 && lesson_id_flag == true ">
                 <mat-card class="banner1cls" *ngIf="(userType=='admin' || userType=='mentor') && i==0 && 
                 lesson_content.has_lessonplan == 1">

@@ -146,6 +146,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   public access_flag: any = false;
   public lesson_locked_by_user: any = 1;
   public video_base_url: any = 'https://www.youtube.com/embed/';
+  public quizflag: boolean = false;
 
   @Input()
   set lessonplanmaterialRoute(route: any) {
@@ -200,6 +201,16 @@ export class TrainingCenterDnaComponent implements OnInit {
           this.next_button_access = false;
         }
       }
+    }
+
+    var complete_lesson_quiz = results.complete_lesson_quiz;
+
+    if (complete_lesson_quiz != null && typeof (complete_lesson_quiz) != 'undefined' && complete_lesson_quiz.length >0) {
+      this.next_button_access = true;
+      this.quizflag = true;
+      console.log(this.quizflag, 'quizflag')
+    } else {
+      this.next_button_access = false;
     }
 
 
@@ -1495,7 +1506,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   // lesson_quiz LessonQuizModalComponent
   lessonQuiz(val: any) {
     if (this.AllTrainingData != null && typeof (this.AllTrainingData.quiz_data) != 'undefined') {
-      // console.log(val, '++', this.AllTrainingData.quiz_data)
+      console.log(val, '++', this.AllTrainingData.quiz_data)
       var server_url: any = this.serverDetailsVal.serverUrl + 'addlessonquizdata';
 
       const dialogRef = this.dialog.open(LessonQuizModalComponent, {
@@ -1777,9 +1788,13 @@ export class LessonQuizModalComponent {
   closedModal() {
     this.data.flag = 'no';
     this.dialogRef.close(this.data.flag);
-    this.snakBar.open(' Your Lesson Quiz is Incomplete..!', 'OK', {
-      duration: 5000
-    })
+
+    if (this.data.quiz_data.length > 0) {
+      this.snakBar.open(' Your Lesson Quiz is Incomplete..!', 'OK', {
+        duration: 5000
+      })
+    }
+
   }
 
 
@@ -1889,6 +1904,6 @@ export class LessonQuizModalComponent {
     this.resultStatus = 'Failed';
     this.quizData = '';
     this.quizData = this.data.quiz_data[0];
-    this.indexVal=1;
+    this.indexVal = 1;
   }
 }
