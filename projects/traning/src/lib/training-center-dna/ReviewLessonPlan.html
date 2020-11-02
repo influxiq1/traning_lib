@@ -18,9 +18,9 @@
           <div class="modalbtncls">
                 <button class="btnbluecls" mat-raised-button color="primary" (click)="submitLesson(data, 'yes')" cdkFocusInitial>CONTINUE</button>&nbsp;
 
-                <button class="btnbluecls" mat-raised-button color="accent" mat-dialog-close="no" cdkFocusInitial>No</button>&nbsp;
+                <button class="btnbluecls" mat-raised-button color="accent"  type="button" (click)="closedModal()">No</button>&nbsp;
 
-                <button class="btncancelcls" mat-raised-button color="accent" mat-dialog-close="no" cdkFocusInitial><span class="material-icons">
+                <button class="btncancelcls" mat-raised-button color="accent" type="button" (click)="closedModal()"><span class="material-icons">
                   clear
                   </span></button>
           </div>

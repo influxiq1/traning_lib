@@ -47,7 +47,9 @@
           </div>
 
           <mat-dialog-actions class="modalbtncls">
-            <button class="btncancelcls" mat-raised-button color="accent" mat-dialog-close="no" cdkFocusInitial><span class="material-icons">
+            <button class="btncancelcls" mat-raised-button color="accent" type="button" 
+            (click)="closedModal()">
+            <span class="material-icons">
               clear
               </span></button>
             <!-- <button class="btnbluecls" mat-raised-button color="primary" (click)="submitLession(session_id, 'yes')" cdkFocusInitial>Submit</button> -->

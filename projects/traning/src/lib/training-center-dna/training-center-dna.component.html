@@ -12,11 +12,13 @@
           aria-label="Button that displays a tooltip when focused or hovered over">
           Apply sequential lessons lock
         </button>
+
         <button color="accent" type="button" *ngIf="lesson_locked_by_user == 1" (click)="UnlockLesson(0)"
           mat-raised-button matTooltip="We highly suggest you to follow the lessons in sequence!"
           aria-label="Button that displays a tooltip when focused or hovered over">
           Unlock sequential lessons
         </button>
+
       </div>
     </div>
 
@@ -29,6 +31,7 @@
     <!-- [ngClass]="{'active':((paramsTrainingId ==  item._id ))}" -->
     <!-- ,item.done >= 100 ? 'class7',item.done < 100? 'class4' -->
     <!-- paramsTrainingId ===  item._id ? 'class5' : 'class4' -->
+
     <mat-list class="trainingcentercls trainingcenterclsnew">
       <mat-list-item class="trainingCategoryList">
         <div class="selectedclass" *ngFor="let item of trainingCategoryList;let i = index"
@@ -40,13 +43,11 @@
 
           <mat-list-item *ngIf="item.childcat.length==0" (click)="clicktrcataining(item._id,item.catagory_name)"
             [ngClass]="paramsTrainingId ==  item._id ? 'classongoing':
-          ( item.percentage >=100 ? 'classdone' : 'classnotdone')">
+          ( item.percentage >= 100 ? 'classdone' : 'classnotdone')">
             <div class="categoryname">
               {{item.catagory_name}}
               <span class="countcls">
                 ({{item.done}}/{{item.count}})
-                <!-- <p>{{item | json}}</p> -->
-                <!-- <p>{{ item.done }}</p> -->
               </span>
 
             </div>
@@ -312,7 +313,7 @@
               <!-- banner 1 start here -->
 
 
-              <div *ngIf=" lesson_content!=null && lesson_content.has_test_lesson == 1 && quizflag == false">
+              <div *ngIf=" lesson_content!=null && lesson_content.has_test_lesson == 1 && quizflag == true">
                 <mat-card class="banner1cls" *ngIf="(userType=='admin' || userType=='mentor' || userType=='mentee') && i==0 && 
                 lesson_content.has_test_lesson == 1">
 
@@ -338,7 +339,7 @@
                 <mat-card class="banner1cls" *ngIf="(userType=='admin' || userType=='mentor') && i==0 && 
                 lesson_content.has_lessonplan == 1">
 
-                  <div class="bannerclassmentor" *ngIf="lesson_id_flag == true ">
+                  <div class="bannerclassmentor" *ngIf="lesson_id_flag == true "> 
                     <div class='reviewcls'>
                       Review the Lesson Plan Material
                     </div>
@@ -366,11 +367,9 @@
 
 
               <!-- banner 2 start here -->
-
-              <div *ngIf="orders_button == true || preview_button == true || schedule_button == true">
-                <mat-card class="banner2cls" *ngIf="userType=='mentee' && item.lessonplan_value=='purchasable' && allLessonDataList[0].lessonplan_value == 'purchasable' && i==0 &&
-                (allLessonDataList[0].has_lessonplan == 1 || lesson_content.has_lessonplan == 1)">
-
+              <!-- *ngIf="orders_button == true || preview_button == true || schedule_button == true" -->
+              <div>
+                <mat-card class="banner2cls" *ngIf="userType=='mentee' && lesson_content.has_lessonplan == 1 && lesson_content.lessonplan_value=='purchasable' && i==0">
                   <div>
                     <div class="bannercls" *ngIf="orders_button == true">
                       <div>
@@ -597,7 +596,7 @@
 
               </mat-card> -->
 
-              <div *ngIf=" lesson_content!=null && lesson_content.has_test_lesson == 1 && quizflag == false">
+              <!-- <div *ngIf=" lesson_content!=null && lesson_content.has_test_lesson == 1 && quizflag == false">
                 <mat-card class="banner1cls" *ngIf="(userType=='admin' || userType=='mentor' || userType=='mentee') && i==0 && 
                 lesson_content.has_test_lesson == 1">
 
@@ -617,7 +616,9 @@
                   </div>
 
                 </mat-card>
-              </div><br>
+              </div><br> -->
+
+
               <div *ngIf=" lesson_content!=null && lesson_content.has_lessonplan == 1 && lesson_id_flag == true ">
                 <mat-card class="banner1cls" *ngIf="(userType=='admin' || userType=='mentor') && i==0 && 
                 lesson_content.has_lessonplan == 1">
@@ -648,9 +649,8 @@
 
               <!-- banner 2 start here -->
 
-              <div *ngIf="orders_button == true || preview_button == true || schedule_button == true">
-                <mat-card class="banner2cls" *ngIf="userType=='mentee' && item.lessonplan_value=='purchasable' && allLessonDataList[0].lessonplan_value == 'purchasable' && i==0 &&
-                (allLessonDataList[0].has_lessonplan == 1 || lesson_content.has_lessonplan == 1)">
+              <div >
+                <mat-card class="banner2cls" *ngIf="userType=='mentee' && lesson_content.has_lessonplan == 1 && lesson_content.lessonplan_value=='purchasable' && i==0">
 
 
                   <div *ngIf="orders_button == true || preview_button == true">
