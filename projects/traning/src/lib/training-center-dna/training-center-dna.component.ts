@@ -120,7 +120,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   public firstIndex: number;
   public currentLesson: any;
   public completedLessons: any = [];
-  public lesson_content: any;
+  public lesson_content: any = [];
   public lesson_data: any;
   public progress_bar = 0;
   public training_cat_name: any;
@@ -175,7 +175,7 @@ export class TrainingCenterDnaComponent implements OnInit {
     this.schedule_button = false;
     this.next_button_access = false;
     this.quizflag = false;
-
+    this.lesson_content = results.lesson_content[0];
     console.log(results.lesson_content[0], 'results.lesson_content[0]')
 
     if (results.lesson_content[0].has_lessonplan == 1 && results.lesson_content[0].has_test_lesson == 0) {
@@ -274,9 +274,9 @@ export class TrainingCenterDnaComponent implements OnInit {
         this.quizflag = true;
       }
 
-      // if (results.quiz_data.length > 0) {
-      //   this.quizflag = false;
-      // }
+      if (results.quiz_data.length > 0) {
+        this.quizflag = false;
+      }
 
       if (results.complete_lesson_video.length == 0) {
         this.next_button_access = false;
@@ -350,10 +350,10 @@ export class TrainingCenterDnaComponent implements OnInit {
 
       // console.log(this.lesson_locked_by_user, 'lesson_locked_by_user', 'single order >>>', results.lesson_question, results.lesson_question_submited_by_user)
 
-      if (this.preview_button == true && this.lesson_locked_by_user == 1) {
-        this.next_button_access = false;
-        // console.log(this.next_button_access, 'next_button_access', this.preview_button)
-      }
+      // if (this.preview_button == true && this.lesson_locked_by_user == 1) {
+      //   this.next_button_access = false;
+      //   // console.log(this.next_button_access, 'next_button_access', this.preview_button)
+      // }
 
       // if (this.lesson_locked_by_user == 0) {
       //   this.next_button_access = true;
@@ -476,7 +476,7 @@ export class TrainingCenterDnaComponent implements OnInit {
         }
       }
     }
-    // console.log(this.next_button_access, 'quizflag 2')
+    // console.log(this.next_button_access, 'quizflag 2',this.quizflag)
 
 
 
@@ -701,32 +701,36 @@ export class TrainingCenterDnaComponent implements OnInit {
 
   ngOnInit() {
 
+    // console.log(this.userId.length, 'userId')
 
-
-    if (this.userType == 'mentee' && this.cookieService.get('parentid') != null && this.cookieService.get('parentid') != '') {
+    if (this.userType == 'mentee' && this.cookieService.get('parentid') != null &&
+      typeof (this.cookieService.get('parentid')) != 'undefined' && this.cookieService.get('parentid') != "") {
       this.user_parent_id = JSON.parse(this.cookieService.get('parentid'));
 
-      // console.log(this.dnaServerUrl,'+++++')
+      // console.log(this.user_parent_id.length, 'user_parent_id')
 
-      let endpoint = this.dnaServerUrl + 'api1/usergetone';
+      if (this.user_parent_id.length > 10) {
+        let endpoint = this.dnaServerUrl + 'api1/usergetone';
 
-      let data: any;
-      data = {
-        id: this.user_parent_id
-      }
-      // console.log('cardData-->', cardData);
-      this.apiService.postDatawithoutToken(endpoint, data).subscribe((response: any) => {
-        if (response.status == "success") {
-
-          this.user_mentor_name = response.result[0].firstname + ' ' + response.result[0].lastname;
-          // console.log(this.dnaServerUrl, '+++++', this.user_mentor_name, response)
-
-        } else {
-          this.snakBar.open('Error Occured..!', 'Try Again', {
-            duration: 3000
-          });
+        let data: any;
+        data = {
+          id: this.user_parent_id
         }
-      })
+        // console.log('cardData-->', cardData);
+        this.apiService.postDatawithoutToken(endpoint, data).subscribe((response: any) => {
+          if (response.status == "success") {
+
+            this.user_mentor_name = response.result[0].firstname + ' ' + response.result[0].lastname;
+            // console.log(this.dnaServerUrl, '+++++', this.user_mentor_name, response)
+
+          } else {
+            this.snakBar.open('Error Occured..!', 'Try Again', {
+              duration: 3000
+            });
+          }
+        })
+      }
+
     }
 
 
@@ -988,7 +992,7 @@ export class TrainingCenterDnaComponent implements OnInit {
 
   nochildclick(val: any) {
 
-    console.log(val, '++==')
+    // console.log(val, '++==')
 
     if (this.lesson_locked_by_user == 1) {
       this.access_flag = false;
@@ -996,7 +1000,13 @@ export class TrainingCenterDnaComponent implements OnInit {
 
     if (this.lesson_locked_by_user == 0) {
       this.access_flag = true;
+
       this.router.navigateByUrl(this.trainingCenterRoute + this.paramsTrainingId + '/' + val._id);
+    }
+    if (val.is_done == true) {
+      this.next_button_access == true;
+      this.access_flag = true;
+
     }
 
     if (val.has_lessonplan == 0) {
@@ -1006,7 +1016,7 @@ export class TrainingCenterDnaComponent implements OnInit {
 
     if (this.lesson_locked_by_user == 1 && val.has_lessonplan == 1) {
 
-      this.access_flag = false;
+      // this.access_flag = false;
       if (this.AllTrainingData.lesson_ids[0].lesson_ids != null) {
 
         for (let i in this.AllTrainingData.lesson_ids[0].lesson_ids) {
@@ -1016,7 +1026,7 @@ export class TrainingCenterDnaComponent implements OnInit {
         }
       }
 
-      // console.log(this.next_button_access,'next_button_access')
+      // console.log(this.next_button_access,'next_button_access',this.access_flag)
 
       if ((val.is_done != null && val.is_done == true && this.access_flag == true) || (val.prerequisite_lession == this.paramslessonId && this.access_flag == true)) {
 
@@ -1152,7 +1162,7 @@ export class TrainingCenterDnaComponent implements OnInit {
 
         // console.log(this.lesson_content, 'this.lesson_content')
         if (this.lesson_content.is_done == null && this.lesson_content.has_lessonplan == 0) {
-          console.log(this.lesson_content.has_lessonplan, 'has_lessonplan')
+          // console.log(this.lesson_content.has_lessonplan, 'has_lessonplan')
           this.addMarkedData(this.lessonDataList[0]._id, this.paramsId, this.nextdata, this.lesson_content.lession_title, this.nextlessondata);
         }
 
@@ -1229,11 +1239,12 @@ export class TrainingCenterDnaComponent implements OnInit {
     }
   }
 
-  // button for purchase ,schedule ,submit lesson
 
+
+  // button for purchase ,schedule ,submit lesson
   menteeLessonReviewButton(flag: any) {
-    console.log('>>>>', this.cookieService.get('parentid'))
-    console.log('ls--->>', this.paramslessonId, 'tc-->', this.paramsId, 'user-->', this.userId, 'parent-id-->', this.user_parent_id, flag);
+    // console.log('>>>>', this.cookieService.get('parentid'))
+    // console.log('ls--->>', this.paramslessonId, 'tc-->', this.paramsId, 'user-->', this.userId, 'parent-id-->', this.user_parent_id, flag);
     // console.log('mentee_banner_text-->', this.mentee_banner_text)
 
 
@@ -1373,7 +1384,7 @@ export class TrainingCenterDnaComponent implements OnInit {
         }
       })
     }
-    
+
     if (this.user_parent_id == null || this.user_parent_id == "") {
       this.router.navigateByUrl('/mentors/' + this.paramsTrainingId + '/' + this.paramslessonId)
       // console.log('>>++', this.cookieService.get('parentid'))
@@ -1420,7 +1431,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   // open Lesson Video
   openLessonVideo(val: any) {
 
-    console.log(val, 'openLessonVideo')
+    // console.log(val, 'openLessonVideo')
 
 
     var url = this.video_base_url + val.video_url + '?modestbranding=1&autohide=0&showinfo=0&controls=0&listType=playlist&rel=0';
@@ -1433,7 +1444,7 @@ export class TrainingCenterDnaComponent implements OnInit {
     if (val.video_skippable == true) {
       var video_url = val.video_url + '?rel=0&modestbranding=1&autoplay=1&showinfo=0&controls=1&listType=playlist';
     } else {
-      var video_url = val.video_url + '?rel=0&modestbranding=1&autoplay=1&showinfo=0&controls=1&listType=playlist';
+      var video_url = val.video_url + '?rel=0&modestbranding=1&autoplay=1&showinfo=0&controls=0&listType=playlist';
     }
 
 
@@ -1468,8 +1479,8 @@ export class TrainingCenterDnaComponent implements OnInit {
             if (this.AllTrainingData.quiz_data.length != 0) {
               this.quizflag = true;
               this.next_button_access = false;
-            } 
-            
+            }
+
             if (this.AllTrainingData.complete_lesson_quiz != null && this.AllTrainingData.complete_lesson_quiz[0] != null) {
               if (this.AllTrainingData.complete_lesson_quiz[0].lesson_id == this.AllTrainingData.lesson_content[0]._id) {
                 this.next_button_access = true;
@@ -1535,7 +1546,7 @@ export class TrainingCenterDnaComponent implements OnInit {
           user_id: this.userId,
           haslessonlocked: val
         }
-        console.log(data, 'data')
+        // console.log(data, 'data')
         this.apiService.postDatawithoutToken(endpoint, data).subscribe((response: any) => {
           if (response.status == "success") {
             // console.log(this.trainingCenterRoute + this.paramsTrainingId)
@@ -1565,7 +1576,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   // lesson_quiz LessonQuizModalComponent
   lessonQuiz(val: any) {
     if (this.AllTrainingData != null && typeof (this.AllTrainingData.quiz_data) != 'undefined') {
-      console.log(val, '++', this.AllTrainingData.quiz_data)
+      // console.log(val, '++', this.AllTrainingData.quiz_data)
       var server_url: any = this.serverDetailsVal.serverUrl + 'addlessonquizdata';
 
       const dialogRef = this.dialog.open(LessonQuizModalComponent, {

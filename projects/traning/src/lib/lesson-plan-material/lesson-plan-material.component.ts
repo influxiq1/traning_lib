@@ -231,7 +231,7 @@ export class LessonPlanMaterialComponent implements OnInit {
           }
 
           if ((this.activatedroute.snapshot.params._id == null && this.allData.length < 2)) {
-            this.router.navigateByUrl(this.redirectPath + '/' + this.associated_training_id);
+            this.router.navigateByUrl(this.redirectPath + '/' + this.associated_training_id + '/' + this.activatedroute.snapshot.params.lesson_id_object);
           }
         }
       })
