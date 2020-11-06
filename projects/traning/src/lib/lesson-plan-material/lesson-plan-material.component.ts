@@ -119,17 +119,17 @@ export class LessonPlanMaterialComponent implements OnInit {
       this.jsonObj1 = {};
       this.valFormData = [];
       this.progress_bar = 1;
-      var question_id:any;
+      var question_id: any;
 
-      if(this.activatedroute.snapshot.params._id != null){
+      if (this.activatedroute.snapshot.params._id != null) {
         question_id = this.activatedroute.snapshot.params._id;
-      } else{
+      } else {
         question_id = this.allData[0]._id;
       }
 
 
       this.jsonObj1 = {
-        quiz_id:question_id,
+        quiz_id: question_id,
         heading: 'Title : ' + this.formDataVal.title + '<br>' +
           'Description : ' + this.formDataVal.description + '<br>' +
           'Question : ' + this.formDataVal.question + '<br>',
@@ -167,7 +167,7 @@ export class LessonPlanMaterialComponent implements OnInit {
 
         for (const b in this.formDataVal.question_img) {
 
-          if(parseInt(val.fromval.item.image) ==  parseInt(b)){
+          if (parseInt(val.fromval.item.image) == parseInt(b)) {
             this.pictureSelect.push({
               key: parseInt(b),
               image: this.formDataVal.question_img[b].basepath + this.formDataVal.question_img[b].image,
