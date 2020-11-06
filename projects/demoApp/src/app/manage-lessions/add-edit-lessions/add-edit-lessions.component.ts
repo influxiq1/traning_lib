@@ -16,7 +16,7 @@ export class AddEditLessionsComponent implements OnInit {
   public isitdna: any = true;
 
   public serverDetails: any = {
-    "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/",
+    "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api1111/",
     "jwttoken": ""
   };
   // public formSource: any = {
@@ -81,7 +81,7 @@ export class AddEditLessionsComponent implements OnInit {
 
       { inputtype: 'checkbox', name: 'status', label: 'Active', placeholder: 'Enter Status', validationrule: { required: true }, validationerrormsg: 'is required' },
 
-      { inputtype: 'select', name: 'mediaType', label: 'Training Type', defaultchoice: 'Select a Training Type', sourceview: 'assets/mediaType.json', sourcetype: 'static', selectvalue: 'name', selectid: 'selectname', validationrule: { required: true }, validationerrormsg: 'is required' },
+      { inputtype: 'button', name: 'mediaType', label: 'Training Type', defaultchoice: 'Choose Training Type', sourceview: 'assets/mediaType.json', sourcetype: 'static', selectvalue: 'name', selectid: 'selectname', validationrule: { required: true }, validationerrormsg: 'is required',buttonflag:true },
 
     ];
 
