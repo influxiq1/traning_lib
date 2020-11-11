@@ -442,6 +442,7 @@ export class TraningComponent implements OnInit {
     switch (val.selectname) {
       case 'video':
         this.videoflag = true;
+        
         break;
       case 'image':
         this.imgflag = true;
@@ -495,6 +496,7 @@ export class TraningComponent implements OnInit {
 
     // console.log(this.video_array, 'this.video_array')
   }
+  
 
   removevideo(index) {
     this.video_array.splice(index, 1)
