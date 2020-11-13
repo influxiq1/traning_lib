@@ -454,11 +454,11 @@ export class TraningComponent implements OnInit {
         this.audioflag = true;
         this.addAudio();
         break;
-    
+
     }
 
-  
-  
+
+
     if (val.selectname == 'image') {
       this.mediaTypeValue = val.selectname;
     }
@@ -481,16 +481,17 @@ export class TraningComponent implements OnInit {
   addflie() {
     this.file_array.push({
       image: {},
-      description: '',
-      title: ''
+      file_description: '',
+      file_title: ''
     })
   }
 
 
   addAudio() {
-this.audio_array.push({
-  audio_title:''
-})
+    this.audio_array.push({
+      audio_title: '',
+      audio_description: ''
+    })
   }
 
 
