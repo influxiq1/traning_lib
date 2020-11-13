@@ -208,6 +208,8 @@ export class TraningComponent implements OnInit {
 
 
   }
+
+  
   formsubmit() {
 
 

@@ -82,7 +82,6 @@ export class AddEditLessionsComponent implements OnInit {
       { inputtype: 'checkbox', name: 'status', label: 'Active', placeholder: 'Enter Status', validationrule: { required: true }, validationerrormsg: 'is required' },
 
       { inputtype: 'button', name: 'mediaType', label: 'Training Type', defaultchoice: 'Choose Training Type', sourceview: 'assets/mediaType.json', sourcetype: 'static', selectvalue: 'name', selectid: 'selectname', validationrule: { required: true }, validationerrormsg: 'is required',buttonflag:true },
-
     ];
 
 
