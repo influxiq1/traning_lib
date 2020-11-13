@@ -136,40 +136,106 @@
             *ngIf="mediaTypeValue == 'image' || mediaTypeValue == 'video' || mediaTypeValue == 'audio'  || mediaTypeValue == 'file' || mediaTypeValue == 'html' ">
             <!-- file uploader start here -->
 
-            <div *ngIf="imgflag== true">
+            <!-- <div *ngIf="imgflag== true">
                 <h4>Add Images :</h4>
                 <lib-file-upload [config]="uploadConfigData"></lib-file-upload>
+            </div> -->
+
+
+            <div *ngIf="fileflag == true" class='filecls'>
+                <div class="addfilecls">
+                    <mat-label><b>Add Files : </b></mat-label>
+                    <span class="adddeletecls">
+                        <i class="material-icons addbtn" (click)="addflie()">add_box</i>
+                    </span>
+                </div>
+
+
+
+
+                <div *ngFor="let item of file_array; let i=index;trackBy: trackByFn" class="fromClass addflie">
+
+                    <lib-file-upload [config]='uploadConfigData'></lib-file-upload>
+
+                    <mat-form-field>
+                        <input type="text" matInput placeholder="File Title" [(ngModel)]=file_array[i].title
+                            [ngModelOptions]="{standalone: true}">
+                        <mat-icon matSuffix>File Title</mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <textarea type="text" matInput placeholder="File Description" [(ngModel)]="description"
+                            [ngModelOptions]="{standalone: true}"></textarea>
+                        <mat-icon matSuffix>File Description</mat-icon>
+                    </mat-form-field>
+
+
+                    <span class="adddeletecls">
+                        <i class="material-icons addbtn" (click)="addflie()">add_box</i>
+                        <i class="material-icons delbtn" (click)="removefile(i)">delete</i>
+                    </span>
+                </div>
+
+                <!-- <mat-form-field>
+                    <input type="text" matInput placeholder="File Title" [(ngModel)]="title"
+                        [ngModelOptions]="{standalone: true}">
+                    <mat-icon matSuffix>File Title</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <textarea type="text" matInput placeholder="File Description" [(ngModel)]="description"
+                        [ngModelOptions]="{standalone: true}"></textarea>
+                    <mat-icon matSuffix>File Description</mat-icon>
+                </mat-form-field>
+                <span class="adddeletecls">
+                    <i class="material-icons addbtn" (click)="addflie()">add_box</i>
+                    <i class="material-icons delbtn" (click)="removefile(i)">delete</i>
+                </span> -->
             </div>
-
-
-            <div *ngIf="fileflag == true">
-                <h4>Add Files :</h4>
-                <lib-file-upload [config]="uploadConfigData"></lib-file-upload>
-            </div>
-
 
             <div *ngIf="audioflag == true">
-                <h4>Add Audio :</h4>
+                <mat-label><b>Add Audio : </b></mat-label>
+                <span class="adddeletecls">
+                    <i class="material-icons addbtn" (click)="addAudio()">add_box</i>
+                </span>
                 <lib-file-upload [config]="uploadConfigData"></lib-file-upload>
+
+                <input type="text" matInput placeholder="Audio Title" [(ngModel)]=audio_title'
+                [ngModelOptions]="{standalone: true}">
+
+                <ng-container *ngIf="mediaTypeValue == 'audio' && imagePath != null && audioVideoFlag==true">
+
+                    <!-- <div style="margin: 0 auto;display: block;">
+                        <mat-card class="example-card">
+                            <span class="closecard" class="pointer" *ngIf="mediaTypeValue == 'audio'"
+                                (click)="clear()"><i class="material-icons">clear</i></span>
+                            <audio controls>
+
+                                <source src="{{ imagePath }}" type="audio/ogg">
+                                <source src="{{ imagePath }}" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </mat-card>
+                    </div> -->
+                </ng-container>
             </div>
 
-            <div *ngIf="htmlflag == true">
+            <!-- <div *ngIf="htmlflag == true">
                 <h4>Add HTML :</h4>
                 <ck-editor [config]="editorconfig" [(ngModel)]="htmType" [ngModelOptions]="{standalone: true}">
                 </ck-editor>
-            </div>
+            </div> -->
 
 
 
             <div *ngIf="videoflag ==true" class="fromClass">
 
-                <div class="addvideocls" >
-                    <mat-label><b>Add Multiple Video : </b></mat-label>
+                <div class="addvideocls">
+                    <mat-label><b>Add Videos : </b></mat-label>
                     <span class="adddeletecls">
-                        <i class="material-icons addbtn" (click)="addVideo(vid_url,vid_tit,vid_desc)">add_box</i>
+                        <i class="material-icons addbtn" (click)="addVideo()">add_box</i>
                     </span>
                 </div>
-
 
                 <div *ngFor="let item of video_array; let i=index;trackBy: trackByFn" class="fromClass addvideoblock">
                     <ng-container>
@@ -194,13 +260,13 @@
 
                         <section class="example-section">
                             <mat-checkbox matInput [(ngModel)]="video_array[i].video_skippable"
-                                [ngModelOptions]="{standalone: true}">Is This Mandatory video ?
+                                [ngModelOptions]="{standalone: true}">Skippable video ?
                             </mat-checkbox>
                         </section><br>
                         <!-- Is this mandatory video? -->
 
                         <span class="adddeletecls">
-                            <i class="material-icons addbtn" (click)="addVideo(vid_url,vid_tit,vid_desc)">add_box</i>
+                            <i class="material-icons addbtn" (click)="addVideo()">add_box</i>
                             <i class="material-icons delbtn" (click)="removevideo(i)">delete</i>
                         </span>
                     </ng-container>
@@ -225,7 +291,7 @@
 
 
 
-            <mat-form-field>
+            <!-- <mat-form-field>
                 <input type="text" matInput placeholder="Title" [(ngModel)]="title"
                     [ngModelOptions]="{standalone: true}">
                 <mat-icon matSuffix>title</mat-icon>
@@ -235,7 +301,9 @@
                 <textarea type="text" matInput placeholder="Description" [(ngModel)]="description"
                     [ngModelOptions]="{standalone: true}"></textarea>
                 <mat-icon matSuffix>description</mat-icon>
-            </mat-form-field>
+            </mat-form-field> -->
+
+
             <!-- file uploader end here -->
 
             <ng-container *ngIf="mediaTypeValue == 'image' && imagePath != null ">
@@ -260,27 +328,11 @@
 
             </ng-container> -->
 
-            <ng-container *ngIf="mediaTypeValue == 'audio' && imagePath != null && audioVideoFlag==true">
-
-                <div style="margin: 0 auto;display: block;">
-                    <mat-card class="example-card">
-                        <span class="closecard" class="pointer" *ngIf="mediaTypeValue == 'audio'" (click)="clear()"><i
-                                class="material-icons">clear</i></span>
-                        <audio controls>
-
-                            <source src="{{ imagePath }}" type="audio/ogg">
-                            <source src="{{ imagePath }}" type="audio/mpeg">
-                            Your browser does not support the audio element.
-                        </audio>
-                    </mat-card>
-                </div>
-
-            </ng-container>
         </div>
 
 
-        <div
-            *ngIf="mediaTypeValue == 'html' || mediaTypeValue == 'image' || mediaTypeValue == 'video' || mediaTypeValue == 'audio'  || mediaTypeValue == 'file' ">
+        <div>
+            <mat-label><b>Add HTML Content : </b></mat-label>
             <ck-editor [config]="editorconfig" [(ngModel)]="htmType" [ngModelOptions]="{standalone: true}">
             </ck-editor>
         </div>

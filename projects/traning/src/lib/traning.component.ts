@@ -65,13 +65,10 @@ export class TraningComponent implements OnInit {
   public dnaFlag: any;
   public lessonplanValue: any;
   public has_test_lesson: any = false;
-  public video_array: any = [
-    // {
-    //   video_url: '',
-    //   video_title: '',
-    //   video_description: ''
-    // }
-  ];
+
+  public video_array: any = [];
+  public file_array: any = [];
+  public audio_array: any = [];
 
   public video_base_url: any = 'https://www.youtube.com/embed/';
   public vid_url: any = '';
@@ -84,7 +81,7 @@ export class TraningComponent implements OnInit {
   public videoflag: boolean = false;
   public fileflag: boolean = false;
   public audioflag: boolean = false;
-  public htmlflag:boolean=false;
+  public htmlflag: boolean = false;
 
 
   public
@@ -209,7 +206,7 @@ export class TraningComponent implements OnInit {
 
   }
 
-  
+
   formsubmit() {
 
 
@@ -444,41 +441,24 @@ export class TraningComponent implements OnInit {
     switch (val.selectname) {
       case 'video':
         this.videoflag = true;
-        
+        this.addVideo();
         break;
       case 'image':
         this.imgflag = true;
         break;
       case 'file':
         this.fileflag = true;
+        this.addflie();
         break;
       case 'audio':
         this.audioflag = true;
+        this.addAudio();
         break;
-      case 'html':
-        this.htmlflag=true;
+    
     }
 
-    // switch (val.selectname) {
-    //   case 'image':
-    //     // this.imgflage =false;
-    //     // this.mediaTypeValue = val[2];
-    //     // val.flagButton = true;
-    //     if (val.selectname == 'image' && val.flagButton == true) {
-    //       this.mediaTypeValue = val.selectname;
-    //       val.flagButton = false
-    //     }
-
-    //     break;
-    //   case 'video':
-    //     break;
-    //   case 'audio':
-    //     break;
-    //   case 'file':
-    //     break;
-
-
-    // }
+  
+  
     if (val.selectname == 'image') {
       this.mediaTypeValue = val.selectname;
     }
@@ -487,23 +467,40 @@ export class TraningComponent implements OnInit {
     }
   }
 
-  addVideo(vid_url: any, vid_tit: any, vid_desc: any) {
-
+  addVideo() {
     this.video_array.push({
       video_url: '',
       video_title: '',
       video_description: '',
       video_skippable: false
     })
-
     // console.log(this.video_array, 'this.video_array')
   }
-  
+
+
+  addflie() {
+    this.file_array.push({
+      image: {},
+      description: '',
+      title: ''
+    })
+  }
+
+
+  addAudio() {
+this.audio_array.push({
+  audio_title:''
+})
+  }
+
+
 
   removevideo(index) {
     this.video_array.splice(index, 1)
   }
-
+  removefile(index) {
+    this.file_array.splice(index, 1)
+  }
   trackByFn(index) {
     return index;
   }
