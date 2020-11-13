@@ -63,8 +63,7 @@
 
     <ng-container *ngIf="dnaFlag == true">
       <mat-form-field class="searchdiv">
-        <mat-select placeholder="Search by Test Availability"
-          [(ngModel)]="searchjson.has_test_lesson">
+        <mat-select placeholder="Search by Test Availability" [(ngModel)]="searchjson.has_test_lesson">
           <mat-option [value]=0>Select a Test Availability</mat-option>
           <mat-option [value]="1">Yes</mat-option>
           <mat-option [value]="0">No</mat-option>
@@ -138,110 +137,117 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
         <td mat-cell *matCellDef="let row" title="Description"> {{row.description}} </td>
       </ng-container>
-<!-- 
+      <!-- 
       <ng-container *ngIf="dnaFlag == true"> -->
-        <ng-container matColumnDef="has_lessonplan">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Has Lesson Plan</th>
-          <td mat-cell *matCellDef="let row" title="Has Lesson Plan"> {{row.has_lessonplan}} </td>
-        </ng-container>
-        <ng-container matColumnDef="lessonplan_value">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Purchasable </th>
-          <td mat-cell *matCellDef="let row" title="Purchasable"> {{row.lessonplan_value}} </td>
-        </ng-container>
+      <ng-container matColumnDef="has_lessonplan">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Has Lesson Plan</th>
+        <td mat-cell *matCellDef="let row" title="Has Lesson Plan">
+          {{row.has_lessonplan}}
+          
+        </td>
+      </ng-container>
 
-        <ng-container matColumnDef="has_test_lesson">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Has Test</th>
-          <td mat-cell *matCellDef="let row" title="Has Test">
-          <span *ngIf="row.has_test_lesson ==1">Yes</span>  
-          <span *ngIf="row.has_test_lesson ==0">No</span>  
 
-          </td>
-        </ng-container>
-        <!-- test_percentage -->
-        <ng-container matColumnDef="test_percentage">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Test Percentage</th>
-          <td mat-cell *matCellDef="let row" title="Test Percentage">
-          <span *ngIf="row?.test_percentage !=null">{{row.test_percentage}}%</span>  
-          <span *ngIf="row?.test_percentage == null">NA</span>  
+      <ng-container matColumnDef="lessonplan_value">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Purchasable </th>
+        <td mat-cell *matCellDef="let row" title="Purchasable"> {{row.lessonplan_value}} </td>
+      </ng-container>
 
-          </td>
-        </ng-container>
+      <ng-container matColumnDef="has_test_lesson">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Has Test</th>
+        <td mat-cell *matCellDef="let row" title="Has Test">
+          <span *ngIf="row.has_test_lesson ==1">Yes</span>
+          <span *ngIf="row.has_test_lesson ==0">No</span>
+
+        </td>
+      </ng-container>
+      <!-- test_percentage -->
+      <ng-container matColumnDef="test_percentage">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Test Percentage</th>
+        <td mat-cell *matCellDef="let row" title="Test Percentage">
+          <span *ngIf="row?.test_percentage !=null">{{row.test_percentage}}%</span>
+          <span *ngIf="row?.test_percentage == null">NA</span>
+
+        </td>
+      </ng-container>
       <!-- </ng-container> -->
 
-        <ng-container matColumnDef="mediaType">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Training Type </th>
-          <td mat-cell *matCellDef="let row" title="Training Type"> {{row.mediaType}} </td>
-        </ng-container>
+      <ng-container matColumnDef="mediaType">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Training Type </th>
+        <td mat-cell *matCellDef="let row" title="Training Type"> {{row.mediaType}} </td>
+      </ng-container>
 
-        <ng-container matColumnDef="associated_training">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Associated Training </th>
-          <td mat-cell *matCellDef="let row" title=" Associated Training"> {{row.associated_training}} </td>
-        </ng-container>
+      <ng-container matColumnDef="associated_training">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Associated Training </th>
+        <td mat-cell *matCellDef="let row" title=" Associated Training"> {{row.associated_training}} </td>
+      </ng-container>
 
-        <ng-container matColumnDef="prerequisite_lession">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Prerequisite Lesson </th>
-          <td mat-cell *matCellDef="let row" title=" Prerequisite Lesson"> {{row.prerequisite_lession}} </td>
-        </ng-container>
+      <ng-container matColumnDef="prerequisite_lession">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Prerequisite Lesson </th>
+        <td mat-cell *matCellDef="let row" title=" Prerequisite Lesson"> {{row.prerequisite_lession}} </td>
+      </ng-container>
 
-        <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-          <td mat-cell *matCellDef="let row" title="Status"> 
-          <span *ngIf="row.status == 1">Active</span>  
-          <span *ngIf="row.status == 0">Inactive</span>  
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <td mat-cell *matCellDef="let row" title="Status">
+          <span *ngIf="row.status == 1">Active</span>
+          <span *ngIf="row.status == 0">Inactive</span>
 
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="deleteRecord">
-          <th mat-header-cell *matHeaderCellDef> Action </th>
-          <td mat-cell *matCellDef="let element; let i = index;" data-label="Action">
-            <span class="buttons_ro">
-              <span class="pointer" (click)="deleteRecord(element._id, i);">
-                <i class="material-icons">
-                  delete_outline
-                </i>
-              </span>
-              <span class="pointer" (click)="routerFunction(element._id)">
-                <i class="material-icons">
-                  edit
-                </i>
-              </span>
-              <!-- for PECE  -->
-              <!-- <span class="pointer" *ngIf="element.quiz_associate_training == 'Yes'" (click)="manageQuiz(element._id)">
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="deleteRecord">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element; let i = index;" data-label="Action">
+          <span class="buttons_ro">
+            <span class="pointer" (click)="deleteRecord(element._id, i);">
+              <i class="material-icons">
+                delete_outline
+              </i>
+            </span>
+            <span class="pointer" (click)="routerFunction(element._id)">
+              <i class="material-icons">
+                edit
+              </i>
+            </span>
+            <!-- for PECE  -->
+            <!-- <span class="pointer" *ngIf="element.quiz_associate_training == 'Yes'" (click)="manageQuiz(element._id)">
                 <i class="material-icons">
                   link
                 </i>
               </span> -->
-              <!-- for DNA -->
-              <span class="pointer" matTooltip="Manage Lesson Plan Materials" *ngIf="element.has_lessonplan == 'Yes'" (click)="manageLessonPlan(element._id)">
-                <i class="material-icons">
-                  link
-                </i>
-              </span>
-
-              <span class="pointer" (click)="statusUpdateModal(element._id,i)">
-                <i class="material-icons">
-                  toggle_on
-                </i>
-              </span>
-              <span class="pointer" *ngIf="element.is_trash != null && element.is_trash==1" (click)="restoreTrashData(element._id,i)">
-                <i class="material-icons">
-                  restore_page
-                </i>
-              </span>
-
-              <span class="pointer" *ngIf="element.has_test_lesson == 1" >
-                <button class="singleButton" mat-raised-button color="primary" (click)="goToManageQuizPage(element._id)">
-                  Manage Quiz
-                </button>
-              </span>
-
-
+            <!-- for DNA -->
+            <span class="pointer" matTooltip="Manage Lesson Plan Materials" *ngIf="element.has_lessonplan == 'Yes'"
+              (click)="manageLessonPlan(element._id)">
+              <i class="material-icons">
+                link
+              </i>
             </span>
-          </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-        </tr>
+
+            <span class="pointer" (click)="statusUpdateModal(element._id,i)">
+              <i class="material-icons">
+                toggle_on
+              </i>
+            </span>
+            <span class="pointer" *ngIf="element.is_trash != null && element.is_trash==1"
+              (click)="restoreTrashData(element._id,i)">
+              <i class="material-icons">
+                restore_page
+              </i>
+            </span>
+
+            <span class="pointer" *ngIf="element.has_test_lesson == 1">
+              <button class="singleButton" mat-raised-button color="primary" (click)="goToManageQuizPage(element._id)">
+                Manage Quiz
+              </button>
+            </span>
+
+
+          </span>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+      </tr>
 
     </table>
 

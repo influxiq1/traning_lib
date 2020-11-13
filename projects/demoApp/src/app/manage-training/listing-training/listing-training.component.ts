@@ -21,7 +21,7 @@ public formSource: Object = {
   "source":'training_category_management',
   "endpoint": "trainingcatdelete",
   "deleteManyEndpoint":"trainingcatdeletemany",
-  "searchEndpoint":"gettrainingcategorydata",
+  "searchEndpoint":"datalist",
   "statusUpdateEndpoint":"trainingcatstatusupdate",
   "statusUpdateManyEndpoint":"trainingcatstatusupdate",
   "statusUpdateSourceName":"training_category_management",
