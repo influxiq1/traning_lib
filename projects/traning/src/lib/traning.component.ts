@@ -72,12 +72,20 @@ export class TraningComponent implements OnInit {
     //   video_description: ''
     // }
   ];
+
   public video_base_url: any = 'https://www.youtube.com/embed/';
   public vid_url: any = '';
   public vid_tit: any = '';
   public vid_desc: any = '';
 
-  public test_percentage: any=80;
+  public test_percentage: any = 80;
+
+  public imgflag: boolean = false;
+  public videoflag: boolean = false;
+  public fileflag: boolean = false;
+  public audioflag: boolean = false;
+  public htmlflag:boolean=false;
+
 
   public
   @Input()
@@ -180,6 +188,10 @@ export class TraningComponent implements OnInit {
 
             this.getselectdata(this.formdataval[c].sourceview, this.formdataval[c].endpoint, c);
           }
+          if (this.formdataval[c].inputtype == 'button') {
+            // this.formdataval[c].sourceval = this.formdataval[c].sourceview 
+            this.getButtonData(this.formdataval[c].sourceview, c);
+          }
         }
 
         if (this.formdataval[c].role != null) {
@@ -251,6 +263,9 @@ export class TraningComponent implements OnInit {
         sourceobj: [this.objectId.objectId, this.objectId.objectId2],
         token: this.serverDetailsVal.jwttoken
       }
+
+      console.log(data, 'data++')
+
       if (this.dnaFlag == true) {
         if (this.hasLessonVal == true) {
           data.data['has_lessonplan'] = 1;
@@ -270,6 +285,7 @@ export class TraningComponent implements OnInit {
           data.data['has_test_lesson'] = 0;
         }
       }
+      console.log(this.dnaFlag, 'dnaFlag+++++++++++++++gvhbkjnlk')
 
 
 
@@ -409,7 +425,64 @@ export class TraningComponent implements OnInit {
   clear() {
     this.imagePath = '';
     this.audioVideoFlag = false;
+  }
 
+  getButtonData(source, c) {
+    this.apiService.localJsonSate(source)
+      .subscribe((res: any) => {
+        this.formdataval[c].sourceval = res;
+      })
+  }
+
+  openTrainingType(val) {
+    console.log(val)
+    this.mediaTypeValue = val.selectname;
+    // val.flagButton = true;
+
+    switch (val.selectname) {
+      case 'video':
+        this.videoflag = true;
+        
+        break;
+      case 'image':
+        this.imgflag = true;
+        break;
+      case 'file':
+        this.fileflag = true;
+        break;
+      case 'audio':
+        this.audioflag = true;
+        break;
+      case 'html':
+        this.htmlflag=true;
+    }
+
+    // switch (val.selectname) {
+    //   case 'image':
+    //     // this.imgflage =false;
+    //     // this.mediaTypeValue = val[2];
+    //     // val.flagButton = true;
+    //     if (val.selectname == 'image' && val.flagButton == true) {
+    //       this.mediaTypeValue = val.selectname;
+    //       val.flagButton = false
+    //     }
+
+    //     break;
+    //   case 'video':
+    //     break;
+    //   case 'audio':
+    //     break;
+    //   case 'file':
+    //     break;
+
+
+    // }
+    if (val.selectname == 'image') {
+      this.mediaTypeValue = val.selectname;
+    }
+    if (val.selectname == '"audio"') {
+
+    }
   }
 
   addVideo(vid_url: any, vid_tit: any, vid_desc: any) {
@@ -423,6 +496,7 @@ export class TraningComponent implements OnInit {
 
     // console.log(this.video_array, 'this.video_array')
   }
+  
 
   removevideo(index) {
     this.video_array.splice(index, 1)
@@ -485,7 +559,7 @@ export class TraningComponent implements OnInit {
             if (res.res[0] != null && res.res[0].has_test_lesson != null && res.res[0].has_test_lesson != 'undefined') {
               // console.log(res.res[0].has_test_lesson, 'res.res[0].has_test_lesson')
               this.has_test_lesson = res.res[0].has_test_lesson;
-              this.test_percentage=res.res[0].test_percentage
+              this.test_percentage = res.res[0].test_percentage
             }
 
             this.getchkboxval(this.chkboxval);

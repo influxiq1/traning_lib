@@ -54,7 +54,6 @@ export class ListingTrainingComponent implements OnInit {
   public allTrashData: any = [];
   public trashFlag: any = 0;
   public status_search_regex: any;
-
   public trashButtonText: any = "View Trash";
   public trainingCounts: any = {
     "activatedtrainingcount": "",
@@ -95,7 +94,7 @@ export class ListingTrainingComponent implements OnInit {
 
   @Input()           //getting all data from application
   set allDataList(val: any) {
-    this.listingData = (val) || 'no name set';
+    this.listingData = (val) || '<no name set>';
     this.listingData = val;
     // console.log(this.listingData);
     this.dataSource = new MatTableDataSource(this.listingData);
@@ -220,7 +219,7 @@ export class ListingTrainingComponent implements OnInit {
     //   searchval["parent_catagory_search"] = { $regex: this.searchjson.parent_catagory_search_regex.toLowerCase() }
     // }
 
-    if (typeof(this.status_search_regex) !='undefined') {
+    if (typeof (this.status_search_regex) != 'undefined') {
       searchval["status_search"] = this.status_search_regex;
     } else {
       searchval["status_search"] = 1;

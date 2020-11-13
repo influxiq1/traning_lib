@@ -1,4 +1,4 @@
-import { Component, OnInit ,Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../api.service';
@@ -20,16 +20,16 @@ export class AddEditQuizComponent implements OnInit {
   public buttonText: any = "Submit"
   public lessonId: any;
   public statuschecked: boolean = true;
-  public skippablechecked:boolean = false;
+  public skippablechecked: boolean = false;
   public lessonidineditForm: any;
   public imageConfigData: any = '';
   public img_var: any;
-  image_name: any;
-  image_type: any;
+  public image_name: any;
+  public image_type: any;
   public images_array: any = [];
-  public images_array_edit:any=[];
+  public images_array_edit: any = [];
   public img_flag: boolean = false;
-  public editorconfig:any={};
+  public editorconfig: any = {};
 
 
   public questionTypeVal: any;
@@ -52,7 +52,7 @@ export class AddEditQuizComponent implements OnInit {
     this.listingData = (val) || 'no name set';
     this.listingData = val;
     if (this.paramId) {
-      this.img_flag=true;
+      this.img_flag = true;
       this.manageQuizForm.controls['question_type'].patchValue(val[0].question_type);
       this.manageQuizForm.controls['question'].patchValue(val[0].question);
       this.manageQuizForm.controls['priority'].patchValue(val[0].priority);
@@ -63,7 +63,7 @@ export class AddEditQuizComponent implements OnInit {
   @Input()
   set formSource(formSource: any) {
     this.formSourceVal = (formSource) || '<no name set>';
-                                                                                        
+
   }
 
   @Input()
@@ -82,9 +82,9 @@ export class AddEditQuizComponent implements OnInit {
       lesson_id: [''],
       question_type: ['radio_button'],
       question: ["", Validators.required],
-      priority: ["",Validators.required],
+      priority: ["", Validators.required],
       status: [""],
-      description: ['',Validators.required]
+      description: ['', Validators.required]
     })
     this.paramId = activatedRoute.snapshot.params._id;
     if (this.paramId) {
@@ -93,7 +93,7 @@ export class AddEditQuizComponent implements OnInit {
     }
 
     this.editorconfig.extraAllowedContent = '*[class](*),span;ul;li;table;td;style;*[id];*(*);*{*}';
-   }
+  }
 
   ngOnInit() {
   }
@@ -160,7 +160,7 @@ export class AddEditQuizComponent implements OnInit {
   }
 
 
-  cancelRoute(){
+  cancelRoute() {
     this.router.navigateByUrl(this.listingPageRoute + this.lessonId);
 
   }

@@ -103,6 +103,14 @@
     display: none;
   }
 
+  .typebtncls{
+    padding: 1px;
+    margin: 13px;
+    display: inline;
+    float: left;
+  }
+  
+
 
 
 

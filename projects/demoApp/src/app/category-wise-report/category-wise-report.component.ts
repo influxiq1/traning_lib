@@ -16,7 +16,7 @@ public serverDetails: any = {
 };
 public formSource: any = {
   
-  "endpoint": "getcategorywisetrainingreportdata-count",
+  "endpoint": "getcategorywisetrainignreportdata-count",
   "viewReportEndpoint":"getcategorywisereportdata"
 }
 constructor(public activatedRoute : ActivatedRoute,public cookie:CookieService) { 

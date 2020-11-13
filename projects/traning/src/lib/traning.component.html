@@ -1,8 +1,8 @@
 <mat-card class="main-mat-card admingeneralcls">
     <span class="searchblock">
-        <span class="searchblockwrapper">
+        <span class="searchblockwrapper" style="display: inline;">
             <span>
-                <h1 class="header">{{ headerText }}</h1>
+                <h1 class="header">{{ headerText     }}</h1>
             </span>
         </span>
     </span>
@@ -94,6 +94,8 @@
                                 {{selectval[item.selectvalue]}}</mat-option>
                         </mat-select>
                     </span>
+
+
                     <span *ngIf="item.multiple==true">
                         <mat-select [placeholder]="item.defaultchoice" [formControlName]="item.name"
                             (selectionChange)="getMediaTypeVal($event.value,item.name);" value="" multiple>
@@ -103,34 +105,65 @@
                                 {{selectval[item.selectvalue]}}</mat-option>
                         </mat-select>
                     </span>
-
                     <mat-error
                         *ngIf="dataForm.controls[item.name]!=null &&  item.validationrule!=null && !dataForm.controls[item.name].valid && dataForm.controls[item.name].touched && issubmit==1">
                         {{item.label}}
                         {{item.validationerrormsg}}</mat-error>
                 </mat-form-field>
+
             </div>
+
+
+            <div *ngIf="item.inputtype == 'button' && item.buttonflag == true" style="display: inline;">
+                <div *ngFor="let i of item.sourceval">
+                    <div class="typebtncls">
+                        <button type="button" mat-raised-button color="primary" (click)="openTrainingType(i)">Add
+                            {{i.name}} <span class="material-icons">
+                                add
+                            </span></button>
+                    </div>
+                </div>
+            </div>
+
 
             <mat-progress-bar *ngIf="progressLoader && item.name =='associated_training'" mode="indeterminate">
             </mat-progress-bar>
-
         </ng-container>
 
 
 
         <div
-            *ngIf="mediaTypeValue == 'image' || mediaTypeValue == 'video' || mediaTypeValue == 'audio'  || mediaTypeValue == 'file' ">
+            *ngIf="mediaTypeValue == 'image' || mediaTypeValue == 'video' || mediaTypeValue == 'audio'  || mediaTypeValue == 'file' || mediaTypeValue == 'html' ">
             <!-- file uploader start here -->
-            <div *ngIf="mediaTypeValue == 'image' || mediaTypeValue == 'audio'  || mediaTypeValue == 'file' ">
-                <h4>Please Add Single File</h4>
 
+            <div *ngIf="imgflag== true">
+                <h4>Add Images :</h4>
                 <lib-file-upload [config]="uploadConfigData"></lib-file-upload>
             </div>
 
 
-            <div *ngIf=" mediaTypeValue == 'video'" class="fromClass">
+            <div *ngIf="fileflag == true">
+                <h4>Add Files :</h4>
+                <lib-file-upload [config]="uploadConfigData"></lib-file-upload>
+            </div>
 
-                <div class="addvideocls">
+
+            <div *ngIf="audioflag == true">
+                <h4>Add Audio :</h4>
+                <lib-file-upload [config]="uploadConfigData"></lib-file-upload>
+            </div>
+
+            <div *ngIf="htmlflag == true">
+                <h4>Add HTML :</h4>
+                <ck-editor [config]="editorconfig" [(ngModel)]="htmType" [ngModelOptions]="{standalone: true}">
+                </ck-editor>
+            </div>
+
+
+
+            <div *ngIf="videoflag ==true" class="fromClass">
+
+                <div class="addvideocls" >
                     <mat-label><b>Add Multiple Video : </b></mat-label>
                     <span class="adddeletecls">
                         <i class="material-icons addbtn" (click)="addVideo(vid_url,vid_tit,vid_desc)">add_box</i>
@@ -205,7 +238,7 @@
             </mat-form-field>
             <!-- file uploader end here -->
 
-            <ng-container *ngIf="mediaTypeValue == 'image' && imagePath != null">
+            <ng-container *ngIf="mediaTypeValue == 'image' && imagePath != null ">
                 <mat-card class="example-card">
                     <span class="closecard" class="pointer" *ngIf="mediaTypeValue == 'image'" (click)="clear()"><i
                             class="material-icons">clear</i></span>
@@ -262,9 +295,8 @@
 
                     <div *ngIf="has_test_lesson == true">
                         <mat-form-field>
-                            <input type="number" matInput placeholder="Enter Complete Test Percentage (%)" 
-                            [(ngModel)]="test_percentage"
-                                [ngModelOptions]="{standalone: true}">
+                            <input type="number" matInput placeholder="Enter Complete Test Percentage (%)"
+                                [(ngModel)]="test_percentage" [ngModelOptions]="{standalone: true}">
                         </mat-form-field>
                     </div>
 
