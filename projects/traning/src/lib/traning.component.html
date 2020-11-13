@@ -142,7 +142,7 @@
                     <ng-container>
                         <mat-form-field>
                             <span matPrefix>https://www.youtube.com/watch?v= &nbsp;</span>
-                            <input matInput placeholder="Enter Video ID" [(ngModel)]="video_array[i].video_url"
+                            <input matInput placeholder="Enter Video ID"  [(ngModel)]="video_array[i].video_url"
                                 [ngModelOptions]="{standalone: true}">
                             <mat-icon matSuffix class="clickable" (click)="preview_video(video_array[i].video_url)">
                                 remove_red_eye</mat-icon>
@@ -161,7 +161,7 @@
 
                         <section class="example-section">
                             <mat-checkbox matInput [(ngModel)]="video_array[i].video_skippable"
-                                [ngModelOptions]="{standalone: true}">Is This Mandatory video ?
+                                [ngModelOptions]="{standalone: true}">Skipable video ?
                             </mat-checkbox>
                         </section><br>
                         <!-- Is this mandatory video? -->
