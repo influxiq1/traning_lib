@@ -40,6 +40,7 @@ export class AddEditLessionsComponent implements OnInit {
     objectId: 'associated_training',
     objectId2: 'prerequisite_lession'
   };
+
   public configFileUpload: any = {
     baseUrl: "https://fileupload.influxhostserver.com/",
     endpoint: "uploads",
@@ -50,8 +51,10 @@ export class AddEditLessionsComponent implements OnInit {
     prefix: "imageGallery-picture_",
     formSubmit: false,
     conversionNeeded: 1,
-    bucketName: "probidfiles-dev.com"
+    bucketName: "probidfiles-dev.com",
   }
+
+
   public jwtToken: any;
 
   constructor(public route: ActivatedRoute, public cookie: CookieService) {

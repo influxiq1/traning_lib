@@ -118,9 +118,7 @@
                 <div *ngFor="let i of item.sourceval">
                     <div class="typebtncls">
                         <button type="button" mat-raised-button color="primary" (click)="openTrainingType(i)">Add
-                            {{i.name}} <span class="material-icons">
-                                add
-                            </span></button>
+                            {{i.name}} </button>
                     </div>
                 </div>
             </div>
@@ -132,43 +130,53 @@
 
 
 
-        <div
-            *ngIf="mediaTypeValue == 'image' || mediaTypeValue == 'video' || mediaTypeValue == 'audio'  || mediaTypeValue == 'file' || mediaTypeValue == 'html' ">
-            <!-- file uploader start here -->
+        <div>
 
-            <!-- <div *ngIf="imgflag== true">
-                <h4>Add Images :</h4>
-                <lib-file-upload [config]="uploadConfigData"></lib-file-upload>
-            </div> -->
-
-
-            <div *ngIf="fileflag == true" class='filecls'>
+            <div *ngIf="fileflag == true && file_array.length > 0" class='fromClass'>
                 <div class="addfilecls">
-                    <mat-label><b>Add Files : </b></mat-label>
+                    <mat-label><b> Files : </b></mat-label>
                     <span class="adddeletecls">
                         <i class="material-icons addbtn" (click)="addflie()">add_box</i>
                     </span>
                 </div>
 
 
-
-
-                <div *ngFor="let item of file_array; let i=index;trackBy: trackByFn" class="fromClass addflie">
+                <div *ngFor="let item of file_array; let i=index;trackBy: trackByFn" class="fromClass addvideoblock">
 
                     <lib-file-upload [config]='uploadConfigData'></lib-file-upload>
 
+                    <mat-card *ngIf="file_array[i].image != null && file_array[i].image != 'undefined'">
+
+                        <p>
+                            picture
+                        </p>
+
+                    </mat-card>
+
+                    <button type="button" mat-raised-button color="primary" 
+                    (click)="doneFileUpload('file_array',i)">Upload Done</button>
+
                     <mat-form-field>
-                        <input type="text" matInput placeholder="File Title" [(ngModel)]=file_array[i].title
+                        <input type="text" matInput placeholder="File Title" [(ngModel)]=file_array[i].file_title
                             [ngModelOptions]="{standalone: true}">
                         <mat-icon matSuffix>File Title</mat-icon>
                     </mat-form-field>
 
                     <mat-form-field>
-                        <textarea type="text" matInput placeholder="File Description" [(ngModel)]="description"
+                        <textarea type="text" matInput placeholder="File Description" [(ngModel)]=file_array[i].file_description
                             [ngModelOptions]="{standalone: true}"></textarea>
                         <mat-icon matSuffix>File Description</mat-icon>
                     </mat-form-field>
-
+                    <mat-form-field>
+                        <input type="number" matInput placeholder="Priority" [(ngModel)]=file_array[i].file_priority
+                            [ngModelOptions]="{standalone: true}">
+                        <mat-icon matSuffix>File Priority</mat-icon>
+                    </mat-form-field>
+                    <section class="example-section">
+                        <mat-checkbox matInput [(ngModel)]="file_array[i].file_skippable"
+                            [ngModelOptions]="{standalone: true}">Skippable file
+                        </mat-checkbox>
+                    </section>
 
                     <span class="adddeletecls">
                         <i class="material-icons addbtn" (click)="addflie()">add_box</i>
@@ -179,13 +187,13 @@
 
             </div>
 
-            <div *ngIf="audioflag == true">
-                <mat-label><b>Add Audio : </b></mat-label>
+            <div *ngIf="audioflag == true && audio_array.length > 0" class="fromClass">
+                <mat-label><b> Audio : </b></mat-label>
                 <span class="adddeletecls">
                     <i class="material-icons addbtn" (click)="addAudio()">add_box</i>
                 </span>
 
-                <div *ngFor="let item of audio_array; let i=index;trackBy: trackByFn" class="fromClass addflie">
+                <div *ngFor="let item of audio_array; let i=index;trackBy: trackByFn" class="fromClass addvideoblock">
 
                     <lib-file-upload [config]="uploadConfigData"></lib-file-upload>
 
@@ -196,14 +204,26 @@
                     </mat-form-field>
 
                     <mat-form-field>
-                        <textarea type="text" matInput placeholder="Audio Description" [(ngModel)]=audio_array[i].audio_description
+                        <textarea type="text" matInput placeholder="Audio Description"
+                            [(ngModel)]="audio_array[i].audio_description"
                             [ngModelOptions]="{standalone: true}"></textarea>
                         <mat-icon matSuffix>Audio Description</mat-icon>
                     </mat-form-field>
+
+                    <mat-form-field>
+                        <input type="number" matInput placeholder="Priority" [(ngModel)]=audio_array[i].audio_priority
+                            [ngModelOptions]="{standalone: true}">
+                        <mat-icon matSuffix>Audio Priority</mat-icon>
+                    </mat-form-field>
+                    <section class="example-section">
+                        <mat-checkbox matInput [(ngModel)]="audio_array[i].audio_skippable"
+                            [ngModelOptions]="{standalone: true}">Skippable Audio
+                        </mat-checkbox>
+                    </section>
                     <span class="adddeletecls">
                         <i class="material-icons addbtn" (click)="addAudio()">add_box</i>
-                        <i class="material-icons delbtn" (click)="removeAudio(i)">delete</i>
-                    </span>
+                        <i class="material-icons delbtn" (click)="removeaudio(i)">delete</i>
+                    </span><br>
 
                 </div>
             </div>
@@ -233,10 +253,9 @@
 
 
 
-            <div *ngIf="videoflag ==true" class="fromClass">
-
+            <div *ngIf="videoflag == true && video_array.length > 0" class="fromClass">
                 <div class="addvideocls">
-                    <mat-label><b>Add Videos : </b></mat-label>
+                    <mat-label><b> Videos : </b></mat-label>
                     <span class="adddeletecls">
                         <i class="material-icons addbtn" (click)="addVideo()">add_box</i>
                     </span>
@@ -263,13 +282,19 @@
                                 [ngModelOptions]="{standalone: true}"></textarea>
                         </mat-form-field>
 
+
+
+                        <!-- Is this mandatory video? -->
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Priority"
+                                [(ngModel)]=video_array[i].video_priority [ngModelOptions]="{standalone: true}">
+                            <mat-icon matSuffix>Video Priority</mat-icon>
+                        </mat-form-field>
                         <section class="example-section">
                             <mat-checkbox matInput [(ngModel)]="video_array[i].video_skippable"
                                 [ngModelOptions]="{standalone: true}">Skippable video ?
                             </mat-checkbox>
                         </section><br>
-                        <!-- Is this mandatory video? -->
-
                         <span class="adddeletecls">
                             <i class="material-icons addbtn" (click)="addVideo()">add_box</i>
                             <i class="material-icons delbtn" (click)="removevideo(i)">delete</i>
@@ -337,7 +362,7 @@
 
 
         <div>
-            <mat-label><b>Add HTML Content : </b></mat-label>
+            <mat-label><b> HTML Content : </b></mat-label>
             <ck-editor [config]="editorconfig" [(ngModel)]="htmType" [ngModelOptions]="{standalone: true}">
             </ck-editor>
         </div>
