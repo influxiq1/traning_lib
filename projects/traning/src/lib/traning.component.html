@@ -145,9 +145,10 @@
 
                     <lib-file-upload [config]='uploadConfigData'></lib-file-upload>
 
-                    <mat-card *ngIf="file_array[i].image != null && file_array[i].image != 'undefined'">
+                    <mat-card *ngIf="file_array[i].image != null && file_array[i].image.fileservername !=null">
 
                         <p>
+                            {{file_array[i].image.fileservername}}img
                             picture
                         </p>
 
