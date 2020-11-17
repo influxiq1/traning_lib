@@ -196,10 +196,14 @@
                     </mat-form-field>
 
                     <mat-form-field>
-                        <textarea type="text" matInput placeholder="File Description" [(ngModel)]="audio_description"
+                        <textarea type="text" matInput placeholder="Audio Description" [(ngModel)]=audio_array[i].audio_description
                             [ngModelOptions]="{standalone: true}"></textarea>
                         <mat-icon matSuffix>Audio Description</mat-icon>
                     </mat-form-field>
+                    <span class="adddeletecls">
+                        <i class="material-icons addbtn" (click)="addAudio()">add_box</i>
+                        <i class="material-icons delbtn" (click)="removeAudio(i)">delete</i>
+                    </span>
 
                 </div>
             </div>

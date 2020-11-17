@@ -502,6 +502,10 @@ export class TraningComponent implements OnInit {
   removefile(index) {
     this.file_array.splice(index, 1)
   }
+  removeAudio(index) {
+    this.audio_array.splice(index, 1)
+  }
+
   trackByFn(index) {
     return index;
   }
