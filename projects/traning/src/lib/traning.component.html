@@ -145,17 +145,18 @@
 
                     <lib-file-upload [config]='uploadConfigData'></lib-file-upload>
 
-                    <mat-card *ngIf="file_array[i].image != null && file_array[i].image.fileservername !=null">
+                    <mat-card class="example-card imgcard"
+                        *ngIf="file_array[i].file != null && file_array[i].file.fileservername !=null">
 
-                        <p>
-                            {{file_array[i].image.fileservername}}img
-                            picture
-                        </p>
-
+                        <img mat-card-image [attr.src]="bucket_url + file_array[i].file.fileservername">
+                        <mat-card-title>{{ file_array[i].file.fileservername }}</mat-card-title>
+                        <span class="closecard" (click)="clear_file('file_array',i)"><i
+                                class="material-icons">clear</i></span>
                     </mat-card>
 
-                    <button type="button" mat-raised-button color="primary" 
-                    (click)="doneFileUpload('file_array',i)">Upload Done</button>
+
+                    <button type="button" mat-raised-button color="primary"
+                        (click)="doneFileUpload('file_array',i)">Upload Done</button>
 
                     <mat-form-field>
                         <input type="text" matInput placeholder="File Title" [(ngModel)]=file_array[i].file_title
@@ -164,8 +165,8 @@
                     </mat-form-field>
 
                     <mat-form-field>
-                        <textarea type="text" matInput placeholder="File Description" [(ngModel)]=file_array[i].file_description
-                            [ngModelOptions]="{standalone: true}"></textarea>
+                        <textarea type="text" matInput placeholder="File Description"
+                            [(ngModel)]=file_array[i].file_description [ngModelOptions]="{standalone: true}"></textarea>
                         <mat-icon matSuffix>File Description</mat-icon>
                     </mat-form-field>
                     <mat-form-field>
@@ -198,6 +199,25 @@
 
                     <lib-file-upload [config]="uploadConfigData"></lib-file-upload>
 
+                    <mat-card class="example-card imgcard"
+                        *ngIf="audio_array[i].audio != null && audio_array[i].audio.fileservername !=null">
+
+
+                        <audio controls>
+
+                            <source src="{{bucket_url + audio_array[i].audio.fileservername }}" type="audio/ogg">
+                            <source src="{{ bucket_url + audio_array[i].audio.fileservername }}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+
+                        <mat-card-title>{{ audio_array[i].audio.fileservername }}</mat-card-title>
+                        <mat-card-subtitle>{{ audio_array[i].audio.type }}</mat-card-subtitle>
+                        <span class="closecard" (click)="clear_file('audio_array',i)"><i
+                                class="material-icons">clear</i></span>
+                    </mat-card>
+
+                    <button type="button" mat-raised-button color="primary"
+                        (click)="doneAudioupload('audio_array',i)">Upload Done</button>
                     <mat-form-field>
                         <input type="text" matInput placeholder="Audio Title" [(ngModel)]=audio_array[i].audio_title
                             [ngModelOptions]="{standalone: true}">
