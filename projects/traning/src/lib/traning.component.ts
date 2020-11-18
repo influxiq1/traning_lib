@@ -216,35 +216,51 @@ export class TraningComponent implements OnInit {
     for (let y in this.dataForm.controls) {
       this.dataForm.controls[y].markAsTouched();
     }
-    switch (this.mediaTypeValue) {
-      case 'image':
-        this.dataForm.value.image_typeHtml = this.htmType;
-        this.dataForm.value.image_title = this.title;
-        this.dataForm.value.image_description = this.description;
-        break;
-      case 'video':
-        this.dataForm.value.video_array = this.video_array;
-        this.dataForm.value.video_typeHtml = this.htmType;
-        this.dataForm.value.video_title = this.title;
-        this.dataForm.value.video_description = this.description;
-        // this.video_array.splice(0, 1);
-        break;
-      case 'audio':
-        this.dataForm.value.audio_typeHtml = this.htmType;
-        this.dataForm.value.audio_title = this.title;
-        this.dataForm.value.audio_description = this.description;
 
-        break;
-      case 'file':
-        this.dataForm.value.file_typeHtml = this.htmType;
-        this.dataForm.value.file_title = this.title;
-        this.dataForm.value.file_description = this.description;
+    // switch (this.mediaTypeValue) {
+    //   // case 'image':
+    //   //   this.dataForm.value.image_typeHtml = this.htmType;
+    //   //   this.dataForm.value.image_title = this.title;
+    //   //   this.dataForm.value.image_description = this.description;
+    //   //   break;
+    //   case 'video':
+    //     this.dataForm.value.video_array = this.video_array;
+    //     this.dataForm.value.video_typeHtml = this.htmType;
+    //     this.dataForm.value.video_title = this.title;
+    //     this.dataForm.value.video_description = this.description;
+    //     this.videoflag =true
+    //     // this.video_array.splice(0, 1);
+    //     break;
+    //   case 'audio':
+    //     this.dataForm.value.audio_typeHtml = this.htmType;
+    //     this.dataForm.value.audio_title = this.title;
+    //     this.dataForm.value.audio_description = this.description;
 
-        break;
+    //     break;
+    //   case 'file':
+    //     this.dataForm.value.file_typeHtml = this.htmType;
+    //     this.dataForm.value.file_title = this.title;
+    //     this.dataForm.value.file_description = this.description;
 
+    //     break;
+
+    // }
+
+    // this.videoflag = true;
+    if (this.videoflag == true) {
+      this.dataForm.value.videoflag = this.videoflag;
+      this.dataForm.value.video_array = this.video_array;
+    }
+    if (this.audioflag == true) {
+      this.dataForm.value.audioflag = this.audioflag;
+      this.dataForm.value.audio_array = this.audio_array;
+    }
+    if (this.fileflag == true) {
+      this.dataForm.value.fileflag = this.fileflag;
+      this.dataForm.value.file_array = this.file_array;
     }
 
-
+    
 
     if (this.dataForm.valid && this.submitval == 1) {
       if (this.dataForm.value.status)
@@ -329,7 +345,6 @@ export class TraningComponent implements OnInit {
               data.data['file_title'] = this.title;
               data.data['file_description'] = this.description;
               break;
-
           }
         }
       }
@@ -472,6 +487,7 @@ export class TraningComponent implements OnInit {
       video_url: '',
       video_title: '',
       video_description: '',
+      video_priority: '',
       video_skippable: false
     })
     // console.log(this.video_array, 'this.video_array')
@@ -482,29 +498,58 @@ export class TraningComponent implements OnInit {
     this.file_array.push({
       image: {},
       file_description: '',
-      file_title: ''
-    })
+      file_title: '',
+      file_priority: '',
+      file_skippable: false
+    });
+
+    this.fileArray
+
   }
 
 
   addAudio() {
     this.audio_array.push({
       audio_title: '',
-      audio_description: ''
+      audio_description: '',
+      audio_priority: '',
+      audio_skippable: false
+
     })
+  }
+
+
+  doneFileUpload(arrayName,index){
+    console.log(arrayName,index)
+    console.log(this.uploadConfigData.files[0].upload.data.data,'this.uploadConfigData.files');
+
+    if(arrayName == 'file_array'){
+      this.file_array[index].image=this.uploadConfigData.files[0].upload.data.data;
+    }
+    console.log(this.file_array,'file_array')
   }
 
 
 
   removevideo(index) {
     this.video_array.splice(index, 1);
+    if(this.video_array.length==0){
+      this.videoflag=false;
+    }
   }
   removefile(index) {
     this.file_array.splice(index, 1);
+    if(this.file_array.length==0){
+      this.fileflag=false;
+    }
   }
 
-  removeaudio(index){
-    this.audio_array.splice(index, 1)
+  removeaudio(index) {
+
+    this.audio_array.splice(index, 1);
+    if(this.audio_array.length==0){
+      this.audioflag=false;
+    }
   }
 
   trackByFn(index) {
@@ -512,12 +557,16 @@ export class TraningComponent implements OnInit {
   }
 
   preview_video(val) {
-
     if (val != null && val != '') {
       var url = this.video_base_url + val + '?rel=0&modestbranding=1&autoplay=1';
 
       const safe_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-      // console.log(safe_url,val)
+
+
+      console.log(safe_url, '>>>>', val)
+
+      console.log('???===>', url)
+
 
       const dialogRef = this.dialog.open(videoDialogComponent, {
         panelClass: 'lesson_videomodal',
@@ -556,7 +605,6 @@ export class TraningComponent implements OnInit {
             let fileserverName: any;
             this.fileArray = res.res[0].fileType;
             // console.log("dingle data", res.res[0]);
-
             this.htmType = res.res[0].typeHtml;
             // this.hasLessonVal=res.res[0].has_lessonplan;
             this.chkboxval = res.res[0].has_lessonplan;
@@ -567,33 +615,51 @@ export class TraningComponent implements OnInit {
               this.test_percentage = res.res[0].test_percentage
             }
 
+            if (res.res[0].videoflag != null && typeof (res.res[0].videoflag) != 'undefined') {
+              this.videoflag = true;
+              this.video_array=res.res[0].video_array;
+            }
+            if (res.res[0].audioflag != null && typeof (res.res[0].audioflag) != 'undefined') {
+              this.audioflag = true;
+              this.audio_array=res.res[0].audio_array;
+            }
+            if (res.res[0].fileflag != null && typeof (res.res[0].fileflag) != 'undefined') {
+              this.fileflag = true;
+              this.file_array=res.res[0].file_array;
+              console.log(this.file_array,'zesdxfghjwaesr')
+            }
+            console.log(this.audioflag, "audio")
+            console.log(this.videoflag, "video")
+            console.log(this.fileflag, "file")
+
             this.getchkboxval(this.chkboxval);
             this.lessonplanValue = res.res[0].lessonplan_value;
-            switch (res.res[0].mediaType) {
-              case 'image':
-                this.htmType = res.res[0].image_typeHtml;
-                this.title = res.res[0].image_title;
-                this.description = res.res[0].image_description;
 
-                break;
-              case 'video':
-                this.video_array = res.res[0].video_array;
-                this.htmType = res.res[0].video_typeHtml;
-                this.title = res.res[0].video_title;
-                this.description = res.res[0].video_description;
-                break;
-              case 'audio':
-                this.htmType = res.res[0].audio_typeHtml;
-                this.title = res.res[0].audio_title;
-                this.description = res.res[0].audio_description;
-                break;
-              case 'file':
-                this.htmType = res.res[0].file_typeHtml;
-                this.title = res.res[0].file_title;
-                this.description = res.res[0].file_description;
-                break;
+            // switch (res.res[0].mediaType) {
+            //   case 'image':
+            //     this.htmType = res.res[0].image_typeHtml;
+            //     this.title = res.res[0].image_title;
+            //     this.description = res.res[0].image_description;
 
-            }
+            //     break;
+            //   case 'video':
+            //     this.video_array = res.res[0].video_array;
+            //     this.htmType = res.res[0].video_typeHtml;
+            //     this.title = res.res[0].video_title;
+            //     this.description = res.res[0].video_description;
+            //     break;
+            //   case 'audio':
+            //     this.htmType = res.res[0].audio_typeHtml;
+            //     this.title = res.res[0].audio_title;
+            //     this.description = res.res[0].audio_description;
+            //     break;
+            //   case 'file':
+            //     this.htmType = res.res[0].file_typeHtml;
+            //     this.title = res.res[0].file_title;
+            //     this.description = res.res[0].file_description;
+            //     break;
+
+            // }
             for (let key in res.res[0].fileType) {
               imageBasepath = res.res[0].fileType[key].basepath;
               fileserverName = res.res[0].fileType[key].fileservername;
@@ -602,12 +668,12 @@ export class TraningComponent implements OnInit {
             this.fileArray = this.imagePath;
 
 
-            for (const vid in res.res[0].video_array) {
+            // for (const vid in res.res[0].video_array) {
 
-              // this.addVideo(res.res[0].video_array[vid].video_url,
-              //   res.res[0].video_array[vid].video_title,
-              //   res.res[0].video_array[vid].video_description);
-            }
+            //   // this.addVideo(res.res[0].video_array[vid].video_url,
+            //   //   res.res[0].video_array[vid].video_title,
+            //   //   res.res[0].video_array[vid].video_description);
+            // }
           }
         }
 
