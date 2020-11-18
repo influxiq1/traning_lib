@@ -47,10 +47,10 @@ export class AddEditLessionsComponent implements OnInit {
     format: ["jpg", "jpeg", "png", "bmp", "zip", 'html', 'mp4', 'mp3', 'doc', 'ppt', 'pptx', 'pdf', 'msword'],  // use all small font
     type: "imageGallery-picture",
     path: "imageGallery",
-    prefix: "imageGallery-picture_",
+    prefix: "imageGallery-picture_",  
     formSubmit: false,
     conversionNeeded: 1,
-    bucketName: "probidfiles-dev.com"
+    bucketName: "awsbackend-dev-patient-files-test"
   }
   public jwtToken: any;
 
