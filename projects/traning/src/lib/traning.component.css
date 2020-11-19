@@ -109,7 +109,53 @@
     display: inline;
     float: left;
   }
+
+  .files-view{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: auto!important;
+    width: 82%;
+    margin: 20px auto;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+   }
+   .files-view .mat-card{
+    position: relative;
+    z-index: 9;
+    margin: 10px!important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 27%;
+    position: relative;
+   }
+   .files-view .mat-card .mat-card-actions{display: inline-block; width: 100%;}
+   .files-view .mat-card .mat-card-titlt{display: inline-block; width: 100%;}
+   .files-view .mat-card .mat-card-subtitle{display: inline-block; width: 100%; text-align: center;}
+   .closecard {
+    position: absolute;
+    top: -10px;
+    right: -8px;
+    background: #464545;
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    border: 1px solid #696969;
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 2px 6px #00000070;
+    cursor: pointer;
+   }
+   .closecard i{font-size: 18px; line-height: 27px;}
   
+
+  .imgcard{  margin: 10px auto;
+    align-items: center; width: 350px; word-break: break-all;
+  }
 
 
 

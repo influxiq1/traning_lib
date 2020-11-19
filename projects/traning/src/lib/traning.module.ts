@@ -1,6 +1,6 @@
 // import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, Component } from '@angular/core';
-import { TraningComponent, videoDialogComponent } from './traning.component';
+import { AddAudioVideoFileDialogComponent, TraningComponent, videoDialogComponent } from './traning.component';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -65,7 +65,8 @@ import { AddEditQuizComponent } from './manage-quiz/add-edit-quiz/add-edit-quiz.
     LessonVideoModalComponent,
     ListQuizComponent,
     AddEditQuizComponent,
-    LessonQuizModalComponent
+    LessonQuizModalComponent,
+    AddAudioVideoFileDialogComponent
   ],
   imports: [
     HttpClientModule,
@@ -87,6 +88,6 @@ import { AddEditQuizComponent } from './manage-quiz/add-edit-quiz/add-edit-quiz.
   
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [CookieService, ApiService,DatePipe],
-  entryComponents:[DialogBoxComponent,Dialogtest,PurchaseModalComponent,ReviewLessonPlanComponent,ScheduleModalComponent,questionDataModalComponent,UnlockLessonModalComponent,videoDialogComponent,LessonVideoModalComponent,LessonQuizModalComponent]
+  entryComponents:[DialogBoxComponent,Dialogtest,PurchaseModalComponent,ReviewLessonPlanComponent,ScheduleModalComponent,questionDataModalComponent,UnlockLessonModalComponent,videoDialogComponent,LessonVideoModalComponent,LessonQuizModalComponent,AddAudioVideoFileDialogComponent]
 })
 export class TraningModule { }
