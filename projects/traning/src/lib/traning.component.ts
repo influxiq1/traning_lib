@@ -10,12 +10,26 @@ declare var moment: any;
 declare var $: any;
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSnackBar } from '@angular/material';
 import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
+import {MatFormFieldModule} from '@angular/material/form-field';
+
 import { duration } from 'moment';
 import { resolve } from 'url';
 
 export interface DialogData {
   data: any;
   safe_url: any;
+}
+
+
+export interface DialogData1 {
+  data: any;
+  configFileUpload: any;
+  flag: any;
+  dataObj: any;
+  heading:any;
+  type_flag:any;
+  videoFields:any;
+  audioFields:any;
 }
 
 @Component({
@@ -123,7 +137,6 @@ export class TraningComponent implements OnInit {
   @Input()
   set IsItDna(val: any) {
     this.dnaFlag = val;
-
   }
 
 
@@ -134,15 +147,6 @@ export class TraningComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    var str='lesson_file_-lesson_file_-medpartner_picture_-batman-1574763456117-1605678964489(1)-1605690692274.jpg';
-
-    var dt='.';
-
-    var type = str.slice(-3);
-
-    console.log(type,'type++')
-
 
     this.headerText = this.formSourceVal.AddheaderText;
     this.route.params.subscribe(params => {
@@ -337,7 +341,7 @@ export class TraningComponent implements OnInit {
 
 
       // if (this.mediaTypeValue == 'html') {
-        data.data['typeHtml'] = this.htmType;
+      data.data['typeHtml'] = this.htmType;
       // }
 
       // if (this.mediaTypeValue == 'image' || this.mediaTypeValue == 'audio' || this.mediaTypeValue == 'file') {
@@ -517,39 +521,117 @@ export class TraningComponent implements OnInit {
   }
 
   addVideo() {
-    this.video_array.push({
-      video_url: '',
+
+    let heading='Add Lesson Video';
+    let type_flag ='video';
+    // this.video_array.push({
+    //   video_url: '',
+    //   video_title: '',
+    //   video_description: '',
+    //   video_priority: '',
+    //   video_skippable: false
+    // })
+    // console.log(this.video_array, 'this.video_array')
+    let dataObj = {
+      video_url:'',
       video_title: '',
       video_description: '',
       video_priority: '',
       video_skippable: false
+    }
+
+
+    const dialogRef = this.dialog.open(AddAudioVideoFileDialogComponent, {
+      panelClass: 'lesson_videomodal',
+      width: '800px',
+      height: '500px',
+      data: { 'configFileUpload': this.uploadConfigData, 'dataObj': dataObj,'heading':heading,'type_flag':type_flag }
+    });
+
+    //for disable modal
+    dialogRef.disableClose = true;
+
+    //for subscribe modal data
+     dialogRef.afterClosed().subscribe(result=>{
+      console.log(result,'++++sub')
+
+      if(result.flag == 'yes'){
+        this.video_array.push(result.videoFields)
+      }
     })
-    // console.log(this.video_array, 'this.video_array')
+
   }
 
 
   addflie() {
-    this.file_array.push({
+    // this.file_array.push({
+    //   file: {},
+    //   file_description: '',
+    //   file_title: '',
+    //   file_priority: '',
+    //   file_skippable: false
+    // });
+
+    let heading='Add Lesson File';
+    let type_flag ='file';
+    
+    let dataObj = {
       file: {},
-      file_description: '',
       file_title: '',
+      file_description: '',
       file_priority: '',
       file_skippable: false
+    }
+
+    const dialogRef = this.dialog.open(AddAudioVideoFileDialogComponent, {
+      panelClass: 'lesson_videomodal',
+      width: '800px',
+      height: '500px',
+      data: { 'configFileUpload': this.uploadConfigData, 'dataObj': dataObj,'heading':heading,'type_flag':type_flag }
     });
 
-    this.fileArray
+    //for disable modal
+    dialogRef.disableClose = true;
+
+    //for subscribe modal data
+     dialogRef.afterClosed().subscribe(result=>{
+      console.log(result,'=>>>>>');
+      // this.video_array.push(result.audiofields)
+    })
 
   }
 
 
   addAudio() {
-    this.audio_array.push({
+
+    console.log('hit modal fun')
+   
+    let heading='Add Lesson Audio';
+    let type_flag ='audio';
+    
+    let dataObj = {
       audio: {},
       audio_title: '',
       audio_description: '',
       audio_priority: '',
       audio_skippable: false
+    }
+    const dialogRef = this.dialog.open(AddAudioVideoFileDialogComponent, {
+      panelClass: 'lesson_videomodal',
+      width: '800px',
+      height: '500px',
+      data: { 'configFileUpload': this.uploadConfigData, 'dataObj': dataObj,'heading':heading,'type_flag':type_flag }
+    });
 
+    //for disable modal
+    dialogRef.disableClose = true;
+
+    //for subscribe modal data
+     dialogRef.afterClosed().subscribe(result=>{
+      console.log(result,'=>>>>>')
+      if(result.flag == 'yes'){
+      this.audio_array.push(result.audioFields)
+      }
     })
   }
 
@@ -557,12 +639,28 @@ export class TraningComponent implements OnInit {
   doneFileUpload(arrayName, index) {
     console.log(arrayName, index)
     // console.log(this.uploadConfigData.files[0].upload.data.data, 'this.uploadConfigData.files');
+
     var errormsg = '';
     if (this.uploadConfigData.files != null && this.uploadConfigData.files[0] != null) {
       if (arrayName == 'file_array') {
+
+
+
+        var file_name_str = this.uploadConfigData.files[0].upload.data.data.filelocalname;
+
+        var str_no = file_name_str.lastIndexOf('.') + 1;
+
+        // var st = str.slice(0, str_no)
+
+        file_name_str = file_name_str.substring(file_name_str.indexOf(file_name_str) + str_no);
+
+        // console.log(str_no, 'type++', file_name_str)
+
+        this.uploadConfigData.files[0].upload.data.data.file_type = file_name_str;
+
         this.file_array[index].file = this.uploadConfigData.files[0].upload.data.data;
       }
-      
+
       console.log(this.file_array, 'file_array')
     } else {
       this.snackBar.open('Please Upload Single file ...!', 'OK', {
@@ -960,6 +1058,34 @@ export class TraningComponent implements OnInit {
     }
   }
 
+
+
+  // addfile(file_array) {
+
+  //   let dataObj = {
+  //     audio: {},
+  //     audio_title: '',
+  //     audio_description: '',
+  //     audio_priority: '',
+  //     audio_skippable: false
+  //   }
+
+  //   const dialogRef = this.dialog.open(AddAudioVideoFileDialogComponent, {
+  //     panelClass: 'lesson_videomodal',
+  //     width: '800px',
+  //     height: '500px',
+  //     data: { 'configFileUpload': this.uploadConfigData, 'dataObj': dataObj }
+  //   });
+
+  //   //for disable modal
+  //   dialogRef.disableClose = true;
+
+  //   //for subscribe modal data
+  //    dialogRef.afterClosed().subscribe(result=>{
+  //     console.log(result,'++++')
+  //   })
+  // }
+
 }
 
 
@@ -983,10 +1109,105 @@ export class videoDialogComponent {
     this.dialogRef.close();
   }
 
+
+
 }
 
 
 
 
+//add audio , video, file modal
+
+@Component({
+  selector: 'AddAudioVideoFileDialog',
+  templateUrl: 'AddAudioVideoFileDialog.html',
+  styleUrls: ['./AddAudioVideoFileDialog.css']
+
+})
+export class AddAudioVideoFileDialogComponent {
+
+  public uploadConfigData: any = {};
+  public video_array: any = [];
+  public video_base_url: any = 'https://www.youtube.com/embed/';
+  public videoflag;
+  public videoFields:any={};
+  public audioFields:any={};
 
 
+  constructor(
+    public dialogRef: MatDialogRef<AddAudioVideoFileDialogComponent>,public sanitizer :DomSanitizer ,public snackBar:MatSnackBar,public dialog:MatDialog,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData1) {
+    this.uploadConfigData = data.configFileUpload;
+
+    if(this.data.type_flag == 'video'){
+      this.videoFields=this.data.dataObj;
+    }
+
+    if(this.data.type_flag == 'audio'){
+      this.audioFields=this.data.dataObj;
+    }
+
+    console.log(data, '>++++++',this.audioFields,">============")
+
+  }
+
+  onNoClick(): void {
+    this.data.flag = 'no';
+    this.dialogRef.close(this.data);
+  }
+
+  // add dialog file
+  addvideo(arrayName) {
+    this.data.flag = 'yes';
+    this.data.videoFields=this.videoFields;
+    // console.log(this.uploadConfigData, 'this.uploadConfigData++', arrayName)
+    console.log(this.videoFields,'videoFields')
+    this.dialogRef.close(this.data);
+
+  }
+  
+  addaudio(arrayName) {
+    this.data.flag = 'yes';
+    this.data.audioFields=this.audioFields;
+    // console.log(this.uploadConfigData, 'this.uploadConfigData++', arrayName)
+    console.log(this.audioFields,'audiofields')
+    this.dialogRef.close(this.data);
+
+  }
+
+  preview_video(val) {
+    if (val != null && val != '') {
+      var url = this.video_base_url + val + '?rel=0&modestbranding=1&autoplay=1';
+
+      const safe_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+
+
+      console.log(safe_url, '>>>>', val)
+
+      console.log('???===>', url)
+
+
+      const dialogRef = this.dialog.open(videoDialogComponent, {
+        panelClass: 'lesson_videomodal',
+        width: '800px',
+        height: '500px',
+        data: { 'safe_url': safe_url }
+      });
+    } else {
+      this.snackBar.open('Please Enter Video ID', 'OK', {
+        duration: 3000
+      })
+    }
+  }
+  removevideo(index) {
+    this.video_array.splice(index, 1);
+    if (this.video_array.length == 0) {
+      this.videoflag = false;
+    }
+    console.log(this.videoflag, 'this.videoflag')
+  }
+  trackByFn(index) {
+    return index;
+  }
+
+}
