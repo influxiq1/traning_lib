@@ -596,7 +596,7 @@ export class TraningComponent implements OnInit {
   clear_file(arrayName, index) {
 
     if (arrayName == 'file_array') {
-      this.file_array[index].image = {};
+      this.file_array[index].file = {};
     }
     if (arrayName == 'audio_array') {
       this.audio_array[index].audio = {};
