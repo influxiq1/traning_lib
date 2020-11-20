@@ -1,5 +1,5 @@
 <div class="maindivcls">
-    <div class="headercls">
+    <div class="headercls" *ngIf="data?.heading != null">
         <h2 style="text-align:center;"><u>{{data.heading}}</u></h2>
     </div>
     <!-- for file  -->
@@ -73,7 +73,7 @@
         </mat-form-field><br>
 
         <mat-form-field class="flietitlecls">
-            <input type="number" matInput placeholder="Priority" [(ngModel)]="audioFields.audio_priority">
+            <input type="number" matInput placeholder="Audio Priority" [(ngModel)]="audioFields.audio_priority">
         </mat-form-field>
         <br>
 
