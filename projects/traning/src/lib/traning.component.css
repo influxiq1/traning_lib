@@ -1,171 +1,218 @@
 * {
-    box-sizing: border-box;
-  }
+  box-sizing: border-box;
+}
 
-  .admingeneralcls h1{
-    font-size: 32px;
-    background: #3f50b5;
-    padding: 15px 0;
-    text-align: center;
-    margin-bottom: 0;
-    color: #fff;
-    text-transform: uppercase;
-  }
+.admingeneralcls h1 {
+  font-size: 32px;
+  background: #3f50b5;
+  padding: 15px 0;
+  text-align: center;
+  margin-bottom: 0;
+  color: #fff;
+  text-transform: uppercase;
+}
 
-  .formclass{
-      align-items: center;
-      background-color: #f3f3f3;
-      padding: 20px;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: space-between;
-  }
+.formclass {
+  align-items: center;
+  background-color: #f3f3f3;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
 
-  .formclass > div{
-    box-sizing: border-box;
-    width: calc(1/1*100% - (1 - 1/1)*10px);
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .formclass .mat-form-field{width: 100%;}
-  .adddeletecls{cursor: pointer;}
-  .adddeletecls i.material-icons{font-size: 32px;}
-  .addvideocls{display: flex;align-items: center; justify-content: flex-start;}
-  .addvideoblock{background: #e2e2e2;padding: 15px;margin-top: 10px;}
-  .addvideoblock:nth-child(1){margin-top: 0;}
-  .addbtn{color:#4CAF50}
-  .delbtn{color:#ff0000}
-  .clickable{
-    cursor: pointer;
-  }
-  .formclass input[type=text], .formclass select, .formclass textarea {
-    width: 100%;
-    padding: 0;
-    border: 0px solid #ccc;
-    border-radius: 4px;
-    resize: vertical;
-  }
-  
-  .formclass mat-label {
-    padding: 12px 12px 12px 0;
-    display: inline-block;
-  }
-  .formclass .formvideoclass mat-form-field{
-    width: 100%;
-    padding: 0;
-    border: 0px solid #ccc;
-    border-radius: 4px;
-    resize: vertical;
-  }
+.formclass>div {
+  box-sizing: border-box;
+  width: calc(1/1*100% - (1 - 1/1)*10px);
+  display: flex;
+  flex-direction: column;
+}
 
- 
-  
+.formclass .mat-form-field {
+  width: 100%;
+}
+
+.adddeletecls {
+  cursor: pointer;
+}
+
+.adddeletecls i.material-icons {
+  font-size: 32px;
+}
+
+.addvideocls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.addvideoblock {
+  background: #e2e2e2;
+  padding: 15px;
+  margin-top: 10px;
+}
+
+.addvideoblock:nth-child(1) {
+  margin-top: 0;
+}
+
+.addbtn {
+  color: #4CAF50
+}
+
+.delbtn {
+  color: #ff0000
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.formclass input[type=text], .formclass select, .formclass textarea {
+  width: 100%;
+  padding: 0;
+  border: 0px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.formclass mat-label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+.formclass .formvideoclass mat-form-field {
+  width: 100%;
+  padding: 0;
+  border: 0px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.formclass input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+
+.formclass input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.formclass .row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.formclass .submitbtn {
+  display: block;
+  width: 170px;
+  margin: 10px auto;
+  background: #3f50b5 !important;
+  color: #fff;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.ytp-watermark {
+  position: absolute;
+  width: 110px;
+  height: 26px;
+  bottom: 49px;
+  right: 16px;
+  z-index: 27;
+  opacity: .9;
+  display: none;
+}
+
+.typebtncls {
+  padding: 1px;
+  margin: 13px;
+  display: inline;
+  float: left;
+}
+
+.files-view {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: auto!important;
+  width: 82%;
+  margin: 20px auto;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+
+.files-view .mat-card {
+  position: relative;
+  z-index: 9;
+  margin: 10px!important;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 27%;
+  position: relative;
+}
+
+.files-view .mat-card .mat-card-actions {
+  display: inline-block;
+  width: 100%;
+}
+
+.files-view .mat-card .mat-card-titlt {
+  display: inline-block;
+  width: 100%;
+}
+
+.files-view .mat-card .mat-card-subtitle {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+.closecard {
+  position: absolute;
+  top: -10px;
+  right: -8px;
+  background: #464545;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  border: 1px solid #696969;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 2px 6px #00000070;
+  cursor: pointer;
+}
+
+.closecard i {
+  font-size: 18px;
+  line-height: 27px;
+}
+
+.imgcard {
+  margin: 10px auto;
+  align-items: center;
+  width: 350px;
+  word-break: break-all;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+
+@media screen and (max-width: 600px) {
   .formclass input[type=submit] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    float: right;
+    width: 100%;
+    margin-top: 0;
   }
-  
-  .formclass input[type=submit]:hover {
-    background-color: #45a049;
-  }
-  
-
-  .formclass .row:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-  .formclass .submitbtn{
-    display: block;
-    width: 170px;
-    margin: 10px auto;
-    background: #3f50b5 !important;
-    color: #fff;
-  }
-  .pointer{
-    cursor: pointer;
-  }
-  .ytp-watermark{
-    position: absolute;
-    width: 110px;
-    height: 26px;
-    bottom: 49px;
-    right: 16px;
-    z-index: 27;
-    opacity: .9;
-    display: none;
-  }
-
-  .typebtncls{
-    padding: 1px;
-    margin: 13px;
-    display: inline;
-    float: left;
-  }
-
-  .files-view{
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    height: auto!important;
-    width: 82%;
-    margin: 20px auto;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
-    flex-wrap: wrap;
-   }
-   .files-view .mat-card{
-    position: relative;
-    z-index: 9;
-    margin: 10px!important;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 27%;
-    position: relative;
-   }
-   .files-view .mat-card .mat-card-actions{display: inline-block; width: 100%;}
-   .files-view .mat-card .mat-card-titlt{display: inline-block; width: 100%;}
-   .files-view .mat-card .mat-card-subtitle{display: inline-block; width: 100%; text-align: center;}
-   .closecard {
-    position: absolute;
-    top: -10px;
-    right: -8px;
-    background: #464545;
-    height: 25px;
-    width: 25px;
-    border-radius: 50%;
-    border: 1px solid #696969;
-    color: #fff;
-    text-align: center;
-    box-shadow: 0 2px 6px #00000070;
-    cursor: pointer;
-   }
-   .closecard i{font-size: 18px; line-height: 27px;}
-  
-
-  .imgcard{  margin: 10px auto;
-    align-items: center; width: 350px; word-break: break-all;
-  }
-
-
-
-
-
-  
-  /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
-  @media screen and (max-width: 600px) {
-    .formclass input[type=submit] {
-      width: 100%;
-      margin-top: 0;
-    }
-  }
+}

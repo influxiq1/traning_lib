@@ -8,25 +8,37 @@
 
         <lib-file-upload [config]='uploadConfigData'></lib-file-upload>
 
-        <mat-form-field>
-            <input type="text" matInput placeholder="File Title">
+        <mat-card class="example-card imgcard"*ngIf="fileFields.file != null && fileFields.file.fileservername !=null">
+
+            <span>
+                <img mat-card-image [attr.src]="bucket_url +fileFields.file.fileservername">
+            </span>
+
+            <mat-card-title>{{fileFields.file.fileservername }}</mat-card-title>
+
+        </mat-card>
+
+        <mat-form-field class="flietitlecls">
+            <input type="text" matInput placeholder="File Title" [(ngModel)]="fileFields.file_title">
             <!-- <mat-icon matSuffix>File Title</mat-icon> -->
         </mat-form-field><br>
         <mat-form-field>
-            <input type="text" matInput placeholder="File Description">
+            <textarea class="flietitlecls" type="text" matInput placeholder="File Description"
+                [(ngModel)]="fileFields.file_description"></textarea>
             <!-- <mat-icon matSuffix>File Description</mat-icon><br> -->
         </mat-form-field><br>
-        <mat-form-field>
-            <input type="number" matInput placeholder="File Priority">
+        <mat-form-field class="flietitlecls">
+            <input type="number" matInput placeholder="File Priority" [(ngModel)]="fileFields.file_priority">
             <!-- <mat-icon matSuffix>File Priority</mat-icon> -->
         </mat-form-field><br>
         <section class="example-section">
-            <mat-checkbox matInput>Skippable File ?
+            <mat-checkbox matInput [(ngModel)]="fileFields.file_skippable">Skippable File ?
             </mat-checkbox>
         </section><br>
         <button type="button" mat-raised-button color="accent" (click)="onNoClick()">Cancel</button> &nbsp;
 
-        <button type="button" mat-raised-button color="primary">Add File</button> <br>
+        <button type="button" mat-raised-button color="primary" (click)="addfile('file_array')">
+            {{data.buttonName}}</button> <br>
     </div>
 
 
@@ -36,15 +48,31 @@
 
         <lib-file-upload [config]='uploadConfigData'></lib-file-upload>
 
-        <mat-form-field>
+        <mat-card class="example-card imgcard"
+            *ngIf="audioFields.audio != null && audioFields.audio.fileservername !=null">
+
+
+            <audio controls>
+
+                <source src="{{bucket_url +audioFields.audio.fileservername }}" type="audio/ogg">
+                <source src="{{ bucket_url + audioFields.audio.fileservername }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+
+            <mat-card-title>{{audioFields.audio.fileservername }}</mat-card-title>
+            <mat-card-subtitle>{{audioFields.audio.type }}</mat-card-subtitle>
+            <!-- <span class="closecard" (click)="clear_file('audio_array',i)"><i class="material-icons">clear</i></span> -->
+        </mat-card>
+
+        <mat-form-field class="flietitlecls">
             <input type="text" matInput placeholder="Audio Title" [(ngModel)]="audioFields.audio_title">
         </mat-form-field><br>
 
         <mat-form-field>
-            <input type="text" matInput placeholder="Audio Description" [(ngModel)]="audioFields.audio_description">
+            <textarea type="text" matInput placeholder="Audio Description" [(ngModel)]="audioFields.audio_description">
         </mat-form-field><br>
 
-        <mat-form-field>
+        <mat-form-field class="flietitlecls">
             <input type="number" matInput placeholder="Priority" [(ngModel)]="audioFields.audio_priority">
         </mat-form-field>
         <br>
@@ -56,7 +84,7 @@
 
         <button type="button" mat-raised-button color="accent" (click)="onNoClick()">Cancel</button> &nbsp;
 
-        <button type="button" mat-raised-button color="primary" (click)="addaudio('audio_array')">Add Audio</button>
+        <button type="button" mat-raised-button color="primary" (click)="addaudio('audio_array')"> {{data.buttonName}}</button>
     </div>
 
 
@@ -90,7 +118,8 @@
 
         <button type="button" mat-raised-button color="accent" (click)="onNoClick()">Cancel</button> &nbsp;
 
-        <button type="button" mat-raised-button color="primary" (click)="addvideo('video_array')">Add Video </button>
+        <button type="button" mat-raised-button color="primary" (click)="addvideo('video_array')"> {{data.buttonName}}
+        </button>
 
     </div>
 

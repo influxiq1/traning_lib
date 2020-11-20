@@ -135,8 +135,6 @@
             <!-- <button type="button" mat-raised-button color="primary" (click)="addfile()">add
                file by modal </button> -->
 
-
-
             <div *ngIf="fileflag == true && file_array.length > 0" class='fromClass'>
                 <div class="addfilecls">
                     <mat-label><b> Files : </b></mat-label>
@@ -152,8 +150,6 @@
 
                     <mat-card class="example-card imgcard"
                         *ngIf="file_array[i].file != null && file_array[i].file.fileservername !=null">
-
-
 
                         <span>
                             <img mat-card-image [attr.src]="bucket_url + file_array[i].file.fileservername">
@@ -193,7 +189,7 @@
                     </section>
 
                     <span class="adddeletecls">
-                        <!-- <i class="material-icons addbtn" (click)="addflie()">add_box</i> -->
+                        <i class="material-icons addbtn" (click)="addflie('edit',i,item)">edit</i>
                         <i class="material-icons delbtn" (click)="removefile(i)">delete</i>
                     </span>
                 </div>
@@ -256,7 +252,7 @@
                         </mat-checkbox>
                     </section>
                     <span class="adddeletecls">
-                        <!-- <i class="material-icons addbtn" (click)="addAudio()">add_box</i> -->
+                        <i class="material-icons addbtn" (click)="addAudio('edit',i,item)">edit</i>
                         <i class="material-icons delbtn" (click)="removeaudio(i)">delete</i>
                     </span><br>
 
@@ -331,6 +327,7 @@
                             </mat-checkbox>
                         </section><br>
                         <span class="adddeletecls">
+                            <i class="material-icons addbtn" (click)="addVideo('edit',i,item)">edit</i>
                             <i class="material-icons delbtn" (click)="removevideo(i)">delete</i>
                         </span>
                     </ng-container>
