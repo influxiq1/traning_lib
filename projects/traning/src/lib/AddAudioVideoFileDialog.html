@@ -4,11 +4,11 @@
     </div>
     <!-- for file  -->
 
-    <div *ngIf="data.type_flag != null && data.type_flag == 'file'">
+    <ng-container *ngIf="data.type_flag != null && data.type_flag == 'file'">
 
         <lib-file-upload [config]='uploadConfigData'></lib-file-upload>
 
-        <mat-card class="example-card imgcard"*ngIf="fileFields.file != null && fileFields.file.fileservername !=null">
+        <mat-card class="example-card imgcard" *ngIf="fileFields.file != null && fileFields.file.fileservername !=null">
 
             <span>
                 <img mat-card-image [attr.src]="bucket_url +fileFields.file.fileservername">
@@ -39,12 +39,10 @@
 
         <button type="button" mat-raised-button color="primary" (click)="addfile('file_array')">
             {{data.buttonName}}</button> <br>
-    </div>
-
-
+    </ng-container>
 
     <!-- for audio  -->
-    <div *ngIf="data.type_flag != null && data.type_flag == 'audio'">
+    <ng-container *ngIf="data.type_flag != null && data.type_flag == 'audio'">
 
         <lib-file-upload [config]='uploadConfigData'></lib-file-upload>
 
@@ -85,12 +83,10 @@
         <button type="button" mat-raised-button color="accent" (click)="onNoClick()">Cancel</button> &nbsp;
 
         <button type="button" mat-raised-button color="primary" (click)="addaudio('audio_array')"> {{data.buttonName}}</button>
-    </div>
-
-
+    </ng-container>
 
     <!-- for video  -->
-    <div *ngIf="data.type_flag != null && data.type_flag == 'video'">
+    <ng-container *ngIf="data.type_flag != null && data.type_flag == 'video'">
 
         <mat-form-field>
             <span matPrefix>https://www.youtube.com/watch?v= &nbsp;</span>
@@ -121,6 +117,6 @@
         <button type="button" mat-raised-button color="primary" (click)="addvideo('video_array')"> {{data.buttonName}}
         </button>
 
-    </div>
+    </ng-container>
 
 </div>

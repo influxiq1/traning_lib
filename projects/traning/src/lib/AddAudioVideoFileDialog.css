@@ -6,3 +6,9 @@
     position: relative;
     text-align: left;
 }
+.imgcard {
+    margin: 10px auto;
+    align-items: center;
+    width: 350px;
+    word-break: break-all;
+  }

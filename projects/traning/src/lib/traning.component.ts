@@ -512,12 +512,12 @@ export class TraningComponent implements OnInit {
         break;
     }
 
-    if (val.selectname == 'image') {
-      this.mediaTypeValue = val.selectname;
-    }
-    if (val.selectname == '"audio"') {
+    // if (val.selectname == 'image') {
+    //   this.mediaTypeValue = val.selectname;
+    // }
+    // if (val.selectname == '"audio"') {
 
-    }
+    // }
   }
 
 
@@ -533,7 +533,8 @@ export class TraningComponent implements OnInit {
     //   video_priority: '',
     //   video_skippable: false
     // })
-    console.log(this.video_array, 'this.video_array', key, i, item)
+    console.log(this.video_array, 'this.video_array', key, i, item);
+    
     if (key == 'add') {
       dataObj = {
         video_url: '',
@@ -568,8 +569,9 @@ export class TraningComponent implements OnInit {
       console.log(result, '++++sub')
 
       if (result.flag == 'yes') {
-        this.video_array[i] = result.videoFields
+        // this.video_array[i] = result.videoFields
       }
+
     })
 
   }
@@ -676,7 +678,7 @@ export class TraningComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(result, '++++++++++.>>>>>>>>')
       if (result.flag == 'yes') {
-        this.audio_array[i] = result.audioFields
+        // this.audio_array[i] = result.audioFields
       }
     })
   }
