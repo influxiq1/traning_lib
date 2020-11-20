@@ -1,54 +1,71 @@
 <div class="maindivcls">
+
     <div class="headercls" *ngIf="data?.heading != null">
         <h2 style="text-align:center;"><u>{{data.heading}}</u></h2>
     </div>
-    <!-- for file  -->
 
-    <ng-container *ngIf="data.type_flag != null && data.type_flag == 'file'">
+
+
+    <!-- for file  -->
+    <div *ngIf="data.type_flag != null && data.type_flag == 'file'">
 
         <lib-file-upload [config]='uploadConfigData'></lib-file-upload>
 
         <mat-card class="example-card imgcard" *ngIf="fileFields.file != null && fileFields.file.fileservername !=null">
 
-            <span>
+            <span
+                *ngIf=" fileFields.file.file_type != null && fileFields.file.file_type == 'jpeg' || fileFields.file.file_type == 'png' || fileFields.file.file_type == 'jpg'">
                 <img mat-card-image [attr.src]="bucket_url +fileFields.file.fileservername">
             </span>
 
+            <span class="filetype_{{fileFields.file.file_type}} mat-card-image"
+                *ngIf=" fileFields.file.file_type != null && fileFields.file.file_type == 'pdf' || fileFields.file.file_type == 'doc' || fileFields.file.file_type == 'ppt' || fileFields.file.file_type == 'pptx' || fileFields.file.file_type == 'msword'">
+                <span class="material-icons icon_{{fileFields.file.file_type}}">
+                    picture_as_pdf
+                </span>
+            </span>
+
+
+
             <mat-card-title>{{fileFields.file.fileservername }}</mat-card-title>
+
+            <span class="closecard" (click)="clear_file(data.type_flag)"><i class="material-icons">clear</i></span>
 
         </mat-card>
 
         <mat-form-field class="flietitlecls">
             <input type="text" matInput placeholder="File Title" [(ngModel)]="fileFields.file_title">
-            <!-- <mat-icon matSuffix>File Title</mat-icon> -->
         </mat-form-field><br>
+
         <mat-form-field>
             <textarea class="flietitlecls" type="text" matInput placeholder="File Description"
                 [(ngModel)]="fileFields.file_description"></textarea>
-            <!-- <mat-icon matSuffix>File Description</mat-icon><br> -->
         </mat-form-field><br>
+
         <mat-form-field class="flietitlecls">
             <input type="number" matInput placeholder="File Priority" [(ngModel)]="fileFields.file_priority">
-            <!-- <mat-icon matSuffix>File Priority</mat-icon> -->
         </mat-form-field><br>
+
         <section class="example-section">
             <mat-checkbox matInput [(ngModel)]="fileFields.file_skippable">Skippable File ?
             </mat-checkbox>
         </section><br>
+
         <button type="button" mat-raised-button color="accent" (click)="onNoClick()">Cancel</button> &nbsp;
 
         <button type="button" mat-raised-button color="primary" (click)="addfile('file_array')">
-            {{data.buttonName}}</button> <br>
-    </ng-container>
+            {{data.buttonName}}</button>
+    </div>
 
-    <!-- for audio  -->
-    <ng-container *ngIf="data.type_flag != null && data.type_flag == 'audio'">
+
+    <!-- for Audio  -->
+
+    <div *ngIf="data.type_flag != null && data.type_flag == 'audio'">
 
         <lib-file-upload [config]='uploadConfigData'></lib-file-upload>
 
         <mat-card class="example-card imgcard"
             *ngIf="audioFields.audio != null && audioFields.audio.fileservername !=null">
-
 
             <audio controls>
 
@@ -58,35 +75,39 @@
             </audio>
 
             <mat-card-title>{{audioFields.audio.fileservername }}</mat-card-title>
-            <mat-card-subtitle>{{audioFields.audio.type }}</mat-card-subtitle>
-            <!-- <span class="closecard" (click)="clear_file('audio_array',i)"><i class="material-icons">clear</i></span> -->
+
+            <span class="closecard" (click)="clear_file(data.type_flag)"><i class="material-icons">clear</i></span>
+
         </mat-card>
 
-        <mat-form-field class="flietitlecls">
-            <input type="text" matInput placeholder="Audio Title" [(ngModel)]="audioFields.audio_title">
-        </mat-form-field><br>
 
         <mat-form-field>
-            <textarea type="text" matInput placeholder="Audio Description" [(ngModel)]="audioFields.audio_description">
-        </mat-form-field><br>
+            <input type="text" matInput placeholder="Audio Title" [(ngModel)]="audioFields.audio_title">
+        </mat-form-field>
+
+        <mat-form-field>
+            <textarea type="text" matInput placeholder="Audio Description"
+                [(ngModel)]="audioFields.audio_description"></textarea>
+        </mat-form-field>
 
         <mat-form-field class="flietitlecls">
             <input type="number" matInput placeholder="Audio Priority" [(ngModel)]="audioFields.audio_priority">
-        </mat-form-field>
-        <br>
+        </mat-form-field><br>
 
-        <section class="example-section" >
+        <section class="example-section">
             <mat-checkbox matInput [(ngModel)]="audioFields.audio_skippable">Skippable Audio ?
             </mat-checkbox>
         </section><br>
 
         <button type="button" mat-raised-button color="accent" (click)="onNoClick()">Cancel</button> &nbsp;
 
-        <button type="button" mat-raised-button color="primary" (click)="addaudio('audio_array')"> {{data.buttonName}}</button>
-    </ng-container>
+        <button type="button" mat-raised-button color="primary" (click)="addaudio('file_array')">
+            {{data.buttonName}}</button>
+    </div>
+
 
     <!-- for video  -->
-    <ng-container *ngIf="data.type_flag != null && data.type_flag == 'video'">
+    <div *ngIf="data.type_flag != null && data.type_flag == 'video'">
 
         <mat-form-field>
             <span matPrefix>https://www.youtube.com/watch?v= &nbsp;</span>
@@ -102,11 +123,10 @@
             <textarea matInput placeholder="Video Description" [(ngModel)]="videoFields.video_description"></textarea>
         </mat-form-field><br>
 
-        <!-- Is this mandatory video? -->
         <mat-form-field>
-            <input type="number" matInput placeholder="Priority" [(ngModel)]="videoFields.video_priority">
-            <!-- <mat-icon matSuffix>Video Priority</mat-icon> -->
+            <input type="number" matInput placeholder="Video Priority" [(ngModel)]="videoFields.video_priority">
         </mat-form-field><br>
+
         <section class="example-section">
             <mat-checkbox matInput [(ngModel)]="videoFields.video_skippable">Skippable video ?
             </mat-checkbox>
@@ -116,7 +136,7 @@
 
         <button type="button" mat-raised-button color="primary" (click)="addvideo('video_array')"> {{data.buttonName}}
         </button>
+    </div>
 
-    </ng-container>
 
 </div>

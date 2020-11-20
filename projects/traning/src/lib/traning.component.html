@@ -2,7 +2,7 @@
     <span class="searchblock">
         <span class="searchblockwrapper" style="display: inline;">
             <span>
-                <h1 class="header">{{ headerText     }}</h1>
+                <h1 class="header">{{ headerText}}</h1>
             </span>
         </span>
     </span>
@@ -151,13 +151,25 @@
                     <mat-card class="example-card imgcard"
                         *ngIf="file_array[i].file != null && file_array[i].file.fileservername !=null">
 
-                        <span>
+                        <!-- <span>
+                            <img mat-card-image [attr.src]="bucket_url + file_array[i].file.fileservername">
+                        </span> -->
+
+                        <span 
+                            *ngIf=" file_array[i].file.file_type != null && file_array[i].file.file_type == 'jpeg' || file_array[i].file.file_type == 'png' || file_array[i].file.file_type == 'jpg'">
                             <img mat-card-image [attr.src]="bucket_url + file_array[i].file.fileservername">
                         </span>
 
-
+                        <span class="filetype_{{file_array[i].file.file_type}} mat-card-image"
+                            *ngIf=" file_array[i].file.file_type != null && file_array[i].file.file_type == 'pdf' || file_array[i].file.file_type == 'doc' || file_array[i].file.file_type == 'ppt' || file_array[i].file.file_type == 'pptx' || file_array[i].file.file_type == 'msword'">
+                            <span class="material-icons icon_{{file_array[i].file.file_type}}">
+                                picture_as_pdf
+                            </span>
+                        </span>
 
                         <mat-card-title>{{ file_array[i].file.fileservername }}</mat-card-title>
+
+
                         <span class="closecard" (click)="clear_file('file_array',i)"><i
                                 class="material-icons">clear</i></span>
                     </mat-card>
@@ -166,27 +178,24 @@
                     <!-- <button type="button" mat-raised-button color="primary" (click)="doneFileUpload('file_array',i)">Add
                         Uploaded File</button><br> -->
 
-                    <mat-form-field>
+                    <!-- <mat-form-field>
                         <input type="text" matInput placeholder="File Title" [(ngModel)]=file_array[i].file_title
                             [ngModelOptions]="{standalone: true}">
-                        <!-- <mat-icon matSuffix>File Title</mat-icon> -->
-                    </mat-form-field>
+                    </mat-form-field> -->
 
-                    <mat-form-field>
+                    <!-- <mat-form-field>
                         <textarea type="text" matInput placeholder="File Description"
                             [(ngModel)]=file_array[i].file_description [ngModelOptions]="{standalone: true}"></textarea>
-                        <!-- <mat-icon matSuffix>File Description</mat-icon> -->
-                    </mat-form-field>
-                    <mat-form-field>
+                    </mat-form-field> -->
+                    <!-- <mat-form-field>
                         <input type="number" matInput placeholder="Priority" [(ngModel)]=file_array[i].file_priority
                             [ngModelOptions]="{standalone: true}">
-                        <!-- <mat-icon matSuffix>File Priority</mat-icon> -->
-                    </mat-form-field>
-                    <section class="example-section">
+                    </mat-form-field> -->
+                    <!-- <section class="example-section">
                         <mat-checkbox matInput [(ngModel)]="file_array[i].file_skippable"
                             [ngModelOptions]="{standalone: true}">Skippable file
                         </mat-checkbox>
-                    </section>
+                    </section> -->
 
                     <span class="adddeletecls">
                         <i class="material-icons addbtn" (click)="addflie('edit',i,item)">edit</i>
@@ -208,7 +217,7 @@
                 <div *ngFor="let item of audio_array; let i=index;trackBy: trackByFn" class="fromClass addvideoblock">
 
                     <!-- <lib-file-upload [config]="uploadConfigData"></lib-file-upload> -->
-                    
+
                     <mat-card class="example-card imgcard"
                         *ngIf="audio_array[i].audio != null && audio_array[i].audio.fileservername !=null">
 
@@ -221,36 +230,35 @@
                         </audio>
 
                         <mat-card-title>{{ audio_array[i].audio.fileservername }}</mat-card-title>
-                         <mat-card-subtitle>{{ audio_array[i].audio.type }}</mat-card-subtitle> 
+                        <mat-card-subtitle>{{ audio_array[i].audio.type }}</mat-card-subtitle>
                         <span class="closecard" (click)="clear_file('audio_array',i)"><i
                                 class="material-icons">clear</i></span>
-                    </mat-card> 
+                    </mat-card>
 
                     <!-- <button type="button" mat-raised-button color="primary"
                         (click)="doneAudioupload('audio_array',i)">Add Uploaded Audio</button><br> -->
-                    <mat-form-field>
+                    <!-- <mat-form-field>
                         <input type="text" matInput placeholder="Audio Title" [(ngModel)]=audio_array[i].audio_title
                             [ngModelOptions]="{standalone: true}">
-                        <!-- <mat-icon matSuffix>Audio Title</mat-icon> -->
-                    </mat-form-field>
+                    </mat-form-field> -->
 
-                    <mat-form-field>
+                    <!-- <mat-form-field>
                         <textarea type="text" matInput placeholder="Audio Description"
                             [(ngModel)]="audio_array[i].audio_description"
                             [ngModelOptions]="{standalone: true}"></textarea>
-                        <!-- <mat-icon matSuffix>Audio Description</mat-icon> -->
-                    </mat-form-field>
+                    </mat-form-field> -->
 
-                    <mat-form-field>
+                    <!-- <mat-form-field>
                         <input type="number" matInput placeholder="Priority" [(ngModel)]=audio_array[i].audio_priority
                             [ngModelOptions]="{standalone: true}">
-                        <!-- <mat-icon matSuffix>Audio Priority</mat-icon> -->
-                    </mat-form-field>
+                    </mat-form-field> -->
+                    <!-- 
                     <section class="example-section">
                         <mat-checkbox matInput [(ngModel)]="audio_array[i].audio_skippable"
                             [ngModelOptions]="{standalone: true}">Skippable Audio
                         </mat-checkbox>
-                    </section>
+                    </section> -->
+
                     <span class="adddeletecls">
                         <i class="material-icons addbtn" (click)="addAudio('edit',i,item)">edit</i>
                         <i class="material-icons delbtn" (click)="removeaudio(i)">delete</i>
@@ -288,7 +296,6 @@
                 <div class="addvideocls">
                     <mat-label><b> Videos : </b></mat-label>
                     <span class="adddeletecls">
-                        <!-- <i class="material-icons addbtn" (click)="addVideo()">add_box</i> -->
                     </span>
                 </div>
 
@@ -302,34 +309,35 @@
                                 remove_red_eye</mat-icon>
                         </mat-form-field> <br>
 
-                        <mat-form-field>
+                        <!-- <mat-form-field>
                             <input matInput placeholder="Video Title" [(ngModel)]="video_array[i].video_title"
                                 [ngModelOptions]="{standalone: true}">
-                        </mat-form-field><br>
+                        </mat-form-field><br> -->
 
-                        <mat-form-field>
+                        <!-- <mat-form-field>
                             <textarea matInput placeholder="Video Description"
                                 [(ngModel)]="video_array[i].video_description"
                                 [ngModelOptions]="{standalone: true}"></textarea>
-                        </mat-form-field>
+                        </mat-form-field> -->
 
 
 
                         <!-- Is this mandatory video? -->
-                        <mat-form-field>
+                        <!-- <mat-form-field>
                             <input type="number" matInput placeholder="Priority"
                                 [(ngModel)]=video_array[i].video_priority [ngModelOptions]="{standalone: true}">
                             <mat-icon matSuffix>Video Priority</mat-icon>
-                        </mat-form-field>
-                        <section class="example-section">
+                        </mat-form-field> -->
+                        <!-- <section class="example-section">
                             <mat-checkbox matInput [(ngModel)]="video_array[i].video_skippable"
                                 [ngModelOptions]="{standalone: true}">Skippable video ?
                             </mat-checkbox>
-                        </section><br>
+                        </section><br> -->
                         <span class="adddeletecls">
                             <i class="material-icons addbtn" (click)="addVideo('edit',i,item)">edit</i>
                             <i class="material-icons delbtn" (click)="removevideo(i)">delete</i>
                         </span>
+
                     </ng-container>
 
                 </div>
@@ -366,13 +374,13 @@
 
             <!-- file uploader end here -->
 
-            <ng-container *ngIf="mediaTypeValue == 'image' && imagePath != null ">
+            <!-- <ng-container *ngIf="mediaTypeValue == 'image' && imagePath != null ">
                 <mat-card class="example-card">
                     <span class="closecard" class="pointer" *ngIf="mediaTypeValue == 'image'" (click)="clear()"><i
                             class="material-icons">clear</i></span>
                     <img mat-card-image src="{{ imagePath }}" />
                 </mat-card>
-            </ng-container>
+            </ng-container> -->
 
             <!-- <ng-container *ngIf="mediaTypeValue == 'video' && imagePath != null && audioVideoFlag==true">
                 <div style="margin: 0 auto;display: block;">

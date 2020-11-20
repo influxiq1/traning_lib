@@ -499,9 +499,6 @@ export class TraningComponent implements OnInit {
         this.videoflag = true;
         this.addVideo('add', 0, 'item');
         break;
-      case 'image':
-        this.imgflag = true;
-        break;
       case 'file':
         this.fileflag = true;
         this.addflie('add', 0, 'item');
@@ -534,7 +531,7 @@ export class TraningComponent implements OnInit {
     //   video_skippable: false
     // })
     console.log(this.video_array, 'this.video_array', key, i, item);
-    
+
     if (key == 'add') {
       dataObj = {
         video_url: '',
@@ -549,20 +546,20 @@ export class TraningComponent implements OnInit {
     if (key == 'edit') {
       dataObj = item;
       heading = 'Edit Lesson Video';
-      buttonName = 'Edit Video'
+      buttonName = 'Update Video'
     }
 
     console.log(dataObj, 'dataObj')
 
     const dialogRef = this.dialog.open(AddAudioVideoFileDialogComponent, {
       panelClass: 'lesson_videomodal',
-      width: '800px',
-      height: '500px',
+      width: '900px',
+      height: '600px',
       data: { 'dataObj': dataObj, 'heading': heading, 'type_flag': type_flag, 'buttonName': buttonName, 'keyVal': key }
     });
 
     //for disable modal
-    // dialogRef.disableClose = true;
+    dialogRef.disableClose = true;
 
     //for subscribe modal data
     dialogRef.afterClosed().subscribe(result => {
@@ -570,6 +567,15 @@ export class TraningComponent implements OnInit {
 
       if (result.flag == 'yes') {
         // this.video_array[i] = result.videoFields
+
+        if (key == 'add') {
+          this.video_array.push(result.videoFields);
+        }
+        if (key == 'edit') {
+          // this.file_array.splice(i, 1);
+          // this.file_array.push(result.fileFields);
+          this.video_array[i] = result.videoFields;
+        }
       }
 
     })
@@ -613,8 +619,8 @@ export class TraningComponent implements OnInit {
 
     const dialogRef = this.dialog.open(AddAudioVideoFileDialogComponent, {
       panelClass: 'lesson_videomodal',
-      width: '800px',
-      height: '500px',
+      width: '900px',
+      height: '600px',
       data: { 'configFileUpload': this.uploadConfigData, 'dataObj': dataObj, 'heading': heading, 'type_flag': type_flag, 'buttonName': buttonName, 'keyVal': key }
     });
 
@@ -660,14 +666,14 @@ export class TraningComponent implements OnInit {
     if (key == 'edit') {
       dataObj = item,
         heading = 'Edit Lesson Audio',
-        buttonName = 'Edit Audio'
+        buttonName = 'Update Audio'
     }
 
 
     const dialogRef = this.dialog.open(AddAudioVideoFileDialogComponent, {
       panelClass: 'lesson_videomodal',
-      width: '800px',
-      height: '500px',
+      width: '900px',
+      height: '600px',
       data: { 'configFileUpload': this.uploadConfigData, 'dataObj': dataObj, 'heading': heading, 'type_flag': type_flag, 'buttonName': buttonName, 'keyVal': key }
     });
 
@@ -679,6 +685,15 @@ export class TraningComponent implements OnInit {
       console.log(result, '++++++++++.>>>>>>>>')
       if (result.flag == 'yes') {
         // this.audio_array[i] = result.audioFields
+
+        if (key == 'add') {
+          this.audio_array.push(result.audioFields);
+        }
+        if (key == 'edit') {
+          // this.file_array.splice(i, 1);
+          // this.file_array.push(result.fileFields);
+          this.audio_array[i] = result.audioFields
+        }
       }
     })
   }
@@ -809,6 +824,9 @@ export class TraningComponent implements OnInit {
     }
   }
 
+
+
+
   geteditdata() {
 
     const link = this.serverDetailsVal.serverUrl + this.formSourceVal.showEndpoint;
@@ -854,7 +872,7 @@ export class TraningComponent implements OnInit {
             if (res.res[0].fileflag != null && typeof (res.res[0].fileflag) != 'undefined') {
               this.fileflag = true;
               this.file_array = res.res[0].file_array;
-              console.log(this.file_array, 'zesdxfghjwaesr')
+              // console.log(this.file_array, 'zesdxfghjwaesr')
             }
             console.log(this.audioflag, "audio")
             console.log(this.videoflag, "video")
@@ -1218,6 +1236,7 @@ export class AddAudioVideoFileDialogComponent {
     this.dialogRef.close(this.data);
   }
 
+  
   // add dialog file
   addvideo(arrayName) {
     this.data.flag = 'yes';
@@ -1228,12 +1247,12 @@ export class AddAudioVideoFileDialogComponent {
 
   }
 
+
+
   addaudio(arrayName) {
 
     if (this.uploadConfigData.files != null && this.uploadConfigData.files[0] != null) {
       if (arrayName == 'audio_array') {
-
-
 
         var file_name_str = this.uploadConfigData.files[0].upload.data.data.filelocalname;
 
@@ -1258,16 +1277,13 @@ export class AddAudioVideoFileDialogComponent {
     // console.log(this.uploadConfigData, 'this.uploadConfigData++', arrayName)
     console.log(this.audioFields, 'audiofields')
     this.dialogRef.close(this.data);
-
   }
 
-  addfile(arrayName) {
 
+
+  addfile(arrayName) {
     if (this.uploadConfigData.files != null && this.uploadConfigData.files[0] != null) {
       if (arrayName == 'file_array') {
-
-
-
         var file_name_str = this.uploadConfigData.files[0].upload.data.data.filelocalname;
 
         var str_no = file_name_str.lastIndexOf('.') + 1;
@@ -1293,39 +1309,17 @@ export class AddAudioVideoFileDialogComponent {
     this.dialogRef.close(this.data);
   }
 
-  preview_video(val) {
-    if (val != null && val != '') {
-      var url = this.video_base_url + val + '?rel=0&modestbranding=1&autoplay=1';
 
-      const safe_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  clear_file(flag) {
 
-
-      console.log(safe_url, '>>>>', val)
-
-      console.log('???===>', url)
-
-
-      const dialogRef = this.dialog.open(videoDialogComponent, {
-        panelClass: 'lesson_videomodal',
-        width: '800px',
-        height: '500px',
-        data: { 'safe_url': safe_url }
-      });
-    } else {
-      this.snackBar.open('Please Enter Video ID', 'OK', {
-        duration: 3000
-      })
+    switch (flag) {
+      case 'file':
+        this.fileFields.file = {};
+        break;
+      case 'audio':
+        this.audioFields.audio = {};
+        break;
     }
-  }
-  removevideo(index) {
-    this.video_array.splice(index, 1);
-    if (this.video_array.length == 0) {
-      this.videoflag = false;
-    }
-    console.log(this.videoflag, 'this.videoflag')
-  }
-  trackByFn(index) {
-    return index;
   }
 
 }
