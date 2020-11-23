@@ -33,6 +33,7 @@ export interface DialogData1 {
   fileFields: any;
   buttonName: any;
   keyVal: any;
+  bucket_url:any;
 }
 
 @Component({
@@ -100,7 +101,7 @@ export class TraningComponent implements OnInit {
   public audioflag: boolean = false;
   public htmlflag: boolean = false;
 
-  public bucket_url: any = 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/';
+  public bucket_url: any;//  = 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/';
 
 
   public
@@ -140,6 +141,12 @@ export class TraningComponent implements OnInit {
   @Input()
   set IsItDna(val: any) {
     this.dnaFlag = val;
+  }
+
+  @Input()
+  set BuketUrl(BuketUrl: any) {
+    this.bucket_url = (BuketUrl) || '<no name set>';
+    this.bucket_url=this.bucket_url.url;
   }
 
 
@@ -578,6 +585,8 @@ export class TraningComponent implements OnInit {
         }
       }
 
+      console.log(this.video_array, 'video_array')
+
     })
 
   }
@@ -621,7 +630,7 @@ export class TraningComponent implements OnInit {
       panelClass: 'lesson_videomodal',
       width: '900px',
       height: '600px',
-      data: { 'configFileUpload': this.uploadConfigData, 'dataObj': dataObj, 'heading': heading, 'type_flag': type_flag, 'buttonName': buttonName, 'keyVal': key }
+      data: { 'configFileUpload': this.uploadConfigData, 'dataObj': dataObj, 'heading': heading, 'type_flag': type_flag, 'buttonName': buttonName, 'keyVal': key,bucket_url:this.bucket_url }
     });
 
     //for disable modal
@@ -674,7 +683,7 @@ export class TraningComponent implements OnInit {
       panelClass: 'lesson_videomodal',
       width: '900px',
       height: '600px',
-      data: { 'configFileUpload': this.uploadConfigData, 'dataObj': dataObj, 'heading': heading, 'type_flag': type_flag, 'buttonName': buttonName, 'keyVal': key }
+      data: { 'configFileUpload': this.uploadConfigData, 'dataObj': dataObj, 'heading': heading, 'type_flag': type_flag, 'buttonName': buttonName, 'keyVal': key,bucket_url:this.bucket_url }
     });
 
     //for disable modal
@@ -1199,7 +1208,8 @@ export class AddAudioVideoFileDialogComponent {
   public videoFields: any = {};
   public audioFields: any = {};
   public fileFields: any = {};
-  public bucket_url: any = 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/';
+  public bucket_url: any ;
+  // = 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/';
 
 
 
@@ -1209,6 +1219,7 @@ export class AddAudioVideoFileDialogComponent {
 
     if (this.data.type_flag == 'audio' || this.data.type_flag == 'file') {
       this.uploadConfigData = data.configFileUpload;
+      this.bucket_url=data.bucket_url;
     }
 
 
@@ -1236,7 +1247,7 @@ export class AddAudioVideoFileDialogComponent {
     this.dialogRef.close(this.data);
   }
 
-  
+
   // add dialog file
   addvideo(arrayName) {
     this.data.flag = 'yes';

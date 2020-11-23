@@ -15,6 +15,10 @@ export class AddEditLessionsComponent implements OnInit {
   public pageName: any = "Manage Lesson";
   public isitdna: any = true;
 
+  public bucket_url: any = {
+   url: 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/'
+  }
+
   public serverDetails: any = {
     "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/",
     "jwttoken": ""
@@ -45,7 +49,7 @@ export class AddEditLessionsComponent implements OnInit {
     baseUrl: "https://fileupload.influxhostserver.com/",
     endpoint: "uploads",
     size: "51200", // kb
-    format: ["jpg", "jpeg", "png", 'mp3','mpeg','doc', 'ppt', 'pptx', 'pdf', 'msword'],  // use all small font
+    format: ["jpg", "jpeg", "png", 'mp3', 'mpeg', 'doc', 'ppt', 'pptx', 'pdf', 'msword'],  // use all small font
     type: "lesson-file",
     path: "lesson-files",
     prefix: "lesson_file_",
@@ -84,7 +88,7 @@ export class AddEditLessionsComponent implements OnInit {
 
       { inputtype: 'checkbox', name: 'status', label: 'Active', placeholder: 'Enter Status', validationrule: { required: true }, validationerrormsg: 'is required' },
 
-      { inputtype: 'button', name: 'mediaType', label: 'Training Type', defaultchoice: 'Choose Training Type', sourceview: 'assets/mediaType.json', sourcetype: 'static', selectvalue: 'name', selectid: 'selectname', validationrule: { required: true }, validationerrormsg: 'is required',buttonflag:true },
+      { inputtype: 'button', name: 'mediaType', label: 'Training Type', defaultchoice: 'Choose Training Type', sourceview: 'assets/mediaType.json', sourcetype: 'static', selectvalue: 'name', selectid: 'selectname', validationrule: { required: true }, validationerrormsg: 'is required', buttonflag: true },
     ];
 
 

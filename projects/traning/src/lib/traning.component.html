@@ -155,7 +155,7 @@
                             <img mat-card-image [attr.src]="bucket_url + file_array[i].file.fileservername">
                         </span> -->
 
-                        <span 
+                        <span
                             *ngIf=" file_array[i].file.file_type != null && file_array[i].file.file_type == 'jpeg' || file_array[i].file.file_type == 'png' || file_array[i].file.file_type == 'jpg'">
                             <img mat-card-image [attr.src]="bucket_url + file_array[i].file.fileservername">
                         </span>
@@ -172,9 +172,26 @@
 
                         <span class="closecard" (click)="clear_file('file_array',i)"><i
                                 class="material-icons">clear</i></span>
+                        <div>
+                            <span>
+                                <b>File Name : </b> {{file_array[i].file_title}}
+                            </span><br>
+                            <span>
+                                <b>File Description :</b> {{file_array[i].file_description}}
+                            </span><br>
+                            <span>
+                                <b>File Priority :</b> {{file_array[i].file_priority}}
+                            </span><br>
+                            <span>
+                                <b>Skipeble File :</b> {{file_array[i].file_skippable}}
+                            </span><br>
+                            <span class="adddeletefilecls">
+                                <i class="material-icons addbtn" (click)="addflie('edit',i,item)">edit</i>
+                                <i class="material-icons delbtn" (click)="removefile(i)">delete</i>
+                            </span>
+                        </div>
+
                     </mat-card>
-
-
                     <!-- <button type="button" mat-raised-button color="primary" (click)="doneFileUpload('file_array',i)">Add
                         Uploaded File</button><br> -->
 
@@ -197,10 +214,7 @@
                         </mat-checkbox>
                     </section> -->
 
-                    <span class="adddeletecls">
-                        <i class="material-icons addbtn" (click)="addflie('edit',i,item)">edit</i>
-                        <i class="material-icons delbtn" (click)="removefile(i)">delete</i>
-                    </span>
+
                 </div>
 
 
@@ -230,9 +244,28 @@
                         </audio>
 
                         <mat-card-title>{{ audio_array[i].audio.fileservername }}</mat-card-title>
-                        <mat-card-subtitle>{{ audio_array[i].audio.type }}</mat-card-subtitle>
+                        <!-- <mat-card-subtitle>{{ audio_array[i].audio.type }}</mat-card-subtitle> -->
                         <span class="closecard" (click)="clear_file('audio_array',i)"><i
                                 class="material-icons">clear</i></span>
+
+                        <div>
+                            <span>
+                                <b>Audio Name : </b> {{audio_array[i].audio_title}}
+                            </span><br>
+                            <span>
+                                <b>Audio Description :</b> {{audio_array[i].audio_description}}
+                            </span><br>
+                            <span>
+                                <b>Audio Priority :</b> {{audio_array[i].audio_priority}}
+                            </span><br>
+                            <span>
+                                <b>Skipeble Audio :</b> {{audio_array[i].audio_skippable}}
+                            </span><br>
+                            <span class="adddeleteAudiocls">
+                                <i class="material-icons addbtn" (click)="addflie('edit',i,item)">edit</i>
+                                <i class="material-icons delbtn" (click)="removefile(i)">delete</i>
+                            </span>
+                        </div>
                     </mat-card>
 
                     <!-- <button type="button" mat-raised-button color="primary"
@@ -259,10 +292,7 @@
                         </mat-checkbox>
                     </section> -->
 
-                    <span class="adddeletecls">
-                        <i class="material-icons addbtn" (click)="addAudio('edit',i,item)">edit</i>
-                        <i class="material-icons delbtn" (click)="removeaudio(i)">delete</i>
-                    </span><br>
+
 
                 </div>
             </div>
@@ -300,21 +330,39 @@
                 </div>
 
                 <div *ngFor="let item of video_array; let i=index;trackBy: trackByFn" class="fromClass addvideoblock">
-                    <ng-container>
-                        <mat-form-field>
-                            <span matPrefix>https://www.youtube.com/watch?v= &nbsp;</span>
-                            <input matInput placeholder="Enter Video ID" [(ngModel)]="video_array[i].video_url"
-                                [ngModelOptions]="{standalone: true}">
+
+                        <div>
+
+                            <span>
+                                <b>Video Url : </b> 
+                            </span><span matPrefix>https://www.youtube.com/watch?v={{video_array[i].video_url}} &nbsp;</span>
+                           
                             <mat-icon matSuffix class="clickable" (click)="preview_video(video_array[i].video_url)">
                                 remove_red_eye</mat-icon>
-                        </mat-form-field> <br>
+                            <span>
+                                <b>Video Name : </b> {{video_array[i].video_title}}
+                            </span><br>
+                            <span>
+                                <b>Video Description :</b> {{video_array[i].video_description}}
+                            </span><br>
+                            <span>
+                                <b>Video Priority :</b> {{video_array[i].video_priority}}
+                            </span><br>
+                            <span>
+                                <b>Skipeble Video :</b> {{video_array[i].video_skippable}}
+                            </span><br>
+                            <span class="adddeletevideocls">
+                                <i class="material-icons addbtn" (click)="addflie('edit',i,item)">edit</i>
+                                <i class="material-icons delbtn" (click)="removefile(i)">delete</i>
+                            </span>
+                        </div> <br>
 
-                        <!-- <mat-form-field>
+                    <!-- <mat-form-field>
                             <input matInput placeholder="Video Title" [(ngModel)]="video_array[i].video_title"
                                 [ngModelOptions]="{standalone: true}">
                         </mat-form-field><br> -->
 
-                        <!-- <mat-form-field>
+                    <!-- <mat-form-field>
                             <textarea matInput placeholder="Video Description"
                                 [(ngModel)]="video_array[i].video_description"
                                 [ngModelOptions]="{standalone: true}"></textarea>
@@ -322,23 +370,19 @@
 
 
 
-                        <!-- Is this mandatory video? -->
-                        <!-- <mat-form-field>
+                    <!-- Is this mandatory video? -->
+                    <!-- <mat-form-field>
                             <input type="number" matInput placeholder="Priority"
                                 [(ngModel)]=video_array[i].video_priority [ngModelOptions]="{standalone: true}">
                             <mat-icon matSuffix>Video Priority</mat-icon>
                         </mat-form-field> -->
-                        <!-- <section class="example-section">
+                    <!-- <section class="example-section">
                             <mat-checkbox matInput [(ngModel)]="video_array[i].video_skippable"
                                 [ngModelOptions]="{standalone: true}">Skippable video ?
                             </mat-checkbox>
                         </section><br> -->
-                        <span class="adddeletecls">
-                            <i class="material-icons addbtn" (click)="addVideo('edit',i,item)">edit</i>
-                            <i class="material-icons delbtn" (click)="removevideo(i)">delete</i>
-                        </span>
 
-                    </ng-container>
+
 
                 </div>
 
