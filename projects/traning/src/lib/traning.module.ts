@@ -12,7 +12,7 @@ import { AddEditLessionsComponent } from './manage-lessions/add-edit-lessions/ad
 import { AddEditCenterComponent } from './training-center/add-edit-center/add-edit-center.component';
 import { ListingTrainingComponent } from './manage-training/listing-training/listing-training.component';
 import { DialogBoxComponent } from './common/dialog-box/dialog-box.component';
-import { ListLessionComponent } from './manage-lessions/list-lession/list-lession.component';
+import { AudioVideoFileDialogComponent, ListLessionComponent } from './manage-lessions/list-lession/list-lession.component';
 import { CKEditorModule } from 'ngx-ckeditor';
 import { FileUploadModule} from 'file-upload-lib-influxiq';
 import { ListComponent,Dialogtest } from './training-center/list/list.component';
@@ -66,7 +66,8 @@ import { AddEditQuizComponent } from './manage-quiz/add-edit-quiz/add-edit-quiz.
     ListQuizComponent,
     AddEditQuizComponent,
     LessonQuizModalComponent,
-    AddAudioVideoFileDialogComponent
+    AddAudioVideoFileDialogComponent,
+    AudioVideoFileDialogComponent
   ],
   imports: [
     HttpClientModule,
@@ -88,6 +89,6 @@ import { AddEditQuizComponent } from './manage-quiz/add-edit-quiz/add-edit-quiz.
   
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [CookieService, ApiService,DatePipe],
-  entryComponents:[DialogBoxComponent,Dialogtest,PurchaseModalComponent,ReviewLessonPlanComponent,ScheduleModalComponent,questionDataModalComponent,UnlockLessonModalComponent,videoDialogComponent,LessonVideoModalComponent,LessonQuizModalComponent,AddAudioVideoFileDialogComponent]
+  entryComponents:[DialogBoxComponent,Dialogtest,PurchaseModalComponent,ReviewLessonPlanComponent,ScheduleModalComponent,questionDataModalComponent,UnlockLessonModalComponent,videoDialogComponent,LessonVideoModalComponent,LessonQuizModalComponent,AddAudioVideoFileDialogComponent,AudioVideoFileDialogComponent]
 })
 export class TraningModule { }
