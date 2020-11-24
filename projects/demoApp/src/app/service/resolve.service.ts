@@ -34,7 +34,7 @@ public user_details:any;
         // this.userType=this.user_details.user_type;
         // this.userId=this.user_details._id;
         this.userType = JSON.parse(this.cookiesService.get('type'));
-        this.userId = JSON.parse(this.cookiesService.get('userid'));
+         this.userId = JSON.parse(this.cookiesService.get('userid'));
 
   }
 
