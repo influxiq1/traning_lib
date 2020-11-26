@@ -1,7 +1,12 @@
 <div class="maindivcls">
 
     <div class="headercls" *ngIf="data?.heading != null">
-        <h2 style="text-align:center;"><u>{{data.heading}}</u></h2>
+        <span class="headercls">
+
+            <h2><u>{{data.heading}}</u></h2>
+
+        </span>
+
     </div>
 
 
@@ -75,7 +80,7 @@
             </audio>
 
             <mat-card-title>{{audioFields.audio.fileservername }}</mat-card-title>
-            
+
             <span class="closecard" (click)="clear_file(data.type_flag)"><i class="material-icons">clear</i></span>
 
         </mat-card>

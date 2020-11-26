@@ -612,7 +612,7 @@ export class ListLessionComponent implements OnInit {
       height: '500px',
       data: { 'data_array': data_array, 'type_flag': flag, 'video_base_url': video_base_url, 'val': val }
     });
-    // dialogRef.disableClose = true;
+    dialogRef.disableClose = true;
     dialogRef.afterClosed().subscribe(result => {
 
     })

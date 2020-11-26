@@ -2,7 +2,7 @@
     <div *ngIf="data.type_flag=='videoflag'  ">
 
 
-        <h2>Lesson Videos </h2> <br>
+        <h2 class="listheader" ><u>  Lesson Videos </u></h2> <br>
         <div *ngFor="let item of video_arr;let i =index">
             <mat-card>
                 <iframe width="560" height="315" [src]='item.safe_url' frameborder="0"
@@ -23,7 +23,7 @@
 
     <div *ngIf="data.type_flag=='fileflag' ">
 
-        <h2>Lesson Files and Images</h2>
+        <h2 class="listheader">Lesson Files </h2>
 
 
         <div *ngFor="let item of data_array;let i =index">
@@ -58,7 +58,7 @@
 
     </div>
     <div *ngIf="data.type_flag=='audioflag'">
-        <h2>
+        <h2 class="listheader">
             Lesson Audio
         </h2>
         <div *ngFor="let item of data_array;let i =index">
