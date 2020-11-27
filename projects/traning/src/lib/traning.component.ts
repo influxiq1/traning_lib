@@ -537,7 +537,7 @@ export class TraningComponent implements OnInit {
     //   video_priority: '',
     //   video_skippable: false
     // })
-    console.log(this.video_array, 'this.video_array', key, i, item);
+    // console.log(this.video_array, 'this.video_array', key, i, item);
 
     if (key == 'add') {
       dataObj = {
@@ -548,12 +548,12 @@ export class TraningComponent implements OnInit {
         video_skippable: false
       }
       heading = 'Add Lesson Video';
-      buttonName = 'Add Video'
+      buttonName = 'Add'
     }
     if (key == 'edit') {
       dataObj = item;
       heading = 'Edit Lesson Video';
-      buttonName = 'Update Video'
+      buttonName = 'Update'
     }
 
     console.log(dataObj, 'dataObj')
@@ -616,13 +616,13 @@ export class TraningComponent implements OnInit {
         file_skippable: false
       }
       heading = 'Add Lesson File';
-      buttonName = 'Add File';
+      buttonName = 'Add ';
     }
 
     if (key == 'edit') {
       dataObj = item;
       heading = 'Edit Lesson File';
-      buttonName = 'Update File';
+      buttonName = 'Update';
     }
 
 
@@ -670,12 +670,12 @@ export class TraningComponent implements OnInit {
         audio_skippable: false
       }
       heading = 'Add Lesson Audio';
-      buttonName = 'Add Audio'
+      buttonName = 'Add'
     }
     if (key == 'edit') {
       dataObj = item,
         heading = 'Edit Lesson Audio',
-        buttonName = 'Update Audio'
+        buttonName = 'Update '
     }
 
 
@@ -1222,8 +1222,7 @@ export class AddAudioVideoFileDialogComponent {
       this.bucket_url=data.bucket_url;
     }
 
-
-    console.log(data, 'data++')
+    // console.log(data, 'data++')
 
     if (this.data.type_flag == 'video') {
       console.log(data, 'data++ cond')
@@ -1261,9 +1260,13 @@ export class AddAudioVideoFileDialogComponent {
 
 
   addaudio(arrayName) {
+    
+    console.log(arrayName,'arrayName 11')
 
     if (this.uploadConfigData.files != null && this.uploadConfigData.files[0] != null) {
       if (arrayName == 'audio_array') {
+
+        console.log(arrayName,'arrayName 22')
 
         var file_name_str = this.uploadConfigData.files[0].upload.data.data.filelocalname;
 
@@ -1273,14 +1276,14 @@ export class AddAudioVideoFileDialogComponent {
 
         file_name_str = file_name_str.substring(file_name_str.indexOf(file_name_str) + str_no);
 
-        // console.log(str_no, 'type++', file_name_str)
+        console.log(str_no, 'type++', file_name_str)
 
         this.uploadConfigData.files[0].upload.data.data.file_type = file_name_str;
 
         this.audioFields.audio = this.uploadConfigData.files[0].upload.data.data;
       }
 
-      console.log(this.audioFields, 'audio_array')
+      console.log(this.audioFields, 'audio_array ++')
     }
 
     this.data.flag = 'yes';

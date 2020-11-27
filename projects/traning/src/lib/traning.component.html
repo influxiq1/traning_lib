@@ -233,16 +233,16 @@
                     <!-- <lib-file-upload [config]="uploadConfigData"></lib-file-upload> -->
 
                     <mat-card class="example-card imgcard"
-                        *ngIf="audio_array[i].audio != null && audio_array[i].audio.fileservername !=null">
+                        *ngIf="audio_array[i].audio != null ">
 
+                        <div *ngIf="audio_array[i].audio.fileservername !=null">
+                            <audio controls>
 
-                        <audio controls>
-
-                            <source src="{{bucket_url + audio_array[i].audio.fileservername }}" type="audio/ogg">
-                            <source src="{{ bucket_url + audio_array[i].audio.fileservername }}" type="audio/mpeg">
-                            Your browser does not support the audio element.
-                        </audio>
-
+                                <source src="{{bucket_url + audio_array[i].audio.fileservername }}" type="audio/ogg">
+                                <source src="{{ bucket_url + audio_array[i].audio.fileservername }}" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
                         <mat-card-title>{{ audio_array[i].audio.fileservername }}</mat-card-title>
                         <!-- <mat-card-subtitle>{{ audio_array[i].audio.type }}</mat-card-subtitle> -->
                         <span class="closecard" (click)="clear_file('audio_array',i)"><i
@@ -331,31 +331,32 @@
 
                 <div *ngFor="let item of video_array; let i=index;trackBy: trackByFn" class="fromClass addvideoblock">
 
-                        <div>
+                    <div>
 
-                            <span>
-                                <b>Video Url : </b> 
-                            </span><span matPrefix>https://www.youtube.com/watch?v={{video_array[i].video_url}} &nbsp;</span>
-                           
-                            <mat-icon matSuffix class="clickable" (click)="preview_video(video_array[i].video_url)">
-                                remove_red_eye</mat-icon><br>
-                            <span>
-                                <b>Video Name : </b> {{video_array[i].video_title}}
-                            </span><br>
-                            <span>
-                                <b>Video Description :</b> {{video_array[i].video_description}}
-                            </span><br>
-                            <span>
-                                <b>Video Priority :</b> {{video_array[i].video_priority}}
-                            </span><br>
-                            <span>
-                                <b>Skipeble Video :</b> {{video_array[i].video_skippable}}
-                            </span><br>
-                            <span class="adddeletevideocls">
-                                <i class="material-icons addbtn" (click)="addVideo('edit',i,item)">edit</i>
-                                <i class="material-icons delbtn" (click)="removevideo(i)">delete</i>
-                            </span>
-                        </div> <br>
+                        <span>
+                            <b>Video Url : </b>
+                        </span><span matPrefix>https://www.youtube.com/watch?v={{video_array[i].video_url}}
+                            &nbsp;</span>
+
+                        <mat-icon matSuffix class="clickable" (click)="preview_video(video_array[i].video_url)">
+                            remove_red_eye</mat-icon><br>
+                        <span>
+                            <b>Video Name : </b> {{video_array[i].video_title}}
+                        </span><br>
+                        <span>
+                            <b>Video Description :</b> {{video_array[i].video_description}}
+                        </span><br>
+                        <span>
+                            <b>Video Priority :</b> {{video_array[i].video_priority}}
+                        </span><br>
+                        <span>
+                            <b>Skipeble Video :</b> {{video_array[i].video_skippable}}
+                        </span><br>
+                        <span class="adddeletevideocls">
+                            <i class="material-icons addbtn" (click)="addVideo('edit',i,item)">edit</i>
+                            <i class="material-icons delbtn" (click)="removevideo(i)">delete</i>
+                        </span>
+                    </div> <br>
 
                     <!-- <mat-form-field>
                             <input matInput placeholder="Video Title" [(ngModel)]="video_array[i].video_title"

@@ -33,6 +33,8 @@ export interface AudioVideoDialog {
   type_flag: any;
   data_array: any;
   video_base_url; any;
+  bucket_url:any
+
 }
 
 export interface DialogData {
@@ -70,6 +72,7 @@ export class ListLessionComponent implements OnInit {
   public allTrashData: any = [];
   public trashFlag: any = 0;
   public dnaFlag: any;
+  public bucket_url: any
   public trashButtonText: any = "View Trash";
   public trainingCounts: any = {
     "activatedtrainingcount": "",
@@ -135,8 +138,12 @@ export class ListLessionComponent implements OnInit {
   @Input()
   set IsItDna(val: any) {
     this.dnaFlag = val;
-    // console.log("dna flag",this.dnaFlag);
-
+    // console.log("dna flag",this.dnaFlag);  
+  }
+  @Input()
+  set BuketUrl(BuketUrl: any) {
+    this.bucket_url = (BuketUrl) || '<no name set>';
+    this.bucket_url=this.bucket_url.url;
   }
   constructor(public dialog: MatDialog, public apiService: ApiService, public router: Router, public snakBar: MatSnackBar, public sanitizer: DomSanitizer) {
     setTimeout(() => {
@@ -610,7 +617,7 @@ export class ListLessionComponent implements OnInit {
       panelClass: 'lesson_videomodal',
       width: '800px',
       height: '500px',
-      data: { 'data_array': data_array, 'type_flag': flag, 'video_base_url': video_base_url, 'val': val }
+      data: { 'data_array': data_array, 'type_flag': flag, 'video_base_url': video_base_url, 'val': val, 'bucket_url': this.bucket_url }
     });
     dialogRef.disableClose = true;
     dialogRef.afterClosed().subscribe(result => {
@@ -627,20 +634,24 @@ export class ListLessionComponent implements OnInit {
 
 })
 export class AudioVideoFileDialogComponent {
+  public uploadConfigData: any = {};
+
   type_flag: any;
-  bucket_url: any = 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/';
+  bucket_url: any //= 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/';
   data_array: any = {};
   video_base_url: any = 'https://www.youtube.com/embed/';
   video_id: any;
 
-  public video_arr:any=[];
+  public video_arr: any = [];
 
 
   constructor(
     public dialogRef: MatDialogRef<AudioVideoFileDialogComponent>, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: AudioVideoDialog, public sanitizer: DomSanitizer) {
-
+    if (this.data.type_flag == 'audio' || this.data.type_flag == 'file') {
+      this.bucket_url=data.bucket_url;
+    }
+    console.log(data,'datacjbtxrtvybun')
     this.data_array = data.data_array;
-
 
 
     if (data.type_flag == 'videoflag') {
@@ -650,7 +661,7 @@ export class AudioVideoFileDialogComponent {
 
         var url = this.video_base_url + data.data_array[i].video_url + '?rel=0&modestbranding=1&autoplay=0';
 
-        console.log(url,'url')
+        console.log(url, 'url')
 
         data.data_array[i].safe_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
 
@@ -658,7 +669,7 @@ export class AudioVideoFileDialogComponent {
         this.video_arr.push(data.data_array[i])
       }
 
-      console.log( data.data_array,' data.data_array')
+      console.log(data.data_array, ' data.data_array')
 
     }
 
