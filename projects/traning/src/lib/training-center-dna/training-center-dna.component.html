@@ -37,7 +37,7 @@
         <div class="selectedclass" *ngFor="let item of trainingCategoryList;let i = index"
           (click)="activatedclass(item)">
 
-          <mat-list-item *ngIf="item.childcat.length>=1">{{item.catagory_name}}</mat-list-item>
+          <mat-list-item *ngIf="item?.childcat?.length>=1">{{item.catagory_name}}</mat-list-item>
           <!-- <span>{{item | json}}</span> -->
           <!-- parent section -->
 
