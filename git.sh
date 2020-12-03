@@ -1,5 +1,5 @@
 git add .
-git commit -m 'enter your comment' $var1 
+git commit -m 'uptodate '  
 git pull origin master
 npm i
 git push origin master

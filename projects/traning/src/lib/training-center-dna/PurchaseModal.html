@@ -1,63 +1,63 @@
 <div class="generalmodalcls">
-    <div class="modal-content">
-          <div class="logowrapperouter">
-              <div class="logowrapper">
-                  <!-- <img src="../../assets/images/logomain.png"> -->
-              </div>
-          </div>       
-       
-          <div mat-dialog-content class="headercls">
-            <h2>Buy Your Lesson Session</h2>
-          </div> 
+  <div class="modal-content">
+    <div class="logowrapperouter">
+      <div class="logowrapper">
+        <!-- <img src="../../assets/images/logomain.png"> -->
+      </div>
+    </div>
 
-          <!-- <mat-card aria-label="Select an option" [(ngModel)]="session_id" 
+    <div mat-dialog-content class="headercls">
+      <h2>Buy Your Lesson Session</h2>
+    </div>
+
+    <!-- <mat-card aria-label="Select an option" [(ngModel)]="session_id" 
           (change)="ngOnChanges($event)" *ngFor="let item of data.product_data">
           <mat-card-content>
             {{item.productname}}
           </mat-card-content>
           </mat-card> -->
-        <div class="modalscrollcls">
-          <mat-card class="example-card" *ngFor="let item of data.product_data;let i = index;">
-            <!-- <mat-card-header>
+    <div class="modalscrollcls">
+      <mat-card class="example-card" *ngFor="let item of data.product_data;let i = index;">
+        <!-- <mat-card-header>
               <div mat-card-avatar class="example-header-image"></div>
               <mat-card-title>Product Name - {{item.productname}}</mat-card-title>
             </mat-card-header> -->
-            <div class="productcls">
-                <span class="productnamecls" *ngIf="item.productname !=null"><label>Product Name</label><p>{{item.productname}}</p></span>
-            </div>
-
-            <div class="summarycls">
-                <span class="shortsummarycls" *ngIf="item.shortsummary !=null"><label>Summary</label><p>{{item.shortsummary}}</p></span>
-            </div>
-
-            <div class="pricecls">
-                <span class="priceclass" *ngIf="item.price !=null">Price :${{item.price}}</span>
-            </div>
-            <mat-card-actions>
-              <button  mat-raised-button color="primary" (click)="submitLession(item, 'yes','single')" cdkFocusInitial>Single Lesson Buy</button>
-
-              <button  mat-raised-button color="primary" (click)="submitLession(item, 'yes','all')" cdkFocusInitial>All Lesson Buy</button>
-
-            </mat-card-actions>
-          </mat-card>
+        <div class="productcls">
+          <span class="productnamecls" *ngIf="item.productname !=null"><label>Product Name</label>
+            <p>{{item.productname}}</p>
+          </span>
         </div>
-          <br><br>
-          <div class>
-          <span style="color:red">{{message}}</span>
-          </div>
 
-          <mat-dialog-actions class="modalbtncls">
-            <button class="btncancelcls" mat-raised-button color="accent" type="button" 
-            (click)="closedModal()">
-            <span class="material-icons">
-              clear
-              </span></button>
-            <!-- <button class="btnbluecls" mat-raised-button color="primary" (click)="submitLession(session_id, 'yes')" cdkFocusInitial>Submit</button> -->
-          </mat-dialog-actions>
-      </div>
+        <div class="summarycls">
+          <span class="shortsummarycls" *ngIf="item.shortsummary !=null"><label>Summary</label>
+            <p>{{item.shortsummary}}</p>
+          </span>
+        </div>
+
+        <div class="pricecls">
+          <span class="priceclass" *ngIf="item.price !=null">Price :${{item.price}}</span>
+        </div>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="submitLession(item, 'yes','single')" cdkFocusInitial>Single
+            Lesson Buy</button>
+
+          <button mat-raised-button color="primary" (click)="submitLession(item, 'yes','all')" cdkFocusInitial>All
+            Lesson Buy</button>
+
+        </mat-card-actions>
+      </mat-card>
     </div>
-  
-  
-  
-  
-   
+    <br><br>
+    <div class>
+      <span style="color:rgb(241, 20, 20)">{{message}}</span>
+    </div>
+
+    <mat-dialog-actions class="modalbtncls">
+      <button class="btncancelcls" mat-raised-button color="accent" type="button" (click)="closedModal()">
+        <span class="material-icons">
+          clear
+        </span></button>
+      <!-- <button class="btnbluecls" mat-raised-button color="primary" (click)="submitLession(session_id, 'yes')" cdkFocusInitial>Submit</button> -->
+    </mat-dialog-actions>
+  </div>
+</div>

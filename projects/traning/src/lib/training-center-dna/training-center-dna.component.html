@@ -41,7 +41,7 @@
           <!-- <span>{{item | json}}</span> -->
           <!-- parent section -->
 
-          <mat-list-item *ngIf="item.childcat.length==0" (click)="clicktrcataining(item._id,item.catagory_name)"
+          <mat-list-item *ngIf="item?.childcat?.length==0" (click)="clicktrcataining(item._id,item.catagory_name)"
             [ngClass]="paramsTrainingId ==  item._id ? 'classongoing':
           ( item.percentage >= 100 ? 'classdone' : 'classnotdone')">
             <div class="categoryname">
@@ -209,8 +209,6 @@
                   <span>{{ item.video_description }}</span>
 
                 </div>
-
-
               </mat-card>
               <mat-card class="example-card" *ngIf="item.mediaType=='audio' ">
                 <!-- <div class="paragraphwrapper">
@@ -243,7 +241,6 @@
                   </mat-carousel>
                   <span>{{ item.file_description }}</span>
                 </div>
-
               </mat-card>
               <ng-container
                 *ngIf="item.test_associate_training=='No' && item.mediaType != 'audio' && item.mediaType != 'video'">
@@ -339,7 +336,7 @@
                 <mat-card class="banner1cls" *ngIf="(userType=='admin' || userType=='mentor') && i==0 && 
                 lesson_content.has_lessonplan == 1">
 
-                  <div class="bannerclassmentor" *ngIf="lesson_id_flag == true "> 
+                  <div class="bannerclassmentor" *ngIf="lesson_id_flag == true ">
                     <div class='reviewcls'>
                       Review the Lesson Plan Material
                     </div>
@@ -369,7 +366,8 @@
               <!-- banner 2 start here -->
               <!-- *ngIf="orders_button == true || preview_button == true || schedule_button == true" -->
               <div>
-                <mat-card class="banner2cls" *ngIf="userType=='mentee' && lesson_content.has_lessonplan == 1 && lesson_content.lessonplan_value=='purchasable' && i==0">
+                <mat-card class="banner2cls"
+                  *ngIf="userType=='mentee' && lesson_content.has_lessonplan == 1 && lesson_content.lessonplan_value=='purchasable' && i==0">
                   <div>
                     <div class="bannercls" *ngIf="orders_button == true">
                       <div>
@@ -649,8 +647,9 @@
 
               <!-- banner 2 start here -->
 
-              <div >
-                <mat-card class="banner2cls" *ngIf="userType=='mentee' && lesson_content.has_lessonplan == 1 && lesson_content.lessonplan_value=='purchasable' && i==0">
+              <div>
+                <mat-card class="banner2cls"
+                  *ngIf="userType=='mentee' && lesson_content.has_lessonplan == 1 && lesson_content.lessonplan_value=='purchasable' && i==0">
 
 
                   <div *ngIf="orders_button == true || preview_button == true">
