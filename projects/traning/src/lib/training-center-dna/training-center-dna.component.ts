@@ -12,7 +12,7 @@ import { MatProgressBarModule, MatRadioModule, MatSliderModule } from '@angular/
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable, interval, Subscription } from 'rxjs';
-
+import { Track } from 'ngx-audio-player';
 
 
 export interface DialogData {
@@ -147,6 +147,38 @@ export class TrainingCenterDnaComponent implements OnInit {
   public lesson_locked_by_user: any = 1;
   public video_base_url: any = 'https://www.youtube.com/embed/';
   public quizflag: boolean = false;
+  public bucket_url: any = 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/'
+  
+  msaapDisplayTitle = true;
+  msaapDisplayPlayList = true;
+  msaapPageSizeOptions = [2,4,6];
+  msaapDisplayVolumeControls = true;
+  msaapDisablePositionSlider = true;
+    
+
+  // Material Style Advance Audio Player Playlist
+  // msaapPlaylist: Track[] = [
+  //   {
+  //     title: 'Audio One Title',
+  //     link: 'https://all-frontend-assets.s3.amazonaws.com/summum.us/assets/audio/SummumAudioBookIntroductionSample.mp3',
+  //   },
+
+  // ];
+
+  msaapPlaylist: Track[] = [
+    {
+      title: 'Audio One Title',
+      link: 'Link to Audio One URL'
+    },
+    {
+      title: 'Audio Two Title',
+      link: 'Link to Audio Two URL'
+    },
+    {
+      title: 'Audio Three Title',
+      link: 'Link to Audio Three URL'
+    },
+  ];
 
   @Input()
   set lessonplanmaterialRoute(route: any) {
@@ -699,6 +731,9 @@ export class TrainingCenterDnaComponent implements OnInit {
     }, 200);
   }
 
+  onEnded(val){
+    console.log(val,'onEnded||onEnded')
+  }
   ngOnInit() {
 
     // console.log(this.userId.length, 'userId')
@@ -1603,6 +1638,11 @@ export class TrainingCenterDnaComponent implements OnInit {
   }
 
 
+  tractAudio(val){
+    console.log(val,'++')
+  }
+
+
 }
 
 
@@ -1778,10 +1818,11 @@ export class LessonVideoModalComponent {
   }
 
   savePlayer(event) {
-    // console.log(event, 'save', this.playerVars)
+    console.log(event, 'save', this.playerVars)
   }
 
   onStateChange(event) {
+    console.log(event, 'state chn', this.playerVars)
 
     //duration calculation
     var sec_num = parseInt(event.target.playerInfo.duration, 10);

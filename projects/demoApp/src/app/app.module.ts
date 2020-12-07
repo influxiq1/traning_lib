@@ -28,6 +28,7 @@ import { LessonPlanMaterialComponent } from './lesson-plan-material/lesson-plan-
 import { ListQuizComponent } from './manage-quiz/list-quiz/list-quiz.component';
 import { AddEditQuizComponent } from './manage-quiz/add-edit-quiz/add-edit-quiz.component';
 
+import { NgxAudioPlayerModule } from 'ngx-audio-player';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { AddEditQuizComponent } from './manage-quiz/add-edit-quiz/add-edit-quiz.
     ReactiveFormsModule,
     RouterModule,
     RouterModule.forRoot([]),
-    DemoMaterialModule
+    DemoMaterialModule,
+    NgxAudioPlayerModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

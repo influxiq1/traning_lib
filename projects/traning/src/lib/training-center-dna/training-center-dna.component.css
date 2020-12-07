@@ -206,3 +206,31 @@
       .example-radio-button {
         margin: 5px;
       }
+.Audio_arraycls{
+    display: flex;justify-content: space-between;width:100%;
+}
+.Audiocls{
+    margin-right: 38px;
+}
+.Audiocls p{
+    background-color: cyan;
+    height: 20px;
+    padding: 7px;
+    font-size: large;
+    margin-top: -4px;
+    height: auto;
+}
+.File_arraycls{
+    display: flex;justify-content: space-between;width:100%;
+}
+.Filecls{
+    margin-right: 38px;
+}
+.Filecls p{
+    background-color: cyan;
+    height: 20px;
+    padding: 7px;
+    font-size: large;
+    margin-top: -4px;
+    height: auto;
+}
