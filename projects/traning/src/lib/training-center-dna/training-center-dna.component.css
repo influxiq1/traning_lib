@@ -244,16 +244,6 @@
 .videomainwrapper .videoimg{ width: 100%; opacity: 0.5;}
 
 .videoplayimg{ position: absolute; width: 20%; left: 40%; top: 40%;}
-.videotitlecls {
-    background-color: aqua;
-    width: 86px;
-    border-radius: 1px;
-}
-.videoDescls{
-    background-color: aqua;
-    width: 86px;
-    border-radius: 1px;
-}
 
 .lessondatadiv .mat-card-content{display: flex; flex-wrap: wrap; justify-content: space-between;}
 .lessondatadiv .mat-card-content .trainingcentercls_newcls{ width: 49%; display: block;}
