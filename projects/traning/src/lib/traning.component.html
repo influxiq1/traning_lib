@@ -174,16 +174,16 @@
                                 class="material-icons">clear</i></span>
                         <div>
                             <span>
-                                <b>File Title : </b> {{file_array[i].file_title}}
+                                <b> Title : </b> {{file_array[i].file_title}}
                             </span><br>
                             <span>
-                                <b>File Description :</b> {{file_array[i].file_description}}
+                                <b> Description :</b> {{file_array[i].file_description}}
                             </span><br>
                             <span>
-                                <b>File Priority :</b> {{file_array[i].file_priority}}
+                                <b>Priority :</b> {{file_array[i].priority}}
                             </span><br>
                             <span>
-                                <b>Skipeble File :</b> {{file_array[i].file_skippable}}
+                                <b>Skippable   :</b> {{file_array[i].file_skippable}}
                             </span><br>
                             <span class="adddeletefilecls">
                                 <i class="material-icons addbtn" (click)="addflie('edit',i,item)">edit</i>
@@ -250,16 +250,16 @@
 
                         <div>
                             <span>
-                                <b>Audio Title : </b> {{audio_array[i].audio_title}}
+                                <b> Title : </b> {{audio_array[i].audio_title}}
                             </span><br>
                             <span>
-                                <b>Audio Description :</b> {{audio_array[i].audio_description}}
+                                <b> Description :</b> {{audio_array[i].audio_description}}
                             </span><br>
                             <span>
-                                <b>Audio Priority :</b> {{audio_array[i].audio_priority}}
+                                <b> Priority :</b> {{audio_array[i].priority}}
                             </span><br>
                             <span>
-                                <b>Skipeble Audio :</b> {{audio_array[i].audio_skippable}}
+                                <b>Skippable   :</b> {{audio_array[i].audio_skippable}}
                             </span><br>
                             <span class="adddeleteAudiocls">
                                 <i class="material-icons addbtn" (click)="addAudio('edit',i,item)">edit</i>
@@ -334,23 +334,23 @@
                     <div>
 
                         <span>
-                            <b>Video Url : </b>
+                            <b> Url : </b>
                         </span><span matPrefix>https://www.youtube.com/watch?v={{video_array[i].video_url}}
                             &nbsp;</span>
 
                         <mat-icon matSuffix class="clickable" (click)="preview_video(video_array[i].video_url)">
                             remove_red_eye</mat-icon><br>
                         <span>
-                            <b>Video Title : </b> {{video_array[i].video_title}}
+                            <b>Title : </b> {{video_array[i].video_title}}
                         </span><br>
                         <span>
-                            <b>Video Description :</b> {{video_array[i].video_description}}
+                            <b>Description :</b> {{video_array[i].video_description}}
                         </span><br>
                         <span>
-                            <b>Video Priority :</b> {{video_array[i].video_priority}}
+                            <b> Priority :</b> {{video_array[i].priority}}
                         </span><br>
                         <span>
-                            <b>Skipeble Video :</b> {{video_array[i].video_skippable}}
+                            <b>Skippable   :</b> {{video_array[i].video_skippable}}
                         </span><br>
                         <span class="adddeletevideocls">
                             <i class="material-icons addbtn" (click)="addVideo('edit',i,item)">edit</i>

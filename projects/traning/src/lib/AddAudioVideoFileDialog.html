@@ -12,7 +12,7 @@
     <div class="modalcomponent">
 
         <!-- for file  -->
-        <div class="videocontainer" *ngIf="data.type_flag != null && data.type_flag == 'file'" >
+        <div class="videocontainer" *ngIf="data.type_flag != null && data.type_flag == 'file'">
 
             <lib-file-upload [config]='uploadConfigData'></lib-file-upload>
 
@@ -49,11 +49,11 @@
             </mat-form-field>
 
             <mat-form-field class="flietitlecls">
-                <input type="number" matInput placeholder="File Priority" [(ngModel)]="fileFields.file_priority">
+                <input type="number" matInput placeholder="File Priority" [(ngModel)]="fileFields.priority">
             </mat-form-field>
 
             <section class="example-section">
-                <mat-checkbox matInput [(ngModel)]="fileFields.file_skippable">Skippable File ?
+                <mat-checkbox matInput [(ngModel)]="fileFields.file_skippable">Skippable ?
                 </mat-checkbox>
             </section>
 
@@ -88,20 +88,20 @@
 
 
             <mat-form-field>
-                <input type="text" matInput placeholder="Audio Title" [(ngModel)]="audioFields.audio_title">
+                <input type="text" matInput placeholder=" Title" [(ngModel)]="audioFields.audio_title">
             </mat-form-field>
 
             <mat-form-field>
-                <textarea type="text" matInput placeholder="Audio Description"
+                <textarea type="text" matInput placeholder="Description"
                     [(ngModel)]="audioFields.audio_description"></textarea>
             </mat-form-field>
 
             <mat-form-field class="flietitlecls">
-                <input type="number" matInput placeholder="Audio Priority" [(ngModel)]="audioFields.audio_priority">
+                <input type="number" matInput placeholder=" Priority" [(ngModel)]="audioFields.priority">
             </mat-form-field>
 
             <section class="example-section">
-                <mat-checkbox matInput [(ngModel)]="audioFields.audio_skippable">Skippable Audio ?
+                <mat-checkbox matInput [(ngModel)]="audioFields.audio_skippable">Skippable ?
                 </mat-checkbox>
             </section>
 
@@ -122,20 +122,20 @@
             </mat-form-field>
 
             <mat-form-field>
-                <input matInput placeholder="Video Title" [(ngModel)]="videoFields.video_title">
+                <input matInput placeholder=" Title" [(ngModel)]="videoFields.video_title">
             </mat-form-field>
 
             <mat-form-field>
-                <textarea matInput placeholder="Video Description"
+                <textarea matInput placeholder=" Description"
                     [(ngModel)]="videoFields.video_description"></textarea>
             </mat-form-field>
 
             <mat-form-field>
-                <input type="number" matInput placeholder="Video Priority" [(ngModel)]="videoFields.video_priority">
+                <input type="number" matInput placeholder=" Priority" [(ngModel)]="videoFields.priority">
             </mat-form-field>
 
             <section class="example-section">
-                <mat-checkbox matInput [(ngModel)]="videoFields.video_skippable">Skippable video ?
+                <mat-checkbox matInput [(ngModel)]="videoFields.video_skippable">Skippable  ?
                 </mat-checkbox>
             </section>
 

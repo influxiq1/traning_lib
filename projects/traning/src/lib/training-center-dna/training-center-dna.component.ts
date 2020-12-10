@@ -12,7 +12,6 @@ import { MatProgressBarModule, MatRadioModule, MatSliderModule } from '@angular/
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable, interval, Subscription } from 'rxjs';
-import { Track } from 'ngx-audio-player';
 
 
 export interface DialogData {
@@ -148,13 +147,13 @@ export class TrainingCenterDnaComponent implements OnInit {
   public video_base_url: any = 'https://www.youtube.com/embed/';
   public quizflag: boolean = false;
   public bucket_url: any = 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/'
-  
+  public lessoncontent: any = []
   msaapDisplayTitle = true;
   msaapDisplayPlayList = true;
-  msaapPageSizeOptions = [2,4,6];
+  msaapPageSizeOptions = [2, 4, 6];
   msaapDisplayVolumeControls = true;
   msaapDisablePositionSlider = true;
-    
+  public l_content:any=[];
 
   // Material Style Advance Audio Player Playlist
   // msaapPlaylist: Track[] = [
@@ -165,20 +164,6 @@ export class TrainingCenterDnaComponent implements OnInit {
 
   // ];
 
-  msaapPlaylist: Track[] = [
-    {
-      title: 'Audio One Title',
-      link: 'Link to Audio One URL'
-    },
-    {
-      title: 'Audio Two Title',
-      link: 'Link to Audio Two URL'
-    },
-    {
-      title: 'Audio Three Title',
-      link: 'Link to Audio Three URL'
-    },
-  ];
 
   @Input()
   set lessonplanmaterialRoute(route: any) {
@@ -208,6 +193,8 @@ export class TrainingCenterDnaComponent implements OnInit {
     this.next_button_access = false;
     this.quizflag = false;
     this.lesson_content = results.lesson_content[0];
+    this.l_content=results.lesson_content;
+
     console.log(results.lesson_content[0], 'results.lesson_content[0]')
 
     if (results.lesson_content[0].has_lessonplan == 1 && results.lesson_content[0].has_test_lesson == 0) {
@@ -729,10 +716,14 @@ export class TrainingCenterDnaComponent implements OnInit {
       this.paramsTrainingId = activatedRoute.snapshot.params.associated_training;
       // console.log(this.paramsTrainingId, '>>>>')
     }, 200);
+    this.activatedRoute.data.subscribe((response: any) => {
+      // console.log(response.trainingdata.results.lesson_attachements_data[0].lesson_attachements[0].type, 'activatedRoute')
+      this.lessoncontent=response.trainingdata.results.lesson_attachements_data[0].lesson_attachements
+    })
+    console.log(this.lessoncontent,'lessoncontent')
   }
-
-  onEnded(val){
-    console.log(val,'onEnded||onEnded')
+  onEnded(val) {
+    console.log(val, 'onEnded||onEnded')
   }
   ngOnInit() {
 
@@ -1140,6 +1131,9 @@ export class TrainingCenterDnaComponent implements OnInit {
       this.reportPercentage = Math.floor(this.dividend / this.divisor * 100);
       this.lesson_content = this.lesson_data.results.lesson_content[0];
       // console.log(this.lesson_data, '+++++>>>')
+      this.l_content=this.lesson_data.results.lesson_content;
+
+      console.log(this.l_content)
 
       if (this.lesson_data.status == 'success') {
         // console.log(this.lesson_data, '+++++>>>', this.lesson_data.status)
@@ -1638,8 +1632,8 @@ export class TrainingCenterDnaComponent implements OnInit {
   }
 
 
-  tractAudio(val){
-    console.log(val,'++')
+  tractAudio(val) {
+    console.log(val, '++')
   }
 
 

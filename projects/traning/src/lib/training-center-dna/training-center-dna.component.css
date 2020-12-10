@@ -1,7 +1,7 @@
 /* Default Skin */
 
 .leftRightPortion{display:flex;justify-content:space-between}
-.mat-card-content{flex-direction:row;box-sizing:border-box;display:flex}
+.mat-card-content{flex-direction:row;box-sizing:border-box;}
 .row{flex-direction:row;box-sizing:border-box;display:flex;place-content:top space-around;align-items:flex-start;-webkit-box-flex:1;flex:1 1 100%;max-width:100%}
 .column{flex-direction:column;box-sizing:border-box;display:flex}
 .column .rowinner{flex-direction:row;box-sizing:border-box;display:flex;flex:1 1 100%;margin-bottom:10px}
@@ -96,7 +96,7 @@
 .trainingcenterclsnew .paragraphwrapper .paragraphcls p{margin: 5px 0; padding: 0;}
 
 .trainingcenterclsupdate{margin-top: 20px;}
-.trainingcenterclsupdate .rowinner{padding: 5px;display: inherit;width: inherit;background-color: #dfdfdf;margin-top: 3px;cursor: pointer;margin: 5px 0px 5px 0px;}
+.trainingcenterclsupdate .rowinner{padding: 5px;display: inherit;width: inherit;background-color: #dfdfdf;margin-top: 3px;cursor: pointer;margin: 5px 0px 5px 0px; display: flex;}
 
 .lessondatadiv{margin: 20px 0;border: 1px solid #bcbdbf;padding: 20px;display: flex;flex-wrap: wrap;justify-content: space-between;}
 .lessondatadiv .lessondatabuttoncls{display: flex;justify-content: space-between;width:100%;}
@@ -125,8 +125,8 @@
 .lessontitlecls{margin-top: 10px;} 
 .banner1cls .mat-card-content,.banner2cls{background: #1095e7;
     border-radius: 8px;
-    padding: 25px;
-    height: 256px;}
+    padding: 25px; 
+     }
 
 .bannercls{padding: 5px;
     margin: 0 0 10px;
@@ -234,3 +234,34 @@
     margin-top: -4px;
     height: auto;
 }
+
+.training_mainwrappercon{ margin: 5px 0; position: relative;}
+
+.training_mainwrappercon .mat-card-image{ width: 100%; margin: 0px!important;}
+
+.videomainwrapper{ width: 100%; background: #000; position: relative;}
+
+.videomainwrapper .videoimg{ width: 100%; opacity: 0.5;}
+
+.videoplayimg{ position: absolute; width: 20%; left: 40%; top: 40%;}
+.videotitlecls {
+    background-color: aqua;
+    width: 86px;
+    border-radius: 1px;
+}
+.videoDescls{
+    background-color: aqua;
+    width: 86px;
+    border-radius: 1px;
+}
+
+.lessondatadiv .mat-card-content{display: flex; flex-wrap: wrap; justify-content: space-between;}
+.lessondatadiv .mat-card-content .trainingcentercls_newcls{ width: 49%; display: block;}
+.lessondatadiv .mat-card-content .trainingcentercls_newcls:first-of-type{ width: 100%;}
+
+
+ .content_div_cls{ display: flex; flex-wrap: wrap; justify-content: space-between;}
+
+ .content_div_cls .training_mainwrappercon{ width: 49%;}
+
+ 

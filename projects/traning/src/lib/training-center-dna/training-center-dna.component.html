@@ -100,7 +100,7 @@
 
       <!-- start content for lesson data -->
       <!-- *ngIf="firstIndex != 0" -->
-      <span class="lessondatadiv">
+      <div class="lessondatadiv">
         <span class="lessondatabuttoncls" id="lessonContentData">
           <div class="btnclsprev">
             <ng-container class="prevbtn"
@@ -120,8 +120,9 @@
         </span>
 
         <mat-card-content>
-          <span fxLayout="row" class="trainingcentercls" *ngFor="let item of lessonDataList ;let i=index">
-            <ng-container *ngIf="item.expanded ==true && flag === 0 && flag===1">
+          <span fxLayout="row" class="trainingcentercls_newcls" *ngFor="let item of l_content ;let i=index">
+            <!-- *ngIf="item.expanded ==true && flag === 0 && flag===1" -->
+            <ng-container>
               <mat-card-title class="lessontitlecls">
                 {{item.lession_title}}
               </mat-card-title>
@@ -484,7 +485,7 @@
                   <p [innerHtml]="lesson_content.typeHtml" class="paragraphcls"></p>
                 </div>
               </div>
-              <div *ngIf="i == 1">
+              <div class="content_div_cls">
                 <mat-card class="example-card" *ngIf="item.mediaType=='image'">
                   <!-- <div class="paragraphwrapper">
                     <p [innerHtml]="item.image_typeHtml" class="paragraphcls"></p>
@@ -498,7 +499,7 @@
                   </div>
                 </mat-card>
 
-                <mat-card class="example-card"
+                <!-- <mat-card class="example-card"
                   *ngIf="lesson_content.videoflag!=null && lesson_content.videoflag!='undefined' && lesson_content.videoflag==true ">
 
                   <div class="videoWrapper">
@@ -521,9 +522,9 @@
                       </div>
                     </div>
                   </div>
-                </mat-card>
+                </mat-card> -->
 
-                <mat-card class="example-card"
+                <!-- <mat-card class="example-card"
                   *ngIf="lesson_content.audioflag!=null && lesson_content.audioflag!='undefined' && lesson_content.audioflag==true">
                   <div class="Audiowrapper">
                     <div class="Audio_arraycls"
@@ -544,19 +545,65 @@
                       </div>
                     </div>
                   </div>
-                </mat-card>
+                </mat-card> -->
 
-               <p>test audio Z++++++++</p>
+                <!-- <p>test audio Z++++++++</p>
                 <mat-card>
                   <ngx-audio-player [playlist]="msaapPlaylist" [displayTitle]="msaapDisplayTitle" [autoPlay]="false" 
                   muted="muted" [displayPlaylist]="msaapDisplayPlayList" [pageSizeOptions]="pageSizeOptions" (trackEnded)="onEnded($event)"
                       [displayVolumeControls]="msaapDisplayVolumeControls" [disablePositionSlider]="msaapDisablePositionSlider" 
                       [expanded]="true"></ngx-audio-player>
-                </mat-card>
+                </mat-card> -->
+                <div *ngFor="let item of lessoncontent;" class="training_mainwrappercon">
+                  <!-- <mat-card *ngIf="item!=null && item!=undefined && item!= '' "> -->
+                  <div class="audio_div afvmaindiv"
+                    *ngIf="item.type=='audio'&& item.type!=null && item.type!=undefined">
+                    <audio controls (change)="tractAudio($event)">
+                      <source src="{{bucket_url +item.audio.fileservername }}" type="audio/ogg">
+                      <source src="{{ bucket_url +item.audio.fileservername }}" type="audio/mpeg">
+                      Your browser does not support the audio element.
+                    </audio>
+                    <p class="Audio_titlecls">{{ item.audio_title }}</p>
+
+                    <p class="Audio_descriptioncls">{{ item.audio_description }}</p>
+                  </div>
+                  <div class="file_div afvmaindiv" *ngIf="item.type=='file' && item.type!=null && item.type!=undefined">
+                    <span
+                      *ngIf=" item.file.file_type != null && item.file.file_type == 'jpeg' || item.file.file_type == 'png' || item.file.file_type == 'jpg'">
+                      <img mat-card-image [attr.src]="bucket_url +item.file.fileservername">
+                    </span>
+
+                    <span class="filetype_{{item.file.file_type}} mat-card-image"
+                      *ngIf=" item.file.file_type != null && item.file.file_type == 'pdf' || item.file.file_type == 'doc' || item.file.file_type == 'ppt' || item.file.file_type == 'pptx' || item.file.file_type == 'msword'">
+                      <span class="material-icons icon_{{item.file.file_type}}">
+                        picture_as_pdf
+                      </span>
+                    </span>
+                    <p class="File_titlecls">{{ item.file_title }}</p>
+
+                    <p class="File_descriptioncls">{{ item.file_description }}</p>
+                  </div>
+                  <div class="video_div afvmaindiv"
+                    *ngIf="item.type=='video' && item.type!=null && item.type!=undefined">
 
 
+                    <!-- <img class="video_iconcls" (click)="openLessonVideo(item)"
+                        src="https://awsbackend-dev-patient-files-test.s3.amazonaws.com/icon-videoplay.png"> -->
+                    <div class="videomainwrapper">
+                      <img src="https://img.youtube.com/vi/{{item.video_url}}/0.jpg" class="videoimg">
+                      <img (click)="openLessonVideo(item)"
+                        src="https://awsbackend-dev-patient-files-test.s3.amazonaws.com/icon-videoplay.png"
+                        class="videoplayimg">
 
-                <mat-card class="example-card"
+                    </div>
+                    <p class="videotitlecls">{{item.video_title}}</p>
+                    <p class="videoDescls"> {{item.video_description}} </p>
+                  </div>
+                  <!-- </mat-card> -->
+                </div>
+
+
+                <!-- <mat-card class="example-card"
                   *ngIf="lesson_content.fileflag!=null && lesson_content.fileflag!='undefined' && lesson_content.fileflag==true">
                   <div class="Filewrapper">
                     <div class="File_arraycls"
@@ -582,7 +629,7 @@
                       </div>
                     </div>
                   </div>
-                </mat-card>
+                </mat-card> -->
 
                 <mat-card class="example-card" *ngIf="item.mediaType=='audio' ">
                   <!-- <div class="paragraphwrapper">
@@ -805,6 +852,8 @@
 
         </mat-card-content>
 
+
+
         <!-- next prev button again -->
         <!-- *ngIf="firstIndex!=0" -->
         <span class="lessondatabuttoncls">
@@ -826,7 +875,7 @@
           </div>
         </span>
 
-      </span>
+      </div>
       <!--end  content for lesson data -->
     </mat-card-content>
 

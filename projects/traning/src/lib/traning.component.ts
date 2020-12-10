@@ -33,7 +33,7 @@ export interface DialogData1 {
   fileFields: any;
   buttonName: any;
   keyVal: any;
-  bucket_url:any;
+  bucket_url: any;
 }
 
 @Component({
@@ -96,6 +96,7 @@ export class TraningComponent implements OnInit {
   public test_percentage: any = 80;
 
   public imgflag: boolean = false;
+  public type: any;
   public videoflag: boolean = false;
   public fileflag: boolean = false;
   public audioflag: boolean = false;
@@ -146,7 +147,7 @@ export class TraningComponent implements OnInit {
   @Input()
   set BuketUrl(BuketUrl: any) {
     this.bucket_url = (BuketUrl) || '<no name set>';
-    this.bucket_url=this.bucket_url.url;
+    this.bucket_url = this.bucket_url.url;
   }
 
 
@@ -272,21 +273,23 @@ export class TraningComponent implements OnInit {
     //     this.dataForm.value.file_description = this.description;
 
     //     break;
-
     // }
 
     // this.videoflag = true;
     if (this.videoflag == true || this.videoflag == false) {
       this.dataForm.value.videoflag = this.videoflag;
+      this.dataForm.value.type = this.type;
       this.dataForm.value.video_array = this.video_array;
     }
     if (this.audioflag == true || this.audioflag == false) {
       this.dataForm.value.audioflag = this.audioflag;
       this.dataForm.value.audio_array = this.audio_array;
+
     }
     if (this.fileflag == true || this.fileflag == false) {
       this.dataForm.value.fileflag = this.fileflag;
       this.dataForm.value.file_array = this.file_array;
+
     }
 
     if (this.file_array.length == 0) {
@@ -305,6 +308,28 @@ export class TraningComponent implements OnInit {
       this.dataForm.value.audioflag = false;
       // delete this.dataForm.value.audioflag;
       // delete this.dataForm.value.audio_array;
+    }
+
+    this.dataForm.value.lesson_attachements = [];
+
+    if (this.file_array.length > 0) {
+      for (let i in this.file_array) {
+        this.dataForm.value.lesson_attachements.push(this.file_array[i])
+      }
+    }
+
+
+    if (this.audio_array.length > 0) {
+      for (let i in this.audio_array) {
+        this.dataForm.value.lesson_attachements.push(this.audio_array[i])
+      }
+    }
+
+
+    if (this.video_array.length > 0) {
+      for (let i in this.video_array) {
+        this.dataForm.value.lesson_attachements.push(this.video_array[i])
+      }
     }
 
 
@@ -529,7 +554,7 @@ export class TraningComponent implements OnInit {
     let buttonName = '';
     let heading = '';
     let type_flag = 'video';
-    let dataObj: {};
+    let dataObj:any= {};
     // this.video_array.push({
     //   video_url: '',
     //   video_title: '',
@@ -544,8 +569,8 @@ export class TraningComponent implements OnInit {
         video_url: '',
         video_title: '',
         video_description: '',
-        video_priority: '',
-        video_skippable: false
+        priority: '',
+        video_skippable: false,
       }
       heading = 'Add Lesson Video';
       buttonName = 'Add'
@@ -555,6 +580,7 @@ export class TraningComponent implements OnInit {
       heading = 'Edit Lesson Video';
       buttonName = 'Update'
     }
+    dataObj.type='video';
 
     console.log(dataObj, 'dataObj')
 
@@ -602,7 +628,7 @@ export class TraningComponent implements OnInit {
     //   file_priority: '',
     //   file_skippable: false
     // });
-    let dataObj = {};
+    let dataObj :any= {};
     let heading = '';
     let buttonName = '';
     let type_flag = 'file';
@@ -612,8 +638,9 @@ export class TraningComponent implements OnInit {
         file: {},
         file_title: '',
         file_description: '',
-        file_priority: '',
-        file_skippable: false
+        priority: '',
+        file_skippable: false,
+        
       }
       heading = 'Add Lesson File';
       buttonName = 'Add ';
@@ -624,13 +651,17 @@ export class TraningComponent implements OnInit {
       heading = 'Edit Lesson File';
       buttonName = 'Update';
     }
+    dataObj.type='file';
+
+    console.log(dataObj,'dataObj')
+
 
 
     const dialogRef = this.dialog.open(AddAudioVideoFileDialogComponent, {
       panelClass: 'lesson_videomodal',
       width: '900px',
       height: '600px',
-      data: { 'configFileUpload': this.uploadConfigData, 'dataObj': dataObj, 'heading': heading, 'type_flag': type_flag, 'buttonName': buttonName, 'keyVal': key,bucket_url:this.bucket_url }
+      data: { 'configFileUpload': this.uploadConfigData, 'dataObj': dataObj, 'heading': heading, 'type_flag': type_flag, 'buttonName': buttonName, 'keyVal': key, bucket_url: this.bucket_url }
     });
 
     //for disable modal
@@ -657,7 +688,7 @@ export class TraningComponent implements OnInit {
 
 
   addAudio(key, i, item) {
-    let dataObj = {};
+    let dataObj:any = {};
     let heading = '';
     let type_flag = 'audio';
     let buttonName = '';
@@ -666,8 +697,8 @@ export class TraningComponent implements OnInit {
         audio: {},
         audio_title: '',
         audio_description: '',
-        audio_priority: '',
-        audio_skippable: false
+        priority: '',
+        audio_skippable: false,
       }
       heading = 'Add Lesson Audio';
       buttonName = 'Add'
@@ -677,13 +708,13 @@ export class TraningComponent implements OnInit {
         heading = 'Edit Lesson Audio',
         buttonName = 'Update '
     }
-
+    dataObj.type='audio';
 
     const dialogRef = this.dialog.open(AddAudioVideoFileDialogComponent, {
       panelClass: 'lesson_videomodal',
       width: '900px',
       height: '600px',
-      data: { 'configFileUpload': this.uploadConfigData, 'dataObj': dataObj, 'heading': heading, 'type_flag': type_flag, 'buttonName': buttonName, 'keyVal': key,bucket_url:this.bucket_url }
+      data: { 'configFileUpload': this.uploadConfigData, 'dataObj': dataObj, 'heading': heading, 'type_flag': type_flag, 'buttonName': buttonName, 'keyVal': key, bucket_url: this.bucket_url }
     });
 
     //for disable modal
@@ -1208,7 +1239,7 @@ export class AddAudioVideoFileDialogComponent {
   public videoFields: any = {};
   public audioFields: any = {};
   public fileFields: any = {};
-  public bucket_url: any ;
+  public bucket_url: any;
   // = 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/';
 
 
@@ -1219,7 +1250,7 @@ export class AddAudioVideoFileDialogComponent {
 
     if (this.data.type_flag == 'audio' || this.data.type_flag == 'file') {
       this.uploadConfigData = data.configFileUpload;
-      this.bucket_url=data.bucket_url;
+      this.bucket_url = data.bucket_url;
     }
 
     // console.log(data, 'data++')
@@ -1260,13 +1291,13 @@ export class AddAudioVideoFileDialogComponent {
 
 
   addaudio(arrayName) {
-    
-    console.log(arrayName,'arrayName 11')
+
+    console.log(arrayName, 'arrayName 11')
 
     if (this.uploadConfigData.files != null && this.uploadConfigData.files[0] != null) {
       if (arrayName == 'audio_array') {
 
-        console.log(arrayName,'arrayName 22')
+        console.log(arrayName, 'arrayName 22')
 
         var file_name_str = this.uploadConfigData.files[0].upload.data.data.filelocalname;
 
