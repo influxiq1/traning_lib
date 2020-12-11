@@ -1,37 +1,37 @@
 <div class="generalmodalcls">
-    <div class="modal-content">
-          <div class="logowrapperouter">
-              <div class="logowrapper">
-                  <!-- <img src="../../assets/images/logomain.png"> -->
-              </div>
-          </div>  
+  <div class="modal-content">
+    <div class="logowrapperouter">
+      <div class="logowrapper">
+        <!-- <img src="../../assets/images/logomain.png"> -->
+      </div>
+    </div>
 
 
-          <div mat-dialog-content class="headercls">
-            <h2>Complete Your Lesson Plan Material Now!</h2>
-          </div> 
-      
-          <div>
-              <span>You have a purchased a Lesson <b>{{data.data.lession_title}}</b>, from your Mentor <b>{{data.user_mentor_name}}</b>, please review and fill out the Questionnaire provided in the Lesson Plan Material.</span>
-          </div>
-          <br>
-          <div class="modalbtncls">
-                <button class="btnbluecls" mat-raised-button color="primary" (click)="submitLesson(data, 'yes')" cdkFocusInitial>CONTINUE</button>&nbsp;
+    <div mat-dialog-content class="headercls">
+      <h2>Complete Your Lesson Plan Material Now!</h2>
+    </div>
 
-                <button class="btnbluecls" mat-raised-button color="accent"  type="button" (click)="closedModal()">No</button>&nbsp;
+    <div>
+      <span>You have a purchased a Lesson <b>{{data.data.lession_title}}</b>, from your Mentor
+        <b>{{data.user_mentor_name}}</b>, please review and fill out the Questionnaire provided in the Lesson Plan
+        Material.</span>
+    </div>
+    <br>
+    <div class="modalbtncls">
+      <button class="btnbluecls" mat-raised-button color="primary" (click)="submitLesson(data, 'yes')"
+        cdkFocusInitial>CONTINUE</button>&nbsp;
 
-                <button class="btncancelcls" mat-raised-button color="accent" type="button" (click)="closedModal()"><span class="material-icons">
-                  clear
-                  </span></button>
-          </div>
-<!-- 
+      <button class="btnbluecls" mat-raised-button color="accent" type="button"
+        (click)="closedModal()">No</button>&nbsp;
+
+      <button class="btncancelcls" mat-raised-button color="accent" type="button" (click)="closedModal()"><span
+          class="material-icons">
+          clear
+        </span></button>
+    </div>
+    <!-- 
           <mat-dialog-actions class="btncancelcls">
            
           </mat-dialog-actions> -->
-      </div>
-    </div>
-  
-  
-  
-  
-   
+  </div>
+</div>

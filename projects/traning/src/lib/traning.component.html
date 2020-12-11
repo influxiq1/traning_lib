@@ -182,8 +182,14 @@
                             <span>
                                 <b>Priority :</b> {{file_array[i].priority}}
                             </span><br>
-                            <span>
-                                <b>Skippable   :</b> {{file_array[i].file_skippable}}
+                            <!-- <span>
+                                <b>Skippable :</b> {{file_array[i].file_skippable}}
+                            </span><br> -->
+                            <span *ngIf="file_array[i].file_skippable==true">
+                                <b>Skippable :</b> YES
+                            </span><br>
+                            <span *ngIf="file_array[i].file_skippable==false">
+                                <b>Skippable :</b> NO
                             </span><br>
                             <span class="adddeletefilecls">
                                 <i class="material-icons addbtn" (click)="addflie('edit',i,item)">edit</i>
@@ -232,8 +238,7 @@
 
                     <!-- <lib-file-upload [config]="uploadConfigData"></lib-file-upload> -->
 
-                    <mat-card class="example-card imgcard"
-                        *ngIf="audio_array[i].audio != null ">
+                    <mat-card class="example-card imgcard" *ngIf="audio_array[i].audio != null ">
 
                         <div *ngIf="audio_array[i].audio.fileservername !=null">
                             <audio controls>
@@ -258,8 +263,14 @@
                             <span>
                                 <b> Priority :</b> {{audio_array[i].priority}}
                             </span><br>
-                            <span>
-                                <b>Skippable   :</b> {{audio_array[i].audio_skippable}}
+                            <!-- <span>
+                                <b>Skippable :</b> {{audio_array[i].audio_skippable}}
+                            </span><br> -->
+                            <span *ngIf="audio_array[i].audio_skippable==true">
+                                <b>Skippable :</b> YES
+                            </span><br>
+                            <span *ngIf="audio_array[i].audio_skippable==false">
+                                <b>Skippable :</b> NO
                             </span><br>
                             <span class="adddeleteAudiocls">
                                 <i class="material-icons addbtn" (click)="addAudio('edit',i,item)">edit</i>
@@ -349,8 +360,14 @@
                         <span>
                             <b> Priority :</b> {{video_array[i].priority}}
                         </span><br>
-                        <span>
-                            <b>Skippable   :</b> {{video_array[i].video_skippable}}
+                        <!-- <span>
+                            <b>Skippable :</b> {{video_array[i].video_skippable}}
+                        </span><br> -->
+                        <span *ngIf="video_array[i].video_skippable==true">
+                            <b>Skippable :</b> YES
+                        </span><br>
+                        <span *ngIf="video_array[i].video_skippable==false">
+                            <b>Skippable :</b> NO
                         </span><br>
                         <span class="adddeletevideocls">
                             <i class="material-icons addbtn" (click)="addVideo('edit',i,item)">edit</i>

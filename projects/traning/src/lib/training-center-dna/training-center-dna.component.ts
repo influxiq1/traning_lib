@@ -153,7 +153,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   msaapPageSizeOptions = [2, 4, 6];
   msaapDisplayVolumeControls = true;
   msaapDisablePositionSlider = true;
-  public l_content:any=[];
+  public l_content: any = [];
 
   // Material Style Advance Audio Player Playlist
   // msaapPlaylist: Track[] = [
@@ -187,16 +187,18 @@ export class TrainingCenterDnaComponent implements OnInit {
 
       this.lesson_locked_by_user = results.lesson_locked_by_user;
     }
+    console.log(this.trainingCategoryList,'trainingCategoryList')
     this.orders_button = true;
     this.preview_button = true;
     this.schedule_button = false;
     this.next_button_access = false;
     this.quizflag = false;
     this.lesson_content = results.lesson_content[0];
-    this.l_content=results.lesson_content;
+    this.l_content = results.lesson_content;
+    console.log(this.l_content, 'l_content')
 
     console.log(results.lesson_content[0], 'results.lesson_content[0]')
-
+    console.log(this.lesson_content, 'lesson_content+++=')
     if (results.lesson_content[0].has_lessonplan == 1 && results.lesson_content[0].has_test_lesson == 0) {
 
       if (results.lesson_ids[0].lesson_ids != null) {
@@ -718,9 +720,9 @@ export class TrainingCenterDnaComponent implements OnInit {
     }, 200);
     this.activatedRoute.data.subscribe((response: any) => {
       // console.log(response.trainingdata.results.lesson_attachements_data[0].lesson_attachements[0].type, 'activatedRoute')
-      this.lessoncontentarraydata=response.trainingdata.results.lesson_attachements_data[0].lesson_attachements
+      this.lessoncontentarraydata = response.trainingdata.results.lesson_attachements_data[0].lesson_attachements
     })
-    console.log(this.lessoncontentarraydata,'lessoncontentarraydata')
+    console.log(this.lessoncontentarraydata, 'lessoncontentarraydata')
   }
   onEnded(val) {
     console.log(val, 'onEnded||onEnded')
@@ -882,6 +884,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   }
 
   audioended(item: any, i: any, j) {
+    console.log(item,i,j,'dcnjmkxdcvf')
     if (item.test_associate_training == 'Yes') {
       this.questionDetails(item._id, i, j);
     } else {
@@ -1011,9 +1014,10 @@ export class TrainingCenterDnaComponent implements OnInit {
       this.reportPercentage = Math.floor(this.dividend / this.divisor * 100);
       this.lesson_content = this.lesson_data.results.lesson_content[0];
       // console.log(this.lesson_data, '+++++>>>')
-      this.l_content=this.lesson_data.results.lesson_content;
+      this.l_content = this.lesson_data.results.lesson_content[0];
 
-      console.log(this.l_content)
+      console.log(this.l_content, "l_content")
+      console.log(this.lesson_content, 'lesson_content')
 
       if (this.lesson_data.status == 'success') {
         // console.log(this.lesson_data, '+++++>>>', this.lesson_data.status)
@@ -1087,7 +1091,7 @@ export class TrainingCenterDnaComponent implements OnInit {
 
             setTimeout(() => {
               this.nochildclick(this.lessonDataList[ind]);
-              
+
             }, 500)
 
             this.progressLoader = true;
@@ -1290,7 +1294,7 @@ export class TrainingCenterDnaComponent implements OnInit {
 
     if (this.user_parent_id != null && flag == 'schedule' && this.user_parent_id != "") {
 
-     
+
 
       this.router.navigateByUrl(this.googlescheduleroute + this.user_parent_id + '/' + this.paramslessonId + '/' + this.paramsTrainingId);
     }
@@ -1437,7 +1441,7 @@ export class TrainingCenterDnaComponent implements OnInit {
         // console.log(data, 'data')
         this.apiService.postDatawithoutToken(endpoint, data).subscribe((response: any) => {
           if (response.status == "success") {
-            
+
             this.lesson_locked_by_user = val;
             this.snakBar.open(snackText, 'OK', {
               duration: 5000
