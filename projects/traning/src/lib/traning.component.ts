@@ -83,16 +83,14 @@ export class TraningComponent implements OnInit {
   public dnaFlag: any;
   public lessonplanValue: any;
   public has_test_lesson: any = false;
-
   public video_array: any = [];
   public file_array: any = [];
   public audio_array: any = [];
-
   public video_base_url: any = 'https://www.youtube.com/embed/';
   public vid_url: any = '';
   public vid_tit: any = '';
   public vid_desc: any = '';
-
+  public lesson_attachment_flag_val: any;
   public test_percentage: any = 80;
 
   public imgflag: boolean = false;
@@ -148,6 +146,11 @@ export class TraningComponent implements OnInit {
   set BuketUrl(BuketUrl: any) {
     this.bucket_url = (BuketUrl) || '<no name set>';
     this.bucket_url = this.bucket_url.url;
+  }
+  @Input()
+  set Lesson_attachment_flag(val: any) {
+    this.lesson_attachment_flag_val = (val) || '<no name set>';
+    this.lesson_attachment_flag_val = val;
   }
 
 
@@ -235,101 +238,67 @@ export class TraningComponent implements OnInit {
 
 
   formsubmit() {
-    // console.log("data value", this.dataForm.value);
+    console.log("data value", this.dataForm.value);
     // return;
     this.issubmit = 1;
     for (let y in this.dataForm.controls) {
       this.dataForm.controls[y].markAsTouched();
     }
-    console.log(this.video_array, "video_array", this.videoflag);
-    console.log(this.audio_array, "audioarray", this.audioflag);
-    console.log(this.file_array, "filearray", this.fileflag);
 
 
+    if (this.lesson_attachment_flag_val == true) {
 
-    // switch (this.mediaTypeValue) {
-    //   // case 'image':
-    //   //   this.dataForm.value.image_typeHtml = this.htmType;
-    //   //   this.dataForm.value.image_title = this.title;
-    //   //   this.dataForm.value.image_description = this.description;
-    //   //   break;
-    //   case 'video':
-    //     this.dataForm.value.video_array = this.video_array;
-    //     this.dataForm.value.video_typeHtml = this.htmType;
-    //     this.dataForm.value.video_title = this.title;
-    //     this.dataForm.value.video_description = this.description;
-    //     this.videoflag =true
-    //     // this.video_array.splice(0, 1);
-    //     break;
-    //   case 'audio':
-    //     this.dataForm.value.audio_typeHtml = this.htmType;
-    //     this.dataForm.value.audio_title = this.title;
-    //     this.dataForm.value.audio_description = this.description;
+      console.log(this.video_array, "video_array", this.videoflag);
+      console.log(this.audio_array, "audioarray", this.audioflag);
+      console.log(this.file_array, "filearray", this.fileflag);
 
-    //     break;
-    //   case 'file':
-    //     this.dataForm.value.file_typeHtml = this.htmType;
-    //     this.dataForm.value.file_title = this.title;
-    //     this.dataForm.value.file_description = this.description;
-
-    //     break;
-    // }
-
-    // this.videoflag = true;
-    if (this.videoflag == true || this.videoflag == false) {
-      this.dataForm.value.videoflag = this.videoflag;
-      this.dataForm.value.type = this.type;
-      this.dataForm.value.video_array = this.video_array;
-    }
-    if (this.audioflag == true || this.audioflag == false) {
-      this.dataForm.value.audioflag = this.audioflag;
-      this.dataForm.value.audio_array = this.audio_array;
-
-    }
-    if (this.fileflag == true || this.fileflag == false) {
-      this.dataForm.value.fileflag = this.fileflag;
-      this.dataForm.value.file_array = this.file_array;
-
-    }
-
-    if (this.file_array.length == 0) {
-      this.dataForm.value.fileflag = false;
-      // delete this.dataForm.value.fileflag;
-      // delete this.dataForm.value.file_array;
-    }
-
-    if (this.video_array.length == 0) {
-      this.dataForm.value.videoflag = false;
-      // delete this.dataForm.value.videoflag;
-      // delete this.dataForm.value.video_array;
-    }
-
-    if (this.audio_array.length == 0) {
-      this.dataForm.value.audioflag = false;
-      // delete this.dataForm.value.audioflag;
-      // delete this.dataForm.value.audio_array;
-    }
-
-    this.dataForm.value.lesson_attachements = [];
-
-    if (this.file_array.length > 0) {
-      for (let i in this.file_array) {
-        this.dataForm.value.lesson_attachements.push(this.file_array[i])
+      if (this.videoflag == true || this.videoflag == false) {
+        this.dataForm.value.videoflag = this.videoflag;
+        this.dataForm.value.type = this.type;
+        this.dataForm.value.video_array = this.video_array;
       }
-    }
+      if (this.audioflag == true || this.audioflag == false) {
+        this.dataForm.value.audioflag = this.audioflag;
+        this.dataForm.value.audio_array = this.audio_array;
 
-
-    if (this.audio_array.length > 0) {
-      for (let i in this.audio_array) {
-        this.dataForm.value.lesson_attachements.push(this.audio_array[i])
       }
-    }
+      if (this.fileflag == true || this.fileflag == false) {
+        this.dataForm.value.fileflag = this.fileflag;
+        this.dataForm.value.file_array = this.file_array;
 
-
-    if (this.video_array.length > 0) {
-      for (let i in this.video_array) {
-        this.dataForm.value.lesson_attachements.push(this.video_array[i])
       }
+
+      if (this.file_array.length == 0) {
+        this.dataForm.value.fileflag = false;
+      }
+
+      if (this.video_array.length == 0) {
+        this.dataForm.value.videoflag = false;
+      }
+
+      if (this.audio_array.length == 0) {
+        this.dataForm.value.audioflag = false;
+      }
+
+      this.dataForm.value.lesson_attachements = [];
+
+
+      if (this.file_array.length > 0) {
+        for (let i in this.file_array) {
+          this.dataForm.value.lesson_attachements.push(this.file_array[i])
+        }
+      }
+      if (this.audio_array.length > 0) {
+        for (let i in this.audio_array) {
+          this.dataForm.value.lesson_attachements.push(this.audio_array[i])
+        }
+      }
+      if (this.video_array.length > 0) {
+        for (let i in this.video_array) {
+          this.dataForm.value.lesson_attachements.push(this.video_array[i])
+        }
+      }
+
     }
 
 
@@ -338,9 +307,6 @@ export class TraningComponent implements OnInit {
         this.dataForm.value.status = parseInt("1");
       else
         this.dataForm.value.status = parseInt("0");
-
-
-
 
       const link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
       let data: any = {
@@ -373,53 +339,7 @@ export class TraningComponent implements OnInit {
       }
       console.log(this.dnaFlag, 'dnaFlag+++++++++++++++gvhbkjnlk')
 
-
-
-      // if (this.mediaTypeValue == 'html') {
       data.data['typeHtml'] = this.htmType;
-      // }
-
-      // if (this.mediaTypeValue == 'image' || this.mediaTypeValue == 'audio' || this.mediaTypeValue == 'file') {
-      //   if (typeof (this.uploadConfigData.files) != 'undefined' && this.uploadConfigData.files.length >= 0) {
-      //     for (let loop = 0; loop < this.uploadConfigData.files.length; loop++) {
-      //       this.images_array =
-      //         this.images_array.concat({
-      //           "upload_server_id": this.uploadConfigData.files[loop].upload.data._id,
-      //           "basepath": this.uploadConfigData.files[loop].upload.data.basepath + '/' + this.uploadConfigData.path + '/',
-      //           "fileservername": this.uploadConfigData.files[loop].upload.data.data.fileservername,
-      //           "name": this.uploadConfigData.files[loop].name,
-      //           "type": this.uploadConfigData.files[loop].type,
-      //           "bucketname": this.uploadConfigData.bucketName
-      //         });
-      //     }
-
-      //     data.data['fileType'] = this.images_array;
-      //     switch (this.mediaTypeValue) {
-      //       // case 'image':
-      //       //   data.data['image_typeHtml'] = this.htmType;
-      //       //   data.data['image_title'] = this.title;
-      //       //   data.data['image_description'] = this.description;
-      //       //   break;
-      //       case 'video':
-      //         data.data['video_array'] = this.video_array
-      //         data.data['video_typeHtml'] = this.htmType;
-      //         data.data['video_title'] = this.title;
-      //         data.data['video_description'] = this.description;
-      //         break;
-      //       case 'audio':
-      //         data.data['audio_typeHtml'] = this.htmType;
-      //         data.data['audio_title'] = this.title;
-      //         data.data['audio_description'] = this.description;
-      //         break;
-      //       case 'file':
-      //         data.data['file_typeHtml'] = this.htmType;
-      //         data.data['file_title'] = this.title;
-      //         data.data['file_description'] = this.description;
-      //         break;
-      //     }
-      //   }
-      // }
-
 
       this.apiService.postData(link, data).subscribe((res: any) => {
 
@@ -554,15 +474,7 @@ export class TraningComponent implements OnInit {
     let buttonName = '';
     let heading = '';
     let type_flag = 'video';
-    let dataObj:any= {};
-    // this.video_array.push({
-    //   video_url: '',
-    //   video_title: '',
-    //   video_description: '',
-    //   video_priority: '',
-    //   video_skippable: false
-    // })
-    // console.log(this.video_array, 'this.video_array', key, i, item);
+    let dataObj: any = {};
 
     if (key == 'add') {
       dataObj = {
@@ -580,7 +492,7 @@ export class TraningComponent implements OnInit {
       heading = 'Edit Lesson Video';
       buttonName = 'Update'
     }
-    dataObj.type='video';
+    dataObj.type = 'video';
 
     console.log(dataObj, 'dataObj')
 
@@ -628,7 +540,7 @@ export class TraningComponent implements OnInit {
     //   file_priority: '',
     //   file_skippable: false
     // });
-    let dataObj :any= {};
+    let dataObj: any = {};
     let heading = '';
     let buttonName = '';
     let type_flag = 'file';
@@ -640,7 +552,7 @@ export class TraningComponent implements OnInit {
         file_description: '',
         priority: '',
         file_skippable: false,
-        
+
       }
       heading = 'Add Lesson File';
       buttonName = 'Add ';
@@ -651,9 +563,9 @@ export class TraningComponent implements OnInit {
       heading = 'Edit Lesson File';
       buttonName = 'Update';
     }
-    dataObj.type='file';
+    dataObj.type = 'file';
 
-    console.log(dataObj,'dataObj')
+    console.log(dataObj, 'dataObj')
 
 
 
@@ -688,7 +600,7 @@ export class TraningComponent implements OnInit {
 
 
   addAudio(key, i, item) {
-    let dataObj:any = {};
+    let dataObj: any = {};
     let heading = '';
     let type_flag = 'audio';
     let buttonName = '';
@@ -708,7 +620,7 @@ export class TraningComponent implements OnInit {
         heading = 'Edit Lesson Audio',
         buttonName = 'Update '
     }
-    dataObj.type='audio';
+    dataObj.type = 'audio';
 
     const dialogRef = this.dialog.open(AddAudioVideoFileDialogComponent, {
       panelClass: 'lesson_videomodal',

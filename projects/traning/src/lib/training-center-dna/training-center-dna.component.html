@@ -132,19 +132,7 @@
                 </div>
               </mat-card>
 
-              <!-- <div class="paragraphwrapper">
-                  <p [innerHtml]="item.audio_typeHtml" class="paragraphcls"></p>
-                </div> -->
-              <!-- <div  class="audioWrapper">
-                  <span>{{ item.audio_title }}</span> -->
 
-              <!-- <audio width="640" height="360" (ended)="audioended(item,i,1)" controls>
-                    <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="audio/mpeg">
-                    Your browser does not support the audio tag.
-                  </audio> -->
-              <!-- <span>{{ item.audio_description }}</span>
-
-                </div> -->
               <mat-card *ngIf="item.audioflag==true && item.audioflag!=null && item.audioflag!=undefined">
                 <audio (ended)="audioended(item,i,1)" controls>
                   <source src="{{bucket_url +item.audio_array[i].audio.fileservername }}" type="audio/ogg">
@@ -154,8 +142,6 @@
                 <span>{{ item.audio_array[i].audio_title }}</span><br>
                 <span>{{ item.audio_array[i].audio_description }}</span>
               </mat-card>
-
-
 
               <mat-card class="example-card" *ngIf="item.mediaType=='file' ">
                 <div class="paragraphwrapper">
@@ -345,14 +331,7 @@
                   <!-- <mat-card *ngIf="item!=null && item!=undefined && item!= '' "> -->
                   <div class="audio_div afvmaindiv"
                     *ngIf="item.type=='audio'&& item.type!=null && item.type!=undefined">
-                    <!-- <audio controls (change)="tractAudio($event)">
-                      <source src="{{bucket_url +item.audio.fileservername }}" type="audio/ogg">
-                      <source src="{{ bucket_url +item.audio.fileservername }}" type="audio/mpeg">
-                      Your browser does not support the audio element.
-                    </audio>
-                    <p class="Audio_titlecls">{{ item.audio_title }}</p>
-
-                    <p class="Audio_descriptioncls">{{ item.audio_description }}</p> -->
+                  -->
                   </div>
                   <div class="file_div afvmaindiv" *ngIf="item.type=='file' && item.type!=null && item.type!=undefined">
                     <span

@@ -14,13 +14,13 @@ export class AddEditTrainingComponent implements OnInit {
   public recid: any;
   public listingPageRoute: any = "/manage-training/list";
   public serverDetails: any = {
-    "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api1/",
+    "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/",
     "jwttoken": ""
   };
   public formSource: any = {
     "source": 'training_category_management',
-    "endpoint": "addorupdatetrainingcategory",
-    "showEndpoint": "gettrainingdatabyid",
+    "endpoint": "addorupdatedata",
+    "showEndpoint": "datalist",
     "AddheaderText": "Add Training",
     "EditheaderText": "Edit Training",
     "formTitleName": 'Training'
@@ -32,6 +32,7 @@ export class AddEditTrainingComponent implements OnInit {
     this.jwtToken = cookie.get('jwtToken');
     this.serverDetails.jwttoken = this.jwtToken;
   }
+  public lesson_attachment_flag:boolean=false;
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -54,7 +55,7 @@ export class AddEditTrainingComponent implements OnInit {
 
       // { inputtype: 'text', name: 'catagoryname', label: 'Catagory Name ', placeholder: 'Enter Catagory Name', validationrule: { required: true }, validationerrormsg: 'is required' },
 
-      { inputtype: 'select', name: 'parent_catagory', label: 'Parent Category', defaultchoice: 'Select a Parent Category', sourceview: 'training_category_management', endpoint: 'gettrainingcategorydata', selectvalue: 'catagory_name', selectid: '_id' },
+      { inputtype: 'select', name: 'parent_catagory', label: 'Parent Category', defaultchoice: 'Select a Parent Category', sourceview: 'training_category_management', endpoint: 'datalist', selectvalue: 'catagory_name', selectid: '_id' },
 
       // {inputtype:'select',name:'state',label:'State/Region',defaultchoice:'Select a State/region',sourceview:'assets/states.json',multiple:true, sourcetype:'static',selectvalue:'name',selectid:'abbreviation',validationrule:{required:true},validationerrormsg:'is required'},
       { inputtype: 'checkbox', name: 'status', label: 'Active', placeholder: 'Enter Status', validationrule: { required: true }, validationerrormsg: 'is required' },

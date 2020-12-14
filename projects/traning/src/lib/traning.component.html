@@ -127,9 +127,6 @@
             <mat-progress-bar *ngIf="progressLoader && item.name =='associated_training'" mode="indeterminate">
             </mat-progress-bar>
         </ng-container>
-
-
-
         <div>
 
             <!-- <button type="button" mat-raised-button color="primary" (click)="addfile()">add
@@ -198,35 +195,9 @@
                         </div>
 
                     </mat-card>
-                    <!-- <button type="button" mat-raised-button color="primary" (click)="doneFileUpload('file_array',i)">Add
-                        Uploaded File</button><br> -->
-
-                    <!-- <mat-form-field>
-                        <input type="text" matInput placeholder="File Title" [(ngModel)]=file_array[i].file_title
-                            [ngModelOptions]="{standalone: true}">
-                    </mat-form-field> -->
-
-                    <!-- <mat-form-field>
-                        <textarea type="text" matInput placeholder="File Description"
-                            [(ngModel)]=file_array[i].file_description [ngModelOptions]="{standalone: true}"></textarea>
-                    </mat-form-field> -->
-                    <!-- <mat-form-field>
-                        <input type="number" matInput placeholder="Priority" [(ngModel)]=file_array[i].file_priority
-                            [ngModelOptions]="{standalone: true}">
-                    </mat-form-field> -->
-                    <!-- <section class="example-section">
-                        <mat-checkbox matInput [(ngModel)]="file_array[i].file_skippable"
-                            [ngModelOptions]="{standalone: true}">Skippable file
-                        </mat-checkbox>
-                    </section> -->
-
 
                 </div>
-
-
             </div>
-
-
 
             <div *ngIf="audioflag == true && audio_array.length > 0" class="fromClass">
                 <mat-label><b> Audio : </b></mat-label>
@@ -279,59 +250,8 @@
                         </div>
                     </mat-card>
 
-                    <!-- <button type="button" mat-raised-button color="primary"
-                        (click)="doneAudioupload('audio_array',i)">Add Uploaded Audio</button><br> -->
-                    <!-- <mat-form-field>
-                        <input type="text" matInput placeholder="Audio Title" [(ngModel)]=audio_array[i].audio_title
-                            [ngModelOptions]="{standalone: true}">
-                    </mat-form-field> -->
-
-                    <!-- <mat-form-field>
-                        <textarea type="text" matInput placeholder="Audio Description"
-                            [(ngModel)]="audio_array[i].audio_description"
-                            [ngModelOptions]="{standalone: true}"></textarea>
-                    </mat-form-field> -->
-
-                    <!-- <mat-form-field>
-                        <input type="number" matInput placeholder="Priority" [(ngModel)]=audio_array[i].audio_priority
-                            [ngModelOptions]="{standalone: true}">
-                    </mat-form-field> -->
-                    <!-- 
-                    <section class="example-section">
-                        <mat-checkbox matInput [(ngModel)]="audio_array[i].audio_skippable"
-                            [ngModelOptions]="{standalone: true}">Skippable Audio
-                        </mat-checkbox>
-                    </section> -->
-
-
-
                 </div>
             </div>
-            <!-- <ng-container *ngIf="mediaTypeValue == 'audio' && imagePath != null && audioVideoFlag==true">
-
-                    <div style="margin: 0 auto;display: block;">
-                        <mat-card class="example-card">
-                            <span class="closecard" class="pointer" *ngIf="mediaTypeValue == 'audio'"
-                                (click)="clear()"><i class="material-icons">clear</i></span>
-                            <audio controls>
-
-                                <source src="{{ imagePath }}" type="audio/ogg">
-                                <source src="{{ imagePath }}" type="audio/mpeg">
-                                Your browser does not support the audio element.
-                            </audio>
-                        </mat-card>
-                    </div>
-                </ng-container> -->
-
-
-
-            <!-- <div *ngIf="htmlflag == true">
-                <h4>Add HTML :</h4>
-                <ck-editor [config]="editorconfig" [(ngModel)]="htmType" [ngModelOptions]="{standalone: true}">
-                </ck-editor>
-            </div> -->
-
-
 
             <div *ngIf="videoflag == true && video_array.length > 0" class="fromClass">
                 <div class="addvideocls">
@@ -374,145 +294,62 @@
                             <i class="material-icons delbtn" (click)="removevideo(i)">delete</i>
                         </span>
                     </div> <br>
-
-                    <!-- <mat-form-field>
-                            <input matInput placeholder="Video Title" [(ngModel)]="video_array[i].video_title"
-                                [ngModelOptions]="{standalone: true}">
-                        </mat-form-field><br> -->
-
-                    <!-- <mat-form-field>
-                            <textarea matInput placeholder="Video Description"
-                                [(ngModel)]="video_array[i].video_description"
-                                [ngModelOptions]="{standalone: true}"></textarea>
-                        </mat-form-field> -->
+                </div>
+            </div>
 
 
-
-                    <!-- Is this mandatory video? -->
-                    <!-- <mat-form-field>
-                            <input type="number" matInput placeholder="Priority"
-                                [(ngModel)]=video_array[i].video_priority [ngModelOptions]="{standalone: true}">
-                            <mat-icon matSuffix>Video Priority</mat-icon>
-                        </mat-form-field> -->
-                    <!-- <section class="example-section">
-                            <mat-checkbox matInput [(ngModel)]="video_array[i].video_skippable"
-                                [ngModelOptions]="{standalone: true}">Skippable video ?
-                            </mat-checkbox>
-                        </section><br> -->
+            <div>
+                <mat-label><b> HTML Content : </b></mat-label>
+                <ck-editor [config]="editorconfig" [(ngModel)]="htmType" [ngModelOptions]="{standalone: true}">
+                </ck-editor>
+            </div>
 
 
+            <ng-container *ngIf="dnaFlag==true">
 
+                <div>
+                    <span>
+                        <mat-checkbox [(ngModel)]="has_test_lesson" [ngModelOptions]="{standalone: true}">Has Test
+                            Lesson ?
+                        </mat-checkbox>
+
+                        <div *ngIf="has_test_lesson == true">
+                            <mat-form-field>
+                                <input type="number" matInput placeholder="Enter Complete Test Percentage (%)"
+                                    [(ngModel)]="test_percentage" [ngModelOptions]="{standalone: true}">
+                            </mat-form-field>
+                        </div>
+
+                    </span>
+                </div>
+
+                <div>
+                    <span>
+                        <mat-checkbox (change)="getchkboxval($event.checked)" [(ngModel)]="chkboxval"
+                            [ngModelOptions]="{standalone: true}">Has Lesson plan?</mat-checkbox>
+                    </span>
+                </div>
+
+                <div *ngIf="hasLessonVal == true">
+                    <mat-form-field>
+                        <mat-label>Select A One</mat-label>
+                        <mat-select [(ngModel)]="lessonplanValue" [ngModelOptions]="{standalone: true}">
+                            <mat-option value="purchasable">Purchasable </mat-option>
+                            <mat-option value="not_purchasable">Not Purchasable </mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </div>
 
 
-                <!-- <div formArrayName="video_array" *ngFor="let item of video_array; let i=index ;trackBy: trackByFn"
-                    class="fromClass">
-                    <ng-container [formGroupName]="i">
-                        <mat-form-field>
-                            <input matInput formControlName="answer" placeholder="Answer">
-                            <span matSuffix>
-                                <i class="material-icons" >add</i>
-                                <i *ngIf="i>0" class="material-icons" >remove</i>
-                            </span>
-                        </mat-form-field>
-                    </ng-container>
-                </div> -->
+            </ng-container>
+
+            <div class="btncls">
+                <button class="trainingsubbtn" mat-raised-button color="primary" type="submit">{{ buttonText }}
+                </button>
+                <button class="trainingsubbtn" mat-raised-button color="primary" type="reset"
+                    (click)="cancelButton()">Cancel</button>
             </div>
-
-
-
-            <!-- <mat-form-field>
-                <input type="text" matInput placeholder="Title" [(ngModel)]="title"
-                    [ngModelOptions]="{standalone: true}">
-                <mat-icon matSuffix>title</mat-icon>
-            </mat-form-field>
-
-            <mat-form-field>
-                <textarea type="text" matInput placeholder="Description" [(ngModel)]="description"
-                    [ngModelOptions]="{standalone: true}"></textarea>
-                <mat-icon matSuffix>description</mat-icon>
-            </mat-form-field> -->
-
-
-            <!-- file uploader end here -->
-
-            <!-- <ng-container *ngIf="mediaTypeValue == 'image' && imagePath != null ">
-                <mat-card class="example-card">
-                    <span class="closecard" class="pointer" *ngIf="mediaTypeValue == 'image'" (click)="clear()"><i
-                            class="material-icons">clear</i></span>
-                    <img mat-card-image src="{{ imagePath }}" />
-                </mat-card>
-            </ng-container> -->
-
-            <!-- <ng-container *ngIf="mediaTypeValue == 'video' && imagePath != null && audioVideoFlag==true">
-                <div style="margin: 0 auto;display: block;">
-                    <mat-card class="example-card">
-                        <span class="closecard" class="pointer" *ngIf="mediaTypeValue == 'video'" (click)="clear()"><i
-                                class="material-icons">clear</i></span>
-                        <video width="640" height="360" controls>
-                            <source src="{{ imagePath }}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    </mat-card>
-                </div>
-
-            </ng-container> -->
 
         </div>
-
-
-        <div>
-            <mat-label><b> HTML Content : </b></mat-label>
-            <ck-editor [config]="editorconfig" [(ngModel)]="htmType" [ngModelOptions]="{standalone: true}">
-            </ck-editor>
-        </div>
-
-
-        <ng-container *ngIf="dnaFlag==true">
-
-            <div>
-                <span>
-                    <mat-checkbox [(ngModel)]="has_test_lesson" [ngModelOptions]="{standalone: true}">Has Test Lesson ?
-                    </mat-checkbox>
-
-                    <div *ngIf="has_test_lesson == true">
-                        <mat-form-field>
-                            <input type="number" matInput placeholder="Enter Complete Test Percentage (%)"
-                                [(ngModel)]="test_percentage" [ngModelOptions]="{standalone: true}">
-                        </mat-form-field>
-                    </div>
-
-                </span>
-            </div>
-            <!-- <div>
-                <span>
-                    <mat-checkbox [(ngModel)]="has_test_lesson" [ngModelOptions]="{standalone: true}"> Skip Lesson ?
-                    </mat-checkbox>
-                </span>
-            </div> -->
-            <div>
-                <span>
-                    <mat-checkbox (change)="getchkboxval($event.checked)" [(ngModel)]="chkboxval"
-                        [ngModelOptions]="{standalone: true}">Has Lesson plan?</mat-checkbox>
-                </span>
-            </div>
-
-            <div *ngIf="hasLessonVal == true">
-                <mat-form-field>
-                    <mat-label>Select A One</mat-label>
-                    <mat-select [(ngModel)]="lessonplanValue" [ngModelOptions]="{standalone: true}">
-                        <mat-option value="purchasable">Purchasable </mat-option>
-                        <mat-option value="not_purchasable">Not Purchasable </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-
-
-        </ng-container>
-
-
-        <button class="trainingsubbtn" mat-raised-button color="primary" type="submit">{{ buttonText }}</button>
-        <button class="trainingsubbtn" mat-raised-button color="primary" type="reset"
-            (click)="cancelButton()">Cancel</button>
     </form>
 </mat-card>

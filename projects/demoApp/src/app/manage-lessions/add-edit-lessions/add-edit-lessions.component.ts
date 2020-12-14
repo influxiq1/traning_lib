@@ -57,6 +57,7 @@ export class AddEditLessionsComponent implements OnInit {
     conversionNeeded: 1,
     bucketName: "training-centre-bucket",
   }
+  public lesson_attachment_flag:boolean=true;
 
 
   public jwtToken: any;
