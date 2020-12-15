@@ -162,6 +162,8 @@ export class TraningComponent implements OnInit {
 
   ngOnInit() {
 
+    
+
     this.headerText = this.formSourceVal.AddheaderText;
     this.route.params.subscribe(params => {
       this.recid = params['id'];
@@ -309,6 +311,7 @@ export class TraningComponent implements OnInit {
         this.dataForm.value.status = parseInt("0");
 
       const link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
+
       let data: any = {
         source: this.formSourceVal.source,
         data: this.dataForm.value,
@@ -339,7 +342,11 @@ export class TraningComponent implements OnInit {
       }
       console.log(this.dnaFlag, 'dnaFlag+++++++++++++++gvhbkjnlk')
 
-      data.data['typeHtml'] = this.htmType;
+      if(this.route.snapshot.url[0].path == "manage-lesson"){
+        data.data['typeHtml'] = this.htmType;
+      }
+
+      data.data.id=this.recid;
 
       this.apiService.postData(link, data).subscribe((res: any) => {
 

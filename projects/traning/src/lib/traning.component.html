@@ -298,14 +298,16 @@
             </div>
 
 
-            <div>
-                <mat-label><b> HTML Content : </b></mat-label>
-                <ck-editor [config]="editorconfig" [(ngModel)]="htmType" [ngModelOptions]="{standalone: true}">
-                </ck-editor>
-            </div>
+         
 
 
             <ng-container *ngIf="dnaFlag==true">
+
+                <div>
+                    <mat-label><b> HTML Content : </b></mat-label>
+                    <ck-editor [config]="editorconfig" [(ngModel)]="htmType" [ngModelOptions]="{standalone: true}">
+                    </ck-editor>
+                </div>
 
                 <div>
                     <span>

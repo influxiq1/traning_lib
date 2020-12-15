@@ -257,6 +257,11 @@
                 Videos
               </button>
             </span>
+            <span class="pointer" *ngIf="element.videoflag!=false && element.videoflag!=null &&  element.videoflag!='undefine' || element.fileflag!=false && element.fileflag!=null &&  element.fileflag!='undefine' || element.audioflag==true && element.audioflag!=null &&  element.audioflag!='undefine'  ">
+              <button class="singleButton" mat-raised-button color="primary" (click)="openModalForAudioVideoFile('preview',element)">
+                Preview Lesson
+              </button>
+            </span>
 
 
           </span>
