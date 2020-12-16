@@ -100,130 +100,79 @@
             </div>
         </div>
     </div>
-    <!-- <div *ngIf="data.type_flag=='videofileaudioflag'  ">
 
-
-        <h2 class="listheader"><u> Lesson Videos </u></h2>
-        <div class="Lesson_Videos_Modal">
-
-            <div *ngFor="let item of data_array;let i =index">
-                <mat-card>
-                    <iframe width="560" height="315" [src]='item.safe_url' frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen></iframe>
-
-                    <div class="popuptextconAB">
-
-                        <span>
-                            <b>Title : </b> {{video_arr[i].video_title}}
-                        </span>
-                        <span>
-                            <b> Description :</b> {{video_arr[i].video_description}}
-                        </span>
-
-                    </div>
-                </mat-card>
-            </div>
-        </div>
-
-    </div> -->
     <div *ngIf="data.type_flag=='preview'">
-        <h2 class="listheader">
-            Lesson Audio
-        </h2>
-        <div class="Lesson_Videos_Modal">
-            <div *ngFor="let item of data_array;let i =index">
-                <div *ngIf="item!=null && item!=undefined && item!=''">
-                    <mat-card
-                        *ngIf="data_array[i]?.audio_array[i]!=null&&data_array[i]?.audio_array[i]!=undefined&&data_array[i]?.audio_array[i]!=''">
+
+        <div *ngFor="let item of data_array;let i =index">
+            <p>{{item.lession_title}}</p>
+            <!-- <p>{{item | json}}</p> -->
+            <div class="allpreviwe">
+                <mat-card *ngIf="item?.audio_array!=null && item?.audio_array!=undefined " class="audiopriview">
+                    <ng-container *ngFor="let val of item.audio_array" class="audiopriviewcls">
                         <audio controls>
 
-                            <source src="{{data.bucket_url + data_array[i].audio_array[i].audio.fileservername }}"
-                                type="audio/ogg">
-                            <source src="{{ data.bucket_url + data_array[i].audio_array[i].audio.fileservername }}"
-                                type="audio/mpeg">
+                            <source src="{{data.bucket_url + val?.audio.fileservername }}" type="audio/ogg">
+                            <source src="{{ data.bucket_url + val?.audio.fileservername }}" type="audio/mpeg">
                             Your browser does not support the audio element.
                         </audio>
 
                         <div class="popuptextconAB">
                             <span>
-                                <b>Title : </b> {{data_array[i].audio_array[i].audio_title}}
+                                <b>Title : </b> {{val?.audio_title}}
                             </span>
                             <span>
-                                <b> Description :</b> {{data_array[i].audio_array[i].audio_description}}
+                                <b> Description :</b> {{val.audio_description}}
                             </span>
                         </div>
+                    </ng-container>
+                </mat-card>
 
-                    </mat-card>
-                    <mat-card>
+                <mat-card *ngIf="data_array[i].file_array!=null && data_array[i].file_array!=undefined"
+                    class="filepriview">
+                    <ng-container *ngFor="let val of item.file_array" class="filepriviewcls">
+
                         <span
-                            *ngIf=" data_array[i].file_array[i].file.file_type != null && data_array[i].file_array[i].file.file_type == 'jpeg' || data_array[i].file_array[i].file.file_type == 'png' || data_array[i].file_array[i].file.file_type == 'jpg'">
-                            <img mat-card-image
-                                [attr.src]="data.bucket_url + data_array[i].file_array[i].file.fileservername">
+                            *ngIf=" val?.file?.file_type != undefined && val?.file?.file_type != null && val?.file?.file_type == 'jpeg' || val?.file?.file_type == 'png' || val?.file?.file_type == 'jpg'">
+                            <img mat-card-image [attr.src]="data.bucket_url + val?.file?.fileservername">
                         </span>
-
-                        <!-- <span class="filetype_{{data_array[i].file.file_type}} mat-card-image"
-                                *ngIf=" data_array[i].file.file_type != null && data_array[i].file.file_type == 'pdf' || data_array[i].file.file_type == 'doc' || data_array[i].file.file_type == 'ppt' || data_array[i].file.file_type == 'pptx' || data_array[i].file.file_type == 'msword'">
-                                <span class="material-icons icon_{{data_array[i].file.file_type}}">
-                                    picture_as_pdf
-                                </span> -->
-                        <!-- </span> -->
+                        <span class="filetype_{{val.file.file_type}} mat-card-image"
+                            *ngIf=" val.file.file_type != null && val.file.file_type == 'pdf' || val.file.file_type == 'doc' || val.file.file_type == 'ppt' || val.file.file_type == 'pptx' || val.file.file_type == 'msword'">
+                            <span class="material-icons icon_{{val.file.file_type}}">
+                                picture_as_pdf
+                            </span>
+                        </span>
                         <div class="popuptextconAB">
 
-                            <span> <b>Title :</b> {{data_array[i].file_array[i].file_title}}</span>
-                            <span><b>Description : </b> {{item.file_description}}</span>
+                            <span> <b>Title :</b> {{val?.file_title}}</span>
+                            <span><b>Description : </b> {{val?.file_description}}</span>
                         </div>
-                    </mat-card>
-                </div>
+                    </ng-container>
+
+                </mat-card>
+                <mat-card *ngIf="data_array[i]?.video_array!=null && data_array[i]?.video_array!=undefined "
+                    class="videopriview">
+                    <ng-container *ngFor="let val of item?.video_array">
+                        <iframe width="560" height="315" [src]='val?.safe_url' frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+
+                        <div class="popuptextconAB">
+
+                            <span>
+                                <b>Title : </b> {{val?.video_title}}
+                            </span>
+                            <span>
+                                <b> Description :</b> {{val?.video_description}}
+                            </span>
+
+                        </div>
+                    </ng-container>
+
+
+
+                </mat-card>
             </div>
         </div>
-
-
-
-        <!-- <div *ngIf="data_array[i].file_array[i].file !=null && data_array[i].file_array[i].file != 'undefined'"> -->
-
-
-        <!-- </div> -->
-
-        <!-- <h2 class="listheader"><u> Lesson Videos </u></h2>
-                <div class="Lesson_Videos_Modal">
-
-                    <div *ngFor="let item of data_array;let i =index">
-                        <mat-card> -->
-        <!-- <iframe width="560" height="315" [src]='item.safe_url' frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen></iframe> -->
-
-        <!-- <div class="popuptextconAB">
-
-                                <span>
-                                    <b>Title : </b> {{data_array[i].video_title}}
-                                </span>
-                                <span>
-                                    <b> Description :</b> {{data_array[i].video_description}}
-                                </span>
-
-                            </div>
-                        </mat-card>
-                    </div>
-                </div> -->
-        <!-- <mat-card *ngIf="data_array[i].audio !=null && data_array[i].audio != 'undefined'>
-                    <iframe width="560" height="315" [src]='item.safe_url' frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen></iframe>
-
-                    <div class="popuptextconAB">
-
-                        <span>
-                            <b>Title : </b> {{video_arr[i].video_title}}
-                        </span>
-                        <span>
-                            <b> Description :</b> {{video_arr[i].video_description}}
-                        </span>
-
-                    </div>
-                </mat-card> -->
-
     </div>
 </div>
 

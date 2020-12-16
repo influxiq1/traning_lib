@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSnackBar } from "@angular/material";
 import { ApiService } from '../../api.service';
 import { DialogBoxComponent } from '../../common/dialog-box/dialog-box.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Action } from 'rxjs/internal/scheduler/Action';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -590,10 +590,11 @@ export class ListLessionComponent implements OnInit {
     })
   }
   openModalForAudioVideoFile(flag, data) {
-    console.log(flag, "======element", data, 'data');
+    // console.log(flag, "======element", data, 'data');
     let data_array: any = [];
     let val: any = data.video_url;
-    let video_base_url: any
+    let video_base_url: any;
+    let lession_title = data.lession_title;
     console.log(data, 'fgthyjkl;')
 
     switch (flag) {
@@ -607,9 +608,9 @@ export class ListLessionComponent implements OnInit {
         data_array = data.video_array;
         break;
       case 'preview':
-
+        data_array.push({ lession_title: lession_title })
         if (data.video_array.length > 0) {
-          data_array.push({ video_array: data.video_array })
+          data_array.push({ video_array: data.video_array });
         }
 
         if (data.file_array.length > 0) {
@@ -621,7 +622,7 @@ export class ListLessionComponent implements OnInit {
         }
         break;
     }
-      console.log(data_array[0], 'data_array ++')
+    console.log(data_array, 'data_array ++')
 
 
     const dialogRef = this.dialog.open(AudioVideoFileDialogComponent, {
@@ -652,21 +653,24 @@ export class AudioVideoFileDialogComponent {
   data_array: any = {};
   video_base_url: any = 'https://www.youtube.com/embed/';
   video_id: any;
-
+  safe_url_video:any;
   public video_arr: any = [];
 
 
   constructor(
-    public dialogRef: MatDialogRef<AudioVideoFileDialogComponent>, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: AudioVideoDialog, public sanitizer: DomSanitizer) {
+    public dialogRef: MatDialogRef<AudioVideoFileDialogComponent>, public activatedroute: ActivatedRoute, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: AudioVideoDialog, public sanitizer: DomSanitizer) {
+      console.log(data,'akash662')
     if (this.data.type_flag == 'audio' || this.data.type_flag == 'file') {
       this.bucket_url = data.bucket_url;
     }
     console.log(data.data_array, 'datacjbtxrtvybun')
     this.data_array = data.data_array;
+    this.activatedroute.data.forEach((response: any) => {
+      console.log(response, 'activatedroute+++++++')
+    })
 
 
-
-    if (data.type_flag == 'videoflag' || this.data_array[0].type == 'video') {
+    if (data.type_flag == 'videoflag'  ) {
 
       for (let i in data.data_array) {
         console.log(data.data_array[i])
@@ -676,13 +680,32 @@ export class AudioVideoFileDialogComponent {
         // console.log(url, 'url')
 
         data.data_array[i].safe_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-
+        data.data_array[i].video_array[i].safe_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
 
         this.video_arr.push(data.data_array[i])
       }
 
-      // console.log(data.data_array, ' data.data_array')
+      console.log(data.data_array, ' data.data_array')
 
+    }
+    if (data.type_flag == 'preview') {
+      for (let i in data.data_array) {
+        // console.log(data.data_array[i])
+        if (data.data_array[i].video_array != null) {
+          for (const key in data.data_array[i].video_array) {
+            var url = this.video_base_url + data.data_array[i].video_array[key].video_url + '?rel=0&modestbranding=1&autoplay=0';
+            data.data_array[i].safe_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+            data.data_array[i].video_array[key].safe_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    
+          }
+         
+          this.video_arr.push(data.data_array[i])
+         
+        }
+
+        console.log(data.data_array, ' data.data_array')
+
+      }
     }
 
 
