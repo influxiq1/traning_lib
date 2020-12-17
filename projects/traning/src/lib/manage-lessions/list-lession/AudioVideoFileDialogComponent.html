@@ -47,7 +47,7 @@
                         <mat-card>
                             <span
                                 *ngIf=" data_array[i].file.file_type != null && data_array[i].file.file_type == 'jpeg' || data_array[i].file.file_type == 'png' || data_array[i].file.file_type == 'jpg'">
-                                <img mat-card-image [attr.src]="data.bucket_url + data_array[i].file.fileservername">
+                                <img mat-card-image [attr.src]="data.bucket_url.url + data_array[i].file.fileservername">
                             </span>
 
                             <span class="filetype_{{data_array[i].file.file_type}} mat-card-image"
@@ -80,8 +80,8 @@
                     <mat-card>
                         <audio controls>
 
-                            <source src="{{data.bucket_url + data_array[i].audio.fileservername }}" type="audio/ogg">
-                            <source src="{{ data.bucket_url + data_array[i].audio.fileservername }}" type="audio/mpeg">
+                            <source src="{{data.bucket_url.url + data_array[i].audio.fileservername }}" type="audio/ogg">
+                            <source src="{{data.bucket_url.url + data_array[i].audio.fileservername }}" type="audio/mpeg">
                             Your browser does not support the audio element.
                         </audio>
 
@@ -102,17 +102,22 @@
     </div>
 
     <div *ngIf="data.type_flag=='preview'">
-
-        <div *ngFor="let item of data_array;let i =index">
-            <p>{{item.lession_title}}</p>
+        <div *ngFor="let item of previewData ;let i=index">
+            <p>{{item?.lession_title}}</p>
             <!-- <p>{{item | json}}</p> -->
             <div class="allpreviwe">
-                <mat-card *ngIf="item?.audio_array!=null && item?.audio_array!=undefined " class="audiopriview">
-                    <ng-container *ngFor="let val of item.audio_array" class="audiopriviewcls">
+                <mat-card *ngIf="item.typeHtml!=null && item.typeHtml!=undefined && item.typeHtml!=''">
+                    <p [innerHtml]="item.typeHtml" class="ptagimg"></p>
+                </mat-card>
+                <ng-container *ngFor="let val of item?.lesson_attachements">
+                    <mat-card *ngIf="val?.audio!=null && val?.audio!=undefined && val?.audio!=''" class="audiopriview">
+
                         <audio controls>
 
-                            <source src="{{data.bucket_url + val?.audio.fileservername }}" type="audio/ogg">
-                            <source src="{{ data.bucket_url + val?.audio.fileservername }}" type="audio/mpeg">
+                            <source src="{{previewData[i].bucket_url.url +val?.audio.fileservername }}"
+                                type="audio/ogg">
+                            <source src="{{ previewData[i].bucket_url.url + val?.audio.fileservername }}"
+                                type="audio/mpeg">
                             Your browser does not support the audio element.
                         </audio>
 
@@ -121,19 +126,19 @@
                                 <b>Title : </b> {{val?.audio_title}}
                             </span>
                             <span>
-                                <b> Description :</b> {{val.audio_description}}
+                                <b> Description :</b> {{val?.audio_description}}
                             </span>
                         </div>
-                    </ng-container>
-                </mat-card>
+                    </mat-card>
+                </ng-container>
 
-                <mat-card *ngIf="data_array[i].file_array!=null && data_array[i].file_array!=undefined"
-                    class="filepriview">
-                    <ng-container *ngFor="let val of item.file_array" class="filepriviewcls">
+
+                <ng-container *ngFor="let val of item?.lesson_attachements">
+                    <mat-card *ngIf="val.file!=null && val.file!=undefined && val.file!=''" class="filepriview">
 
                         <span
                             *ngIf=" val?.file?.file_type != undefined && val?.file?.file_type != null && val?.file?.file_type == 'jpeg' || val?.file?.file_type == 'png' || val?.file?.file_type == 'jpg'">
-                            <img mat-card-image [attr.src]="data.bucket_url + val?.file?.fileservername">
+                            <img mat-card-image style="width: 100%;" [attr.src]="previewData[i].bucket_url.url +  val?.file?.fileservername">
                         </span>
                         <span class="filetype_{{val.file.file_type}} mat-card-image"
                             *ngIf=" val.file.file_type != null && val.file.file_type == 'pdf' || val.file.file_type == 'doc' || val.file.file_type == 'ppt' || val.file.file_type == 'pptx' || val.file.file_type == 'msword'">
@@ -146,13 +151,15 @@
                             <span> <b>Title :</b> {{val?.file_title}}</span>
                             <span><b>Description : </b> {{val?.file_description}}</span>
                         </div>
-                    </ng-container>
 
-                </mat-card>
-                <mat-card *ngIf="data_array[i]?.video_array!=null && data_array[i]?.video_array!=undefined "
-                    class="videopriview">
-                    <ng-container *ngFor="let val of item?.video_array">
-                        <iframe width="560" height="315" [src]='val?.safe_url' frameborder="0"
+                    </mat-card>
+                </ng-container>
+
+                <ng-container *ngFor="let val of item?.lesson_attachements">
+                    <mat-card
+                        *ngIf="val.type!=null && val.type!=undefined && val.type!=''&&val.type=='video' "
+                        class="videopriview">
+                        <iframe width="560" height="315" [src]='val.safeUrl' frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen></iframe>
 
@@ -166,11 +173,13 @@
                             </span>
 
                         </div>
-                    </ng-container>
+
+                    </mat-card>
+                </ng-container>
 
 
 
-                </mat-card>
+
             </div>
         </div>
     </div>

@@ -32,9 +32,9 @@ export interface PeriodicElement {
 export interface AudioVideoDialog {
   type_flag: any;
   data_array: any;
-  video_base_url; any;
-  bucket_url: any
-
+  video_base_url: any;
+  bucket_url: any;
+  previewData: any;
 }
 
 export interface DialogData {
@@ -72,7 +72,8 @@ export class ListLessionComponent implements OnInit {
   public allTrashData: any = [];
   public trashFlag: any = 0;
   public dnaFlag: any;
-  public bucket_url: any
+  public bucket_url: any;
+  public preview_endpoint: any;
   public trashButtonText: any = "View Trash";
   public trainingCounts: any = {
     "activatedtrainingcount": "",
@@ -92,6 +93,7 @@ export class ListLessionComponent implements OnInit {
     "has_lessonplan_regex": "",
     "lessonplan_value_regex": ""
   }
+  public previewData: any = [];
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   selection = new SelectionModel<PeriodicElement>(true, []);
@@ -141,9 +143,14 @@ export class ListLessionComponent implements OnInit {
     // console.log("dna flag",this.dnaFlag);  
   }
   @Input()
-  set BuketUrl(BuketUrl: any) {
-    this.bucket_url = (BuketUrl) || '<no name set>';
-    this.bucket_url = this.bucket_url.url;
+  set BuketUrl(val: any) {
+    this.bucket_url = (val) || '<no name set>';
+  }
+
+  @Input()
+  set PreviewEndpoint(val: any) {
+    this.preview_endpoint = (val) || '<no name set>';
+    this.preview_endpoint = val;
   }
   constructor(public dialog: MatDialog, public apiService: ApiService, public router: Router, public snakBar: MatSnackBar, public sanitizer: DomSanitizer) {
     setTimeout(() => {
@@ -590,7 +597,7 @@ export class ListLessionComponent implements OnInit {
     })
   }
   openModalForAudioVideoFile(flag, data) {
-    // console.log(flag, "======element", data, 'data');
+    console.log(flag, "======element", data, 'data');
     let data_array: any = [];
     let val: any = data.video_url;
     let video_base_url: any;
@@ -608,33 +615,47 @@ export class ListLessionComponent implements OnInit {
         data_array = data.video_array;
         break;
       case 'preview':
-        data_array.push({ lession_title: lession_title })
-        if (data.video_array.length > 0) {
-          data_array.push({ video_array: data.video_array });
-        }
+        console.log(this.preview_endpoint, this.serverDetailsVal, '????')
 
-        if (data.file_array.length > 0) {
-          data_array.push({ file_array: data.file_array })
+        let link = this.serverDetailsVal.serverUrl + this.preview_endpoint
+        let cond = {
+          lesson_id: data._id
         }
+        this.apiService.postDatawithoutToken(link, cond).subscribe((response: any) => {
+          // let result: any;
+          if (response.status = 'success') {
+            this.previewData = response.results;
+            console.log(this.previewData, 'response')
+            const dialogRef = this.dialog.open(AudioVideoFileDialogComponent, {
+              panelClass: 'lesson_videomodal',
+              width: '1000px',
+              height: '650px',
+              data: { 'type_flag': flag, 'previewData': this.previewData, 'bucket_url': this.bucket_url }
+            })
+            dialogRef.disableClose = true;
+            dialogRef.afterClosed().subscribe(result => {
 
-        if (data.audio_array.length > 0) {
-          data_array.push({ audio_array: data.audio_array })
-        }
+            })
+          }
+        })
+
         break;
     }
-    console.log(data_array, 'data_array ++')
+    console.log(data, 'data_array ++')
 
+    if (flag == 'audioflag' || flag == 'fileflag' || flag == 'videoflag') {
+      const dialogRef = this.dialog.open(AudioVideoFileDialogComponent, {
+        panelClass: 'lesson_videomodal',
+        width: '800px',
+        height: '500px',
+        data: { 'data_array': data_array, 'type_flag': flag, 'video_base_url': video_base_url, 'val': val, 'bucket_url': this.bucket_url, 'previewData': this.previewData }
+      })
+      dialogRef.disableClose = true;
+      dialogRef.afterClosed().subscribe(result => {
 
-    const dialogRef = this.dialog.open(AudioVideoFileDialogComponent, {
-      panelClass: 'lesson_videomodal',
-      width: '800px',
-      height: '500px',
-      data: { 'data_array': data_array, 'type_flag': flag, 'video_base_url': video_base_url, 'val': val, 'bucket_url': this.bucket_url }
-    });
-    dialogRef.disableClose = true;
-    dialogRef.afterClosed().subscribe(result => {
+      })
+    }
 
-    })
 
   }
 
@@ -653,24 +674,47 @@ export class AudioVideoFileDialogComponent {
   data_array: any = {};
   video_base_url: any = 'https://www.youtube.com/embed/';
   video_id: any;
-  safe_url_video:any;
+  safe_url_video: any;
   public video_arr: any = [];
+  url: any;
+  endpoint: any;
+  previewData: any = [];
+  video_safe_url: any;
 
 
   constructor(
-    public dialogRef: MatDialogRef<AudioVideoFileDialogComponent>, public activatedroute: ActivatedRoute, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: AudioVideoDialog, public sanitizer: DomSanitizer) {
-      console.log(data,'akash662')
-    if (this.data.type_flag == 'audio' || this.data.type_flag == 'file') {
-      this.bucket_url = data.bucket_url;
+    public dialogRef: MatDialogRef<AudioVideoFileDialogComponent>, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: AudioVideoDialog, public sanitizer: DomSanitizer) {
+
+    console.log(data, 'dtfbgnhjmk+++++++++++++++++++')
+
+    this.previewData = data.previewData;
+    console.log(this.previewData, 'zwrxyhbinujkmxetrvu===============')
+
+    if (data.type_flag == 'preview') {
+      for (const i in this.previewData) {
+
+        for (let j in this.previewData[i].lesson_attachements) {
+          if (this.previewData[i].lesson_attachements[j].type == 'video') {
+
+            this.previewData[i].lesson_attachements[j].safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.video_base_url + this.previewData[i].lesson_attachements[j].video_url + '?rel=0&modestbranding=1&autoplay=0&showinfo=0&listType=playlist');
+          }
+        }
+        console.log(this.previewData)
+      }
     }
-    console.log(data.data_array, 'datacjbtxrtvybun')
+console.log(data.bucket_url.url,'data.bucket_url')
+
+    if (data.type_flag == 'preview' && data.bucket_url != null && typeof (data.bucket_url) != 'undefined') {
+      this.previewData[0].bucket_url = data.bucket_url;
+      console.log(this.previewData[0].video_safe_url, 'dtfbgnhjmk__________________')
+    }
+
+
+
+    this.bucket_url = data.bucket_url;
     this.data_array = data.data_array;
-    this.activatedroute.data.forEach((response: any) => {
-      console.log(response, 'activatedroute+++++++')
-    })
 
-
-    if (data.type_flag == 'videoflag'  ) {
+    if (data.type_flag == 'videoflag') {
 
       for (let i in data.data_array) {
         console.log(data.data_array[i])
@@ -680,38 +724,18 @@ export class AudioVideoFileDialogComponent {
         // console.log(url, 'url')
 
         data.data_array[i].safe_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-        data.data_array[i].video_array[i].safe_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-
         this.video_arr.push(data.data_array[i])
       }
 
-      console.log(data.data_array, ' data.data_array')
-
     }
-    if (data.type_flag == 'preview') {
-      for (let i in data.data_array) {
-        // console.log(data.data_array[i])
-        if (data.data_array[i].video_array != null) {
-          for (const key in data.data_array[i].video_array) {
-            var url = this.video_base_url + data.data_array[i].video_array[key].video_url + '?rel=0&modestbranding=1&autoplay=0';
-            data.data_array[i].safe_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-            data.data_array[i].video_array[key].safe_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-    
-          }
-         
-          this.video_arr.push(data.data_array[i])
-         
-        }
 
-        console.log(data.data_array, ' data.data_array')
-
-      }
-    }
 
 
   }
   onNoClick(): void {
     this.dialogRef.close();
+  }
+  ngOnInit(): void {
   }
 
 }

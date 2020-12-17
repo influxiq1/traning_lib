@@ -17,7 +17,9 @@ public manageQuizRoute:any="/manage-quiz/list/";
 public QuizPageRoute:any='/quiz/list/';
 public bucket_url: any = {
   url: 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/'
- }
+ };
+ public preview_url:any = 'https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/'
+ public preview_endpoint= 'lesson-preview-data'
 public serverDetails: any = {
   "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/",
   "jwttoken": ""
