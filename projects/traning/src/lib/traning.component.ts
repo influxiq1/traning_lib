@@ -506,7 +506,6 @@ export class TraningComponent implements OnInit {
     const dialogRef = this.dialog.open(AddAudioVideoFileDialogComponent, {
       panelClass: 'lesson_videomodal',
       width: '900px',
-      height: '600px',
       data: { 'dataObj': dataObj, 'heading': heading, 'type_flag': type_flag, 'buttonName': buttonName, 'keyVal': key }
     });
 
@@ -579,7 +578,6 @@ export class TraningComponent implements OnInit {
     const dialogRef = this.dialog.open(AddAudioVideoFileDialogComponent, {
       panelClass: 'lesson_videomodal',
       width: '900px',
-      height: '600px',
       data: { 'configFileUpload': this.uploadConfigData, 'dataObj': dataObj, 'heading': heading, 'type_flag': type_flag, 'buttonName': buttonName, 'keyVal': key, bucket_url: this.bucket_url }
     });
 
@@ -632,7 +630,6 @@ export class TraningComponent implements OnInit {
     const dialogRef = this.dialog.open(AddAudioVideoFileDialogComponent, {
       panelClass: 'lesson_videomodal',
       width: '900px',
-      height: '600px',
       data: { 'configFileUpload': this.uploadConfigData, 'dataObj': dataObj, 'heading': heading, 'type_flag': type_flag, 'buttonName': buttonName, 'keyVal': key, bucket_url: this.bucket_url }
     });
 
@@ -773,7 +770,6 @@ export class TraningComponent implements OnInit {
       const dialogRef = this.dialog.open(videoDialogComponent, {
         panelClass: 'lesson_videomodal',
         width: '800px',
-        height: '500px',
         data: { 'safe_url': safe_url }
       });
     } else {

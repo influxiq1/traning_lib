@@ -1,17 +1,11 @@
-import { Component, OnInit, ViewChild, Input, Inject } from '@angular/core';
+import { OnInit, ViewChild, Input, Inject, Component } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSnackBar } from "@angular/material";
 
 import { ApiService } from '../api.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel';
-import { MatCarouselSlide, MatCarouselSlideComponent } from '@ngmodule/material-carousel';
-import { count } from 'rxjs/operators';
-import { MatProgressBarModule, MatRadioModule, MatSliderModule } from '@angular/material'
 // import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
-import { Pipe, PipeTransform } from '@angular/core';
-import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
-import { Observable, interval, Subscription } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 export interface DialogData {
@@ -59,6 +53,9 @@ export interface DialogData5 {
   lesson_data: any;
   server_url: any;
   user_id: any;
+}
+export interface DialogData6 {
+  data: any;
 }
 
 @Component({
@@ -111,6 +108,8 @@ export class TrainingCenterDnaComponent implements OnInit {
   public allLessonDataList: any = [];
   public nextdata: number = 0;
   public nextlessondata: any;
+  public externalWindow: any;
+  public pdf_url: any;
 
   public userType: any;
   public Index: number;
@@ -146,6 +145,8 @@ export class TrainingCenterDnaComponent implements OnInit {
   public lesson_locked_by_user: any = 1;
   public video_base_url: any = 'https://www.youtube.com/embed/';
   public quizflag: boolean = false;
+  public previewimages: any;
+
   public bucket_url: any = 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/'
   public lessoncontentarraydata: any = []
   msaapDisplayTitle = true;
@@ -349,7 +350,7 @@ export class TrainingCenterDnaComponent implements OnInit {
         }
       }
 
-      
+
 
       if (results.lesson_ids[0].lesson_ids != null) {
         for (let id in results.lesson_ids[0].lesson_ids) {
@@ -357,15 +358,15 @@ export class TrainingCenterDnaComponent implements OnInit {
           if ((results.lesson_content[0]._id == results.lesson_ids[0].lesson_ids[id] && results.lesson_content[0].has_lessonplan == 1) || (results.lesson_content[0]._id == results.lesson_ids[0].lesson_ids[id])) {
             this.lesson_id_flag = results.lesson_ids[0].lesson_ids[id];
             this.preview_button = false;
-          
-            
+
+
           }
         }
       }
 
 
 
-     
+
 
       if (this.orders_button == false && this.preview_button == false) {
         this.schedule_button = true;
@@ -409,7 +410,7 @@ export class TrainingCenterDnaComponent implements OnInit {
       }
 
 
-     
+
     }
 
 
@@ -649,10 +650,34 @@ export class TrainingCenterDnaComponent implements OnInit {
       // console.log(response.trainingdata.results.lesson_attachements_data[0].lesson_attachements[0].type, 'activatedRoute')
       this.lessoncontentarraydata = response.trainingdata.results.lesson_attachements_data[0].lesson_attachements
     })
-    console.log(this.lessoncontentarraydata, 'lessoncontentarraydata')
+    console.log(this.lessoncontentarraydata[0].images.converted_array[0].name, 'lessoncontentarraydata!!!!!!!')
+    console.log(this.bucket_url + this.lessoncontentarraydata[0].images.converted_array[0].name, 'lessoncontentarraydata[0].images.converted_array[0].name')
   }
   onEnded(val) {
     console.log(val, 'onEnded||onEnded')
+  }
+  downloadPdf(file: any) {
+    console.log(file)
+    this.pdf_url = this.bucket_url + file.fileservername;
+    this.externalWindow = window.open(
+      this.pdf_url,
+      "width=600,height=400,left=200,top=200"
+    );
+  }
+
+  previewpdf(val) {
+    this.previewimages = val.converted_array;
+    console.log(this.previewimages, 'PreviewContentDialog')
+
+    const dialogRef = this.dialog.open(PreviewContentDialog, {
+      panelClass: 'lesson_pdfmodal',
+      width: 'auto',
+      data: { data: val, }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log();
+    });
   }
   ngOnInit() {
 
@@ -1763,3 +1788,60 @@ export class LessonQuizModalComponent {
     this.indexVal = 1;
   }
 }
+@Component({
+  selector: 'preview-content-dialog',
+  templateUrl: 'dialog-content-dialog.html',
+  styleUrls: ['./dialog-content-dialog.css']
+
+})
+export class PreviewContentDialog {
+  public previewImg: any = [];
+  public image: any = '';
+  public index = 0;
+  public page = 1;
+  public bucket_url: any = 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/';
+  public nextflg: any = 'disabled';
+  public prevflag: any = 'disabled';
+  public pos: any
+
+  constructor(public dialogRef: MatDialogRef<PreviewContentDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData6, public snakBar: MatSnackBar, public apiService: ApiService, public router: Router) {
+    console.log(data.data, 'data')
+    this.previewImg = data.data.converted_array;
+    this.image = this.bucket_url + this.previewImg[this.index].name
+    this.pos = data.data.numberOfPages;
+    // console.log(this.quizData, '++')
+  }
+  nextprevbtn(flag, index) {
+    switch (flag) {
+      case 'prev':
+        if (this.index == 0 || this.index < 0) {
+          console.log(flag, '++++++++++++ if')
+         
+        } else{
+          console.log(flag, '++++++++++++ else')
+          this.index = this.index - 1;
+          this.image = this.bucket_url + this.previewImg[this.index].name
+          this.page = this.previewImg[this.index].page
+        }
+        break;
+      case 'next':
+
+        if (this.previewImg.length == this.index + 1) {
+          console.log(flag, '++++++++++++ if')
+        }
+        else {
+          console.log(flag, '++++++++++++ else')
+          this.index = this.index + 1;
+          this.image = this.bucket_url + this.previewImg[this.index].name
+          this.page = this.previewImg[this.index].page
+          console.log(index, 'index+++++++', this.index, this.previewImg.length)
+        }
+        break;
+    }
+
+    // console.log(flag, '++++++++++++', index)
+  };
+
+}
+

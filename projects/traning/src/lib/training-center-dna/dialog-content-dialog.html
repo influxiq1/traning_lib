@@ -1,0 +1,21 @@
+<div class="allcontent">
+
+    <!-- {{previewImg|json}} -->
+    <span>Lesson Images</span>
+    <div>
+        <img style="height: 500px;width: 300px;" [src]="image">
+    </div>
+<div style="display: inline;">
+
+    <button mat-stroked-button (click)="nextprevbtn('prev',index)" [ngClass]="index == 0?'inactive':'active'"><span class="material-icons" >
+        arrow_back_ios
+    </span></button>
+<span>
+    {{page}} of {{pos}}
+</span>
+
+<button mat-stroked-button (click)="nextprevbtn('next',index)" [ngClass]="page == pos?'inactive':'active'"> <span class="material-icons">
+        navigate_next
+    </span> </button>
+</div>
+</div>

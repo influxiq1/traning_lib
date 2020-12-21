@@ -96,7 +96,8 @@
           <div class="btnclsnext" *ngIf="next_button_access == true">
             <ng-container class="nextbtn">
               <button mat-button type="button" class="submitbtn" color="primary" (click)="nextbutton('next','')">Next
-                <mat-icon>keyboard_arrow_right</mat-icon></button>
+                <mat-icon>keyboard_arrow_right</mat-icon>
+              </button>
             </ng-container>
           </div>
         </span>
@@ -327,11 +328,11 @@
                 </mat-card>
 
 
-                <div *ngFor="let item of lessoncontentarraydata;" class="training_mainwrappercon">
+                <div *ngFor="let item of lessoncontentarraydata;let i=index" class="training_mainwrappercon">
                   <!-- <mat-card *ngIf="item!=null && item!=undefined && item!= '' "> -->
                   <div class="audio_div afvmaindiv"
                     *ngIf="item.type=='audio'&& item.type!=null && item.type!=undefined">
-                  -->
+                    -->
                   </div>
                   <div class="file_div afvmaindiv" *ngIf="item.type=='file' && item.type!=null && item.type!=undefined">
                     <span
@@ -341,9 +342,22 @@
 
                     <span class="filetype_{{item.file.file_type}} mat-card-image"
                       *ngIf=" item.file.file_type != null && item.file.file_type == 'pdf' || item.file.file_type == 'doc' || item.file.file_type == 'ppt' || item.file.file_type == 'pptx' || item.file.file_type == 'msword'">
-                      <span class="material-icons icon_{{item.file.file_type}}">
+                     
+                      <ng-container *ngIf="item?.images!=null && item?.images!=undefined && item?.images!=''; else elseTemplate">
+                        <img mat-card-image [src]="bucket_url+item?.images?.converted_array[i]?.name" alt="Photo of a pdf">
+                     </ng-container>
+                     <ng-template #elseTemplate>
+                       <span class="material-icons icon_{{item.file.file_type}}">
                         picture_as_pdf
                       </span>
+                     </ng-template>
+                    
+                      <button mat-raised-button (click)="previewpdf(item.images)">
+                        Preview
+                      </button>
+                      <button mat-raised-button (click)="downloadPdf(item.file)">
+                       Download
+                      </button>
                     </span>
                     <p class="File_titlecls">{{ item.file_title }}</p>
 
