@@ -162,7 +162,7 @@ export class TraningComponent implements OnInit {
 
   ngOnInit() {
 
-    
+
 
     this.headerText = this.formSourceVal.AddheaderText;
     this.route.params.subscribe(params => {
@@ -342,11 +342,11 @@ export class TraningComponent implements OnInit {
       }
       console.log(this.dnaFlag, 'dnaFlag+++++++++++++++gvhbkjnlk')
 
-      if(this.route.snapshot.url[0].path == "manage-lesson"){
+      if (this.route.snapshot.url[0].path == "manage-lesson") {
         data.data['typeHtml'] = this.htmType;
       }
 
-      data.data.id=this.recid;
+      data.data.id = this.recid;
 
       this.apiService.postData(link, data).subscribe((res: any) => {
 
@@ -835,46 +835,6 @@ export class TraningComponent implements OnInit {
 
             this.getchkboxval(this.chkboxval);
             this.lessonplanValue = res.res[0].lessonplan_value;
-
-            // switch (res.res[0].mediaType) {
-            //   case 'image':
-            //     this.htmType = res.res[0].image_typeHtml;
-            //     this.title = res.res[0].image_title;
-            //     this.description = res.res[0].image_description;
-
-            //     break;
-            //   case 'video':
-            //     this.video_array = res.res[0].video_array;
-            //     this.htmType = res.res[0].video_typeHtml;
-            //     this.title = res.res[0].video_title;
-            //     this.description = res.res[0].video_description;
-            //     break;
-            //   case 'audio':
-            //     this.htmType = res.res[0].audio_typeHtml;
-            //     this.title = res.res[0].audio_title;
-            //     this.description = res.res[0].audio_description;
-            //     break;
-            //   case 'file':
-            //     this.htmType = res.res[0].file_typeHtml;
-            //     this.title = res.res[0].file_title;
-            //     this.description = res.res[0].file_description;
-            //     break;
-
-            // }
-            // for (let key in res.res[0].fileType) {
-            //   imageBasepath = res.res[0].fileType[key].basepath;
-            //   fileserverName = res.res[0].fileType[key].fileservername;
-            // }
-            // this.imagePath = imageBasepath + fileserverName;
-            // this.fileArray = this.imagePath;
-
-
-            // for (const vid in res.res[0].video_array) {
-
-            //   // this.addVideo(res.res[0].video_array[vid].video_url,
-            //   //   res.res[0].video_array[vid].video_title,
-            //   //   res.res[0].video_array[vid].video_description);
-            // }
           }
         }
 
@@ -891,57 +851,7 @@ export class TraningComponent implements OnInit {
               else checkval = false;
               this.dataForm.controls[c].patchValue(checkval);
             }
-            // if (this.formdataval[j].name == c && this.formdataval[j].inputtype == 'daterange') {
-            //     $('#inputdate' + this.formdataval[j].name).val(this.showdate(result.res[0][c]));
-            //     let bsValue = new Date(result.res[0][c][0]);
-            //     let maxDate = new Date(result.res[0][c][1]);
-            //     let datearr = [bsValue, maxDate];
-            //     this.dataForm.controls[c].patchValue(datearr);
-            // }
-            // if (this.formdataval[j].name == c && this.formdataval[j].inputtype == 'dateis') {
-            //     let a = result.res[0][c].split('T');
-            //     $('#inputdateis' + this.formdataval[j].name).val(moment(a[0]).format('MM-DD-YYYY'));
-            //     let bsValue = new Date(result.res[0][c][0]);
-            //     let maxDate = new Date(result.res[0][c][1]);
-            // }
-            // if (this.formdataval[j].name == c && this.formdataval[j].inputtype == 'timeis') {
-            //     if (this.formdataval[j].name == 'start_time') {
-            //         let sttime = new Date();
-            //         var spl = result.res[0][c].split(':');
-            //         sttime.setHours(spl[0]);
-            //         sttime.setMinutes(spl[1]);
-            //         this.start_time = sttime;
-            //     }
-            //     if (this.formdataval[j].name == 'end_time') {
-            //         let sttime = new Date();
-            //         var spl = result.res[0][c].split(':');
-            //         sttime.setHours(spl[0]);
-            //         sttime.setMinutes(spl[1]);
-            //         this.end_time = sttime;
-            //     }
-            // }
 
-            // if (this.formdataval[j].name == c && this.formdataval[j].inputtype == 'image') {
-            //     folder = this.formdataval[j].imagefolder;
-            //     const link = this._commonservice.base64encode + '&img=' + this.dataForm.controls[c].value + '&type=' + folder;
-            //     this._http.get(link)
-            //         .subscribe(res => {
-            //             let result: any;
-            //             result = res;
-            //             if (result.data != null) {
-            //                 this.unsafebase64imgdata[j] = result.data;
-            //                 this.croppedImage[j] = result.data;
-            //             }
-            //         }, error => {
-            //             console.log('Oooops!');
-            //         });
-            // }
-            // if (this.formdataval[j].name == c && this.formdataval[j].inputtype == 'file') {
-            //     this.percentageis[j] = 100;
-            //     this.lengthis[j] = 1;
-            //     this.flag = 0;
-            //     this.nameis[j] = result.res[0][c];
-            // }
           }
         }
         // Validators.required
@@ -954,122 +864,10 @@ export class TraningComponent implements OnInit {
             this.dataForm.addControl('lessonplan_value', new FormControl(this.lessonplanValue));
           }
         }
-
-
-        // switch (res.res[0].mediaType) {
-        //   case 'image':
-        //     this.dataForm.addControl('image_typeHtml', new FormControl(this.htmType));
-        //     this.dataForm.addControl('image_title', new FormControl(res.res[0].image_title));
-        //     this.dataForm.addControl('image_description', new FormControl(res.res[0].image_description));
-
-        //     break;
-        //   case 'video':
-        //     this.dataForm.addControl('video_array', new FormControl(this.video_array));
-        //     this.dataForm.addControl('video_typeHtml', new FormControl(this.htmType));
-        //     this.dataForm.addControl('video_title', new FormControl(res.res[0].video_title));
-        //     this.dataForm.addControl('video_description', new FormControl(res.res[0].video_description));
-
-        //     break;
-        //   case 'audio':
-        //     this.dataForm.addControl('audio_typeHtml', new FormControl(this.htmType));
-        //     this.dataForm.addControl('audio_title', new FormControl(res.res[0].audio_title));
-        //     this.dataForm.addControl('audio_description', new FormControl(res.res[0].audio_description));
-
-        //     break;
-        //   case 'file':
-        //     this.dataForm.addControl('file_typeHtml', new FormControl(this.htmType));
-        //     this.dataForm.addControl('file_title', new FormControl(res.res[0].file_title));
-        //     this.dataForm.addControl('file_description', new FormControl(res.res[0].file_description));
-
-        //     break;
-
-        // }
-
-
       }
     }, error => {
       // this.datalist = [];
     });
-
-    // }
-    // })
-    // this._http.post(link, { source: sourcevalue, condition: { _id: this.selecteditem._id } })
-    //     .subscribe(res => {
-    //         let result;
-    //         result = res;
-    //         if (result.status == 'error') {
-    //             this.router.navigate(['/']);
-    //         } else {
-
-    //             let folder: any = '';
-    //             for (let c in this.dataForm.controls) {
-    //                 this.dataForm.controls[c].patchValue(result.res[0][c]);
-    //                 for (let j in this.formdataval) {
-
-    //                   if (this.formdataval[j].name == c && this.formdataval[j].inputtype == 'checkbox') {
-    //                     let checkval = result.res[0][c];
-    //                     if (result.res[0][c] == 1) checkval = true;
-    //                     else checkval = false;
-    //                     this.dataForm.controls[c].patchValue(checkval);
-    //                 }
-    //                     // if (this.formdataval[j].name == c && this.formdataval[j].inputtype == 'daterange') {
-    //                     //     $('#inputdate' + this.formdataval[j].name).val(this.showdate(result.res[0][c]));
-    //                     //     let bsValue = new Date(result.res[0][c][0]);
-    //                     //     let maxDate = new Date(result.res[0][c][1]);
-    //                     //     let datearr = [bsValue, maxDate];
-    //                     //     this.dataForm.controls[c].patchValue(datearr);
-    //                     // }
-    //                     // if (this.formdataval[j].name == c && this.formdataval[j].inputtype == 'dateis') {
-    //                     //     let a = result.res[0][c].split('T');
-    //                     //     $('#inputdateis' + this.formdataval[j].name).val(moment(a[0]).format('MM-DD-YYYY'));
-    //                     //     let bsValue = new Date(result.res[0][c][0]);
-    //                     //     let maxDate = new Date(result.res[0][c][1]);
-    //                     // }
-    //                     // if (this.formdataval[j].name == c && this.formdataval[j].inputtype == 'timeis') {
-    //                     //     if (this.formdataval[j].name == 'start_time') {
-    //                     //         let sttime = new Date();
-    //                     //         var spl = result.res[0][c].split(':');
-    //                     //         sttime.setHours(spl[0]);
-    //                     //         sttime.setMinutes(spl[1]);
-    //                     //         this.start_time = sttime;
-    //                     //     }
-    //                     //     if (this.formdataval[j].name == 'end_time') {
-    //                     //         let sttime = new Date();
-    //                     //         var spl = result.res[0][c].split(':');
-    //                     //         sttime.setHours(spl[0]);
-    //                     //         sttime.setMinutes(spl[1]);
-    //                     //         this.end_time = sttime;
-    //                     //     }
-    //                     // }
-
-    //                     // if (this.formdataval[j].name == c && this.formdataval[j].inputtype == 'image') {
-    //                     //     folder = this.formdataval[j].imagefolder;
-    //                     //     const link = this._commonservice.base64encode + '&img=' + this.dataForm.controls[c].value + '&type=' + folder;
-    //                     //     this._http.get(link)
-    //                     //         .subscribe(res => {
-    //                     //             let result: any;
-    //                     //             result = res;
-    //                     //             if (result.data != null) {
-    //                     //                 this.unsafebase64imgdata[j] = result.data;
-    //                     //                 this.croppedImage[j] = result.data;
-    //                     //             }
-    //                     //         }, error => {
-    //                     //             console.log('Oooops!');
-    //                     //         });
-    //                     // }
-    //                     // if (this.formdataval[j].name == c && this.formdataval[j].inputtype == 'file') {
-    //                     //     this.percentageis[j] = 100;
-    //                     //     this.lengthis[j] = 1;
-    //                     //     this.flag = 0;
-    //                     //     this.nameis[j] = result.res[0][c];
-    //                     // }
-    //                 }
-    //             }
-    //             this.dataForm.addControl('id', new FormControl(this.selecteditem._id, Validators.required));
-    //         }
-    //     }, error => {
-    //         this.datalist = [];
-    //     });
   }
 
   getchkboxval(val: any) {
@@ -1079,39 +877,7 @@ export class TraningComponent implements OnInit {
     }
   }
 
-
-
-  // addfile(file_array) {
-
-  //   let dataObj = {
-  //     audio: {},
-  //     audio_title: '',
-  //     audio_description: '',
-  //     audio_priority: '',
-  //     audio_skippable: false
-  //   }
-
-  //   const dialogRef = this.dialog.open(AddAudioVideoFileDialogComponent, {
-  //     panelClass: 'lesson_videomodal',
-  //     width: '800px',
-  //     height: '500px',
-  //     data: { 'configFileUpload': this.uploadConfigData, 'dataObj': dataObj }
-  //   });
-
-  //   //for disable modal
-  //   dialogRef.disableClose = true;
-
-  //   //for subscribe modal data
-  //    dialogRef.afterClosed().subscribe(result=>{
-  //     console.log(result,'++++')
-  //   })
-  // }
-
 }
-
-
-
-
 
 //preview lesson videos
 @Component({
@@ -1129,13 +895,7 @@ export class videoDialogComponent {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
-
-
 }
-
-
-
 
 //add audio , video, file modal
 
@@ -1156,8 +916,6 @@ export class AddAudioVideoFileDialogComponent {
   public fileFields: any = {};
   public bucket_url: any;
   // = 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/';
-
-
 
   constructor(
     public dialogRef: MatDialogRef<AddAudioVideoFileDialogComponent>, public sanitizer: DomSanitizer, public snackBar: MatSnackBar, public dialog: MatDialog,
@@ -1203,8 +961,6 @@ export class AddAudioVideoFileDialogComponent {
 
   }
 
-
-
   addaudio(arrayName) {
 
     console.log(arrayName, 'arrayName 11')
@@ -1238,8 +994,6 @@ export class AddAudioVideoFileDialogComponent {
     console.log(this.audioFields, 'audiofields')
     this.dialogRef.close(this.data);
   }
-
-
 
   addfile(arrayName) {
     if (this.uploadConfigData.files != null && this.uploadConfigData.files[0] != null) {

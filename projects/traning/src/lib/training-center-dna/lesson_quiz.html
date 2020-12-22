@@ -13,20 +13,7 @@
                 <h3 class="quizData">{{quizData?.question}}</h3>
                 <br>
 
-                <!-- <section class="example-section">
-
-                    <span class="example-list-section">
-                        <ul>
-                            <li *ngFor="let item of quizData.answer;let i=index">
-                                <mat-checkbox value="{{item}}" (change)="chooseQuizAns(item,$event,i)">
-                                    {{item.answer}}
-                                </mat-checkbox>
-                            </li>
-                        </ul>
-                    </span>
-
-                </section> -->
-
+               
                 <mat-radio-group aria-labelledby="example-radio-group-label" class="exampleradiogroupcls"
                     [(ngModel)]="quizVal">
                     <mat-radio-button class="example-radio-button" *ngFor="let item of quizData.answer;let i=index"

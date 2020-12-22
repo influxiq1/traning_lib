@@ -167,9 +167,9 @@ export class ListLessionComponent implements OnInit {
 
     this.getAllLessonData();
     if (this.dnaFlag == true) {
-      this.displayedColumns.push('select', 'no', 'lession_title', 'description', 'mediaType', 'associated_training', 'prerequisite_lession', 'has_lessonplan', 'lessonplan_value', 'has_test_lesson', 'test_percentage', 'status', 'deleteRecord');
+      this.displayedColumns.push('select', 'no', 'lession_title', 'description',  'associated_training', 'prerequisite_lession', 'has_lessonplan', 'lessonplan_value', 'has_test_lesson', 'test_percentage', 'status', 'deleteRecord');
     } else {
-      this.displayedColumns.push('select', 'no', 'lession_title', 'description', 'mediaType', 'associated_training', 'prerequisite_lession', 'status', 'deleteRecord');
+      this.displayedColumns.push('select', 'no', 'lession_title', 'description',  'associated_training', 'prerequisite_lession', 'status', 'deleteRecord');
     }
 
   }
@@ -629,7 +629,6 @@ export class ListLessionComponent implements OnInit {
             const dialogRef = this.dialog.open(AudioVideoFileDialogComponent, {
               panelClass: 'lesson_videomodal',
               width: '1000px',
-              height: '650px',
               data: { 'type_flag': flag, 'previewData': this.previewData, 'bucket_url': this.bucket_url }
             })
             dialogRef.disableClose = true;
@@ -647,7 +646,6 @@ export class ListLessionComponent implements OnInit {
       const dialogRef = this.dialog.open(AudioVideoFileDialogComponent, {
         panelClass: 'lesson_videomodal',
         width: '800px',
-        height: '500px',
         data: { 'data_array': data_array, 'type_flag': flag, 'video_base_url': video_base_url, 'val': val, 'bucket_url': this.bucket_url, 'previewData': this.previewData }
       })
       dialogRef.disableClose = true;

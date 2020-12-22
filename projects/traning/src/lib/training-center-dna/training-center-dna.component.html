@@ -106,15 +106,7 @@
           <span fxLayout="row" class="trainingcentercls_newcls" *ngFor="let item of l_content ;let i=index">
             <ng-container>
 
-              <div *ngIf="item.mediaType=='html'">
-                <!-- <div class="paragraphwrapper">
-                  <p [innerHtml]="item.typeHtml" class="paragraphcls"></p> 
-                </div> -->
-              </div>
 
-              <mat-card class="example-card" *ngIf="item.mediaType=='image'">
-
-              </mat-card>
 
               <mat-card class="example-card" *ngIf="item.videoflag =='true'">
                 <!-- <div class="paragraphwrapper">
@@ -134,45 +126,11 @@
               </mat-card>
 
 
-              <mat-card *ngIf="item.audioflag==true && item.audioflag!=null && item.audioflag!=undefined">
-                <audio (ended)="audioended(item,i,1)" controls>
-                  <source src="{{bucket_url +item.audio_array[i].audio.fileservername }}" type="audio/ogg">
-                  <source src="{{ bucket_url + item.audio_array[i].audio.fileservername }}" type="audio/mpeg">
-                  Your browser does not support the audio element.
-                </audio><br>
-                <span>{{ item.audio_array[i].audio_title }}</span><br>
-                <span>{{ item.audio_array[i].audio_description }}</span>
-              </mat-card>
-
-              <mat-card class="example-card" *ngIf="item.mediaType=='file' ">
-                <div class="paragraphwrapper">
-                  <p [innerHtml]="item.file_typeHtml" class="paragraphcls"></p>
-                </div>
-                <div class="carouselWrapper">
-                  <span>{{ item.file_title }}</span>
-                  <mat-carousel timings="250ms ease-in" [autoplay]="true" interval="15000" [loop]="true"
-                    [maintainAspectRatio]="true" [hideArrows]="false" [hideIndicators]="false" [useKeyboard]="true"
-                    [useMouseWheel]="false" orientation="ltr">
-                    <mat-carousel-slide #matCarouselSlide *ngFor="let slide of item.convertedimages; let i1 = index"
-                      [image]="slide" overlayColor="#00000040" [hideOverlay]="false">
-                    </mat-carousel-slide>
-                  </mat-carousel>
-                  <span>{{ item.file_description }}</span>
-                </div>
-              </mat-card>
 
 
               <!-- banner 1 end here -->
 
-              <!-- banner 2 start here -->
-              <mat-card class="banner2cls" *ngIf="userType=='mentee' && item.lessonplan_value=='purchasable' && i==999">
-                <mat-card-content>
-                  Now that you have completed the Lesson, please review and fill out the Questionaire provided in the
-                  Lesson Plan Material. Once completed, you can submit the Lesson Plan Material to your Mentor and book
-                  an appointment for a Mentor Session.
-                </mat-card-content>
 
-              </mat-card>
 
             </ng-container>
             <ng-container *ngIf="lesson_content!=null">
@@ -233,7 +191,7 @@
 
               <div>
                 <mat-card class="banner2cls"
-                  *ngIf="userType=='mentee' && lesson_content.has_lessonplan == 1 && lesson_content.lessonplan_value=='purchasable' && i==0">
+                  *ngIf="userType=='mentee' && lesson_content.has_lessonplan == 1 && lesson_content.lessonplan_value=='purchasable' ">
                   <div>
                     <div class="bannercls" *ngIf="orders_button == true">
                       <div>
@@ -283,28 +241,21 @@
                     <mat-card-content>
                       Congratulations!! Your Lesson Plan Material for this Lesson has been submitted to your Mentor for
                       review. Please proceed to book your Mentor Session Appointment with your Mentor.
-
                     </mat-card-content>
-
                     <div>
-                      <button mat-button type="button" class="submitbtn booknow" color="primary"
+                      <button mat-button type="button" class="submitbtn booknow"   color="primary"
                         (click)="menteeLessonReviewButton('schedule')" *ngIf="schedule_button == true && 
-              preview_button == false && orders_button == false">Book Mentor Appointment</button>
+                           preview_button == false && orders_button == false">Book Mentor Appointment
+                      </button>
                     </div>
                   </div>
-
-
                 </mat-card>
               </div>
-
               <!-- banner 2 end here -->
 
 
               <!-- user is mentee and also lessonplan value is not purchasable end here -->
-
               <!--Banner Section End Here  -->
-
-
 
               <div class="lessoncontent lessoncontent{{i}}">
                 <div class="paragraphwrapper">
@@ -327,13 +278,10 @@
                   </div>
                 </mat-card>
 
-
+                <!-- file video audio content -->
                 <div *ngFor="let item of lessoncontentarraydata;let i=index" class="training_mainwrappercon">
                   <!-- <mat-card *ngIf="item!=null && item!=undefined && item!= '' "> -->
-                  <div class="audio_div afvmaindiv"
-                    *ngIf="item.type=='audio'&& item.type!=null && item.type!=undefined">
-                    -->
-                  </div>
+                  <!-- filecontent -->
                   <div class="file_div afvmaindiv" *ngIf="item.type=='file' && item.type!=null && item.type!=undefined">
                     <span
                       *ngIf=" item.file.file_type != null && item.file.file_type == 'jpeg' || item.file.file_type == 'png' || item.file.file_type == 'jpg'">
@@ -342,27 +290,30 @@
 
                     <span class="filetype_{{item.file.file_type}} mat-card-image"
                       *ngIf=" item.file.file_type != null && item.file.file_type == 'pdf' || item.file.file_type == 'doc' || item.file.file_type == 'ppt' || item.file.file_type == 'pptx' || item.file.file_type == 'msword'">
-                     
-                      <ng-container *ngIf="item?.images!=null && item?.images!=undefined && item?.images!=''; else elseTemplate">
-                        <img mat-card-image [src]="bucket_url+item?.images?.converted_array[i]?.name" alt="Photo of a pdf">
-                     </ng-container>
-                     <ng-template #elseTemplate>
-                       <span class="material-icons icon_{{item.file.file_type}}">
-                        picture_as_pdf
-                      </span>
-                     </ng-template>
-                    
-                      <button mat-raised-button (click)="previewpdf(item.images)">
+
+                      <ng-container class="documentcls"
+                        *ngIf="item?.images!=null && item?.images!=undefined && item?.images!=''; else elseTemplate">
+                        <img mat-card-image [src]="bucket_url+item?.images?.converted_array[i]?.name"
+                          alt="Photo of a pdf">
+                      </ng-container>
+                      <ng-template class="documentcls" #elseTemplate>
+                        <span class="material-icons icon_{{item.file.file_type}}">
+                          picture_as_pdf
+                        </span>
+                      </ng-template>
+
+                      <button mat-raised-button (click)="previewpdf(item)">
                         Preview
                       </button>
                       <button mat-raised-button (click)="downloadPdf(item.file)">
-                       Download
+                        Download
                       </button>
                     </span>
                     <p class="File_titlecls">{{ item.file_title }}</p>
 
                     <p class="File_descriptioncls">{{ item.file_description }}</p>
                   </div>
+                  <!-- video content -->
                   <div class="video_div afvmaindiv"
                     *ngIf="item.type=='video' && item.type!=null && item.type!=undefined">
                     <div class="videomainwrapper">
@@ -375,43 +326,20 @@
                     <p class="videotitlecls">{{item.video_title}}</p>
                     <p class="videoDescls"> {{item.video_description}} </p>
                   </div>
-                  <!-- </mat-card> -->
+                  <!-- Audio content -->
+                  <mat-card class="example-card" *ngIf="item.type=='audio' && item.type!=null && item.type!=undefined ">
+                    <div class="audioWrapper">
+                      <audio (ended)="audioended(item,i,1)" controls >
+                        <source src="{{bucket_url +item.audio.fileservername }}" type="audio/ogg">
+                        <source src="{{ bucket_url + item.audio.fileservername }}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                      </audio>
+                      <span>{{ item.audio_title }}</span>
+                      <span >{{ item.audio_description }}</span>
+                    </div>
+
+                  </mat-card>
                 </div>
-
-                <mat-card class="example-card" *ngIf="item.type=='audio' && item.type!=null && item.type!=undefined ">
-                  <div class="audioWrapper">
-                    <!-- <audio width="640" height="360" (ended)="audioended(item,i,1)" controls>
-                      <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="audio/mpeg">
-                      Your browser does not support the audio tag.
-                    </audio>
-                    -->
-                    <audio controls>
-                      <source src="{{bucket_url +item.audio.fileservername }}" type="audio/ogg">
-                      <source src="{{ bucket_url + item.audio.fileservername }}" type="audio/mpeg">
-                      Your browser does not support the audio element.
-                    </audio>
-                    <span>{{ item.audio_title }}</span>
-                    <span>{{ item.audio_description }}</span>
-                  </div>
-
-                </mat-card>
-                <mat-card class="example-card" *ngIf="item.mediaType=='file' ">
-                  <!-- <div class="paragraphwrapper">
-                    <p [innerHtml]="item.file_typeHtml" class="paragraphcls"></p>
-                  </div> -->
-                  <div class="carouselWrapper">
-                    <span>{{ item.file_title }}</span>
-                    <mat-carousel timings="250ms ease-in" [autoplay]="true" interval="15000" [loop]="true"
-                      [maintainAspectRatio]="true" [hideArrows]="false" [hideIndicators]="false" [useKeyboard]="true"
-                      [useMouseWheel]="false" orientation="ltr">
-                      <mat-carousel-slide #matCarouselSlide *ngFor="let slide of item.convertedimages; let i1 = index"
-                        [image]="slide" overlayColor="#00000040" [hideOverlay]="false">
-                      </mat-carousel-slide>
-                    </mat-carousel>
-                    <span>{{ item.file_description }}</span>
-                  </div>
-
-                </mat-card>
               </div>
               <div *ngIf=" lesson_content!=null && lesson_content.has_lessonplan == 1 && lesson_id_flag == true ">
                 <mat-card class="banner1cls" *ngIf="(userType=='admin' || userType=='mentor') && i==0 && 

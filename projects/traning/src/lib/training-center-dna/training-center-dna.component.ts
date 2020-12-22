@@ -650,8 +650,8 @@ export class TrainingCenterDnaComponent implements OnInit {
       // console.log(response.trainingdata.results.lesson_attachements_data[0].lesson_attachements[0].type, 'activatedRoute')
       this.lessoncontentarraydata = response.trainingdata.results.lesson_attachements_data[0].lesson_attachements
     })
-    console.log(this.lessoncontentarraydata[0].images.converted_array[0].name, 'lessoncontentarraydata!!!!!!!')
-    console.log(this.bucket_url + this.lessoncontentarraydata[0].images.converted_array[0].name, 'lessoncontentarraydata[0].images.converted_array[0].name')
+    // console.log(this.lessoncontentarraydata[0].images.converted_array[0].name, 'lessoncontentarraydata!!!!!!!')
+    // console.log(this.bucket_url + this.lessoncontentarraydata[0].images.converted_array[0].name, 'lessoncontentarraydata[0].images.converted_array[0].name')
   }
   onEnded(val) {
     console.log(val, 'onEnded||onEnded')
@@ -666,7 +666,8 @@ export class TrainingCenterDnaComponent implements OnInit {
   }
 
   previewpdf(val) {
-    this.previewimages = val.converted_array;
+    console.log(val, 'val')
+    this.previewimages = val.images.converted_array;
     console.log(this.previewimages, 'PreviewContentDialog')
 
     const dialogRef = this.dialog.open(PreviewContentDialog, {
@@ -674,9 +675,9 @@ export class TrainingCenterDnaComponent implements OnInit {
       width: 'auto',
       data: { data: val, }
     });
-
+    dialogRef.disableClose = true;
     dialogRef.afterClosed().subscribe(result => {
-      console.log();
+      // console.log(result,'>>>>>>>>>>');
     });
   }
   ngOnInit() {
@@ -1115,10 +1116,10 @@ export class TrainingCenterDnaComponent implements OnInit {
           });
 
           dialogRef.afterClosed().subscribe((result: any) => {
-            // console.log('>>>', result);
+            console.log('>>>', result);
 
 
-            if (result.flag == 'yes') {
+            if (result != null && result.flag == 'yes') {
 
               var lesson_data: any = [];
               var lesson_id: any;
@@ -1260,8 +1261,8 @@ export class TrainingCenterDnaComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
-      // console.log(result);
-      if (result.flag == 'yes') {
+      console.log(result);
+      if (result != null && result.flag == 'yes') {
         this.router.navigateByUrl('/lesson-plan-material/' + this.paramsTrainingId + '/' + this.paramslessonId);
       } else {
         return;
@@ -1334,8 +1335,6 @@ export class TrainingCenterDnaComponent implements OnInit {
 
   }
 
-
-
   // Schedule modal open
 
   getScheduleModal() {
@@ -1346,13 +1345,12 @@ export class TrainingCenterDnaComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
-      // console.log(result);
-      if (result.flag == 'yes') {
+      console.log(result);
+      if (result != null && result.flag == 'yes') {
         this.router.navigateByUrl(this.googlescheduleroute + this.user_parent_id + '/' + this.paramslessonId + '/' + this.paramsTrainingId);
       }
     })
   }
-
 
   // Unlock Lesson 
   UnlockLesson(val) {
@@ -1402,8 +1400,6 @@ export class TrainingCenterDnaComponent implements OnInit {
     })
   }
 
-
-
   // lesson_quiz LessonQuizModalComponent
   lessonQuiz(val: any) {
     if (this.AllTrainingData != null && typeof (this.AllTrainingData.quiz_data) != 'undefined') {
@@ -1432,8 +1428,7 @@ export class TrainingCenterDnaComponent implements OnInit {
       )
     }
   }
-
-
+  
   tractAudio(val) {
     console.log(val, '++')
   }
@@ -1790,8 +1785,8 @@ export class LessonQuizModalComponent {
 }
 @Component({
   selector: 'preview-content-dialog',
-  templateUrl: 'dialog-content-dialog.html',
-  styleUrls: ['./dialog-content-dialog.css']
+  templateUrl: 'preview-content-dialog.html',
+  styleUrls: ['preview-content-dialog.css']
 
 })
 export class PreviewContentDialog {
@@ -1806,19 +1801,24 @@ export class PreviewContentDialog {
 
   constructor(public dialogRef: MatDialogRef<PreviewContentDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData6, public snakBar: MatSnackBar, public apiService: ApiService, public router: Router) {
-    console.log(data.data, 'data')
-    this.previewImg = data.data.converted_array;
+    console.log(data, 'data')
+    this.previewImg = data.data.images.converted_array;
     this.image = this.bucket_url + this.previewImg[this.index].name
-    this.pos = data.data.numberOfPages;
+    this.pos = data.data.images.numberOfPages;
     // console.log(this.quizData, '++')
+  }
+  close() {
+    this.snakBar.open(' Your Lesson preview is Incomplete..!', 'OK', {
+      duration: 5000
+    })
   }
   nextprevbtn(flag, index) {
     switch (flag) {
       case 'prev':
         if (this.index == 0 || this.index < 0) {
           console.log(flag, '++++++++++++ if')
-         
-        } else{
+
+        } else {
           console.log(flag, '++++++++++++ else')
           this.index = this.index - 1;
           this.image = this.bucket_url + this.previewImg[this.index].name
@@ -1831,11 +1831,12 @@ export class PreviewContentDialog {
           console.log(flag, '++++++++++++ if')
         }
         else {
+
           console.log(flag, '++++++++++++ else')
           this.index = this.index + 1;
           this.image = this.bucket_url + this.previewImg[this.index].name
           this.page = this.previewImg[this.index].page
-          console.log(index, 'index+++++++', this.index, this.previewImg.length)
+          console.log(index, 'index+++++++', this.index + 1, this.previewImg.length)
         }
         break;
     }

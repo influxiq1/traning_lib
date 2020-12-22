@@ -1,0 +1,31 @@
+<div class="allcontent">
+
+    <!-- {{previewImg|json}} -->
+    <span class="filetitle">{{data.data.file_title}}</span>
+    <div class="pdftoimgcls">
+        <img  [src]="image">
+    </div>
+    <div class="allimgcountscls">
+
+        <button mat-stroked-button (click)="nextprevbtn('prev',index)" [ngClass]="index == 0?'preview_inactive':'preview_active'"><span
+                class="material-icons">
+                keyboard_arrow_left
+            </span></button>
+        <span>
+            {{page}} of {{pos}}
+        </span>
+
+        <button mat-stroked-button (click)="nextprevbtn('next',index)" [ngClass]="page == pos?'preview_inactive':'preview_active'">
+            <span class="material-icons">
+                navigate_next
+            </span> </button>
+    </div>
+    <div mat-dialog-actions class="Lesson_Videos_Modal_footer dilogcontentcancelcls">
+        <button mat-button mat-dialog-close (click)="close()">
+            <span class="material-icons">
+                clear
+            </span>
+        </button>
+
+    </div>
+</div>
