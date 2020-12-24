@@ -49,7 +49,7 @@ export class AddEditLessionsComponent implements OnInit {
     baseUrl: "https://fileupload.influxhostserver.com/",
     endpoint: "uploads",
     size: "51200", // kb
-    format: ["jpg", "jpeg", "png", 'mp3', 'mpeg', 'doc', 'ppt', 'pptx', 'pdf', 'docx'],  // use all small font
+    format: ["jpg", "jpeg", "png", "bmp", "zip", 'html', 'mp3','mp4','txt', 'mpeg', 'doc', 'ppt', 'pptx', 'pdf', 'docx','xlsx','ods','csv'], // use all small font
     type: "lesson-file",
     path: "lesson-files",
     prefix: "lesson_file_",

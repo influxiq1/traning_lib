@@ -710,16 +710,16 @@ export class TraningComponent implements OnInit {
 
 
 
-  clear_file(arrayName, index) {
+  // clear_file(arrayName, index) {
 
-    if (arrayName == 'file_array') {
-      this.file_array[index].file = {};
-    }
-    if (arrayName == 'audio_array') {
-      this.audio_array[index].audio = {};
-    }
-    console.log(this.file_array, 'file_array')
-  }
+  //   if (arrayName == 'file_array') {
+  //     this.file_array[index].file = {};
+  //   }
+  //   if (arrayName == 'audio_array') {
+  //     this.audio_array[index].audio = {};
+  //   }
+  //   console.log(this.file_array, 'file_array')
+  // }
 
 
 
@@ -1025,7 +1025,6 @@ export class AddAudioVideoFileDialogComponent {
 
 
   clear_file(flag) {
-
     switch (flag) {
       case 'file':
         this.fileFields.file = {};

@@ -249,7 +249,7 @@
 .lessondatadiv .mat-card-content .trainingcentercls_newcls{ width: 49%; display: block;}
 .lessondatadiv .mat-card-content .trainingcentercls_newcls:first-of-type{ width: 100%;}
 
-
+.readmore{cursor: pointer;}
  .content_div_cls{ display: flex; flex-wrap: wrap; justify-content: space-between;}
 
  .content_div_cls .training_mainwrappercon{ width: 49%;}

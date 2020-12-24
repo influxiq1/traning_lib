@@ -56,6 +56,7 @@ export interface DialogData5 {
 }
 export interface DialogData6 {
   data: any;
+  flag: any;
 }
 
 @Component({
@@ -110,7 +111,14 @@ export class TrainingCenterDnaComponent implements OnInit {
   public nextlessondata: any;
   public externalWindow: any;
   public pdf_url: any;
+  public fileendpoint: any;
+  public audio_duration: any;
+  public audio_currenttime: any;
+  public audio_end_time: any;
 
+  public audio_progress: any;
+
+  public audio_time: any;
   public userType: any;
   public Index: number;
   public flag: any = 0;
@@ -146,6 +154,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   public video_base_url: any = 'https://www.youtube.com/embed/';
   public quizflag: boolean = false;
   public previewimages: any;
+  public file_data: any;
 
   public bucket_url: any = 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/'
   public lessoncontentarraydata: any = []
@@ -155,16 +164,6 @@ export class TrainingCenterDnaComponent implements OnInit {
   msaapDisplayVolumeControls = true;
   msaapDisablePositionSlider = true;
   public l_content: any = [];
-
-  // Material Style Advance Audio Player Playlist
-  // msaapPlaylist: Track[] = [
-  //   {
-  //     title: 'Audio One Title',
-  //     link: 'https://all-frontend-assets.s3.amazonaws.com/summum.us/assets/audio/SummumAudioBookIntroductionSample.mp3',
-  //   },
-
-  // ];
-
 
   @Input()
   set lessonplanmaterialRoute(route: any) {
@@ -184,6 +183,16 @@ export class TrainingCenterDnaComponent implements OnInit {
     this.trainingCategoryList = results.trainingcenterlist;
     this.lesson_locked_by_user = 1;
     this.AllTrainingData = results;
+
+    setTimeout(() => {
+      // let audiotrack: any = document.getElementById("audioPlayer");
+      // audiotrack.onloadstart = function () {
+      //   console.log('progresss)))')
+      // };
+      // console.log(audiotrack, 'audiotrack')
+
+    }, 5000);
+
     if (results.lesson_locked_by_user != null && results.lesson_locked_by_user != 'undefined') {
 
       this.lesson_locked_by_user = results.lesson_locked_by_user;
@@ -210,20 +219,7 @@ export class TrainingCenterDnaComponent implements OnInit {
           }
         }
       }
-
-      // if (results.lesson_question_submited_by_user != null && results.lesson_question_submited_by_user[0] != null) {
-      //   if (results.lesson_question_submited_by_user[0].training_from_data >= results.lesson_question) {
-      //     this.preview_button = false;
-      //     this.next_button_access = true;
-      //   } else {
-      //     this.preview_button = true;
-      //     this.schedule_button = false;
-      //     this.next_button_access = false;
-      //   }
-      // }
-
     }
-
 
     if (results.lesson_content[0].has_lessonplan == 0 && results.lesson_content[0].has_test_lesson == 1) {
       // console.log('++++++ ==== ??', this.next_button_access)
@@ -239,9 +235,7 @@ export class TrainingCenterDnaComponent implements OnInit {
     if (results.lesson_content[0].has_lessonplan == 0 && results.lesson_content[0].has_test_lesson == 0) {
       this.next_button_access = true;
     }
-
     if (results.lesson_content[0].has_lessonplan == 1 && results.lesson_content[0].has_test_lesson == 1) {
-
       if (results.lesson_ids[0].lesson_ids != null) {
         for (let id in results.lesson_ids[0].lesson_ids) {
           if (results.lesson_content[0]._id == results.lesson_ids[0].lesson_ids[id]) {
@@ -252,21 +246,14 @@ export class TrainingCenterDnaComponent implements OnInit {
           }
         }
       }
-
       if (results.complete_lesson_quiz != null && results.complete_lesson_quiz[0] != null) {
         if (results.complete_lesson_quiz[0].lesson_id == results.lesson_content[0]._id) {
           this.next_button_access = true;
           this.quizflag = false;
         }
       }
-
-
     }
-
-
-
     for (let i in this.trainingCategoryList) {
-
       parentdone = this.trainingCategoryList[i].done;
       parentcount = this.trainingCategoryList[i].count;
       if (this.trainingCategoryList[i].done != null && this.trainingCategoryList[i].count != null) {
@@ -275,7 +262,6 @@ export class TrainingCenterDnaComponent implements OnInit {
 
       }
     }
-
     this.allLessonData = results.lessondata;
     this.trainingCategoryName = results.trainingname;
 
@@ -305,9 +291,6 @@ export class TrainingCenterDnaComponent implements OnInit {
         // console.log(this.next_button_access, 'quizflag 2====')
       }
     }
-
-
-
     // console.log(this.quizflag, 'quizflag')
 
     // console.log(results, '.....>')
@@ -315,21 +298,6 @@ export class TrainingCenterDnaComponent implements OnInit {
       this.orders_data = results.orders_data;
       this.all_orders_data = results.all_orders_data;
       this.schedule_data = results.schedule_data;
-
-      // console.log('schedule_data>>>', this.schedule_data, this.schedule_button)
-      // console.log('orders_data>>>++', this.orders_data, this.orders_button)
-      // console.log('lesson_ids>>>++', results.lesson_ids[0].lesson_ids, this.preview_button)
-      // console.log('lesson_data id >>>++', results.lessondata[0].id)
-      // console.log('lesson_content id >>>++', this.all_orders_data)
-
-      // setTimeout(() => {
-      //   this.addMarkedData(this.lesson_content.id, this.paramsId, this.nextdata, this.lesson_content.lession_title, this.nextlessondata);
-      // }, 1000)
-
-
-      // if ((this.orders_data != null && this.orders_data != '') || (results.lesson_ids[0].lesson_ids != null)) {
-
-
 
       if (results.lesson_locked_by_user != null && results.lesson_locked_by_user != 'undefined') {
         this.lesson_locked_by_user = results.lesson_locked_by_user;
@@ -349,25 +317,14 @@ export class TrainingCenterDnaComponent implements OnInit {
           }
         }
       }
-
-
-
       if (results.lesson_ids[0].lesson_ids != null) {
         for (let id in results.lesson_ids[0].lesson_ids) {
-
           if ((results.lesson_content[0]._id == results.lesson_ids[0].lesson_ids[id] && results.lesson_content[0].has_lessonplan == 1) || (results.lesson_content[0]._id == results.lesson_ids[0].lesson_ids[id])) {
             this.lesson_id_flag = results.lesson_ids[0].lesson_ids[id];
             this.preview_button = false;
-
-
           }
         }
       }
-
-
-
-
-
       if (this.orders_button == false && this.preview_button == false) {
         this.schedule_button = true;
       }
@@ -383,8 +340,6 @@ export class TrainingCenterDnaComponent implements OnInit {
         }
       }
       // }
-
-
       if (this.orders_button == false && this.preview_button == true && this.schedule_button == false) {
         setTimeout(() => {
           this.getReviewLessonPlanModal()
@@ -397,23 +352,14 @@ export class TrainingCenterDnaComponent implements OnInit {
         }, 500)
       }
     }
-
     // console.log('next_button_access flag', this.next_button_access)
-
-
     if (this.userType == 'mentor') {
-
       if (results.lesson_locked_by_user != null && results.lesson_locked_by_user != 'undefined') {
         this.lesson_locked_by_user = results.lesson_locked_by_user;
       } else {
         this.lesson_locked_by_user = 1;
       }
-
-
-
     }
-
-
 
     if (results.lesson_ids[0].lesson_ids != null) {
       for (let id in results.lesson_ids[0].lesson_ids) {
@@ -653,27 +599,164 @@ export class TrainingCenterDnaComponent implements OnInit {
     // console.log(this.lessoncontentarraydata[0].images.converted_array[0].name, 'lessoncontentarraydata!!!!!!!')
     // console.log(this.bucket_url + this.lessoncontentarraydata[0].images.converted_array[0].name, 'lessoncontentarraydata[0].images.converted_array[0].name')
   }
-  onEnded(val) {
-    console.log(val, 'onEnded||onEnded')
-  }
+
   downloadPdf(file: any) {
-    console.log(file)
-    this.pdf_url = this.bucket_url + file.fileservername;
-    this.externalWindow = window.open(
-      this.pdf_url,
-      "width=600,height=400,left=200,top=200"
-    );
+    console.log(file, 'fvgbnjkmgbh')
+
+    console.log(this.serverDetailsVal.serverUrl, 'serverDetailsVal')
+    this.fileendpoint = this.serverDetailsVal.serverUrl + 'updateusercompletelessonfiles'
+    this.file_data = {
+      user_id: this.userId,
+      training_id: this.paramsTrainingId,
+      lesson_id: this.paramslessonId,
+      file_type: file.file_type,
+      file_id: file._id,
+      file_servername: file.fileservername
+
+    }
+    this.apiService.postDatawithoutToken(this.fileendpoint, this.file_data).subscribe(res => {
+      let result: any = res;
+      console.log(result, '+++++++')
+      if (result.status == 'success') {
+        this.pdf_url = this.bucket_url + file.fileservername;
+        this.externalWindow = window.open(
+          this.pdf_url
+        );
+      }
+    })
   }
 
-  previewpdf(val) {
-    console.log(val, 'val')
-    this.previewimages = val.images.converted_array;
-    console.log(this.previewimages, 'PreviewContentDialog')
+
+  // downloadAudio(audio) {
+  //   console.log(audio, '???????');
+  //   let audio_url = this.bucket_url + audio.fileservername;
+  //   this.externalWindow = window.open(
+  //     audio_url,
+  //     "width=600,height=400,left=200,top=200"
+  //   );
+  //   console.log(this.serverDetailsVal.serverUrl, 'serverDetailsVal')
+
+
+  // }
+
+
+  loadstart() {
+    // console.log(this.l_content,"progress(((((((((",val);
+    console.log(this.l_content[0], 'this.l_content')
+
+    let data = this.l_content[0].lesson_attachements;
+
+
+
+    for (const key in data) {
+      if (data[key].type == 'audio') {
+        console.log( data[key].audio._id,' data[key].audio._id')
+        var vid: any = document.getElementById("audioPlayer_" + data[key].audio._id);
+        setTimeout(() => {
+          this.audio_duration = vid.duration;
+          // vid.currentTime = 0.00;
+          this.audio_currenttime = vid.currentTime;
+          this.audio_progress = Math.floor((this.audio_currenttime / this.audio_duration) * 100);
+          console.log(this.audio_duration, "audioPlayerduration++", vid.currentTime);
+          this.startEndTimeCalculation(this.audio_currenttime, this.audio_duration);
+
+        }, 5000);
+      }
+    }
+
+    // var vid: any = document.getElementById("audioPlayer_" + val.audio._id);
+    // setTimeout(() => {
+    //   this.audio_duration = vid.duration;
+    //   // vid.currentTime = 0.00;
+    //   this.audio_currenttime = vid.currentTime;
+    //   this.audio_progress = Math.floor((this.audio_currenttime / this.audio_duration) * 100);
+    //   console.log(this.audio_duration, "audioPlayerduration++", vid.currentTime);
+    //   this.startEndTimeCalculation(this.audio_currenttime, this.audio_duration);
+
+    // }, 1000);
+
+  }
+
+  onprocess() {
+
+    // console.log(this.l_content,'this.l_content')
+    let data = this.l_content[0].lesson_attachements;
+
+    for (const key in data) {
+      if (data[key].type == 'audio') {
+        console.log( data[key].audio._id,' data[key].audio._id')
+        var vid: any = document.getElementById("audioPlayer_" + data[key].audio._id);
+        setTimeout(() => {
+          this.audio_duration = vid.duration;
+          // vid.currentTime = 0.00;
+          this.audio_currenttime = vid.currentTime;
+          this.audio_progress = Math.floor((this.audio_currenttime / this.audio_duration) * 100);
+          console.log(this.audio_duration, "audioPlayerduration++", vid.currentTime);
+          this.startEndTimeCalculation(this.audio_currenttime, this.audio_duration);
+
+        }, 5000);
+      }
+    }
+
+    // var vid: any = document.getElementById("audioPlayer_"+val.audio._id);
+    // this.audio_currenttime = vid.currentTime;
+    // this.audio_progress = Math.floor((this.audio_currenttime / this.audio_duration) * 100);
+    // console.log(this.audio_time, "ondurationchange,?????????????????????", this.audio_currenttime)
+
+    // this.startEndTimeCalculation(this.audio_currenttime,this.audio_duration);
+  }
+
+  //for audio time
+  startEndTimeCalculation(audio_currenttime, audio_duration) {
+    //current time calculation
+    var sec_num = parseInt(audio_currenttime, 10);
+    var hours: any = Math.floor(sec_num / 3600);
+    var minutes: any = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds: any = sec_num - (hours * 3600) - (minutes * 60);
+    this.audio_time = hours + ':' + minutes + ':' + seconds;
+
+
+    //end time calculation
+    var sec_duration_num = parseInt(audio_duration, 10);
+    var duration_hours: any = Math.floor(sec_duration_num / 3600);
+    var duration_minutes: any = Math.floor((sec_duration_num - (duration_hours * 3600)) / 60);
+    var duration_seconds: any = sec_duration_num - (duration_hours * 3600) - (duration_minutes * 60);
+    console.log(audio_duration, 'audio_duration')
+    this.audio_end_time = duration_hours + ':' + duration_minutes + ':' + duration_seconds;
+
+  }
+
+  playbtn(val) {
+    console.log(val,'000000796e')
+    let vid: any = document.getElementById("audioPlayer_" + val);
+    vid.play();
+    console.log(vid, 'vid')
+
+
+  }
+  pausebtn(val) {
+    let vid: any = document.getElementById("audioPlayer_"+val);
+    vid.pause();
+    console.log(vid, '+++++++++++++')
+  }
+
+  previewpdf(val, flag) {
+    console.log(val, 'val', flag);
+    if (flag == 'img') {
+      this.previewimages = val
+    }
+    if (flag == 'pdf') {
+      this.previewimages = val.images.converted_array;
+      console.log(this.previewimages, 'PreviewContentDialog')
+
+    }
+    // this.previewimages = val.images.converted_array;
+    // console.log(this.previewimages, 'PreviewContentDialog')
 
     const dialogRef = this.dialog.open(PreviewContentDialog, {
       panelClass: 'lesson_pdfmodal',
       width: 'auto',
-      data: { data: val, }
+      data: { data: val, flag: flag }
     });
     dialogRef.disableClose = true;
     dialogRef.afterClosed().subscribe(result => {
@@ -839,6 +922,30 @@ export class TrainingCenterDnaComponent implements OnInit {
       this.questionDetails(item._id, i, j);
     } else {
       this.addMarkedData(item._id, this.paramsId, i, this.lesson_title, this.nextlessondata);
+    }
+    if (j == 1) {
+      let audioendpoint = this.serverDetailsVal.serverUrl + 'updateusercompletelessonaudio'
+      let audio_data = {
+        user_id: this.userId,
+        training_id: this.paramsTrainingId,
+        lesson_id: this.paramslessonId,
+        audio_type: item.audio.file_type,
+        audio_id: item.audio._id,
+        audio_name: item.audio.fileservername,
+      }
+      this.apiService.postDatawithoutToken(audioendpoint, audio_data).subscribe(res => {
+        let result: any = res;
+
+        console.log(result, '+++++++')
+        if (result.status == 'success') {
+          // let audio_url = this.bucket_url + item.audio.fileservername;
+          // this.externalWindow = window.open(
+          //   audio_url,
+          //   "width=600,height=400,left=200,top=200"
+          // );
+        }
+      })
+
     }
   }
 
@@ -1428,7 +1535,7 @@ export class TrainingCenterDnaComponent implements OnInit {
       )
     }
   }
-  
+
   tractAudio(val) {
     console.log(val, '++')
   }
@@ -1792,51 +1899,62 @@ export class LessonQuizModalComponent {
 export class PreviewContentDialog {
   public previewImg: any = [];
   public image: any = '';
-  public index = 0;
+  public indeximg = 0;
   public page = 1;
   public bucket_url: any = 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/';
   public nextflg: any = 'disabled';
   public prevflag: any = 'disabled';
-  public pos: any
+  public pos: any;
+  public image1: any
 
   constructor(public dialogRef: MatDialogRef<PreviewContentDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData6, public snakBar: MatSnackBar, public apiService: ApiService, public router: Router) {
-    console.log(data, 'data')
-    this.previewImg = data.data.images.converted_array;
-    this.image = this.bucket_url + this.previewImg[this.index].name
-    this.pos = data.data.images.numberOfPages;
+    console.log(data.flag, 'data',)
+    if (data.flag == 'pdf' && typeof(data.data.images.converted_array)!=undefined) {
+      
+      this.previewImg = data.data.images.converted_array;
+      this.image = this.bucket_url + data.data.images.converted_array[this.indeximg].name
+      this.pos = data.data.images.numberOfPages;
+      console.log(this.previewImg[this.indeximg])
+
+    }
+    if (data.flag == 'img') {
+      this.image1 = this.bucket_url + data.data.file.fileservername;
+    }
     // console.log(this.quizData, '++')
   }
-  close() {
-    this.snakBar.open(' Your Lesson preview is Incomplete..!', 'OK', {
+  close(val) {
+    this.snakBar.open(' Your Lesson  is Complete After Download This File ..!', 'OK', {
       duration: 5000
     })
   }
-  nextprevbtn(flag, index) {
+  nextprevbtn(flag, ) {
+    console.log(flag,'nextbtn',)
     switch (flag) {
       case 'prev':
-        if (this.index == 0 || this.index < 0) {
+        if (this.indeximg == 0 || this.indeximg < 0) {
           console.log(flag, '++++++++++++ if')
 
         } else {
           console.log(flag, '++++++++++++ else')
-          this.index = this.index - 1;
-          this.image = this.bucket_url + this.previewImg[this.index].name
-          this.page = this.previewImg[this.index].page
+          this.indeximg = this.indeximg - 1;
+          this.image = this.bucket_url + this.previewImg[this.indeximg].name
+          this.page = this.previewImg[this.indeximg].page
+          console.log( 'index+++++++', this.indeximg , this.previewImg.length)
         }
         break;
       case 'next':
 
-        if (this.previewImg.length == this.index + 1) {
+        if (this.previewImg.length == this.indeximg + 1) {
           console.log(flag, '++++++++++++ if')
         }
         else {
 
           console.log(flag, '++++++++++++ else')
-          this.index = this.index + 1;
-          this.image = this.bucket_url + this.previewImg[this.index].name
-          this.page = this.previewImg[this.index].page
-          console.log(index, 'index+++++++', this.index + 1, this.previewImg.length)
+          this.indeximg = this.indeximg + 1;
+          this.image = this.bucket_url + this.previewImg[this.indeximg].name
+          this.page = this.previewImg[this.indeximg].page
+          console.log( 'index+++++++', this.indeximg , this.previewImg.length)
         }
         break;
     }

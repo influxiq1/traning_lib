@@ -14,8 +14,7 @@
   width: 350px;
   word-break: break-all;
 }
-.maindivcls{
-}
+  
 
 .closecard {
   position: absolute;
@@ -46,4 +45,14 @@
 
 .headercls {
   text-align: center;
+}
+ .videocontainer{
+  position: relative;
+    overflow-y: scroll!important;
+    height: 430px;
+}
+.Lesson_Videos_Modal{
+  position: relative;
+  overflow-y: scroll!important;
+  height: 430px;
 }
