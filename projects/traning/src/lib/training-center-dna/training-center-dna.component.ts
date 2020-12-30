@@ -1,5 +1,5 @@
 import { OnInit, ViewChild, Input, Inject, Component } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSnackBar } from "@angular/material";
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSnackBar, SimpleSnackBar } from "@angular/material";
 
 import { ApiService } from '../api.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -112,13 +112,16 @@ export class TrainingCenterDnaComponent implements OnInit {
   public externalWindow: any;
   public pdf_url: any;
   public fileendpoint: any;
-  public audio_duration: any;
-  public audio_currenttime: any;
-  public audio_end_time: any;
+  public audio_duration: any = [];
+  public audio_currenttime: any = [];
+  public audio_end_time: any = [];
 
-  public audio_progress: any;
+  public audio_progress: any = [];
 
-  public audio_time: any;
+  public disabled = [];
+
+
+  public audio_time: any = [];
   public userType: any;
   public Index: number;
   public flag: any = 0;
@@ -155,6 +158,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   public quizflag: boolean = false;
   public previewimages: any;
   public file_data: any;
+  public modelval:any=[];
 
   public bucket_url: any = 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/'
   public lessoncontentarraydata: any = []
@@ -164,6 +168,9 @@ export class TrainingCenterDnaComponent implements OnInit {
   msaapDisplayVolumeControls = true;
   msaapDisablePositionSlider = true;
   public l_content: any = [];
+  public play_flag: any = [];
+  public pause_flag: any = [];
+
 
   @Input()
   set lessonplanmaterialRoute(route: any) {
@@ -640,30 +647,53 @@ export class TrainingCenterDnaComponent implements OnInit {
   // }
 
 
-  loadstart() {
+  loadstart(fullval, val) {
+    console.log(fullval, 'itemfullval')
     // console.log(this.l_content,"progress(((((((((",val);
     console.log(this.l_content[0], 'this.l_content')
 
     let data = this.l_content[0].lesson_attachements;
+    console.log(val, 'load')
+    // for (const key in data) {
+    // if (data[key].type == 'audio') {
+    // console.log(data[key].audio._id, ' data[key].audio._id')
+    var vid: any = document.getElementById("audioPlayer_" + val);
+    console.log(vid, '++++++++++ssss')
+    setTimeout(() => {
 
+      if (this.audio_duration[val] == null) {
 
-
-    for (const key in data) {
-      if (data[key].type == 'audio') {
-        console.log( data[key].audio._id,' data[key].audio._id')
-        var vid: any = document.getElementById("audioPlayer_" + data[key].audio._id);
-        setTimeout(() => {
-          this.audio_duration = vid.duration;
-          // vid.currentTime = 0.00;
-          this.audio_currenttime = vid.currentTime;
-          this.audio_progress = Math.floor((this.audio_currenttime / this.audio_duration) * 100);
-          console.log(this.audio_duration, "audioPlayerduration++", vid.currentTime);
-          this.startEndTimeCalculation(this.audio_currenttime, this.audio_duration);
-
-        }, 5000);
       }
-    }
+      this.audio_duration[val] = vid.duration;
+      // vid.currentTime = 0.00;
+      this.audio_currenttime[val] = vid.currentTime;
+      this.audio_progress[val] = Math.floor((this.audio_currenttime[val] / this.audio_duration[val]) * 100);
+      console.log(this.audio_duration[val], "audioPlayerduration++", vid.currentTime);
+      this.startEndTimeCalculation(val);
+      this.play_flag[val] = true;
+      this.pause_flag[val] = false;
+      console.log(data[5].audio_skippable, 'constdata')
 
+      if (fullval.audio_skippable == false) {
+        // console.log('true')
+        this.disabled[val] = true
+      }
+
+      // if (this.l_content[0].lesson_attachements.audio_skippable!=null && this.l_content[0].lesson_attachements.audio_skippable== false) {
+      //   this.disabled[val]=true
+      // }
+      console.log(this.audio_currenttime, 'audio_currenttime')
+      console.log(this.audio_progress, 'audio_progress')
+      console.log(this.audio_progress[val], 'audio_progress val')
+      console.log(this.audio_duration, 'audio_duration')
+      console.log(this.play_flag, 'play')
+      console.log(this.pause_flag, 'fghjklgfdfghjk')
+      console.log(this.disabled[val], 'disabled')
+
+      this.modelval[val]=0;
+      console.log(this.modelval[val],'ghjgh+++++++++')
+
+    }, 500);
     // var vid: any = document.getElementById("audioPlayer_" + val.audio._id);
     // setTimeout(() => {
     //   this.audio_duration = vid.duration;
@@ -672,31 +702,38 @@ export class TrainingCenterDnaComponent implements OnInit {
     //   this.audio_progress = Math.floor((this.audio_currenttime / this.audio_duration) * 100);
     //   console.log(this.audio_duration, "audioPlayerduration++", vid.currentTime);
     //   this.startEndTimeCalculation(this.audio_currenttime, this.audio_duration);
-
     // }, 1000);
-
   }
 
-  onprocess() {
-
+  onprocess(val, fullval) {
+    console.log(fullval, 'onprocess')
     // console.log(this.l_content,'this.l_content')
     let data = this.l_content[0].lesson_attachements;
 
-    for (const key in data) {
-      if (data[key].type == 'audio') {
-        console.log( data[key].audio._id,' data[key].audio._id')
-        var vid: any = document.getElementById("audioPlayer_" + data[key].audio._id);
-        setTimeout(() => {
-          this.audio_duration = vid.duration;
-          // vid.currentTime = 0.00;
-          this.audio_currenttime = vid.currentTime;
-          this.audio_progress = Math.floor((this.audio_currenttime / this.audio_duration) * 100);
-          console.log(this.audio_duration, "audioPlayerduration++", vid.currentTime);
-          this.startEndTimeCalculation(this.audio_currenttime, this.audio_duration);
+    // for (const key in data) {
+    //   if (data[key].type == 'audio') {
+    // console.log(data[key].audio._id, ' data[key].audio._id')
+    var vid: any = document.getElementById("audioPlayer_" + val);
+    // setTimeout(() => {
+    this.audio_duration[val] = vid.duration;
+    // vid.currentTime = 0.00;
+    this.audio_currenttime[val] = vid.currentTime;
+    this.audio_progress[val] = Math.floor((this.audio_currenttime[val] / this.audio_duration[val]) * 100);
+    console.log(this.audio_duration, "audioPlayerduration++", vid.currentTime);
 
-        }, 5000);
-      }
+    this.modelval[val]=this.audio_progress[val];
+      console.log(this.modelval,'ghjgh+++++++++')
+
+    if (fullval.audio_skippable == false) {
+      // console.log('true')
+      this.disabled[val] = true
+
     }
+    this.startEndTimeCalculation(val);
+
+    // }, 5000);
+    //   }
+    // }
 
     // var vid: any = document.getElementById("audioPlayer_"+val.audio._id);
     // this.audio_currenttime = vid.currentTime;
@@ -705,38 +742,68 @@ export class TrainingCenterDnaComponent implements OnInit {
 
     // this.startEndTimeCalculation(this.audio_currenttime,this.audio_duration);
   }
-
+  replay(val) {
+    var vid: any = document.getElementById("audioPlayer_" + val);
+    vid.seekable.start(0)
+    vid.load();
+  }
   //for audio time
-  startEndTimeCalculation(audio_currenttime, audio_duration) {
+  startEndTimeCalculation(val) {
     //current time calculation
-    var sec_num = parseInt(audio_currenttime, 10);
+
+    // console.log(audio_currenttime,"audio_currenttime, audio_duration", audio_duration)
+
+    console.log(this.audio_currenttime, 'this.audio_currenttime[val]', this.audio_duration)
+
+    var sec_num = parseInt(this.audio_currenttime[val], 10);
     var hours: any = Math.floor(sec_num / 3600);
     var minutes: any = Math.floor((sec_num - (hours * 3600)) / 60);
     var seconds: any = sec_num - (hours * 3600) - (minutes * 60);
-    this.audio_time = hours + ':' + minutes + ':' + seconds;
+    this.audio_time[val] = hours + ':' + minutes + ':' + seconds;
 
 
     //end time calculation
-    var sec_duration_num = parseInt(audio_duration, 10);
+    var sec_duration_num = parseInt(this.audio_duration[val], 10);
     var duration_hours: any = Math.floor(sec_duration_num / 3600);
     var duration_minutes: any = Math.floor((sec_duration_num - (duration_hours * 3600)) / 60);
     var duration_seconds: any = sec_duration_num - (duration_hours * 3600) - (duration_minutes * 60);
-    console.log(audio_duration, 'audio_duration')
-    this.audio_end_time = duration_hours + ':' + duration_minutes + ':' + duration_seconds;
+    console.log(val, 'audio_duration')
+    this.audio_end_time[val] = duration_hours + ':' + duration_minutes + ':' + duration_seconds;
 
   }
+  progressbtn(val, fullval) {
+    console.log(fullval, 'jhgvkjhvk')
+    console.log(this.audio_progress[val], '////////////')
 
-  playbtn(val) {
-    console.log(val,'000000796e')
+    if (fullval.audio_skippable == true) {
+      var vid: any = document.getElementById("audioPlayer_" + val);
+      let duration = vid.durationchange;
+      console.log(duration, 'ondurationchange')
+      console.log(this.modelval,'moddellllll')
+    }
+    else{
+      this.snakBar.open("You can't skip this audio", 'Ok', {
+        duration: 2000
+      });
+    }
+    // this.audio_progress[id]=5
+  }
+
+  playbtn(val: any, flag: any) {
+    console.log(val, '000000796e++', flag)
     let vid: any = document.getElementById("audioPlayer_" + val);
+    this.play_flag[val] = false;
+    this.pause_flag[val] = true;
     vid.play();
     console.log(vid, 'vid')
 
 
   }
-  pausebtn(val) {
-    let vid: any = document.getElementById("audioPlayer_"+val);
+  pausebtn(val: any, flag: any) {
+    let vid: any = document.getElementById("audioPlayer_" + val);
     vid.pause();
+    this.play_flag[val] = true;
+    this.pause_flag[val] = false;
     console.log(vid, '+++++++++++++')
   }
 
@@ -943,6 +1010,9 @@ export class TrainingCenterDnaComponent implements OnInit {
           //   audio_url,
           //   "width=600,height=400,left=200,top=200"
           // );
+          this.snakBar.open('You complete the audio lesson ', 'ok', {
+            duration: 3000
+          });
         }
       })
 
@@ -1521,7 +1591,7 @@ export class TrainingCenterDnaComponent implements OnInit {
       });
       dialogRef.disableClose = true;
       dialogRef.afterClosed().subscribe((result: any) => {
-        // console.log(result, 'result')
+        console.log(result, 'result')
         if (result == 'yes') {
           this.next_button_access = true;
 
@@ -1909,9 +1979,9 @@ export class PreviewContentDialog {
 
   constructor(public dialogRef: MatDialogRef<PreviewContentDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData6, public snakBar: MatSnackBar, public apiService: ApiService, public router: Router) {
-    console.log(data.flag, 'data',)
-    if (data.flag == 'pdf' && typeof(data.data.images.converted_array)!=undefined) {
-      
+    console.log(data, 'data',)
+    if (data.flag == 'pdf' && typeof (data.data.images.converted_array) != undefined) {
+
       this.previewImg = data.data.images.converted_array;
       this.image = this.bucket_url + data.data.images.converted_array[this.indeximg].name
       this.pos = data.data.images.numberOfPages;
@@ -1928,8 +1998,8 @@ export class PreviewContentDialog {
       duration: 5000
     })
   }
-  nextprevbtn(flag, ) {
-    console.log(flag,'nextbtn',)
+  nextprevbtn(flag,) {
+    console.log(flag, 'nextbtn',)
     switch (flag) {
       case 'prev':
         if (this.indeximg == 0 || this.indeximg < 0) {
@@ -1940,7 +2010,7 @@ export class PreviewContentDialog {
           this.indeximg = this.indeximg - 1;
           this.image = this.bucket_url + this.previewImg[this.indeximg].name
           this.page = this.previewImg[this.indeximg].page
-          console.log( 'index+++++++', this.indeximg , this.previewImg.length)
+          console.log('index+++++++', this.indeximg, this.previewImg.length)
         }
         break;
       case 'next':
@@ -1954,7 +2024,7 @@ export class PreviewContentDialog {
           this.indeximg = this.indeximg + 1;
           this.image = this.bucket_url + this.previewImg[this.indeximg].name
           this.page = this.previewImg[this.indeximg].page
-          console.log( 'index+++++++', this.indeximg , this.previewImg.length)
+          console.log('index+++++++', this.indeximg + 1, this.previewImg.length)
         }
         break;
     }

@@ -782,6 +782,7 @@ export class TraningComponent implements OnInit {
 
 
 
+
   geteditdata() {
 
     const link = this.serverDetailsVal.serverUrl + this.formSourceVal.showEndpoint;
@@ -880,25 +881,6 @@ export class TraningComponent implements OnInit {
 }
 
 //preview lesson videos
-@Component({
-  selector: 'videodialog',
-  templateUrl: 'LessonPreviewVideoDialog.html'
-})
-export class videoDialogComponent {
-
-  constructor(
-    public dialogRef: MatDialogRef<videoDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-    // console.log(data)
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}
-
-//add audio , video, file modal
-
 @Component({
   selector: 'AddAudioVideoFileDialog',
   templateUrl: 'AddAudioVideoFileDialog.html',
@@ -1025,6 +1007,7 @@ export class AddAudioVideoFileDialogComponent {
 
 
   clear_file(flag) {
+
     switch (flag) {
       case 'file':
         this.fileFields.file = {};
@@ -1035,4 +1018,21 @@ export class AddAudioVideoFileDialogComponent {
     }
   }
 
+}
+//preview lesson videos
+@Component({
+  selector: 'videodialog',
+  templateUrl: 'LessonPreviewVideoDialog.html'
+})
+export class videoDialogComponent {
+
+  constructor(
+    public dialogRef: MatDialogRef<videoDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    // console.log(data)
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }

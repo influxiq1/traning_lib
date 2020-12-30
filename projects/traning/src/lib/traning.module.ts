@@ -34,6 +34,7 @@ import { NgxYoutubePlayerModule } from 'ngx-youtube-player';
 import { ListQuizComponent } from './manage-quiz/list-quiz/list-quiz.component';
 import { AddEditQuizComponent } from './manage-quiz/add-edit-quiz/add-edit-quiz.component';
 import { AudioServiceService } from './audio-service.service';
+import {  DetailsPipe } from './pipe/details.pipe';
 
 
 
@@ -69,7 +70,8 @@ import { AudioServiceService } from './audio-service.service';
     LessonQuizModalComponent,
     AddAudioVideoFileDialogComponent,
     AudioVideoFileDialogComponent,
-    PreviewContentDialog
+    PreviewContentDialog,
+    DetailsPipe
   ],
   imports: [
     HttpClientModule,
@@ -91,6 +93,6 @@ import { AudioServiceService } from './audio-service.service';
   
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [CookieService, ApiService,DatePipe,AudioServiceService],
-  entryComponents:[DialogBoxComponent,Dialogtest,PurchaseModalComponent,ReviewLessonPlanComponent,ScheduleModalComponent,questionDataModalComponent,UnlockLessonModalComponent,videoDialogComponent,LessonVideoModalComponent,LessonQuizModalComponent,AddAudioVideoFileDialogComponent,AudioVideoFileDialogComponent,PreviewContentDialog]
+  entryComponents:[DialogBoxComponent,Dialogtest,PurchaseModalComponent,ReviewLessonPlanComponent,ScheduleModalComponent,questionDataModalComponent,UnlockLessonModalComponent,videoDialogComponent,LessonVideoModalComponent,LessonQuizModalComponent,AddAudioVideoFileDialogComponent,AudioVideoFileDialogComponent,PreviewContentDialog,]
 })
 export class TraningModule { }

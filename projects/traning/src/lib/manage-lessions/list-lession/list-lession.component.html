@@ -135,8 +135,9 @@
 
       <ng-container matColumnDef="description">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-        <td mat-cell *matCellDef="let row" title="Description"> {{row.description}} </td>
+        <td mat-cell *matCellDef="let row" title="Description"> <span>{{row.description|details}}</span>  </td>
       </ng-container>
+      <!-- <span (click)="detailslen(row.description)" >...ReadMore</span> -->
       <!-- 
       <ng-container *ngIf="dnaFlag == true"> -->
       <ng-container matColumnDef="has_lessonplan">
@@ -150,7 +151,7 @@
 
       <ng-container matColumnDef="lessonplan_value">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Purchasable </th>
-        <td mat-cell *matCellDef="let row" title="Purchasable"> {{row.lessonplan_value}} </td>
+        <td mat-cell *matCellDef="let row" title="Purchasable"> {{row.p}} </td>
       </ng-container>
 
       <ng-container matColumnDef="has_test_lesson">

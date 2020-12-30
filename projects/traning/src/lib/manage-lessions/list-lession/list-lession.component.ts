@@ -40,6 +40,11 @@ export interface AudioVideoDialog {
 export interface DialogData {
   message: string;
 }
+
+export interface DialogData4 {
+  data: any;
+
+}
 @Component({
   selector: 'lib-list-lession',
   templateUrl: './list-lession.component.html',
@@ -158,6 +163,18 @@ export class ListLessionComponent implements OnInit {
 
     }, 500);
   }
+  // detailslen(val) {
+  //   console.log(val, 'detailslen')
+  //   const dialogRef = this.dialog.open(detailslen, {
+  //     panelClass: 'lesson_videomodal',
+  //     width: '1000px',
+  //     data: { data: val }
+  //   })
+  //   dialogRef.afterClosed().subscribe(result => {
+
+  //   })
+
+  // }
 
   ngOnInit() {
     setTimeout(() => {
@@ -167,9 +184,9 @@ export class ListLessionComponent implements OnInit {
 
     this.getAllLessonData();
     if (this.dnaFlag == true) {
-      this.displayedColumns.push('select', 'no', 'lession_title', 'description',  'associated_training', 'prerequisite_lession', 'has_lessonplan', 'lessonplan_value', 'has_test_lesson', 'test_percentage', 'status', 'deleteRecord');
+      this.displayedColumns.push('select', 'no', 'lession_title', 'description', 'associated_training', 'prerequisite_lession', 'has_lessonplan', 'lessonplan_value', 'has_test_lesson', 'test_percentage', 'status', 'deleteRecord');
     } else {
-      this.displayedColumns.push('select', 'no', 'lession_title', 'description',  'associated_training', 'prerequisite_lession', 'status', 'deleteRecord');
+      this.displayedColumns.push('select', 'no', 'lession_title', 'description', 'associated_training', 'prerequisite_lession', 'status', 'deleteRecord');
     }
 
   }
@@ -650,6 +667,7 @@ export class ListLessionComponent implements OnInit {
       })
       dialogRef.disableClose = true;
       dialogRef.afterClosed().subscribe(result => {
+        console.log(result,'ResolveResolve')
 
       })
     }
@@ -700,7 +718,7 @@ export class AudioVideoFileDialogComponent {
         console.log(this.previewData)
       }
     }
-console.log(data.bucket_url.url,'data.bucket_url')
+    console.log(data.bucket_url.url, 'data.bucket_url')
 
     if (data.type_flag == 'preview' && data.bucket_url != null && typeof (data.bucket_url) != 'undefined') {
       this.previewData[0].bucket_url = data.bucket_url;
@@ -738,3 +756,15 @@ console.log(data.bucket_url.url,'data.bucket_url')
 
 }
 
+// @Component({
+//   selector: 'detailsDialog',
+//   templateUrl: 'DetailsDialogComponent.html'
+
+// })
+// export class detailslen {
+
+//   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData4) {
+//     console.log(data, 'detailslen')
+//   }
+
+// }

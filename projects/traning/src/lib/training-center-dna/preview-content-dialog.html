@@ -5,10 +5,12 @@
     <div class="pdftoimgcls">
         <img [src]="image">
     </div>
+    <p>{{data.data.file_description}}</p>
     <div class="allimgcountscls">
 
         <button mat-stroked-button (click)="nextprevbtn('prev')"
-            [ngClass]="indeximg == 0?'preview_inactive':'preview_active'"><span class="material-icons">
+            [ngClass]="indeximg == 0?'preview_inactive':'preview_active'">
+            <span class="material-icons">
                 keyboard_arrow_left
             </span></button>
         <span>

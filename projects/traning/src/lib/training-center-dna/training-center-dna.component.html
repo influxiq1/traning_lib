@@ -285,7 +285,7 @@
                   <div class="file_div afvmaindiv" *ngIf="item.type=='file' && item.type!=null && item.type!=undefined">
                     <span
                       *ngIf=" item.file.file_type != null && item.file.file_type == 'jpeg' || item.file.file_type == 'png' || item.file.file_type == 'jpg'">
-                      <img mat-card-image [attr.src]="bucket_url +item.file.fileservername">
+                      <img (click)="previewpdf(item,'img')" mat-card-image [attr.src]="bucket_url +item.file.fileservername">
                       <button mat-raised-button (click)="previewpdf(item,'img')">
                         Preview
                       </button>
@@ -294,11 +294,14 @@
                       </button>
                       <p class="File_titlecls">{{ item.file_title }}</p>
 
-                      <p class="File_descriptioncls">{{ item.file_description }}
-                        <span class="readmore" (click)="previewpdf(item,'img')">
+                      <p class="File_descriptioncls" >{{ item.file_description }}
+
+                        <!-- <span class="readmore" (click)="previewpdf(item,'img')">
                           .... Read More
-                        </span>
+                        </span> -->
                       </p>
+                      <span class="mandetorycls">*This is a mandetory image to complete this lession (after download)
+                      </span>
 
                     </span>
 
@@ -307,7 +310,7 @@
 
                       <ng-container class="documentcls"
                         *ngIf="item?.images!=null && item?.images!=undefined && item?.images!=''; else elseTemplate">
-                        <img mat-card-image [src]="bucket_url+item?.images?.converted_array[i]?.name"
+                        <img mat-card-image (click)="previewpdf(item,'pdf')" [src]="bucket_url+item?.images?.converted_array[i]?.name"
                           alt="Photo of a pdf">
                       </ng-container>
                       <ng-template class="documentcls" #elseTemplate>
@@ -324,11 +327,14 @@
                       </button>
                       <p class="File_titlecls">{{ item.file_title }}</p>
 
-                      <p class="File_descriptioncls">{{ item.file_description }}
+                      <p  class="File_descriptioncls">{{ item.file_description
+                        |details}}
                         <span class="readmore" (click)="previewpdf(item,'pdf')">
-                          .... Read More 
+                          ...Read More
                         </span>
                       </p>
+                      <span class="mandetorycls">*This is a mandetory file to complete this lession (after
+                        download)</span>
                     </span>
 
                   </div>
@@ -344,31 +350,60 @@
                     </div>
                     <p class="videotitlecls">{{item.video_title}}</p>
                     <p class="videoDescls"> {{item.video_description}} </p>
+                    <span class="mandetorycls">*This is a mandetory video to complete this lession</span>
                   </div>
+
                   <!-- Audio content _{{item.audio._id}} -->
+
+
                   <mat-card class="example-card" *ngIf="item.type=='audio' && item.type!=null && item.type!=undefined ">
-                    <div class="audioWrapper" >
-                      <span>audioPlayer_{{item.audio._id}}</span>
-                      <audio id="audioPlayer_{{item.audio._id}}" (timeupdate)="onprocess()" (loadstart)="loadstart()" (ended)="audioended(item,i,1)" controls
-                         style="display: none;">
+                    <div class="audioWrapper">
+                      <!-- <span>audioPlayer_{{item.audio._id}}</span> -->
+                      <audio id="audioPlayer_{{item.audio._id}}" (timeupdate)="onprocess(item.audio._id,item)"
+                        (loadstart)="loadstart(item,item.audio._id)"  (ended)="audioended(item,i,1)" controls
+                        class="audioprogresscls">
                         <source src="{{bucket_url +item.audio.fileservername }}" type="audio/ogg">
                         <source src="{{ bucket_url + item.audio.fileservername }}" type="audio/mpeg">
                         Your browser does not support the audio element.
                       </audio>
-                      <mat-progress-bar mode="determinate" [value]="audio_progress"></mat-progress-bar>
-                     {{audio_time}} / {{audio_end_time}}
-                      <button mat-button (click)="playbtn(item.audio._id)">
-                        <span class="material-icons">
-                          play_circle
+
+                      <div *ngIf="audio_progress!=null && audio_progress[item.audio._id]!=null">
+                        <!-- <mat-progress-bar class="audioprocls" (durationchange)="progressbtn(item.audio._id)" mode="determinate"
+                          [value]="audio_progress[item.audio._id]">
+                        </mat-progress-bar> -->
+                        <mat-slider class="audioprocls" [(ngModel)]="modelval[item.audio._id]" (click)="progressbtn(item.audio._id,item)" 
+                        [value]="audio_progress[item.audio._id]" [disabled]="disabled[item.audio._id]">
+
+                        </mat-slider>
+                      
+                        <!-- <br> -->
+                        <span>
+                          {{audio_time[item.audio._id]}} / {{audio_end_time[item.audio._id]}}
+                        </span>
+                        <button *ngIf="play_flag[item.audio._id]==true" mat-button
+                          (click)="playbtn(item.audio._id,'play')">
+                          <span class="material-icons">
+                            play_circle
                           </span>
-                      </button>
-                      <button mat-button (click)="pausebtn(item.audio._id)">
-                        <span class="material-icons">
-                          pause
+                        </button>
+                        <button *ngIf="pause_flag[item.audio._id]==true" mat-button
+                          (click)="pausebtn(item.audio._id,'pause')">
+                          <span class="material-icons">
+                            pause
                           </span>
-                      </button>
-                      <p>{{ item.audio_title }}</p>
-                      <p>{{ item.audio_description }}</p>
+                        </button>
+
+                        <button  mat-button (click)="replay(item.audio._id)">
+                          <span class="material-icons">
+                            replay
+                            </span>
+                        </button>
+
+                        <p>{{ item.audio_title }}</p>
+                        <p>{{ item.audio_description }}</p>
+                        <span class="mandetorycls">*This is a mandetory audio to complete this lession</span>
+                      </div>
+
                       <!-- <button mat-raised-button (click)="downloadAudio(item.audio)">
                         Download
                       </button> -->
