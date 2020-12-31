@@ -715,5 +715,18 @@
     cursor: pointer;
 }
 .mandetorycls{
-    color: darkred;
+    color: rgb(180, 62, 62);
+}
+.progresscls{
+    /* margin-left: 22px; */
+}
+.skip_cls{
+    height: 37px;
+    margin-right: 5px;
+    cursor: pointer
+}
+.audiocontrolcls{
+    font-size: 35px;
+    margin-right: 5px;
+    cursor: pointer;
 }
