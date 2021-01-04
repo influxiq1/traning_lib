@@ -1,16 +1,16 @@
 {
-  "name": "traning-lib-influxiq",
-  "version": "1.0.72",
-  "bugs": "https://github.com/debasiskar-devel-007/traning-lib-influxiq/issues",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/debasiskar-devel-007/traning-lib-influxiq.git"
-  },
-  "peerDependencies": {
-    "@angular/common": "^8.1.3",
-    "@angular/core": "^8.1.3",
-    "@angular/material": "latest",
-    "@angular/cdk": "latest",
-    "@angular/animations": "latest"
-  }
+    "name": "traning-lib-influxiq",
+    "version": "1.0.75",
+    "bugs": "https://github.com/debasiskar-devel-007/traning-lib-influxiq/issues",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/debasiskar-devel-007/traning-lib-influxiq.git"
+    },
+    "peerDependencies": {
+        "@angular/common": "^8.1.3",
+        "@angular/core": "^8.1.3",
+        "@angular/material": "latest",
+        "@angular/cdk": "latest",
+        "@angular/animations": "latest"
+    }
 }

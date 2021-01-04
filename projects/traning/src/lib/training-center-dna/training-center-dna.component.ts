@@ -661,9 +661,12 @@ export class TrainingCenterDnaComponent implements OnInit {
     setTimeout(() => {
 
       var vid: any = document.getElementById("audioPlayer_" + val);
+      console.log(vid.duration,'vid.duration',)
+      if (vid.duration!=null && vid.duration!='') {
+      this.audio_duration[val] = vid.duration;
+      }
       // console.log(vid, '++++++++++ssss', fullval)
 
-      this.audio_duration[val] = vid.duration;
       // vid.currentTime = 0.00;
       this.audio_currenttime[val] = vid.currentTime;
       this.audio_progress[val] = Math.floor((this.audio_currenttime[val] / this.audio_duration[val]) * 100);
@@ -712,7 +715,7 @@ export class TrainingCenterDnaComponent implements OnInit {
       // // console.log(this.audio_currenttime, 'audio_currenttime')
 
 
-    }, 500);
+    }, 1000);
     // var vid: any = document.getElementById("audioPlayer_" + val.audio._id);
     // setTimeout(() => {
     //   this.audio_duration = vid.duration;
@@ -1306,6 +1309,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   //next prev button work
 
   nextbutton(value: any, bottomval: any) {
+    console.log(value,'value',bottomval,'bottomval')
 
     switch (value) {
       case 'next':
@@ -1329,7 +1333,7 @@ export class TrainingCenterDnaComponent implements OnInit {
           if (this.lessonDataList[ind] != null) {
 
             setTimeout(() => {
-              this.nochildclick(this.lessonDataList[ind]);
+              this.nochildclick(this.lessonDataList[ind]);              
 
             }, 500)
 

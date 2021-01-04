@@ -2,20 +2,22 @@
   <span fxLayout="column" class="column" class="rightside">
     <div class="trainingheadercls">
       <h2>You Have Completed {{ dividend }}/{{divisor}} Lessons</h2>
-      <mat-progress-bar *ngIf="percentageprogressLoader " mode="determinate" value="{{ reportPercentage }}">
+      <mat-progress-bar *ngIf="percentageprogressLoader" mode="determinate" value="{{ reportPercentage }}">
       </mat-progress-bar>
       <h3>{{ reportPercentage }}%</h3>
       <!-- lock/unlock all session  -->
       <div class="togglebtncls">
         <button color="accent" type="button" *ngIf="lesson_locked_by_user == 0" (click)="UnlockLesson(1)"
-          mat-raised-button matTooltip="We highly suggest you to follow the lessons in sequence!"
-          aria-label="Button that displays a tooltip when focused or hovered over">
+          mat-raised-button matTooltip="We highly suggest you to follow the
+          lessons in sequence!" aria-label="Button that displays a tooltip when focused or hovered
+          over">
           Apply sequential lessons lock
         </button>
 
         <button color="accent" type="button" *ngIf="lesson_locked_by_user == 1" (click)="UnlockLesson(0)"
-          mat-raised-button matTooltip="We highly suggest you to follow the lessons in sequence!"
-          aria-label="Button that displays a tooltip when focused or hovered over">
+          mat-raised-button matTooltip="We highly suggest you to follow the
+          lessons in sequence!" aria-label="Button that displays a tooltip when focused or hovered
+          over">
           Unlock sequential lessons
         </button>
 
@@ -24,16 +26,16 @@
 
     <mat-list class="trainingcentercls trainingcenterclsnew">
       <mat-list-item class="trainingCategoryList">
-        <div class="selectedclass" *ngFor="let item of trainingCategoryList;let i = index"
-          (click)="activatedclass(item)">
+        <div class="selectedclass" *ngFor="let item of trainingCategoryList;let
+          i= index" (click)="activatedclass(item)">
 
           <mat-list-item *ngIf="item?.childcat?.length>=1">{{item.catagory_name}}</mat-list-item>
           <!-- <span>{{item | json}}</span> -->
           <!-- parent section -->
 
           <mat-list-item *ngIf="item?.childcat?.length==0" (click)="clicktrcataining(item._id,item.catagory_name)"
-            [ngClass]="paramsTrainingId ==  item._id ? 'classongoing':
-          ( item.percentage >= 100 ? 'classdone' : 'classnotdone')">
+            [ngClass]="paramsTrainingId == item._id ? 'classongoing':
+            ( item.percentage >= 100 ? 'classdone' : 'classnotdone')">
             <div class="categoryname">
               {{item.catagory_name}}
               <span class="countcls">
@@ -43,10 +45,12 @@
             </div>
             <div class="progressbarcls">
 
-              <mat-progress-bar *ngIf="percentageprogressLoader " mode="determinate"
+              <mat-progress-bar *ngIf="percentageprogressLoader" mode="determinate"
                 value="{{((item.done/item.count)*100) }}">
               </mat-progress-bar>
-              <span class="progresspercentage">{{((item.done/item.count))| percent }}</span>
+              <span class="progresspercentage">{{((item.done/item.count))|
+                percent }}
+              </span>
 
             </div>
           </mat-list-item>
@@ -58,17 +62,17 @@
 
 
     <mat-progress-bar mode="indeterminate" *ngIf="progress_bar == 1"></mat-progress-bar>
-
     <mat-card-content class="trainingcentercls trainingcenterclsupdate">
-
       <mat-card-title class="mentortitle" id="lessonData">{{training_cat_name}}</mat-card-title>
       <!-- <ng-container>
        
       </ng-container> -->
-      <div fxLayout="row" class="rowinner" *ngFor="let item of allLessonDataList ; let i=index;">
+      <div fxLayout="row" class="rowinner" *ngFor="let item of allLessonDataList
+        ; let i=index;">
 
-        <div (click)="nochildclick(item)" [ngClass]="paramslessonId ==  item._id ? 'classlessonongoing':
-            ( item.is_done == true ? 'classlessondone' : 'classlessonnotdone')">{{item.lession_title}}
+        <div (click)="nochildclick(item)" [ngClass]="paramslessonId == item._id
+          ? 'classlessonongoing':
+          ( item.is_done == true ? 'classlessondone' : 'classlessonnotdone')">{{item.lession_title}}
           <!-- <span>{{item  | json}}</span> -->
           <span (click)="nochildclick(item)">
             <!-- {{item.lession_title}} -->
@@ -85,8 +89,8 @@
       <div class="lessondatadiv">
         <span class="lessondatabuttoncls" id="lessonContentData">
           <div class="btnclsprev">
-            <ng-container class="prevbtn"
-              *ngIf="allLessonDataList[0] !=null && paramslessonId != allLessonDataList[0]._id">
+            <ng-container class="prevbtn" *ngIf="allLessonDataList[0] !=null && paramslessonId !=
+              allLessonDataList[0]._id">
               <button mat-button type="button" class="submitbtn" color="primary" (click)="nextbutton('prev','')">
                 <mat-icon>keyboard_arrow_left</mat-icon> Previous
               </button>
@@ -103,7 +107,8 @@
         </span>
 
         <mat-card-content>
-          <span fxLayout="row" class="trainingcentercls_newcls" *ngFor="let item of l_content ;let i=index">
+          <span fxLayout="row" class="trainingcentercls_newcls" *ngFor="let item
+            of l_content ;let i=index">
             <ng-container>
 
 
@@ -134,7 +139,8 @@
 
             </ng-container>
             <ng-container *ngIf="lesson_content!=null">
-              <mat-card-title class="lessontitlecls lessontitleclass lessontitleclass_{{i}}">
+              <mat-card-title class="lessontitlecls lessontitleclass
+                lessontitleclass_{{i}}">
                 {{lesson_content.lession_title}}
               </mat-card-title>
 
@@ -142,9 +148,11 @@
               <!-- banner 1 start here -->
 
 
-              <div *ngIf=" lesson_content!=null && lesson_content.has_test_lesson == 1 && quizflag == true">
-                <mat-card class="banner1cls" *ngIf="(userType=='admin' || userType=='mentor' || userType=='mentee') && i==0 && 
-                lesson_content.has_test_lesson == 1">
+              <div *ngIf="lesson_content!=null && lesson_content.has_test_lesson
+                == 1 && quizflag == true">
+                <mat-card class="banner1cls" *ngIf="(userType=='admin' ||
+                  userType=='mentor' || userType=='mentee') && i==0 &&
+                  lesson_content.has_test_lesson == 1">
 
                   <div class="bannerclassmentor">
                     <div class='reviewcls'>
@@ -154,32 +162,33 @@
                       Please review the Lesson Quiz for this Lesson.
                     </mat-card-content>
                     <div class="submitbtngroup">
-                      <button mat-button type="button" class="submitbtn reviewlesson" color="primary"
-                        (click)="lessonQuiz(lesson_content)">Take Quiz</button>
+                      <button mat-button type="button" class="submitbtn
+                        reviewlesson" color="primary" (click)="lessonQuiz(lesson_content)">Take Quiz</button>
                     </div>
                   </div>
                 </mat-card>
               </div><br>
 
-              <div *ngIf=" lesson_content!=null && lesson_content.has_lessonplan == 1 && lesson_id_flag == true ">
-                <mat-card class="banner1cls" *ngIf="(userType=='admin' || userType=='mentor') && i==0 && 
-                lesson_content.has_lessonplan == 1">
+              <div *ngIf="lesson_content!=null && lesson_content.has_lessonplan
+                == 1 && lesson_id_flag == true">
+                <mat-card class="banner1cls" *ngIf="(userType=='admin' ||
+                  userType=='mentor') && i==0 &&
+                  lesson_content.has_lessonplan == 1">
 
-                  <div class="bannerclassmentor" *ngIf="lesson_id_flag == true ">
+                  <div class="bannerclassmentor" *ngIf="lesson_id_flag == true">
                     <div class='reviewcls'>
                       Review the Lesson Plan Material
                     </div>
 
                     <mat-card-content>
                       Please review the Lesson Plan Material for this Lesson in order to understand the questionnaire
-                      that
-                      a Mentee must submit prior to a Mentor Session. The answers submitted by a Mentor to the questions
-                      here will help you (Mentor) understand your Mentee and prepare for the Mentor Session.
+                      that a Mentee must submit prior to a Mentor Session. The answers submitted by a Mentor to the
+                      questions here will help you (Mentor) understand your Mentee
+                      and prepare for the Mentor Session.
                     </mat-card-content>
                     <div class="submitbtngroup">
-                      <button mat-button type="button" class="submitbtn reviewlesson" color="primary"
-                        (click)="lessonplanpageroute(lesson_content._id)">Review</button>
-
+                      <button mat-button type="button" class="submitbtn
+                        reviewlesson" color="primary" (click)="lessonplanpageroute(lesson_content._id)">Review</button>
                     </div>
                   </div>
 
@@ -190,8 +199,9 @@
               <!-- banner 2 start here -->
 
               <div>
-                <mat-card class="banner2cls"
-                  *ngIf="userType=='mentee' && lesson_content.has_lessonplan == 1 && lesson_content.lessonplan_value=='purchasable' ">
+                <mat-card class="banner2cls" *ngIf="userType=='mentee' &&
+                  lesson_content.has_lessonplan == 1 &&
+                  lesson_content.lessonplan_value=='purchasable'">
                   <div>
                     <div class="bannercls" *ngIf="orders_button == true">
                       <div>
@@ -200,15 +210,14 @@
 
                       <mat-card-content>
                         Please Purchase the Lesson Plan Material and the Mentor Appointment for this Lesson. The Lesson
-                        Plan
-                        Material i.e the questionnaire submitted by you will help your Mentor understand and prepare for
-                        the
-                        Mentor Session.
+                        Plan Material i.e the questionnaire submitted by you will help your Mentor understand and
+                        prepare for the Mentor Session.
                       </mat-card-content>
 
                       <div>
-                        <button mat-button type="button" class="submitbtn booknow" color="primary"
-                          (click)="menteeLessonReviewButton('buy')" *ngIf="orders_button == true ">Buy Now</button>
+                        <button mat-button type="button" class="submitbtn
+                          booknow" color="primary" (click)="menteeLessonReviewButton('buy')"
+                          *ngIf="orders_button == true">Buy Now</button>
                       </div>
                     </div><br><br>
 
@@ -219,21 +228,21 @@
 
                       <mat-card-content>
                         Now that you have completed the Lesson, please review and fill out the Questionaire provided in
-                        the
-                        Lesson Plan Material. Once completed, you can submit the Lesson Plan Material to your Mentor and
-                        book an appointment for a Mentor Session.
+                        the Lesson Plan Material. Once completed, you can submit the Lesson Plan Material to your Mentor
+                        and book an appointment for a Mentor Session.
                       </mat-card-content>
 
                       <div>
-                        <button mat-button type="button" class="submitbtn booknow" color="primary"
-                          (click)="menteeLessonReviewButton('lesson_plan')" *ngIf="preview_button == true">Submit
+                        <button mat-button type="button" class="submitbtn
+                          booknow" color="primary" (click)="menteeLessonReviewButton('lesson_plan')"
+                          *ngIf="preview_button == true">Submit
                           Now</button>
                       </div>
                     </div>
 
                   </div>
-                  <div class="bannercls" *ngIf="schedule_button == true && 
-                     preview_button == false && orders_button == false">
+                  <div class="bannercls" *ngIf="schedule_button == true &&
+                    preview_button == false && orders_button == false">
                     <div>
                       Book an Appointment with your Mentor
                     </div>
@@ -244,8 +253,9 @@
                     </mat-card-content>
                     <div>
                       <button mat-button type="button" class="submitbtn booknow" color="primary"
-                        (click)="menteeLessonReviewButton('schedule')" *ngIf="schedule_button == true && 
-                           preview_button == false && orders_button == false">Book Mentor Appointment
+                        (click)="menteeLessonReviewButton('schedule')" *ngIf="schedule_button == true &&
+                        preview_button == false && orders_button == false">Book
+                        Mentor Appointment
                       </button>
                     </div>
                   </div>
@@ -282,9 +292,11 @@
                 <div *ngFor="let item of lessoncontentarraydata;let i=index" class="training_mainwrappercon">
                   <!-- <mat-card *ngIf="item!=null && item!=undefined && item!= '' "> -->
                   <!-- filecontent -->
-                  <div class="file_div afvmaindiv" *ngIf="item.type=='file' && item.type!=null && item.type!=undefined">
-                    <span
-                      *ngIf=" item.file.file_type != null && item.file.file_type == 'jpeg' || item.file.file_type == 'png' || item.file.file_type == 'jpg'">
+                  <div class="file_div afvmaindiv" *ngIf="item.type=='file' &&
+                    item.type!=null && item.type!=undefined">
+                    <span *ngIf="item.file.file_type != null &&
+                      item.file.file_type == 'jpeg' || item.file.file_type ==
+                      'png' || item.file.file_type == 'jpg'">
                       <img (click)="previewpdf(item,'img')" mat-card-image
                         [attr.src]="bucket_url +item.file.fileservername">
                       <button mat-raised-button (click)="previewpdf(item,'img')">
@@ -296,26 +308,33 @@
                       <p class="File_titlecls">{{ item.file_title }}</p>
 
                       <p class="File_descriptioncls">{{ item.file_description }}
-
                         <!-- <span class="readmore" (click)="previewpdf(item,'img')">
                           .... Read More
                         </span> -->
                       </p>
-                      <span class="mandetorycls">*This is a mandetory image to complete this lession (after download)
+                      <span class="mandetorycls">*This is a mandetory image to
+                        complete this lession (after download)
                       </span>
 
                     </span>
 
-                    <span class="filetype_{{item.file.file_type}} mat-card-image"
-                      *ngIf=" item.file.file_type != null && item.file.file_type == 'pdf' || item.file.file_type == 'doc' || item.file.file_type == 'ppt' || item.file.file_type == 'pptx' || item.file.file_type == 'msword'||item.file.file_type == 'xlsx'||item.file.file_type == 'ods'||item.file.file_type =='docx'||item.file.file_type =='ppt'">
+                    <span class="filetype_{{item.file.file_type}}
+                      mat-card-image" *ngIf="item.file.file_type != null &&
+                      item.file.file_type == 'pdf' || item.file.file_type ==
+                      'doc' || item.file.file_type == 'ppt' ||
+                      item.file.file_type == 'pptx' || item.file.file_type ==
+                      'msword'||item.file.file_type ==
+                      'xlsx'||item.file.file_type == 'ods'||item.file.file_type
+                      =='docx'||item.file.file_type =='ppt'">
 
-                      <ng-container class="documentcls"
-                        *ngIf="item?.images!=null && item?.images!=undefined && item?.images!=''; else elseTemplate">
+                      <ng-container class="documentcls" *ngIf="item?.images!=null && item?.images!=undefined &&
+                        item?.images!=''; else elseTemplate">
                         <img mat-card-image (click)="previewpdf(item,'pdf')"
                           [src]="bucket_url+item?.images?.converted_array[i]?.name" alt="Photo of a pdf">
                       </ng-container>
                       <ng-template class="documentcls" #elseTemplate>
-                        <span class="material-icons icon_{{item.file.file_type}}">
+                        <span class="material-icons
+                          icon_{{item.file.file_type}}">
                           picture_as_pdf
                         </span>
                       </ng-template>
@@ -328,20 +347,20 @@
                       </button>
                       <p class="File_titlecls">{{ item.file_title }}</p>
 
-                      <p class="File_descriptioncls">{{ item.file_description
-                        |details}}
+                      <p class="File_descriptioncls">{{ item.file_description |details}}
                         <span class="readmore" (click)="previewpdf(item,'pdf')">
                           ...Read More
                         </span>
                       </p>
-                      <span class="mandetorycls">*This is a mandetory file to complete this lession (after
+                      <span class="mandetorycls">*This is a mandetory file to
+                        complete this lession (after
                         download)</span>
                     </span>
 
                   </div>
                   <!-- video content -->
-                  <div class="video_div afvmaindiv"
-                    *ngIf="item.type=='video' && item.type!=null && item.type!=undefined">
+                  <div class="video_div afvmaindiv" *ngIf="item.type=='video' &&
+                    item.type!=null && item.type!=undefined">
                     <div class="videomainwrapper">
                       <img src="https://img.youtube.com/vi/{{item.video_url}}/0.jpg" class="videoimg">
                       <img (click)="openLessonVideo(item)"
@@ -351,84 +370,106 @@
                     </div>
                     <p class="videotitlecls">{{item.video_title}}</p>
                     <p class="videoDescls"> {{item.video_description}} </p>
-                    <span class="mandetorycls">*This is a mandetory video to complete this lession</span>
+                    <span class="mandetorycls">*This is a mandetory video to
+                      complete this lession</span>
                   </div>
 
                   <!-- Audio content _{{item.audio._id}} -->
 
 
-                  <mat-card class="example-card" *ngIf="item.type=='audio' && item.type!=null && item.type!=undefined ">
+                  <mat-card class="example-card" *ngIf="item.type=='audio' &&
+                    item.type!=null && item.audio!=null && item.audio.fileservername!=null" >
                     <div class="audioWrapper">
                       <!-- <span>audioPlayer_{{item.audio._id}}</span> -->
                       <audio id="audioPlayer_{{item.audio._id}}" (timeupdate)="onprocess(item.audio._id,item)"
                         (loadstart)="loadstart(item,item.audio._id)" (ended)="audioended(item,i,1)" controls
                         class="audioprogresscls">
                         <source src="{{bucket_url +item.audio.fileservername }}" type="audio/ogg">
-                        <source src="{{ bucket_url + item.audio.fileservername }}" type="audio/mpeg">
+                        <source src="{{ bucket_url + item.audio.fileservername
+                          }}" type="audio/mpeg">
                         Your browser does not support the audio element.
                       </audio>
 
-                      <div *ngIf="audio_progress!=null && audio_progress[item.audio._id]!=null">
+                      <div *ngIf="audio_progress!=null &&
+                        audio_progress[item.audio._id]!=null">
+                        <mat-card class="audioseccls">
+                          <!-- <img src="https://training-centre-bucket.s3.amazonaws.com/audio_animation.gif" alt=""> -->
+                          <div class="progresscls">
 
-                        <div class="progresscls">
-                          <span class="audiotimeing">
-                            {{audio_time[item.audio._id]}} / {{audio_end_time[item.audio._id]}}
-                          </span>
-                          <span class="mataudiocls" (click)="progressbtn(item.audio._id,item) ">
-                            <mat-slider class="audioprocls" [(ngModel)]="modelval[item.audio._id]"
-                              (click)="progressbtn(item.audio._id,item) " [value]="audio_progress[item.audio._id]"
-                              [disabled]="disabled[item.audio._id]">
+                            <mat-card-content class="audioseccls_title">
+                              <p>{{ item.audio_title }}</p>
+                            </mat-card-content>
+                            <!-- <mat-card-content class="audioseccls_timer">
+                              <span class="material-icons">
+                                timer
+                              </span>
+                              </mat-card-content> -->
+                            <!-- <span class="audiotimeing">
+                              {{audio_time[item.audio._id]}} / {{audio_end_time[item.audio._id]}}
+                            </span> -->
+                            <mat-card-content class="audioseccls_slider">
+                              <span class="mataudiocls" (click)="progressbtn(item.audio._id,item)">
+                                <mat-slider class="audioprocls" [(ngModel)]="modelval[item.audio._id]"
+                                  (click)="progressbtn(item.audio._id,item)" [value]="audio_progress[item.audio._id]"
+                                  [disabled]="disabled[item.audio._id]">
+                                </mat-slider>
+                                <!-- audio curent time -->
 
-                            </mat-slider>
-                          </span>
+                              </span>
+                            </mat-card-content>
 
-                        </div>
-
-                        <div class="controlcls">
-                          <!-- <button mat-button (click)="skipTensec(item.audio._id,item,'previos')"> -->
-                          <mat-card>
-                            <span class="skip_cls"
-                              *ngIf="pause_flag[item.audio._id]==true && item.audio_skippable == true"
-                              (click)="skipTensec(item.audio._id,item,'previos')">
-                              <img class="skip_cls"
-                                src="https://training-centre-bucket.s3.amazonaws.com/10sec_backward.png">
-                            </span>
-                            <!-- </button> -->
-
-                            <!-- <button  > -->
-                            <span *ngIf="play_flag[item.audio._id]==true " (click)="playbtn(item.audio._id,'play')"
-                              class="material-icons audiocontrolcls">
-                              play_circle
-                            </span>
-                            <!-- </button> -->
-                            <!-- <button *ngIf="pause_flag[item.audio._id]==true" mat-button
-                            > -->
-                            <span *ngIf="pause_flag[item.audio._id]==true" (click)="pausebtn(item.audio._id,'pause')"
-                              class="material-icons audiocontrolcls">
-                              pause
-                            </span>
-                            <!-- </button> -->
-                            <!-- <button mat-button (click)="skipTensec(item.audio._id,item,'next')"> -->
-                            <span class="skip_cls"
-                              *ngIf="pause_flag[item.audio._id]==true && item.audio_skippable == true"
-                              (click)="skipTensec(item.audio._id,item,'next')">
-                              <img class="skip_cls"
-                                src="https://training-centre-bucket.s3.amazonaws.com/10sec_forward.png">
-                            </span>
-                            <!-- </button> -->
-                            <!-- <button mat-button (click)="replay(item.audio._id)"> -->
-                            <span class="material-icons audiocontrolcls" (click)="replay(item.audio._id)">
-                              replay
-                            </span>
-                          </mat-card>
-
-                          <!-- </button> -->
-                        </div>
+                            <p class="audiotitle_STARTtime">{{audio_time[item.audio._id]}}</p>
+                            <!-- audiofulltime -->
+                            <p class="audiodescendtime">{{audio_end_time[item.audio._id]}}</p>
+                          </div>
 
 
-                        <p>{{ item.audio_title }}</p>
-                        <p>{{ item.audio_description |details }}</p>
-                        <span class="mandetorycls">*This is a mandetory audio to complete this lession</span>
+
+
+                          <mat-card-content class="audiocntrlbtn">
+                            <div class="controlcls">
+                              <!-- <button mat-button (click)="skipTensec(item.audio._id,item,'previos')"> -->
+                              <mat-card class="audiocntrlbtn_card">
+                                <span class="skip_cls" *ngIf="pause_flag[item.audio._id]==true &&
+                                  item.audio_skippable == true" (click)="skipTensec(item.audio._id,item,'previos')">
+                                  <img class="skip_cls"
+                                    src="https://training-centre-bucket.s3.amazonaws.com/10sec_backward.png">
+                                </span>
+                                <!-- </button> -->
+
+                                <!-- <button  > -->
+                                <span *ngIf="play_flag[item.audio._id]==true" (click)="playbtn(item.audio._id,'play')"
+                                  class="material-icons audiocontrolcls">
+                                  play_circle
+                                </span>
+                                <!-- </button> -->
+                                <!-- <button *ngIf="pause_flag[item.audio._id]==true" mat-button
+                          > -->
+                                <span *ngIf="pause_flag[item.audio._id]==true"
+                                  (click)="pausebtn(item.audio._id,'pause')" class="material-icons audiocontrolcls">
+                                  pause
+                                </span>
+                                <!-- </button> -->
+                                <!-- <button mat-button (click)="skipTensec(item.audio._id,item,'next')"> -->
+                                <span class="skip_cls" *ngIf="pause_flag[item.audio._id]==true &&
+                                  item.audio_skippable == true" (click)="skipTensec(item.audio._id,item,'next')">
+                                  <img class="skip_cls"
+                                    src="https://training-centre-bucket.s3.amazonaws.com/10sec_forward.png">
+                                </span>
+                                <!-- </button> -->
+                                <!-- <button mat-button (click)="replay(item.audio._id)"> -->
+                                <span class="material-icons audiocontrolcls" (click)="replay(item.audio._id)">
+                                  replay
+                                </span>
+                              </mat-card>
+
+                              <!-- </button> -->
+                            </div>
+                          </mat-card-content>
+                        </mat-card>
+                        <!-- <p>{{ item.audio_description |details }}</p> -->
+                        <span class="mandetorycls">*This is a mandetory audio to
+                          complete this lession</span>
                       </div>
 
                       <!-- <button mat-raised-button (click)="downloadAudio(item.audio)">
@@ -438,25 +479,26 @@
                   </mat-card>
                 </div>
               </div>
-              <div *ngIf=" lesson_content!=null && lesson_content.has_lessonplan == 1 && lesson_id_flag == true ">
-                <mat-card class="banner1cls" *ngIf="(userType=='admin' || userType=='mentor') && i==0 && 
-                lesson_content.has_lessonplan == 1">
+              <div *ngIf="lesson_content!=null && lesson_content.has_lessonplan
+                == 1 && lesson_id_flag == true">
+                <mat-card class="banner1cls" *ngIf="(userType=='admin' ||
+                  userType=='mentor') && i==0 &&
+                  lesson_content.has_lessonplan == 1">
 
-                  <div class="bannerclassmentor" *ngIf="lesson_id_flag == true ">
+                  <div class="bannerclassmentor" *ngIf="lesson_id_flag == true">
                     <div class='reviewcls'>
                       Review the Lesson Plan Material
                     </div>
 
                     <mat-card-content>
                       Please review the Lesson Plan Material for this Lesson in order to understand the questionnaire
-                      that
-                      a Mentee must submit prior to a Mentor Session. The answers submitted by a Mentor to the questions
-                      here will help you (Mentor) understand your Mentee and prepare for the Mentor Session.
+                      that a Mentee must submit prior to a Mentor Session. The answers submitted by a Mentor to the
+                      questions here will help you (Mentor) understand your Mentee
+                      and prepare for the Mentor Session.
                     </mat-card-content>
                     <div class="submitbtngroup">
-                      <button mat-button type="button" class="submitbtn reviewlesson" color="primary"
-                        (click)="lessonplanpageroute(lesson_content._id)">Review</button>
-
+                      <button mat-button type="button" class="submitbtn
+                        reviewlesson" color="primary" (click)="lessonplanpageroute(lesson_content._id)">Review</button>
                     </div>
                   </div>
 
@@ -469,8 +511,9 @@
               <!-- banner 2 start here -->
 
               <div>
-                <mat-card class="banner2cls"
-                  *ngIf="userType=='mentee' && lesson_content.has_lessonplan == 1 && lesson_content.lessonplan_value=='purchasable' && i==0">
+                <mat-card class="banner2cls" *ngIf="userType=='mentee' &&
+                  lesson_content.has_lessonplan == 1 &&
+                  lesson_content.lessonplan_value=='purchasable' && i==0">
 
 
                   <div *ngIf="orders_button == true || preview_button == true">
@@ -481,15 +524,14 @@
 
                       <mat-card-content>
                         Please Purchase the Lesson Plan Material and the Mentor Appointment for this Lesson. The Lesson
-                        Plan
-                        Material i.e the questionnaire submitted by you will help your Mentor understand and prepare for
-                        the
-                        Mentor Session.
+                        Plan Material i.e the questionnaire submitted by you will help your Mentor understand and
+                        prepare for the Mentor Session.
                       </mat-card-content>
 
                       <div>
-                        <button mat-button type="button" class="submitbtn booknow" color="primary"
-                          (click)="menteeLessonReviewButton('buy')" *ngIf="orders_button == true ">Buy Now</button>
+                        <button mat-button type="button" class="submitbtn
+                          booknow" color="primary" (click)="menteeLessonReviewButton('buy')"
+                          *ngIf="orders_button == true">Buy Now</button>
                       </div>
                     </div><br><br>
 
@@ -500,19 +542,19 @@
 
                       <mat-card-content>
                         Now that you have completed the Lesson, please review and fill out the Questionaire provided in
-                        the
-                        Lesson Plan Material. Once completed, you can submit the Lesson Plan Material to your Mentor and
-                        book an appointment for a Mentor Session.
+                        the Lesson Plan Material. Once completed, you can submit the Lesson Plan Material to your Mentor
+                        and book an appointment for a Mentor Session.
                       </mat-card-content>
                       <div>
-                        <button mat-button type="button" class="submitbtn booknow" color="primary"
-                          (click)="menteeLessonReviewButton('lesson_plan')" *ngIf="preview_button == true">Submit
+                        <button mat-button type="button" class="submitbtn
+                          booknow" color="primary" (click)="menteeLessonReviewButton('lesson_plan')"
+                          *ngIf="preview_button == true">Submit
                           Now</button>
                       </div>
                     </div>
                   </div>
-                  <div class="bannercls" *ngIf="schedule_button == true && 
-                   preview_button == false && orders_button == false">
+                  <div class="bannercls" *ngIf="schedule_button == true &&
+                    preview_button == false && orders_button == false">
                     <div>
                       Book an Appointment with your Mentor
                     </div>
@@ -524,8 +566,8 @@
                     </mat-card-content>
                     <div>
                       <button mat-button type="button" class="submitbtn booknow" color="primary"
-                        (click)="menteeLessonReviewButton('schedule')"
-                        *ngIf="schedule_button == true && preview_button == false && orders_button == false">Book Mentor
+                        (click)="menteeLessonReviewButton('schedule')" *ngIf="schedule_button == true && preview_button ==
+                        false && orders_button == false">Book Mentor
                         Appointment</button>
                     </div>
                   </div>
@@ -541,8 +583,8 @@
         <!-- *ngIf="firstIndex!=0" -->
         <span class="lessondatabuttoncls">
           <div class="btnclsprev">
-            <ng-container class="prevbtn"
-              *ngIf="allLessonDataList[0] !=null && paramslessonId != allLessonDataList[0]._id">
+            <ng-container class="prevbtn" *ngIf="allLessonDataList[0] !=null && paramslessonId !=
+              allLessonDataList[0]._id">
               <button mat-button type="button" class="submitbtn" color="primary"
                 (click)="nextbutton('prev','bottomPrev')">
                 <mat-icon>keyboard_arrow_left</mat-icon> Previous
@@ -565,10 +607,12 @@
     <mat-card-content class="trainingcentercls trainingcenterclsupdate">
 
       <!-- start content for lesson data -->
-      <div fxLayout="row" class="rowinner" *ngFor="let item of allLessonDataList ; let i=index;">
+      <div fxLayout="row" class="rowinner" *ngFor="let item of allLessonDataList
+        ; let i=index;">
 
-        <div (click)="nochildclick(item)" [ngClass]="paramslessonId ==  item._id ? 'classlessonongoing':
-            ( item.is_done == true ? 'classlessondone' : 'classlessonnotdone')">{{item.lession_title}}
+        <div (click)="nochildclick(item)" [ngClass]="paramslessonId == item._id
+          ? 'classlessonongoing':
+          ( item.is_done == true ? 'classlessondone' : 'classlessonnotdone')">{{item.lession_title}}
           <!-- <span>{{item  | json}}</span> -->
           <span (click)="nochildclick(item)">
             <!-- {{item.lession_title}} -->
@@ -588,12 +632,13 @@
     <!-- again category list data -->
     <mat-list class="trainingcentercls trainingcenterclsnew">
       <mat-list-item class="trainingCategoryList">
-        <div class="selectedclass" *ngFor="let item of trainingCategoryList;let i = index"
-          (click)="activatedclass(item)">
+        <div class="selectedclass" *ngFor="let item of trainingCategoryList;let
+          i= index" (click)="activatedclass(item)">
           <mat-list-item *ngIf="item.childcat.length>=1">{{item.catagory_name}}</mat-list-item>
           <!-- parent section -->
-          <mat-list-item [ngClass]="paramsTrainingId ==  item._id ? 'classongoing':
-          ( item.percentage >=100 ? 'classdone' : 'classnotdone')" *ngIf="item.childcat.length==0"
+          <mat-list-item [ngClass]="paramsTrainingId == item._id ?
+            'classongoing':
+            ( item.percentage >=100 ? 'classdone' : 'classnotdone')" *ngIf="item.childcat.length==0"
             (click)="clicktrcataining(item._id,item.catagory_name)">
             <div class="categoryname">
               {{item.catagory_name}}
@@ -602,10 +647,11 @@
               </span>
             </div>
             <div class="progressbarcls">
-              <mat-progress-bar *ngIf="percentageprogressLoader " mode="determinate"
+              <mat-progress-bar *ngIf="percentageprogressLoader" mode="determinate"
                 value="{{((item.done/item.count)*100) }}">
               </mat-progress-bar>
-              <span class="progresspercentage">{{(item.done/item.count)| percent }}</span>
+              <span class="progresspercentage">{{(item.done/item.count)| percent
+                }}</span>
             </div>
           </mat-list-item>
         </div>

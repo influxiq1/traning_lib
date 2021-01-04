@@ -112,6 +112,7 @@
     margin: 5px;
 }
 
+
 /* .wrapper .childButton{width:100%;background:#1162ad;color:#fff;margin-bottom:10px;min-width:240px} */
 
 .trainingcentercls .rightside {
@@ -234,7 +235,9 @@
     display: block
 }
 
-.imgwrappercls img, .paragraphwrapper p p img, .paragraphwrapper p img {
+.imgwrappercls img,
+.paragraphwrapper p p img,
+.paragraphwrapper p img {
     width: 100%;
     height: auto;
     margin-top: 0
@@ -269,11 +272,12 @@
     height: auto
 }
 
+
 /* .videoWrapper iframe,.videoWrapper video,.videoWrapper object{position:absolute;top:0;left:0;width:100%;height:100%} */
 
 .audioWrapper {
     margin: 0;
-    padding: 0
+    padding: 0;
 }
 
 .audioWrapper audio {
@@ -315,7 +319,8 @@
     margin-top: 5px;
 }
 
-.modalclslibrary button, .modalclslibrary button.childButton {
+.modalclslibrary button,
+.modalclslibrary button.childButton {
     margin-right: 5px;
     background: #5c5f61;
     color: #fff;
@@ -351,6 +356,7 @@
     cursor: pointer;
     align-items: center;
 }
+
 
 /* Skin Theme 2 */
 
@@ -498,7 +504,8 @@
     margin-top: 10px;
 }
 
-.banner1cls .mat-card-content, .banner2cls {
+.banner1cls .mat-card-content,
+.banner2cls {
     background: #1095e7;
     border-radius: 8px;
     padding: 25px;
@@ -509,6 +516,7 @@
     margin: 0 0 10px;
     font-size: large;
 }
+
 
 /* .active > .class1{background-color: #bcbce6 !important;}
 .active > .class2{background-color: #bcbce6 !important;}
@@ -532,6 +540,7 @@
 .classdone {
     background-color: rgb(59, 182, 89);
 }
+
 
 /* .active > .class1{background-color: #34343a !important;} */
 
@@ -571,11 +580,13 @@
     text-transform: uppercase;
 }
 
-.lessontitleclass, .lessoncontent {
+.lessontitleclass,
+.lessoncontent {
     display: none;
 }
 
-.lessontitleclass_0, .lessoncontent0 {
+.lessontitleclass_0,
+.lessoncontent0 {
     display: block;
 }
 
@@ -714,19 +725,88 @@
     margin-bottom: 3px;
     cursor: pointer;
 }
-.mandetorycls{
+
+.mandetorycls {
     color: rgb(180, 62, 62);
 }
-.progresscls{
-    /* margin-left: 22px; */
-}
-.skip_cls{
+
+.skip_cls {
     height: 37px;
     margin-right: 5px;
     cursor: pointer
 }
-.audiocontrolcls{
+
+.audiocontrolcls {
     font-size: 35px;
     margin-right: 5px;
     cursor: pointer;
 }
+
+.audioseccls {
+    /* background-color: #b8abab; */
+    background: rgb(9, 121, 99);
+    background: linear-gradient(90deg, rgba(9, 121, 99, 1) 35%, rgba(0, 255, 222, 1) 100%);
+    /* background: url("https://training-centre-bucket.s3.amazonaws.com/lesson-files/lesson_file_-download(2)-1608809187426.png"); */
+    background-size: 100%;
+    /* overflow: hidden; */
+    height: 287px;
+    position: relative;
+}
+
+.audioseccls_title {
+    position: absolute;
+    top: 29px;
+    left: 237px;
+    color: #fff!important;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.audioseccls_slider {
+    position: absolute;
+    bottom: 0;
+    right: 69px;
+}
+
+
+/* .audioseccls_timer{
+    padding: 8px !important;
+} */
+
+
+mat-slider {
+    width: 436px;
+}
+
+
+/* .mat-accent .mat-slider-thumb {
+    background-color: #d67a56!important;
+} */
+
+.mat-slider-thumb {
+    border-color: rgba(0, 0, 0, .26);
+    background: none!important;
+}
+
+.audiodescendtime {
+    position: absolute;
+    bottom: 0px;
+    right: 78px;
+}
+
+.audiotitle_STARTtime {
+    position: absolute;
+    /* top: 29px; */
+    left: 87px;
+    bottom: 0;
+}
+
+.audiocntrlbtn_card {
+    background: none!important;
+}
+
+
+/* .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: blue;
+    
+} */
