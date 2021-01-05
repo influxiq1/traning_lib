@@ -185,6 +185,7 @@ export class TrainingCenterDnaComponent implements OnInit {
 
   @Input()
   set TrainingCategoryList(val: any) {
+   // console.log(val, 'TrainingCategoryList')
     let results: any = (val) || '<no name set>';
     let parentdone: any;
     let parentcount: any;
@@ -193,11 +194,6 @@ export class TrainingCenterDnaComponent implements OnInit {
     this.AllTrainingData = results;
 
     setTimeout(() => {
-      // let audiotrack: any = document.getElementById("audioPlayer");
-      // audiotrack.onloadstart = function () {
-      //   // console.log('progresss)))')
-      // };
-      // // console.log(audiotrack, 'audiotrack')
 
     }, 5000);
 
@@ -385,7 +381,7 @@ export class TrainingCenterDnaComponent implements OnInit {
         }
       }
     }
-    // // console.log(this.next_button_access, 'quizflag 2',this.quizflag)
+    console.log(this.next_button_access, 'quizflag 2', this.quizflag)
 
 
 
@@ -634,48 +630,24 @@ export class TrainingCenterDnaComponent implements OnInit {
     })
   }
 
-
-  // downloadAudio(audio) {
-  //   // console.log(audio, '???????');
-  //   let audio_url = this.bucket_url + audio.fileservername;
-  //   this.externalWindow = window.open(
-  //     audio_url,
-  //     "width=600,height=400,left=200,top=200"
-  //   );
-  //   // console.log(this.serverDetailsVal.serverUrl, 'serverDetailsVal')
-
-
-  // }
-
-
+  //load to start the audio
   loadstart(fullval, val) {
-    // // console.log(fullval, 'itemfullval')
-    // // console.log(this.l_content,"progress(((((((((",val);
-    // // console.log(this.l_content[0], 'this.l_content')
-
-    let data = this.l_content[0].lesson_attachements;
-    // // console.log(val, 'load')
-    // for (const key in data) {
-    // if (data[key].type == 'audio') {
-    // // console.log(data[key].audio._id, ' data[key].audio._id')
     setTimeout(() => {
-
-      var vid: any = document.getElementById("audioPlayer_" + val);
-      console.log(vid.duration,'vid.duration',)
-      if (vid.duration!=null && vid.duration!='') {
-      this.audio_duration[val] = vid.duration;
+      // audioId.duration find audio duration 
+      var audioId: any = document.getElementById("audioPlayer_" + val);
+      if (audioId.duration != null && audioId.duration != '') {
+        this.audio_duration[val] = audioId.duration;
       }
-      // console.log(vid, '++++++++++ssss', fullval)
-
-      // vid.currentTime = 0.00;
-      this.audio_currenttime[val] = vid.currentTime;
+      //audioId.currentTime for current audio time 
+      this.audio_currenttime[val] = audioId.currentTime;
       this.audio_progress[val] = Math.floor((this.audio_currenttime[val] / this.audio_duration[val]) * 100);
-      // // console.log(this.audio_duration[val], "audioPlayerduration++", vid.currentTime);
-      // this.startEndTimeCalculation(val);
+
+      //start time calculation
       var sec_num = parseInt(this.audio_currenttime[val], 10);
       var hours: any = Math.floor(sec_num / 3600);
       var minutes: any = Math.floor((sec_num - (hours * 3600)) / 60);
       var seconds: any = sec_num - (hours * 3600) - (minutes * 60);
+      // convert start time to hours minutes sec format
       this.audio_time[val] = hours + ':' + minutes + ':' + seconds;
 
       //end time calculation
@@ -683,27 +655,15 @@ export class TrainingCenterDnaComponent implements OnInit {
       var duration_hours: any = Math.floor(sec_duration_num / 3600);
       var duration_minutes: any = Math.floor((sec_duration_num - (duration_hours * 3600)) / 60);
       var duration_seconds: any = sec_duration_num - (duration_hours * 3600) - (duration_minutes * 60);
-      // // console.log(val, 'audio_duration')
+      // convert end time to min hour sec format
       this.audio_end_time[val] = duration_hours + ':' + duration_minutes + ':' + duration_seconds;
       this.play_flag[val] = true;
       this.pause_flag[val] = false;
-      // // console.log(data[5].audio_skippable, 'constdata')
 
       if (fullval.audio_skippable == false) {
         // // console.log('true')
         this.disabled[val] = true
       }
-
-      // if (this.l_content[0].lesson_attachements.audio_skippable!=null && this.l_content[0].lesson_attachements.audio_skippable== false) {
-      //   this.disabled[val]=true
-      // }
-      // // console.log(this.audio_currenttime, 'audio_currenttime')
-      // // console.log(this.audio_progress, 'audio_progress')
-      // // console.log(this.audio_progress[val], 'audio_progress val')
-      // // console.log(this.audio_duration, 'audio_duration')
-      // // console.log(this.play_flag, 'play')
-      // // console.log(this.pause_flag, 'fghjklgfdfghjk')
-      // // console.log(this.disabled[val], 'disabled')
 
       this.modelval[val] = 0;
       // // console.log(this.modelval[val], 'ghjgh+++++++++');
@@ -715,21 +675,10 @@ export class TrainingCenterDnaComponent implements OnInit {
       // // console.log(this.audio_currenttime, 'audio_currenttime')
 
 
-    }, 1000);
-    // var vid: any = document.getElementById("audioPlayer_" + val.audio._id);
-    // setTimeout(() => {
-    //   this.audio_duration = vid.duration;
-    //   // vid.currentTime = 0.00;
-    //   this.audio_currenttime = vid.currentTime;
-    //   this.audio_progress = Math.floor((this.audio_currenttime / this.audio_duration) * 100);
-    //   // console.log(this.audio_duration, "audioPlayerduration++", vid.currentTime);
-    //   this.startEndTimeCalculation(this.audio_currenttime, this.audio_duration);
-    // }, 1000);
-  }
-  // for (let index = 0; index < array.length; index++) {
-  //   const element = array[index];
+    }, 1500);
 
-  // }
+  }
+//skip ten sec (next and previous)
   skipTensec(val, item, flag) {
     // console.log(item, '+++++++++++====', flag)
     if (item.audio_skippable == false) {
@@ -739,58 +688,45 @@ export class TrainingCenterDnaComponent implements OnInit {
     }
     else {
       if (flag == 'previos') {
-        var vid: any = document.getElementById("audioPlayer_" + val);
-        vid.currentTime = vid.currentTime - Math.floor(10);
-        // console.log(vid.currentTime,'previos')
+        var audioId: any = document.getElementById("audioPlayer_" + val);
+        audioId.currentTime = audioId.currentTime - Math.floor(10);
+        // console.log(audioId.currentTime,'previos')
 
       }
       if (flag == 'next') {
-        var vid: any = document.getElementById("audioPlayer_" + val);
-        vid.currentTime = vid.currentTime + 10;
-        // console.log(vid.currentTime,'next')
-        
+        var audioId: any = document.getElementById("audioPlayer_" + val);
+        audioId.currentTime = audioId.currentTime + 10;
+        // console.log(audioId.currentTime,'next')
+
       }
     }
 
 
   }
+  // get time update onprocess(id,full value)
   onprocess(val, fullval) {
 
-    // console.log(this.audio_currenttime[val], 'audio_currenttime onprocess fst_+++++++++++++')
-    // console.log(this.audio_progress[val], 'audio_progress onprocess fst_+++++++++++++')
-    // // console.log(fullval, 'onprocess')
-    // // console.log(this.l_content,'this.l_content')
-    let data = this.l_content[0].lesson_attachements;
+    var audioId: any = document.getElementById("audioPlayer_" + val); // audio id
 
-    // for (const key in data) {
-    //   if (data[key].type == 'audio') {
-    // // console.log(data[key].audio._id, ' data[key].audio._id')
-    var vid: any = document.getElementById("audioPlayer_" + val);
-    // setTimeout(() => {
-    this.audio_duration[val] = vid.duration;
-    // vid.currentTime = 0.00;
+    this.audio_duration[val] = audioId.duration; //audio duration
 
-    // console.log(vid.currentTime, 'vid.currentTime')
 
-    this.audio_currenttime[val] = vid.currentTime;
-    this.audio_progress[val] = (this.audio_currenttime[val] / this.audio_duration[val]) * 100;
-    // // console.log(this.audio_duration, "audioPlayerduration++", vid.currentTime);
+    this.audio_currenttime[val] = audioId.currentTime;
+    this.audio_progress[val] = (this.audio_currenttime[val] / this.audio_duration[val]) * 100; // audio progress based on current time 
 
     this.modelval[val] = 0;
-    // // console.log(this.modelval[val], 'ghjgh+++++++++');
     this.modelval[val] = this.audio_progress[val];
 
-    this.audio_currenttime[val] = (this.modelval[val] * this.audio_duration[val]) / 100;
+    this.audio_currenttime[val] = (this.modelval[val] * this.audio_duration[val]) / 100; // audio current val
     this.newaudio_currenttime[val] = this.audio_currenttime[val]
 
-    // // console.log(this.audio_currenttime, 'audio_currenttime')
 
     if (fullval.audio_skippable == false) {
       // // console.log('true')
       this.disabled[val] = true;
     }
     // this.startEndTimeCalculation(val);
-
+    //start time calculation
 
     var sec_num = parseInt(this.audio_currenttime[val], 10);
     var hours: any = Math.floor(sec_num / 3600);
@@ -806,44 +742,23 @@ export class TrainingCenterDnaComponent implements OnInit {
     // // console.log(val, 'audio_duration')
     this.audio_end_time[val] = duration_hours + ':' + duration_minutes + ':' + duration_seconds;
 
-    // }, 5000);
-    //   }
-    // }
-
-    // var vid: any = document.getElementById("audioPlayer_"+val.audio._id);
-    // this.audio_currenttime = vid.currentTime;
-    // this.audio_progress = Math.floor((this.audio_currenttime / this.audio_duration) * 100);
-    // // console.log(this.audio_time, "ondurationchange,?????????????????????", this.audio_currenttime)
-
-    // this.startEndTimeCalculation(this.audio_currenttime,this.audio_duration);
-
-    // console.log(this.audio_currenttime[val], 'audio_currenttime onprocess fst__--------')
-    // console.log(this.audio_progress[val], 'audio_progress onprocess fst__-------- ')
   }
   replay(val) {
-    var vid: any = document.getElementById("audioPlayer_" + val);
-    // vid.seekable.start(0)
-    // vid.load();
-    // // console.log(vid.currentTime,'vid.currentTime')
-    vid.currentTime = 0;
-    this.audio_currenttime[val] = vid.currentTime;
-    var sec_num = parseInt(vid.currentTime, 10);
+    var audioId: any = document.getElementById("audioPlayer_" + val);
+
+    audioId.currentTime = 0;
+    this.audio_currenttime[val] = audioId.currentTime;
+    var sec_num = parseInt(audioId.currentTime, 10);
     var hours: any = Math.floor(sec_num / 3600);
     var minutes: any = Math.floor((sec_num - (hours * 3600)) / 60);
     var seconds: any = sec_num - (hours * 3600) - (minutes * 60);
     this.audio_time[val] = hours + ':' + minutes + ':' + seconds;
     this.audio_progress[val] = Math.floor((this.audio_currenttime[val] / this.audio_duration[val]) * 100);
-    // // console.log(this.audio_currenttime[val],'vid.currentTime')
-
+    // // console.log(this.audio_currenttime[val],'audioId.currentTime')
   }
   //for audio time
   startEndTimeCalculation(val) {
     //current time calculation
-
-    // // console.log(audio_currenttime,"audio_currenttime, audio_duration", audio_duration)
-
-    // // console.log(this.audio_currenttime, 'this.audio_currenttime[val]', this.audio_duration)
-
     var sec_num = parseInt(this.audio_currenttime[val], 10);
     var hours: any = Math.floor(sec_num / 3600);
     var minutes: any = Math.floor((sec_num - (hours * 3600)) / 60);
@@ -862,28 +777,12 @@ export class TrainingCenterDnaComponent implements OnInit {
 
 
   progressbtn(val, fullval) {
-    // // console.log(fullval, 'jhgvkjhvk')
-    // // console.log(this.audio_progress[val], '////////////')
-
 
     if (fullval.audio_skippable == true) {
-      // console.log(this.audio_currenttime, 'audio_currenttime progressbtn fst__++++++++')
-      // console.log(this.audio_progress[val], 'audio_progress progressbtn fst__+++++++++++++++')
-      // var vid: any = document.getElementById("audioPlayer_" + val);
-      // let duration = vid.durationchange;
-      // // console.log(duration, 'ondurationchange')
 
-      // // console.log(this.modelval, 'moddellllllprogressbtn')
-
-      // this.modelval[val] = this.audio_progress[val];
       this.audio_progress[val] = this.modelval[val];
 
-      // // console.log(this.modelval[val], ' this.modelval[val]', this.audio_progress[val])
-
       this.audio_currenttime[val] = (this.modelval[val] * this.audio_duration[val]) / 100;
-
-
-
 
       var sec_num = parseInt(this.audio_currenttime[val], 10);
       var hours: any = Math.floor(sec_num / 3600);
@@ -891,8 +790,8 @@ export class TrainingCenterDnaComponent implements OnInit {
       var seconds: any = sec_num - (hours * 3600) - (minutes * 60);
       this.audio_time[val] = hours + ':' + minutes + ':' + seconds;
       // // console.log(this.audio_currenttime[val], 'audio_currenttime');
-      let vid: any = document.getElementById("audioPlayer_" + val);
-      vid.currentTime = this.audio_currenttime[val];
+      let audioId: any = document.getElementById("audioPlayer_" + val);
+      audioId.currentTime = this.audio_currenttime[val];
 
       // console.log(this.audio_currenttime, 'audio_currenttime progressbtn fst__--------')
       // console.log(this.audio_progress[val], 'audio_progress progressbtn fst__--------')
@@ -907,19 +806,19 @@ export class TrainingCenterDnaComponent implements OnInit {
 
   playbtn(val: any, flag: any) {
     // console.log(val, '000000796e++', flag)
-    let vid: any = document.getElementById("audioPlayer_" + val);
+    let audioId: any = document.getElementById("audioPlayer_" + val);
     this.play_flag[val] = false;
     this.pause_flag[val] = true;
-    vid.play();
-    // console.log(vid, 'vid')
+    audioId.play();
+    // console.log(audioId, 'audioId')
   }
 
   pausebtn(val: any, flag: any) {
-    let vid: any = document.getElementById("audioPlayer_" + val);
-    vid.pause();
+    let audioId: any = document.getElementById("audioPlayer_" + val);
+    audioId.pause();
     this.play_flag[val] = true;
     this.pause_flag[val] = false;
-    // console.log(vid, '+++++++++++++')
+    // console.log(audioId, '+++++++++++++')
   }
 
   previewpdf(val, flag) {
@@ -1120,11 +1019,7 @@ export class TrainingCenterDnaComponent implements OnInit {
 
         // console.log(result, '+++++++')
         if (result.status == 'success') {
-          // let audio_url = this.bucket_url + item.audio.fileservername;
-          // this.externalWindow = window.open(
-          //   audio_url,
-          //   "width=600,height=400,left=200,top=200"
-          // );
+          // this.next_button_access=true;
           this.snakBar.open('Successfully Completed This Lesson Audio', 'ok', {
             duration: 3000
           });
@@ -1184,7 +1079,7 @@ export class TrainingCenterDnaComponent implements OnInit {
         setTimeout(() => {
           this.progress_bar = 1;
         }, 100);
-        this.next_button_access = false;
+        // this.next_button_access = false;
         this.router.navigateByUrl(this.trainingCenterRoute + this.paramsTrainingId + '/' + val._id);
 
       } else {
@@ -1286,7 +1181,7 @@ export class TrainingCenterDnaComponent implements OnInit {
     }
     this.apiService.postDatawithoutToken(link, data).subscribe((response: any) => {
       this.lesson_data = response;
-      // // console.log("response", response);
+      console.log("response", response);
       this.trainingCategoryList = response.results.trainingcenterlist;
       this.lessonDataList = response.rdata;
       this.dividend = response.results.done_lesson_by_user[0].lessonsdone;
@@ -1308,8 +1203,8 @@ export class TrainingCenterDnaComponent implements OnInit {
 
   //next prev button work
 
-  nextbutton(value: any, bottomval: any) {
-    console.log(value,'value',bottomval,'bottomval')
+  nextbutton(value: any) {
+    console.log(value, 'value')
 
     switch (value) {
       case 'next':
@@ -1333,7 +1228,7 @@ export class TrainingCenterDnaComponent implements OnInit {
           if (this.lessonDataList[ind] != null) {
 
             setTimeout(() => {
-              this.nochildclick(this.lessonDataList[ind]);              
+              this.nochildclick(this.lessonDataList[ind]);
 
             }, 500)
 
@@ -2076,6 +1971,7 @@ export class LessonQuizModalComponent {
     this.indexVal = 1;
   }
 }
+// preview content class
 @Component({
   selector: 'preview-content-dialog',
   templateUrl: 'preview-content-dialog.html',
@@ -2099,13 +1995,13 @@ export class PreviewContentDialog {
     if (data.flag == 'pdf' && typeof (data.data.images.converted_array) != undefined) {
 
       this.previewImg = data.data.images.converted_array;
-      this.image = this.bucket_url + data.data.images.converted_array[this.indeximg].name
+      this.image = this.bucket_url + data.data.images.converted_array[this.indeximg].name //set image for pdf
       this.pos = data.data.images.numberOfPages;
       // console.log(this.previewImg[this.indeximg])
 
     }
     if (data.flag == 'img') {
-      this.image1 = this.bucket_url + data.data.file.fileservername;
+      this.image1 = this.bucket_url + data.data.file.fileservername; //set img for imagefile
     }
     // // console.log(this.quizData, '++')
   }
@@ -2114,10 +2010,11 @@ export class PreviewContentDialog {
       duration: 5000
     })
   }
-  nextprevbtn(flag,) {
+  //next previos btn
+  nextprevbtn(flag) {
     // console.log(flag, 'nextbtn',)
     switch (flag) {
-      case 'prev':
+      case 'prev': // for prevous case 
         if (this.indeximg == 0 || this.indeximg < 0) {
           // console.log(flag, '++++++++++++ if')
 
@@ -2129,7 +2026,7 @@ export class PreviewContentDialog {
           // console.log('index+++++++', this.indeximg, this.previewImg.length)
         }
         break;
-      case 'next':
+      case 'next': // for next case 
 
         if (this.previewImg.length == this.indeximg + 1) {
           // console.log(flag, '++++++++++++ if')

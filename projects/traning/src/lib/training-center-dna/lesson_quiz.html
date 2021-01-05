@@ -8,12 +8,12 @@
         <mat-card class="lessonquizcls">
             <mat-card-content *ngIf="quizData != null && quizData != ''" class="questioncls">
 
-                <h2 class="quizData">Question  {{indexVal}} of {{data?.quiz_data.length}} :</h2>
+                <h2 class="quizData">Question {{indexVal}} of {{data?.quiz_data.length}} :</h2>
 
                 <h3 class="quizData">{{quizData?.question}}</h3>
                 <br>
 
-               
+
                 <mat-radio-group aria-labelledby="example-radio-group-label" class="exampleradiogroupcls"
                     [(ngModel)]="quizVal">
                     <mat-radio-button class="example-radio-button" *ngFor="let item of quizData.answer;let i=index"
@@ -46,7 +46,7 @@
                 <h2>No Quiz Available</h2>
             </span>
 
-            
+
         </mat-card>
 
 
@@ -66,7 +66,7 @@
             <button *ngIf="quizData != null && quizData != ''" class="btnbluecls" mat-raised-button color="accent"
                 (click)="nextQuizRecord(quizData)">Next <span class="material-icons">
                     arrow_forward_ios
-                    </span></button>
+                </span></button>
 
         </mat-dialog-actions>
     </div>

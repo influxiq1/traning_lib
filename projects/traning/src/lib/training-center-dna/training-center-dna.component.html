@@ -91,7 +91,7 @@
           <div class="btnclsprev">
             <ng-container class="prevbtn" *ngIf="allLessonDataList[0] !=null && paramslessonId !=
               allLessonDataList[0]._id">
-              <button mat-button type="button" class="submitbtn" color="primary" (click)="nextbutton('prev','')">
+              <button mat-button type="button" class="submitbtn" color="primary" (click)="nextbutton('prev')">
                 <mat-icon>keyboard_arrow_left</mat-icon> Previous
               </button>
             </ng-container>
@@ -99,7 +99,7 @@
           <!-- *ngIf="lastIndex != Index" -->
           <div class="btnclsnext" *ngIf="next_button_access == true">
             <ng-container class="nextbtn">
-              <button mat-button type="button" class="submitbtn" color="primary" (click)="nextbutton('next','')">Next
+              <button mat-button type="button" class="submitbtn" color="primary" (click)="nextbutton('next')">Next
                 <mat-icon>keyboard_arrow_right</mat-icon>
               </button>
             </ng-container>
@@ -110,13 +110,7 @@
           <span fxLayout="row" class="trainingcentercls_newcls" *ngFor="let item
             of l_content ;let i=index">
             <ng-container>
-
-
-
               <mat-card class="example-card" *ngIf="item.videoflag =='true'">
-                <!-- <div class="paragraphwrapper">
-                  <p [innerHtml]="item.video_typeHtml" class="paragraphcls"></p>
-                </div> -->
                 <div class="videoWrapper">
                   <span>{{ item.video_title }}wwww</span>
                   <span>{{item}}</span>
@@ -130,12 +124,7 @@
                 </div>
               </mat-card>
 
-
-
-
               <!-- banner 1 end here -->
-
-
 
             </ng-container>
             <ng-container *ngIf="lesson_content!=null">
@@ -318,7 +307,7 @@
 
                     </span>
 
-                    <span class="filetype_{{item.file.file_type}}
+                    <span (click)="previewpdf(item,'pdf')" class="filetype_{{item.file.file_type}}
                       mat-card-image" *ngIf="item.file.file_type != null &&
                       item.file.file_type == 'pdf' || item.file.file_type ==
                       'doc' || item.file.file_type == 'ppt' ||
@@ -332,6 +321,7 @@
                         <img mat-card-image (click)="previewpdf(item,'pdf')"
                           [src]="bucket_url+item?.images?.converted_array[i]?.name" alt="Photo of a pdf">
                       </ng-container>
+                     
                       <ng-template class="documentcls" #elseTemplate>
                         <span class="material-icons
                           icon_{{item.file.file_type}}">
@@ -349,10 +339,10 @@
 
                       <p class="File_descriptioncls">{{ item.file_description |details}}
                         <span class="readmore" (click)="previewpdf(item,'pdf')">
-                          ...Read More
+
                         </span>
                       </p>
-                      <span class="mandetorycls">*This is a mandetory file to
+                      <span class="mandetorycls" *ngIf="item.file_skippable!=true">*This is a mandetory file to
                         complete this lession (after
                         download)</span>
                     </span>
@@ -361,122 +351,92 @@
                   <!-- video content -->
                   <div class="video_div afvmaindiv" *ngIf="item.type=='video' &&
                     item.type!=null && item.type!=undefined">
+                    
                     <div class="videomainwrapper">
                       <img src="https://img.youtube.com/vi/{{item.video_url}}/0.jpg" class="videoimg">
                       <img (click)="openLessonVideo(item)"
                         src="https://awsbackend-dev-patient-files-test.s3.amazonaws.com/icon-videoplay.png"
                         class="videoplayimg">
-
+                      
                     </div>
                     <p class="videotitlecls">{{item.video_title}}</p>
                     <p class="videoDescls"> {{item.video_description}} </p>
-                    <span class="mandetorycls">*This is a mandetory video to
+                    <span class="mandetorycls" *ngIf="item.video_skippable!=true">*This is a mandetory video to
                       complete this lession</span>
                   </div>
 
-                  <!-- Audio content _{{item.audio._id}} -->
+                  <div class="example-card audioWrapper" *ngIf="item.type=='audio' &&
+                    item.type!=null && item.audio!=null && item.audio.fileservername!=null">
 
-
-                  <mat-card class="example-card" *ngIf="item.type=='audio' &&
-                    item.type!=null && item.audio!=null && item.audio.fileservername!=null" >
-                    <div class="audioWrapper">
-                      <!-- <span>audioPlayer_{{item.audio._id}}</span> -->
-                      <audio id="audioPlayer_{{item.audio._id}}" (timeupdate)="onprocess(item.audio._id,item)"
-                        (loadstart)="loadstart(item,item.audio._id)" (ended)="audioended(item,i,1)" controls
-                        class="audioprogresscls">
-                        <source src="{{bucket_url +item.audio.fileservername }}" type="audio/ogg">
-                        <source src="{{ bucket_url + item.audio.fileservername
+                    <audio id="audioPlayer_{{item.audio._id}}" (timeupdate)="onprocess(item.audio._id,item)"
+                      (loadstart)="loadstart(item,item.audio._id)" (ended)="audioended(item,i,1)" controls
+                      class="audioprogresscls">
+                      <source src="{{bucket_url +item.audio.fileservername }}" type="audio/ogg">
+                      <source src="{{ bucket_url + item.audio.fileservername
                           }}" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                      </audio>
+                      Your browser does not support the audio element.
+                    </audio>
 
-                      <div *ngIf="audio_progress!=null &&
-                        audio_progress[item.audio._id]!=null">
-                        <mat-card class="audioseccls">
-                          <!-- <img src="https://training-centre-bucket.s3.amazonaws.com/audio_animation.gif" alt=""> -->
-                          <div class="progresscls">
+                    <div *ngIf="audio_progress!=null &&
+                        audio_progress[item.audio._id]!=null" class="audioseccls">
+                        
+                      <div class="audioseccls_slider">
+                        <div class="audiotitle_position">
+                          <span class="audioseccls_title">
+                            <p>{{ item.audio_title }}</p>
+                          </span>
+                        </div>
 
-                            <mat-card-content class="audioseccls_title">
-                              <p>{{ item.audio_title }}</p>
-                            </mat-card-content>
-                            <!-- <mat-card-content class="audioseccls_timer">
-                              <span class="material-icons">
-                                timer
-                              </span>
-                              </mat-card-content> -->
-                            <!-- <span class="audiotimeing">
-                              {{audio_time[item.audio._id]}} / {{audio_end_time[item.audio._id]}}
-                            </span> -->
-                            <mat-card-content class="audioseccls_slider">
-                              <span class="mataudiocls" (click)="progressbtn(item.audio._id,item)">
-                                <mat-slider class="audioprocls" [(ngModel)]="modelval[item.audio._id]"
-                                  (click)="progressbtn(item.audio._id,item)" [value]="audio_progress[item.audio._id]"
-                                  [disabled]="disabled[item.audio._id]">
-                                </mat-slider>
-                                <!-- audio curent time -->
-
-                              </span>
-                            </mat-card-content>
-
-                            <p class="audiotitle_STARTtime">{{audio_time[item.audio._id]}}</p>
-                            <!-- audiofulltime -->
-                            <p class="audiodescendtime">{{audio_end_time[item.audio._id]}}</p>
-                          </div>
-
-
-
-
-                          <mat-card-content class="audiocntrlbtn">
-                            <div class="controlcls">
-                              <!-- <button mat-button (click)="skipTensec(item.audio._id,item,'previos')"> -->
-                              <mat-card class="audiocntrlbtn_card">
-                                <span class="skip_cls" *ngIf="pause_flag[item.audio._id]==true &&
-                                  item.audio_skippable == true" (click)="skipTensec(item.audio._id,item,'previos')">
-                                  <img class="skip_cls"
-                                    src="https://training-centre-bucket.s3.amazonaws.com/10sec_backward.png">
-                                </span>
-                                <!-- </button> -->
-
-                                <!-- <button  > -->
-                                <span *ngIf="play_flag[item.audio._id]==true" (click)="playbtn(item.audio._id,'play')"
-                                  class="material-icons audiocontrolcls">
-                                  play_circle
-                                </span>
-                                <!-- </button> -->
-                                <!-- <button *ngIf="pause_flag[item.audio._id]==true" mat-button
-                          > -->
-                                <span *ngIf="pause_flag[item.audio._id]==true"
-                                  (click)="pausebtn(item.audio._id,'pause')" class="material-icons audiocontrolcls">
-                                  pause
-                                </span>
-                                <!-- </button> -->
-                                <!-- <button mat-button (click)="skipTensec(item.audio._id,item,'next')"> -->
-                                <span class="skip_cls" *ngIf="pause_flag[item.audio._id]==true &&
-                                  item.audio_skippable == true" (click)="skipTensec(item.audio._id,item,'next')">
-                                  <img class="skip_cls"
-                                    src="https://training-centre-bucket.s3.amazonaws.com/10sec_forward.png">
-                                </span>
-                                <!-- </button> -->
-                                <!-- <button mat-button (click)="replay(item.audio._id)"> -->
-                                <span class="material-icons audiocontrolcls" (click)="replay(item.audio._id)">
-                                  replay
-                                </span>
-                              </mat-card>
-
-                              <!-- </button> -->
-                            </div>
-                          </mat-card-content>
-                        </mat-card>
-                        <!-- <p>{{ item.audio_description |details }}</p> -->
-                        <span class="mandetorycls">*This is a mandetory audio to
-                          complete this lession</span>
+                        <span class="mataudiocls" (click)="progressbtn(item.audio._id,item)">
+                          <mat-slider class="audioprocls" [(ngModel)]="modelval[item.audio._id]"
+                            (click)="progressbtn(item.audio._id,item)" [value]="audio_progress[item.audio._id]"
+                            [disabled]="disabled[item.audio._id]">
+                          </mat-slider>
+                          <!-- audio curent time -->
+                        </span>
                       </div>
 
-                      <!-- <button mat-raised-button (click)="downloadAudio(item.audio)">
-                        Download
-                      </button> -->
+                      <div class="controlcls audiocntrlbtn">
+                        <p class="audiotitle_STARTtime">{{audio_time[item.audio._id]}}</p>
+                        <!-- audiofulltime -->
+
+                        <mat-card class="audiocntrlbtn_card">
+                          <span class="skip_cls" *ngIf="pause_flag[item.audio._id]==true &&
+                                  item.audio_skippable == true" (click)="skipTensec(item.audio._id,item,'previos')">
+                            <img class="skip_cls"
+                              src="https://training-centre-bucket.s3.amazonaws.com/10sec_backward.png">
+                          </span>
+                          <span *ngIf="play_flag[item.audio._id]==true" (click)="playbtn(item.audio._id,'play')"
+                            class="material-icons audiocontrolcls">
+                            play_circle
+                          </span>
+
+                          <span *ngIf="pause_flag[item.audio._id]==true" (click)="pausebtn(item.audio._id,'pause')"
+                            class="material-icons audiocontrolcls">
+                            pause
+                          </span>
+
+                          <span class="skip_cls" *ngIf="pause_flag[item.audio._id]==true &&
+                                  item.audio_skippable == true" (click)="skipTensec(item.audio._id,item,'next')">
+                            <img class="skip_cls"
+                              src="https://training-centre-bucket.s3.amazonaws.com/10sec_forward.png">
+                          </span>
+
+                          <span class="material-icons audiocontrolcls" (click)="replay(item.audio._id)">
+                            replay
+                          </span>
+
+                        </mat-card>
+                        <p class="audiodescendtime">{{audio_end_time[item.audio._id]}}</p>
+                      </div>
+
+
                     </div>
-                  </mat-card>
+                    <span class="mandetorycls" *ngIf="item.audio_skippable!=true">*This is a mandetory audio to
+                      complete this lession</span>
+
+
+                  </div>
                 </div>
               </div>
               <div *ngIf="lesson_content!=null && lesson_content.has_lessonplan
@@ -585,8 +545,7 @@
           <div class="btnclsprev">
             <ng-container class="prevbtn" *ngIf="allLessonDataList[0] !=null && paramslessonId !=
               allLessonDataList[0]._id">
-              <button mat-button type="button" class="submitbtn" color="primary"
-                (click)="nextbutton('prev','bottomPrev')">
+              <button mat-button type="button" class="submitbtn" color="primary" (click)="nextbutton('prev')">
                 <mat-icon>keyboard_arrow_left</mat-icon> Previous
               </button>
             </ng-container>
@@ -594,8 +553,9 @@
           <!-- *ngIf="lastIndex != Index" -->
           <div class="btnclsnext" *ngIf="next_button_access == true">
             <ng-container class="nextbtn">
-              <button mat-button type="button" class="submitbtn" color="primary"
-                (click)="nextbutton('next','bottomNext')">Next <mat-icon>keyboard_arrow_right</mat-icon></button>
+              <button mat-button type="button" class="submitbtn" color="primary" (click)="nextbutton('next')">Next
+                <mat-icon>keyboard_arrow_right</mat-icon>
+              </button>
             </ng-container>
           </div>
         </span>

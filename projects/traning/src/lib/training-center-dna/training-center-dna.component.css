@@ -744,28 +744,19 @@
 
 .audioseccls {
     /* background-color: #b8abab; */
-    background: rgb(9, 121, 99);
-    background: linear-gradient(90deg, rgba(9, 121, 99, 1) 35%, rgba(0, 255, 222, 1) 100%);
+    /* background: rgb(9, 121, 99); */
+    /* background: linear-gradient(90deg, rgba(9, 121, 99, 1) 35%, rgba(0, 255, 222, 1) 100%); */
     /* background: url("https://training-centre-bucket.s3.amazonaws.com/lesson-files/lesson_file_-download(2)-1608809187426.png"); */
     background-size: 100%;
     /* overflow: hidden; */
     height: 287px;
-    position: relative;
+    /* position: relative */
 }
 
-.audioseccls_title {
-    position: absolute;
-    top: 29px;
-    left: 237px;
-    color: #fff!important;
-    font-size: 24px;
-    font-weight: bold;
-}
+
 
 .audioseccls_slider {
-    position: absolute;
-    bottom: 0;
-    right: 69px;
+ background-color: #8fef8d;
 }
 
 
@@ -789,20 +780,29 @@ mat-slider {
 }
 
 .audiodescendtime {
-    position: absolute;
+   
     bottom: 0px;
     right: 78px;
+    columns: #000000;
 }
 
 .audiotitle_STARTtime {
-    position: absolute;
+    
     /* top: 29px; */
     left: 87px;
     bottom: 0;
+    columns: #000000;
 }
 
 .audiocntrlbtn_card {
     background: none!important;
+}
+.audiocntrlbtn{
+    display: flex;
+    padding: 8px;
+}
+.audiocntrlbtn p{
+    margin-right:5px ;
 }
 
 
