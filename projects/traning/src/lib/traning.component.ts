@@ -645,13 +645,9 @@ export class TraningComponent implements OnInit {
 
         if (result.dataObj.audio != null && key == 'add' && result.dataObj.audio != '') {
           this.audio_array.push(result.audioFields);
-          console.log(this.audio_array,'audio_array')
+          console.log(this.audio_array, 'audio_array')
         }
-        else {
-          this.snackBar.open('Please Upload a audio file ...!', 'OK', {
-            duration: 3000
-          })
-        }
+
         if (key == 'edit') {
           // this.file_array.splice(i, 1);
           // this.file_array.push(result.fileFields);
@@ -700,18 +696,12 @@ export class TraningComponent implements OnInit {
 
   doneAudioupload(arrayName, index) {
     console.log(arrayName, index)
-    // console.log(this.uploadConfigData.files[0].upload.data.data, 'this.uploadConfigData.files');
-
-    if (this.uploadConfigData.files != null && this.uploadConfigData.files[0] != null) {
-      if (arrayName == 'audio_array') {
-        this.audio_array[index].audio = this.uploadConfigData.files[0].upload.data.data;
-      }
-      console.log(this.audio_array, 'audio_array')
-    } else {
-      this.snackBar.open('Please Upload Single Audio ...!', 'OK', {
-        duration: 3000
-      })
+    // console.log(this.uploadConfigData.files[0].upload.data.data, 'this.uploadConfigData.files');    
+    if (arrayName == 'audio_array') {
+      this.audio_array[index].audio = this.uploadConfigData.files[0].upload.data.data;
     }
+    console.log(this.audio_array, 'audio_array')
+
   }
 
 
@@ -911,7 +901,7 @@ export class AddAudioVideoFileDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<AddAudioVideoFileDialogComponent>, public sanitizer: DomSanitizer, public snackBar: MatSnackBar, public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: DialogData1) {
-    console.log(data, 'jhgkj')
+    console.log(this.data.keyVal, 'jhgkj')
 
     if (this.data.type_flag == 'audio' || this.data.type_flag == 'file') {
       this.uploadConfigData = data.configFileUpload;
@@ -953,14 +943,25 @@ export class AddAudioVideoFileDialogComponent {
 
   }
 
-  addaudio(arrayName) {
+  addaudio(arrayName, name) {
 
-    console.log(arrayName, 'arrayName 11++++==')
+    // console.log(arrayName, 'arrayName 11++++==', name)
 
-    if (this.uploadConfigData.files != null && this.uploadConfigData.files[0] != null) {
-      if (arrayName == 'audio_array') {
+    var checkCond = false;
 
-        console.log(arrayName, 'arrayName 22++')
+    if (this.uploadConfigData.files != null && this.uploadConfigData.files[0] != null && this.data.keyVal == 'add') {
+      checkCond = true;
+    }
+    if (this.data.keyVal == 'edit') {
+      checkCond = true;
+    }
+
+
+    if (checkCond == true) {
+      if (arrayName == 'audio_array' && this.uploadConfigData.files != null) {
+
+        // console.log(arrayName, 'arrayName 22++')
+        console.log(this.uploadConfigData, 'drftgyujikl')
 
         var file_name_str = this.uploadConfigData.files[0].upload.data.data.filelocalname;
 
@@ -983,6 +984,7 @@ export class AddAudioVideoFileDialogComponent {
       // console.log(this.uploadConfigData, 'this.uploadConfigData++', arrayName)
       console.log(this.audioFields, 'audiofields')
       this.dialogRef.close(this.data);
+
     }
     else {
       this.snackBar.open("please fill up all the fields ", 'Ok', {
@@ -992,7 +994,7 @@ export class AddAudioVideoFileDialogComponent {
     }
 
 
-   
+
   }
 
   addfile(arrayName) {

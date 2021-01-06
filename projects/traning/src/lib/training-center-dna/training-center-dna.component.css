@@ -112,7 +112,6 @@
     margin: 5px;
 }
 
-
 /* .wrapper .childButton{width:100%;background:#1162ad;color:#fff;margin-bottom:10px;min-width:240px} */
 
 .trainingcentercls .rightside {
@@ -235,9 +234,7 @@
     display: block
 }
 
-.imgwrappercls img,
-.paragraphwrapper p p img,
-.paragraphwrapper p img {
+.imgwrappercls img, .paragraphwrapper p p img, .paragraphwrapper p img {
     width: 100%;
     height: auto;
     margin-top: 0
@@ -271,7 +268,6 @@
     padding-bottom: 10px;
     height: auto
 }
-
 
 /* .videoWrapper iframe,.videoWrapper video,.videoWrapper object{position:absolute;top:0;left:0;width:100%;height:100%} */
 
@@ -319,8 +315,7 @@
     margin-top: 5px;
 }
 
-.modalclslibrary button,
-.modalclslibrary button.childButton {
+.modalclslibrary button, .modalclslibrary button.childButton {
     margin-right: 5px;
     background: #5c5f61;
     color: #fff;
@@ -356,7 +351,6 @@
     cursor: pointer;
     align-items: center;
 }
-
 
 /* Skin Theme 2 */
 
@@ -504,8 +498,7 @@
     margin-top: 10px;
 }
 
-.banner1cls .mat-card-content,
-.banner2cls {
+.banner1cls .mat-card-content, .banner2cls {
     background: #1095e7;
     border-radius: 8px;
     padding: 25px;
@@ -516,7 +509,6 @@
     margin: 0 0 10px;
     font-size: large;
 }
-
 
 /* .active > .class1{background-color: #bcbce6 !important;}
 .active > .class2{background-color: #bcbce6 !important;}
@@ -540,7 +532,6 @@
 .classdone {
     background-color: rgb(59, 182, 89);
 }
-
 
 /* .active > .class1{background-color: #34343a !important;} */
 
@@ -580,13 +571,11 @@
     text-transform: uppercase;
 }
 
-.lessontitleclass,
-.lessoncontent {
+.lessontitleclass, .lessoncontent {
     display: none;
 }
 
-.lessontitleclass_0,
-.lessoncontent0 {
+.lessontitleclass_0, .lessoncontent0 {
     display: block;
 }
 
@@ -743,32 +732,21 @@
 }
 
 .audioseccls {
-    /* background-color: #b8abab; */
-    /* background: rgb(9, 121, 99); */
-    /* background: linear-gradient(90deg, rgba(9, 121, 99, 1) 35%, rgba(0, 255, 222, 1) 100%); */
-    /* background: url("https://training-centre-bucket.s3.amazonaws.com/lesson-files/lesson_file_-download(2)-1608809187426.png"); */
     background-size: 100%;
-    /* overflow: hidden; */
     height: 287px;
-    /* position: relative */
 }
-
-
 
 .audioseccls_slider {
- background-color: #8fef8d;
+    background-color: #8fef8d;
 }
-
 
 /* .audioseccls_timer{
     padding: 8px !important;
 } */
 
-
 mat-slider {
     width: 436px;
 }
-
 
 /* .mat-accent .mat-slider-thumb {
     background-color: #d67a56!important;
@@ -780,14 +758,12 @@ mat-slider {
 }
 
 .audiodescendtime {
-   
     bottom: 0px;
     right: 78px;
     columns: #000000;
 }
 
 .audiotitle_STARTtime {
-    
     /* top: 29px; */
     left: 87px;
     bottom: 0;
@@ -797,14 +773,38 @@ mat-slider {
 .audiocntrlbtn_card {
     background: none!important;
 }
-.audiocntrlbtn{
+
+.audiocntrlbtn {
     display: flex;
     padding: 8px;
 }
-.audiocntrlbtn p{
-    margin-right:5px ;
+
+.audiocntrlbtn p {
+    margin-right: 5px;
 }
 
+.File_descriptioncls {
+    cursor: pointer;
+}
+
+.image_filetype {
+    cursor: pointer;
+}
+
+.filetype_pptx {
+    cursor: pointer;
+}
+
+.filetype_ppt {
+    cursor: pointer;
+}
+
+.filetype_docx {
+    cursor: pointer;
+}
+.filetype_doc{
+    cursor: pointer;
+}
 
 /* .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
     background-color: blue;

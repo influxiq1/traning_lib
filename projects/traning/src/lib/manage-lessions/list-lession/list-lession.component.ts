@@ -110,6 +110,9 @@ export class ListLessionComponent implements OnInit {
     this.listingData = (val) || 'no name set';
     this.listingData = val;
     this.dataSource = new MatTableDataSource(this.listingData);
+    console.log(
+      this.dataSource,'dataSource'
+      )
 
   }
   @Input()

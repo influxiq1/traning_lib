@@ -6,97 +6,93 @@
   <span class="searchblock">
     <span class="searchblockwrapper">
       <span>
-          <mat-toolbar color="primary" style="justify-content: center; align-items: center;" >
-    <h2 class="headerSpan">List Of Training Management</h2>
-  </mat-toolbar>
+        <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
+          <h2 class="headerSpan">List Of Training Management</h2>
+        </mat-toolbar>
 
-  <mat-card-content class="countSection">
-    <h2>{{trainingCounts.totaltrainingcount}}</h2>
-    <span>Total Number Of <br>Training</span>
-  </mat-card-content>
-  <!-- <mat-card-content class="countSection">
+        <mat-card-content class="countSection">
+          <h2>{{trainingCounts.totaltrainingcount}}</h2>
+          <span>Total Number Of <br>Training</span>
+        </mat-card-content>
+        <!-- <mat-card-content class="countSection">
     <h2>{{trainingCounts.totallessoncount}}</h2>
     <span>Total Number Of <br>Lessons</span>
   </mat-card-content> -->
-  <mat-card-content class="countSection">
-    <h2>{{trainingCounts.activatedtrainingcount}}</h2>
-    <span>Total Number Of <br>Active Training</span>
-  </mat-card-content>
-  <!-- <mat-card-content  class="countSection">
+        <mat-card-content class="countSection">
+          <h2>{{trainingCounts.activatedtrainingcount}}</h2>
+          <span>Total Number Of <br>Active Training</span>
+        </mat-card-content>
+        <!-- <mat-card-content  class="countSection">
     <h2>{{trainingCounts.activatedlessoncount}}</h2>
     <span>Total Number Of <br>Activate Lesson</span>
   </mat-card-content > -->
-  <mat-card-content class="countSection">
-    <h2>{{trainingCounts.trashedtrainingcount}}</h2>
-    <span>Total Number Of <br>Trashed Trainings</span>
-  </mat-card-content>
-  <!-- <mat-card-content class="countSection">
+        <mat-card-content class="countSection">
+          <h2>{{trainingCounts.trashedtrainingcount}}</h2>
+          <span>Total Number Of <br>Trashed Trainings</span>
+        </mat-card-content>
+        <!-- <mat-card-content class="countSection">
     <h2>{{trainingCounts.trashedlessoncount}}</h2>
     <span>Total Number Of <br>Trashed Lessons</span>
   </mat-card-content> -->
 
-</span>
+      </span>
 
-<span>
-  <mat-toolbar class="buttonsetToolbar" >
-    <button class="singleButton" mat-raised-button color="primary" (click)="addButton()"> 
-      <i class="material-icons">add</i>Add Training</button>
-  </mat-toolbar>
-</span>
+      <span>
+        <mat-toolbar class="buttonsetToolbar">
+          <button class="singleButton" mat-raised-button color="primary" (click)="addButton()">
+            <i class="material-icons">add</i>Add Training</button>
+        </mat-toolbar>
+      </span>
     </span>
   </span>
-<span class="searchbar">
-<mat-form-field   class="searchdiv">
-    <input matInput placeholder="Search by Training Name"
-     [(ngModel)]="searchjson.catagory_name_search_regex">
-  </mat-form-field>
+  <span class="searchbar">
+    <mat-form-field class="searchdiv">
+      <input matInput placeholder="Search by Training Name" [(ngModel)]="searchjson.catagory_name_search_regex">
+    </mat-form-field>
 
-  <mat-form-field   class="searchdiv">
-    <input matInput placeholder="Search by Parent Category"
-     [(ngModel)]="searchjson.parent_catagory_search_regex">
-  </mat-form-field>
+    <mat-form-field class="searchdiv">
+      <input matInput placeholder="Search by Parent Category" [(ngModel)]="searchjson.parent_catagory_search_regex">
+    </mat-form-field>
 
-  <mat-form-field class="searchdiv">
-    <mat-select placeholder="Search By Status" [(ngModel)]="status_search_regex" >
-      <!-- <mat-option value="Select a status">Select a status</mat-option> -->
-      <mat-option [value]=1>Active</mat-option>
-      <mat-option [value]=0>Inactive</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <button class="submitbtn" mat-raised-button color="primary" type="button" (click)="filterByTrainingName()">Search</button>
-  <!-- <button class="submitbtn" mat-raised-button color="primary" type="button" (click)="filterByTrainingName('parent_catagory_search_regex', parentCategory)">Search</button> -->
+    <mat-form-field class="searchdiv">
+      <mat-select placeholder="Search By Status" [(ngModel)]="status_search_regex">
+        <!-- <mat-option value="Select a status">Select a status</mat-option> -->
+        <mat-option [value]=1>Active</mat-option>
+        <mat-option [value]=0>Inactive</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button class="submitbtn" mat-raised-button color="primary" type="button"
+      (click)="filterByTrainingName()">Search</button>
+    <!-- <button class="submitbtn" mat-raised-button color="primary" type="button" (click)="filterByTrainingName('parent_catagory_search_regex', parentCategory)">Search</button> -->
 
-  <button class="submitbtn" mat-raised-button color="primary" type="button" (click)="resetSearch()">Reset</button>
-  <button  class="submitbtn" mat-raised-button color="primary" type="button" (click)="viewTrash()">{{ trashButtonText }}</button>
-
-</span>
-
-<ng-container *ngIf="selection.selected.length!=null && selection.selected.length>0">
-  <span class="multipledeleteandupdatebuttan" >
-
-  <button mat-raised-button (click)="deleteAllRecordModalFunction()"> Delete </button>
-  <button mat-raised-button (click)="statusUpdateAllRecords()"> Update Status </button>
+    <button class="submitbtn" mat-raised-button color="primary" type="button" (click)="resetSearch()">Reset</button>
+    <button class="submitbtn" mat-raised-button color="primary" type="button" (click)="viewTrash()">{{ trashButtonText
+      }}</button>
 
   </span>
-</ng-container>
 
-<div class="mat-elevation-z8">
-<table mat-table [dataSource]="dataSource" matSort>
-<!-- Checkbox Column -->
-<ng-container matColumnDef="select">
-  <th mat-header-cell *matHeaderCellDef>
-    <mat-checkbox (change)="$event ? masterToggle() : null"
-    [checked]="selection.hasValue() && isAllSelected()"
-    [indeterminate]="selection.hasValue() && !isAllSelected()"
-    [aria-label]="checkboxLabel()"> </mat-checkbox>
-  </th>
-  <td mat-cell *matCellDef="let row" data-label = "select">
-    <mat-checkbox (click)="$event.stopPropagation()"
-    (change)="$event ? selection.toggle(row) : null"
-    [checked]="selection.isSelected(row)"
-    [aria-label]="checkboxLabel(row)"></mat-checkbox>
-  </td>
-</ng-container>
+  <ng-container *ngIf="selection.selected.length!=null && selection.selected.length>0">
+    <span class="multipledeleteandupdatebuttan">
+
+      <button mat-raised-button (click)="deleteAllRecordModalFunction()"> Delete </button>
+      <button mat-raised-button (click)="statusUpdateAllRecords()"> Update Status </button>
+
+    </span>
+  </ng-container>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()"> </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row" data-label="select">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)"></mat-checkbox>
+        </td>
+      </ng-container>
 
 
 
@@ -107,7 +103,7 @@
       </ng-container>
       <ng-container matColumnDef="no">
         <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td mat-cell *matCellDef="let row; let i = index;" title= "No"> {{ i + 1 }} </td>
+        <td mat-cell *matCellDef="let row; let i = index;" title="No"> {{ i + 1 }} </td>
       </ng-container>
       <ng-container matColumnDef="type">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
@@ -118,7 +114,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
         <td mat-cell *matCellDef="let row" title="Description"> {{row.description}} </td>
       </ng-container>
-      
+
       <!-- Name Column -->
       <ng-container matColumnDef="priority">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Priority </th>
@@ -130,18 +126,18 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Parent Catagory </th>
         <td mat-cell *matCellDef="let row" title="Parent Catagory"> {{row.parent_catagory}} </td>
       </ng-container>
-     
+
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef>Status </th>
         <td mat-cell *matCellDef="let row" title="Status">
-            <div *ngIf="row.status == 1">
-                Active </div>
-            <div *ngIf="row.status == 0">
-                Inactive
-            </div>
+          <div *ngIf="row.status == 1">
+            Active </div>
+          <div *ngIf="row.status == 0">
+            Inactive
+          </div>
 
         </td>
-    </ng-container>
+      </ng-container>
       <ng-container matColumnDef="deleteRecord">
         <th mat-header-cell *matHeaderCellDef> Action </th>
         <td mat-cell *matCellDef="let element; let i = index;" data-label="Action">
@@ -161,13 +157,13 @@
             <span class="pointer" (click)="statusUpdateModal(element._id,i)">
               <i class="material-icons">
                 toggle_on
-                </i>
-             </span>
-             <span *ngIf="element.is_trash != null && element.is_trash==1" (click)="restoreTrashData(element._id,i)">
+              </i>
+            </span>
+            <span *ngIf="element.is_trash != null && element.is_trash==1" (click)="restoreTrashData(element._id,i)">
               <i class="material-icons">
                 restore_page
-                </i>
-             </span>
+              </i>
+            </span>
           </span>
         </td>
       </ng-container>

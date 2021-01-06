@@ -285,7 +285,7 @@
                     item.type!=null && item.type!=undefined">
                     <span *ngIf="item.file.file_type != null &&
                       item.file.file_type == 'jpeg' || item.file.file_type ==
-                      'png' || item.file.file_type == 'jpg'">
+                      'png' || item.file.file_type == 'jpg'" class="image_filetype">
                       <img (click)="previewpdf(item,'img')" mat-card-image
                         [attr.src]="bucket_url +item.file.fileservername">
                       <button mat-raised-button (click)="previewpdf(item,'img')">
@@ -297,17 +297,15 @@
                       <p class="File_titlecls">{{ item.file_title }}</p>
 
                       <p class="File_descriptioncls">{{ item.file_description }}
-                        <!-- <span class="readmore" (click)="previewpdf(item,'img')">
-                          .... Read More
-                        </span> -->
+
                       </p>
-                      <span class="mandetorycls">*This is a mandetory image to
+                      <span class="mandetorycls" *ngIf="item.file_skippable!=true">*This is a mandetory image to
                         complete this lession (after download)
                       </span>
 
                     </span>
 
-                    <span (click)="previewpdf(item,'pdf')" class="filetype_{{item.file.file_type}}
+                    <span  class="filetype_{{item.file.file_type}}
                       mat-card-image" *ngIf="item.file.file_type != null &&
                       item.file.file_type == 'pdf' || item.file.file_type ==
                       'doc' || item.file.file_type == 'ppt' ||
@@ -321,7 +319,7 @@
                         <img mat-card-image (click)="previewpdf(item,'pdf')"
                           [src]="bucket_url+item?.images?.converted_array[i]?.name" alt="Photo of a pdf">
                       </ng-container>
-                     
+
                       <ng-template class="documentcls" #elseTemplate>
                         <span class="material-icons
                           icon_{{item.file.file_type}}">
@@ -337,10 +335,8 @@
                       </button>
                       <p class="File_titlecls">{{ item.file_title }}</p>
 
-                      <p class="File_descriptioncls">{{ item.file_description |details}}
-                        <span class="readmore" (click)="previewpdf(item,'pdf')">
-
-                        </span>
+                      <p class="File_descriptioncls" >{{ item.file_description |details}}
+                        
                       </p>
                       <span class="mandetorycls" *ngIf="item.file_skippable!=true">*This is a mandetory file to
                         complete this lession (after
@@ -351,13 +347,13 @@
                   <!-- video content -->
                   <div class="video_div afvmaindiv" *ngIf="item.type=='video' &&
                     item.type!=null && item.type!=undefined">
-                    
+
                     <div class="videomainwrapper">
                       <img src="https://img.youtube.com/vi/{{item.video_url}}/0.jpg" class="videoimg">
                       <img (click)="openLessonVideo(item)"
                         src="https://awsbackend-dev-patient-files-test.s3.amazonaws.com/icon-videoplay.png"
                         class="videoplayimg">
-                      
+
                     </div>
                     <p class="videotitlecls">{{item.video_title}}</p>
                     <p class="videoDescls"> {{item.video_description}} </p>
@@ -379,7 +375,7 @@
 
                     <div *ngIf="audio_progress!=null &&
                         audio_progress[item.audio._id]!=null" class="audioseccls">
-                        
+
                       <div class="audioseccls_slider">
                         <div class="audiotitle_position">
                           <span class="audioseccls_title">
@@ -392,13 +388,12 @@
                             (click)="progressbtn(item.audio._id,item)" [value]="audio_progress[item.audio._id]"
                             [disabled]="disabled[item.audio._id]">
                           </mat-slider>
-                          <!-- audio curent time -->
+
                         </span>
                       </div>
-
+                      <!-- audio curent time -->
                       <div class="controlcls audiocntrlbtn">
                         <p class="audiotitle_STARTtime">{{audio_time[item.audio._id]}}</p>
-                        <!-- audiofulltime -->
 
                         <mat-card class="audiocntrlbtn_card">
                           <span class="skip_cls" *ngIf="pause_flag[item.audio._id]==true &&
@@ -427,14 +422,15 @@
                           </span>
 
                         </mat-card>
+                        <!-- audiofulltime -->
                         <p class="audiodescendtime">{{audio_end_time[item.audio._id]}}</p>
                       </div>
 
 
                     </div>
                     <span class="mandetorycls" *ngIf="item.audio_skippable!=true">*This is a mandetory audio to
-                      complete this lession</span>
-
+                      complete this lession
+                    </span>
 
                   </div>
                 </div>

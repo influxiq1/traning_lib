@@ -185,13 +185,14 @@ export class TrainingCenterDnaComponent implements OnInit {
 
   @Input()
   set TrainingCategoryList(val: any) {
-   // console.log(val, 'TrainingCategoryList')
+    console.log(val, 'TrainingCategoryList')
     let results: any = (val) || '<no name set>';
     let parentdone: any;
     let parentcount: any;
     this.trainingCategoryList = results.trainingcenterlist;
     this.lesson_locked_by_user = 1;
     this.AllTrainingData = results;
+    console.log(results.complete_lesson_audio, 'results')
 
     setTimeout(() => {
 
@@ -211,7 +212,7 @@ export class TrainingCenterDnaComponent implements OnInit {
     this.l_content = results.lesson_content;
     // // console.log(this.l_content, 'l_content')
 
-    // // console.log(results.lesson_content[0], 'results.lesson_content[0]')
+    // console.log(results.lesson_content[0], 'results.lesson_content[0]')
     // // console.log(this.lesson_content, 'lesson_content+++=')
     if (results.lesson_content[0].has_lessonplan != null && typeof (results.lesson_content[0].has_lessonplan) != 'undefined' && results.lesson_content[0].has_lessonplan == 1 && results.lesson_content[0].has_test_lesson == 0) {
 
@@ -271,11 +272,26 @@ export class TrainingCenterDnaComponent implements OnInit {
 
 
     var complete_lesson_quiz = results.complete_lesson_quiz;
+    for (const key of results.lesson_content[0].audio_array) {
+      // console.log(results.complete_lesson_audio,'results.complete_lesson_audio')
+      if (key.audio_skippable == false) {
+        this.next_button_access = false;
+      }
+      var audio_content = results.lesson_content[0].audio_array
+      if (audio_content >= results.complete_lesson_audio) {
+        console.log(audio_content, 'results.lesson_content[0].audio_array');
+        this.next_button_access = true;
+      }
+    }
+    if (val.complete_lesson_file) {
+
+    }
+
 
     if (results.lesson_content[0].mediaType == 'video') {
       this.quizflag = false;
 
-      // // console.log(results.lesson_content[0].video_array, '++', results.complete_lesson_video)
+      console.log(results.lesson_content[0].video_array, '++++++++++++++++')
 
       var lesson_video: any = results.lesson_content[0].video_array
       var complete_lesson_video: any = results.complete_lesson_video;
@@ -381,7 +397,8 @@ export class TrainingCenterDnaComponent implements OnInit {
         }
       }
     }
-    console.log(this.next_button_access, 'quizflag 2', this.quizflag)
+    this.next_button_access = false
+    // // console.log(this.next_button_access, 'quizflag 2', this.quizflag)
 
 
 
@@ -503,7 +520,7 @@ export class TrainingCenterDnaComponent implements OnInit {
             next_lesson_id: '',
             next_lesson_title: ''
           }
-          // // console.log("else >>>>><<<<<++this.lessonDataList[i+1],this.lessonDataList[i]")
+          // console.log("else >>>>><<<<<++this.lessonDataList[i+1],this.lessonDataList[i]")
         }
       }
 
@@ -605,7 +622,10 @@ export class TrainingCenterDnaComponent implements OnInit {
   }
 
   downloadPdf(file: any) {
-    // // console.log(file, 'fvgbnjkmgbh')
+    console.log(file, 'fvgbnjkmgbh')
+    setTimeout(() => {
+      this.getTrainingCenterlistFunctionwithLessonId(this.paramsId, this.userType, this.userId, this.paramslessonId)
+    }, 500);
 
     // // console.log(this.serverDetailsVal.serverUrl, 'serverDetailsVal')
     this.fileendpoint = this.serverDetailsVal.serverUrl + 'updateusercompletelessonfiles'
@@ -678,7 +698,7 @@ export class TrainingCenterDnaComponent implements OnInit {
     }, 1500);
 
   }
-//skip ten sec (next and previous)
+  //skip ten sec (next and previous)
   skipTensec(val, item, flag) {
     // console.log(item, '+++++++++++====', flag)
     if (item.audio_skippable == false) {
@@ -1005,7 +1025,12 @@ export class TrainingCenterDnaComponent implements OnInit {
       this.addMarkedData(item._id, this.paramsId, i, this.lesson_title, this.nextlessondata);
     }
     if (j == 1) {
+      setTimeout(() => {
+        this.getTrainingCenterlistFunctionwithLessonId(this.paramsId, this.userType, this.userId, this.paramslessonId)
+      }, 500);
+
       let audioendpoint = this.serverDetailsVal.serverUrl + 'updateusercompletelessonaudio'
+
       let audio_data = {
         user_id: this.userId,
         training_id: this.paramsTrainingId,
@@ -1014,6 +1039,7 @@ export class TrainingCenterDnaComponent implements OnInit {
         audio_id: item.audio._id,
         audio_name: item.audio.fileservername,
       }
+
       this.apiService.postDatawithoutToken(audioendpoint, audio_data).subscribe(res => {
         let result: any = res;
 
@@ -1168,6 +1194,8 @@ export class TrainingCenterDnaComponent implements OnInit {
   }
 
 
+
+
   getTrainingCenterlistFunctionwithLessonId(associated_training: any, type: any, user_id: any, _id: any) {
     const link = this.serverDetailsVal.serverUrl + "gettrainingcenterlist";
     let data: any = {
@@ -1184,6 +1212,7 @@ export class TrainingCenterDnaComponent implements OnInit {
       console.log("response", response);
       this.trainingCategoryList = response.results.trainingcenterlist;
       this.lessonDataList = response.rdata;
+
       this.dividend = response.results.done_lesson_by_user[0].lessonsdone;
       this.divisor = response.results.total_lesson[0].count;
       this.reportPercentage = Math.floor(this.dividend / this.divisor * 100);
@@ -1196,9 +1225,19 @@ export class TrainingCenterDnaComponent implements OnInit {
 
         this.progress_bar = 0;
       }
+      this.next_button_access = false
+      // console.log(this.next_button_access, 'quizflag 2', this.quizflag)
+      if (response.results.lesson_content[0].file_array.length <= response.results.complete_lesson_file.length) {
+        this.next_button_access = true;
 
+      }
+      if (response.results.lesson_content[0].audio_array.length <= response.results.complete_lesson_audio.length) {
+        this.next_button_access = true;
+        console.log("++++++++++++++++++++")
+      }
 
     });
+
   }
 
   //next prev button work
@@ -1586,6 +1625,9 @@ export class TrainingCenterDnaComponent implements OnInit {
         })
       }
     })
+  }
+  if() {
+
   }
 
   // lesson_quiz LessonQuizModalComponent
@@ -2005,7 +2047,7 @@ export class PreviewContentDialog {
     }
     // // console.log(this.quizData, '++')
   }
-  close(val) {
+  close(val) {                 //FOR MODAL CLOSE 
     this.snakBar.open(' Your Lesson  is Complete After Download This File ..!', 'OK', {
       duration: 5000
     })

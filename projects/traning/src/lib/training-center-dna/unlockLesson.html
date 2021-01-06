@@ -3,33 +3,33 @@
     <div class="logowrapperouter">
       <div class="logowrapper">
         <!-- {{data}} -->
-        <h2 *ngIf="data?.data == 1">Are you sure you want to turn on Sequential lock for all the lessons?</h2>
+        <h2 *ngIf="data.data == 1">Are you sure you want to turn on Sequential lock for all the lessons?</h2>
 
-        <h2 *ngIf="data?.data == 0">Are you sure you want to unlock all lessons?
+        <h2 *ngIf="data.data == 0">Are you sure you want to unlock all lessons?
         </h2>
       </div>
     </div>
 
     <div mat-dialog-content class="headercls">
-      <span class="sequencecls" style="color:crimson;">* We highly suggest you to follow the lessons in sequence!</span>
+      <span class="sequencecls" style="color:rgba(230, 32, 72, 0.945);">* We highly suggest you to follow the lessons in sequence!</span>
     </div>
 
     <mat-dialog-actions class="modalbtncls">
 
-      
 
-        <button class="btnbluecls" mat-raised-button color="accent" type="button"
+
+      <button class="btnbluecls" mat-raised-button color="accent" type="button"
         (click)="lockedLesson('yes')">Yes</button>
 
-        <button class="btnbluecls" mat-raised-button color="primary" type="button" (click)="lockedLesson('no')"
+      <button class="btnbluecls" mat-raised-button color="primary" type="button" (click)="lockedLesson('no')"
         cdkFocusInitial>No</button>
 
-        <button class="btncancelcls" mat-raised-button color="primary" type="button" (click)="lockedLesson('no')"
+      <button class="btncancelcls" mat-raised-button color="primary" type="button" (click)="lockedLesson('no')"
         cdkFocusInitial><span class="material-icons">
           clear
         </span></button>
 
-      
+
     </mat-dialog-actions>
   </div>
 </div>
