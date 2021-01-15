@@ -30,7 +30,7 @@
           i= index" (click)="activatedclass(item)">
 
           <mat-list-item *ngIf="item?.childcat?.length>=1">{{item.catagory_name}}</mat-list-item>
-          <!-- <span>{{item | json}}</span> -->
+          <!-- <span>{{item.count | json}}</span> -->
           <!-- parent section -->
 
           <mat-list-item *ngIf="item?.childcat?.length==0" (click)="clicktrcataining(item._id,item.catagory_name)"
@@ -39,7 +39,7 @@
             <div class="categoryname">
               {{item.catagory_name}}
               <span class="countcls">
-                ({{item.done}}/{{item.count}})
+                ({{item.done}}/{{parentcount[i]}})
               </span>
 
             </div>
@@ -70,11 +70,11 @@
       <div fxLayout="row" class="rowinner" *ngFor="let item of allLessonDataList
         ; let i=index;">
 
-        <div (click)="nochildclick(item)" [ngClass]="paramslessonId == item._id
+        <div (click)="nochildclick(item,'click')" [ngClass]="paramslessonId == item._id
           ? 'classlessonongoing':
           ( item.is_done == true ? 'classlessondone' : 'classlessonnotdone')">{{item.lession_title}}
           <!-- <span>{{item  | json}}</span> -->
-          <span (click)="nochildclick(item)">
+          <span (click)="nochildclick(item,'click')">
             <!-- {{item.lession_title}} -->
           </span>
 
@@ -97,9 +97,9 @@
             </ng-container>
           </div>
           <!-- *ngIf="lastIndex != Index" -->
-          next_button_access
+          <!-- next_button_access
           
-          {{ next_button_access }}
+          {{ next_button_access }}\\quizflag{{quizflag}} -->
           <div class="btnclsnext" *ngIf="next_button_access == true">
             <ng-container class="nextbtn">
               <button mat-button type="button" class="submitbtn" color="primary" (click)="nextbutton('next')">Next
@@ -304,10 +304,13 @@
                       </p>
                       <span class="mandetorycls" *ngIf="item.file_skippable!=true">*This is a mandetory image to
                         complete this lession (after download)
+
+
+
                       </span>
 
                     </span>
-
+                    <!-- {{item?.images?.converted_array[i]?.name}} -->
                     <span class="filetype_{{item.file.file_type}}
                       mat-card-image" *ngIf="item.file.file_type != null &&
                       item.file.file_type == 'pdf' || item.file.file_type ==
@@ -316,11 +319,11 @@
                       'msword'||item.file.file_type ==
                       'xlsx'||item.file.file_type == 'ods'||item.file.file_type
                       =='docx'||item.file.file_type =='ppt'">
-
+                      pdf{{item.file._id|json}}
                       <ng-container class="documentcls" *ngIf="item?.images!=null && item?.images!=undefined &&
                         item?.images!=''; else elseTemplate">
                         <img mat-card-image (click)="previewpdf(item,'pdf')"
-                          [src]="bucket_url+item?.images?.converted_array[i]?.name" alt="Photo of a pdf">
+                          [src]="bucket_url+item?.images?.converted_array[0]?.name" alt="Photo of a pdf">
                       </ng-container>
 
                       <ng-template class="documentcls" #elseTemplate>
@@ -343,7 +346,13 @@
                       </p>
                       <span class="mandetorycls" *ngIf="item.file_skippable!=true">*This is a mandetory file to
                         complete this lession (after
-                        download)</span>
+                        download)
+                        <span *ngIf="complete_fileflag[item.file._id]==true" class="donetikcls">
+                          <img class="doneimgcls"
+                            src="https://all-frontend-assets.s3.amazonaws.com/dna-frontend-new/assets/images/Trainninglibary_right_icon.jpg"
+                            alt="">
+                        </span>
+                      </span>
                     </span>
 
                   </div>
@@ -378,11 +387,11 @@
 
                     <div *ngIf="audio_progress!=null &&
                         audio_progress[item.audio._id]!=null" class="audioseccls">
-                    
+
                       <div class="audioseccls_slider">
                         <div class="audiotitle_position">
                           <span class="audioseccls_title">
-                            
+
                             <p>{{ item.audio_title }}</p>
                           </span>
                         </div>
@@ -471,9 +480,9 @@
               <!-- banner 2 start here -->
 
               <div>
-                <mat-card class="banner2cls" *ngIf="userType=='mentee' &&
+                <mat-card class="banner2cls" *ngIf="(userType=='mentee' &&
                   lesson_content.has_lessonplan == 1 &&
-                  lesson_content.lessonplan_value=='purchasable' && i==0">
+                  lesson_content.lessonplan_value=='purchasable' && i==0)">
 
 
                   <div *ngIf="orders_button == true || preview_button == true">
@@ -570,11 +579,11 @@
       <div fxLayout="row" class="rowinner" *ngFor="let item of allLessonDataList
         ; let i=index;">
 
-        <div (click)="nochildclick(item)" [ngClass]="paramslessonId == item._id
+        <div (click)="nochildclick(item,'click')" [ngClass]="paramslessonId == item._id
           ? 'classlessonongoing':
           ( item.is_done == true ? 'classlessondone' : 'classlessonnotdone')">{{item.lession_title}}
           <!-- <span>{{item  | json}}</span> -->
-          <span (click)="nochildclick(item)">
+          <span (click)="nochildclick(item,'click')">
             <!-- {{item.lession_title}} -->
           </span>
 
