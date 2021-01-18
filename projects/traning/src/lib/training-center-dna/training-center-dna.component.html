@@ -48,7 +48,7 @@
               <mat-progress-bar *ngIf="percentageprogressLoader" mode="determinate"
                 value="{{((item.done/item.count)*100) }}">
               </mat-progress-bar>
-              <span class="progresspercentage">{{((item.done/item.count))|
+              <span class="progresspercentage">{{((item.done/parentcount[i]))|
                 percent }}
               </span>
 
@@ -112,24 +112,24 @@
         <mat-card-content>
           <span fxLayout="row" class="trainingcentercls_newcls" *ngFor="let item
             of l_content ;let i=index">
-            <ng-container>
+            <!-- <ng-container>
               <mat-card class="example-card" *ngIf="item.videoflag =='true'">
                 <div class="videoWrapper">
                   <span>{{ item.video_title }}wwww</span>
                   <span>{{item}}</span>
 
-                  <video width="640" height="360" autoplay (ended)="videoended(item,i,1)">
-                    <!-- <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="video/mp4"> -->
-                    Your browser does not support the video tag.
+                  <video width="640" height="360" autoplay (ended)="videoended(item,i,1)"> -->
+            <!-- <source src="{{item.fileType[0].basepath}}{{item.fileType[0].fileservername}}" type="video/mp4"> -->
+            <!-- Your browser does not support the video tag.
                   </video>
                   <span>{{ item.video_description }}</span>
 
                 </div>
-              </mat-card>
+              </mat-card> -->
 
-              <!-- banner 1 end here -->
+            <!-- banner 1 end here -->
 
-            </ng-container>
+            <!-- </ng-container> -->
             <ng-container *ngIf="lesson_content!=null">
               <mat-card-title class="lessontitlecls lessontitleclass
                 lessontitleclass_{{i}}">
@@ -319,7 +319,7 @@
                       'msword'||item.file.file_type ==
                       'xlsx'||item.file.file_type == 'ods'||item.file.file_type
                       =='docx'||item.file.file_type =='ppt'">
-                      pdf{{item.file._id|json}}
+                      <!-- pdf{{item.file._id|json}} -->
                       <ng-container class="documentcls" *ngIf="item?.images!=null && item?.images!=undefined &&
                         item?.images!=''; else elseTemplate">
                         <img mat-card-image (click)="previewpdf(item,'pdf')"
@@ -359,7 +359,7 @@
                   <!-- video content -->
                   <div class="video_div afvmaindiv" *ngIf="item.type=='video' &&
                     item.type!=null && item.type!=undefined">
-
+                    <!-- {{item|json}} -->
                     <div class="videomainwrapper">
                       <img src="https://img.youtube.com/vi/{{item.video_url}}/0.jpg" class="videoimg">
                       <img (click)="openLessonVideo(item)"
@@ -370,7 +370,13 @@
                     <p class="videotitlecls">{{item.video_title}}</p>
                     <p class="videoDescls"> {{item.video_description}} </p>
                     <span class="mandetorycls" *ngIf="item.video_skippable!=true">*This is a mandetory video to
-                      complete this lession</span>
+                      complete this lession
+                      <span *ngIf="complete_videoflag[item.video_url]==true" class="donetikcls">
+                      <img class="doneimgcls"
+                      src="https://all-frontend-assets.s3.amazonaws.com/dna-frontend-new/assets/images/Trainninglibary_right_icon.jpg"
+                      alt="">
+                      </span>
+                    </span>
                   </div>
 
                   <div class="example-card audioWrapper" *ngIf="item.type=='audio' &&
@@ -443,6 +449,11 @@
                     </div>
                     <span class="mandetorycls" *ngIf="item.audio_skippable!=true">*This is a mandetory audio to
                       complete this lession
+                      <span *ngIf="complete_audioflag[item.audio._id]==true" class="donetikcls">
+                        <img class="doneimgcls"
+                          src="https://all-frontend-assets.s3.amazonaws.com/dna-frontend-new/assets/images/Trainninglibary_right_icon.jpg"
+                          alt="">
+                      </span>
                     </span>
 
                   </div>

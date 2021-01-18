@@ -163,9 +163,11 @@ export class TrainingCenterDnaComponent implements OnInit {
   public files_data: any = [];
   public audio_data: any = [];
   public video_data: any = [];
-  public parentcount: any=[];
+  public parentcount: any = [];
 
   public complete_fileflag: any = [];
+  public complete_audioflag: any = [];
+  public complete_videoflag: any = [];
 
   public bucket_url: any = 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/'
   public lessoncontentarraydata: any = []
@@ -196,25 +198,17 @@ export class TrainingCenterDnaComponent implements OnInit {
     // console.log(val, 'TrainingCategoryList')
     let results: any = (val) || '<no name set>';
     let parentdone: any;
-    
+
     this.trainingCategoryList = results.trainingcenterlist;
     this.lesson_locked_by_user = 1;
     this.AllTrainingData = results;
-    console.log( results.trainingcenterlist, 'results')
+    // console.log( results.trainingcenterlist, 'results')
 
     setTimeout(() => {
 
     }, 5000);
-    console.log(val, 'val.lesson_content[0].file_array')
+    // console.log(val, 'val.lesson_content[0].file_array')
 
-
-
-
-    // for (const key of this.files_data) {
-    //   this.file_array_id = key
-    // }
-
-    // console.log(this.files_data.file, 'files_data')
     if (results.lesson_locked_by_user != null && results.lesson_locked_by_user != 'undefined') {
 
       this.lesson_locked_by_user = results.lesson_locked_by_user;
@@ -357,7 +351,7 @@ export class TrainingCenterDnaComponent implements OnInit {
     for (let i in this.trainingCategoryList) {
       parentdone = this.trainingCategoryList[i].done;
       this.parentcount[i] = this.trainingCategoryList[i].count;
-      console.log(this.parentcount[i],'parentcount',this.trainingCategoryList[i].count)
+      // console.log(this.parentcount[i],'parentcount',this.trainingCategoryList[i].count)
       if (this.trainingCategoryList[i].done != null && this.trainingCategoryList[i].count != null) {
         this.trainingCategoryList[i].percentage = Math.floor((this.trainingCategoryList[i].done / this.trainingCategoryList[i].count) * 100);
         // console.log('this.trainingCategoryList[i].percentage', this.trainingCategoryList[i].percentage, this.trainingCategoryList[i], i, this.trainingCategoryList[i].done, this.trainingCategoryList[i].count);
@@ -429,15 +423,15 @@ export class TrainingCenterDnaComponent implements OnInit {
           }
         }
       }
-      // if (results.lesson_ids[0].lesson_ids != null) {
-      //   for (let id in results.lesson_ids[0].lesson_ids) {
-      //     if ((results.lesson_content[0]._id == results.lesson_ids[0].lesson_ids[id] && results.lesson_content[0].has_lessonplan == 1) || (results.lesson_content[0]._id == results.lesson_ids[0].lesson_ids[id])) {
-      //       this.lesson_id_flag = results.lesson_ids[0].lesson_ids[id];
-      //       this.preview_button = false;
+      if (results.lesson_ids[0].lesson_ids != null) {
+        for (let id in results.lesson_ids[0].lesson_ids) {
+          if ((results.lesson_content[0]._id == results.lesson_ids[0].lesson_ids[id] && results.lesson_content[0].has_lessonplan == 1) || (results.lesson_content[0]._id == results.lesson_ids[0].lesson_ids[id])) {
+            this.lesson_id_flag = results.lesson_ids[0].lesson_ids[id];
+            this.preview_button = false;
 
-      //     }
-      //   }
-      // }
+          }
+        }
+      }
       if (this.orders_button == false && this.preview_button == false) {
         this.schedule_button = true;
       }
@@ -528,23 +522,25 @@ export class TrainingCenterDnaComponent implements OnInit {
 
       }
     }
-    console.log(val.complete_lesson_file, 'val.complete_lesson_file', this.lessoncontentarraydata)
-    if (val.complete_lesson_file.length > 0 && val.complete_lesson_file != null) {
-      for (const key of this.lessoncontentarraydata) {
-        for (const iterator of val.complete_lesson_file) {
-          console.log(iterator,'key.file._idkey.file._idkey.file._id')
-        
-            console.log(key,'kkkkkkkkkkk')
-          
-        }
-          
-      }
-     
-    }
+    // console.log(val.complete_lesson_file, 'val.complete_lesson_file', this.lessoncontentarraydata)
+    // if (val.complete_lesson_file.length > 0 && val.complete_lesson_file != null) {
+    //   for (const key of this.lessoncontentarraydata) {
+    //     for (const iterator of val.complete_lesson_file) {
+    //       console.log(iterator, 'key.file._idkey.file._idkey.file._id')
+
+    //       console.log(key, 'kkkkkkkkkkk')
+
+    //     }
+
+    //   }
+
+    // }
 
   }
   @Input()
   set TotalData(data: {}) {
+    // console.log(data, 'data', this.quizflag);
+
     this.totalData = (data) || '<no name set>';
     this.trainingLessonCount = this.totalData.training_lesson_count;
     this.doneLessonByCatByUser = this.totalData.done_lesson_by_cat_by_user;
@@ -561,6 +557,8 @@ export class TrainingCenterDnaComponent implements OnInit {
     if (this.userType == 'mentee') {
       this.adminlessoncount = this.totalData.total_lesson_mentee[0].count;
     }
+    // console.log(this.totalData, 'totalData', this.quizflag);
+
 
 
     // this.salesreplessoncount=this.totalData.total_lesson_salesrep[0].count;
@@ -628,6 +626,52 @@ export class TrainingCenterDnaComponent implements OnInit {
     if (done_lesson_by_cat_by_user == 0) {
       this.dividend = 0;
     }
+    if ((this.totalData.complete_lesson_file != null && this.totalData.complete_lesson_file.length > 0) && (this.files_data != null && this.files_data.length > 0)) {
+      for (const key in this.files_data) {
+        // console.log(this.files_data[key].file._id, 'dtufuygtfifk')
+        for (const iterator of this.totalData.complete_lesson_file) {
+          // console.log(iterator.file_id, '5146546')
+          if (this.files_data[key].file._id == iterator.file_id) {
+
+            this.complete_fileflag[iterator.file_id] = true
+
+          }
+
+        }
+      }
+
+    }
+    if ((this.totalData.complete_lesson_audio != null && this.totalData.complete_lesson_audio.length > 0) && (this.audio_data != null && this.audio_data.length > 0)) {
+      for (const key in this.audio_data) {
+        // console.log(this.audio_data[key].audio._id)
+        for (const iterator of this.totalData.complete_lesson_audio) {
+          if (this.audio_data[key].audio._id == iterator.audio_id) {
+
+            this.complete_audioflag[iterator.audio_id] = true
+
+          }
+
+        }
+
+      }
+    }
+    if ((this.totalData.complete_lesson_video != null && this.totalData.complete_lesson_video.length > 0) && (this.video_data != null && this.video_data.length > 0)) {
+      for (const key in this.video_data) {
+        // console.log(this.video_data[key].video_url)
+        for (const iterator of this.totalData.complete_lesson_video) {
+          // console.log(this.totalData.complete_lesson_video[key].video_id)
+          if (this.video_data[key].video_url == iterator.video_id) {
+
+            this.complete_videoflag[iterator.video_id] = true
+
+          }
+
+        }
+
+      }
+    }
+
+
 
 
     // this.divisor = this.salesrepLessonCount;
@@ -701,15 +745,15 @@ export class TrainingCenterDnaComponent implements OnInit {
 
     // console.log('less ids>>', results.results.lesson_ids[0].lesson_ids, this.activatedRoute.snapshot.params._id)
 
-    // if (this.userType == 'admin' || this.userType == 'mentor') {
-    //   this.lesson_id_flag = true;
-    //   for (let id in results.results.lesson_ids[0].lesson_ids) {
+    if (this.userType == 'admin' || this.userType == 'mentor') {
+      this.lesson_id_flag = true;
+      for (let id in results.results.lesson_ids[0].lesson_ids) {
 
-    //     if (this.lesson_content._id == results.results.lesson_ids[0].lesson_ids[id]) {
-    //       this.lesson_id_flag = false;
-    //     }
-    //   }
-    // }
+        if (this.lesson_content._id == results.results.lesson_ids[0].lesson_ids[id]) {
+          this.lesson_id_flag = false;
+        }
+      }
+    }
 
 
   }
@@ -1176,17 +1220,17 @@ export class TrainingCenterDnaComponent implements OnInit {
 
   }
 
-  videoended(item: any, i: any, j) {
-    // console.log(i, '+++++++++==============')
-    if (item.test_associate_training == 'Yes') {
-      this.questionDetails(item._id, i, j);
-    } else {
-      // this.addMarkedData(item._id, this.paramsId, i, this.lesson_title, this.nextlessondata);
-    }
-  }
+  // videoended(item: any, i: any, j) {
+  //   // console.log(i, '+++++++++==============')
+  //   if (item.test_associate_training == 'Yes') {
+  //     this.questionDetails(item._id, i, j);
+  //   } else {
+  //     // this.addMarkedData(item._id, this.paramsId, i, this.lesson_title, this.nextlessondata);
+  //   }
+  // }
 
   audioended(item: any, i: any, j) {
-    // console.log(item, 'dcnjmkxdcvf')
+    console.log(item, 'dcnjmkxdcvf')
     if (item.test_associate_training == 'Yes') {
       this.questionDetails(item._id, i, j);
     } else {
@@ -1209,10 +1253,13 @@ export class TrainingCenterDnaComponent implements OnInit {
       }
       if (item.audio_skippable != true) {
         this.apiService.postDatawithoutToken(audioendpoint, audio_data).subscribe(res => {
+          console.log(res)
           let result: any = res;
 
           // console.log(result, '+++++++')
           if (result.status == 'success') {
+            console.log(item, 'dcnjmkxdcvf')
+            this.complete_audioflag[item.audio._id] = true
             // this.next_button_access=true;
             this.snakBar.open('Successfully Completed This Lesson Audio', 'ok', {
               duration: 3000
@@ -1476,19 +1523,19 @@ export class TrainingCenterDnaComponent implements OnInit {
         // console.log("++++++++getTrainingCenterlistFunctionwithLessonId++++++++++++")
         if (this.files_data.length != response.results.complete_lesson_file.length && this.audio_data.length == response.results.complete_lesson_audio.length && this.video_data.length == response.results.complete_lesson_video.length) {
           this.next_button_access = false;
-          // console.log('xxxxxxxxxxxxx')
+          console.log('xxxxxxxxxxxxx')
         }
         if (this.video_data.length != response.results.complete_lesson_video.length && this.audio_data.length == response.results.complete_lesson_audio.length && this.files_data.length == response.results.complete_lesson_file.length) {
           this.next_button_access = false;
-          // console.log('yyyyyyyyyy')
+          console.log('yyyyyyyyyy')
 
         }
         if (this.audio_data.length != response.results.complete_lesson_audio.length && this.files_data.length == response.results.complete_lesson_file.length && this.video_data.length == response.results.complete_lesson_video.length) {
           this.next_button_access = false;
-          // console.log('zzzzzzzzzzz')
+          console.log('zzzzzzzzzzz')
 
         }
-        // this.next_button_access = true;
+        this.next_button_access = true;
 
       }
 
@@ -1797,7 +1844,7 @@ export class TrainingCenterDnaComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: any) => {
 
-      // console.log(result, 'result********************')
+      console.log(result, 'result********************', val)
       if (result != null && result == 'yes') {
         // console.log()
         this.getTrainingCenterlistFunctionwithLessonId(this.paramsId, this.userType, this.userId, this.paramslessonId);
@@ -1809,7 +1856,7 @@ export class TrainingCenterDnaComponent implements OnInit {
 
         setTimeout(() => {
           if (this.AllTrainingData.complete_lesson_video.length != null &&
-            this.AllTrainingData.complete_lesson_video.length == this.lesson_content.video_array.length) {
+            this.AllTrainingData.complete_lesson_video.length == this.video_data.length) {
             // console.log(this.AllTrainingData.complete_lesson_video, 'has_lessonplan ++')
             this.next_button_access = true;
 
@@ -1824,7 +1871,7 @@ export class TrainingCenterDnaComponent implements OnInit {
                 this.quizflag = false;
               }
             }
-
+            this.complete_videoflag[val.video_url] = true
             // if (this.lesson_content.is_done == null) {
             //   // console.log(this.lesson_content.has_lessonplan, 'has_lessonplan')
             //   // this.addMarkedData(this.lessonDataList[0]._id, this.paramsId, this.nextdata, this.lesson_content.lession_title, this.nextlessondata);
@@ -2121,8 +2168,8 @@ export class LessonVideoModalComponent {
   onStateChange(event) {
     // console.log(this.data.data.video_skippable, 'data_video')
 
-    // console.log(event, 'state chn',)
-    // console.log(event.target.playerInfo.duration, '/\/\/\)', event.target.playerInfo.currentTime)
+    console.log(event, 'state chn',)
+    console.log(event.target.playerInfo.duration, '/\/\/\)', event.target.playerInfo.currentTime)
 
     //duration calculation
     var sec_num = parseInt(event.target.playerInfo.duration, 10);
@@ -2139,7 +2186,7 @@ export class LessonVideoModalComponent {
     // this.startTimer(event.target.playerInfo.duration);
 
     // console.log(event.target.playerInfo, 'change 1', event.data)
-    if (event.data == 0 && event.target.playerInfo.duration <= event.target.playerInfo.currentTime) {
+    if (event.data == 0 && event.target.playerInfo.duration >= event.target.playerInfo.currentTime) {
 
       // console.log(event.data, 'data 0', event.target.playerInfo)
 
@@ -2154,8 +2201,9 @@ export class LessonVideoModalComponent {
       }
       // console.log(video_data, 'data===++')
       if (this.data.data.video_skippable != true) {
+
         this.apiService.postDatawithoutToken(endpoint, video_data).subscribe(res => {
-          // console.log(res, 'frghjk++++++++++')
+          console.log(res, 'frghjk++++++++++', event.target.playerInfo.videoData.video_id)
           let result: any = res;
           if (result.status == 'success') {
             // getTrainingCenterlistFunctionwithLessonId(associated_training: any, type: any, user_id: any, _id: any)
@@ -2164,6 +2212,7 @@ export class LessonVideoModalComponent {
             this.snakBar.open('Successfully Completed The Lesson Video..!', 'OK', {
               duration: 5000
             })
+
           }
         })
       }

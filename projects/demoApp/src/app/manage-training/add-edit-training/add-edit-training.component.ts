@@ -37,7 +37,7 @@ export class AddEditTrainingComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.recid = params['id'];
-      console.log(params['id'],'//////')
+      // console.log(params['id'],'//////')
       if (this.recid != null && this.recid != '' && this.recid != undefined) {
         // this.geteditdata()
       }

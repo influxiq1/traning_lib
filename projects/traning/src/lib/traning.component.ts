@@ -139,6 +139,7 @@ export class TraningComponent implements OnInit {
   }
   @Input()
   set IsItDna(val: any) {
+    console.log(val);
     this.dnaFlag = val;
   }
 
@@ -250,9 +251,9 @@ export class TraningComponent implements OnInit {
 
     if (this.lesson_attachment_flag_val == true) {
 
-      console.log(this.video_array, "video_array", this.videoflag);
-      console.log(this.audio_array, "audioarray", this.audioflag);
-      console.log(this.file_array, "filearray", this.fileflag);
+      // console.log(this.video_array, "video_array", this.videoflag);
+      // console.log(this.audio_array, "audioarray", this.audioflag);
+      // console.log(this.file_array, "filearray", this.fileflag);
 
       if (this.videoflag == true || this.videoflag == false) {
         this.dataForm.value.videoflag = this.videoflag;
