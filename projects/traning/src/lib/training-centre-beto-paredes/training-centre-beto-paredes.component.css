@@ -1,0 +1,816 @@
+/* Default Skin */
+
+.leftRightPortion {
+    display: flex;
+    justify-content: space-between
+}
+
+.mat-card-content {
+    flex-direction: row;
+    box-sizing: border-box;
+}
+
+.row {
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: top space-around;
+    align-items: flex-start;
+    -webkit-box-flex: 1;
+    flex: 1 1 100%;
+    max-width: 100%
+}
+
+.column {
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex
+}
+
+.column .rowinner {
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    flex: 1 1 100%;
+    margin-bottom: 10px
+}
+
+.column .rowinner:last-child {
+    margin-bottom: 0
+}
+
+.column .rowinner .mat-accordion {
+    width: 100%
+}
+
+.columnleft {
+    width: 70%
+}
+
+.submitbtn {
+    display: block;
+    min-width: 40px;
+    margin: 0;
+    background: #5c5f61;
+    color: #fff;
+    float: left;
+    margin-top: 16px
+}
+
+.pointer {
+    cursor: pointer
+}
+
+.leftside {
+    width: 67%;
+    margin-right: 3%
+}
+
+.rightside {
+    width: 30%
+}
+
+.class1 {
+    background-color: #8fef8d;
+    height: 100% !important;
+}
+
+.class2 {
+    background-color: red;
+    height: 100% !important;
+}
+
+.class3 {
+    background-color: #d67a56;
+    height: 100% !important;
+}
+
+.class4 {
+    background-color: #d3d3d5;
+    height: 100% !important;
+}
+
+.class5 {
+    background-color: #f5a216;
+    height: 100% !important;
+}
+
+.class6 {
+    background-color: #ff8f91;
+    height: 100% !important;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    flex-wrap: wrap
+}
+
+.wrapper .buttonsingle {
+    flex: 1;
+    margin: 5px;
+}
+
+/* .wrapper .childButton{width:100%;background:#1162ad;color:#fff;margin-bottom:10px;min-width:240px} */
+
+.trainingcentercls .rightside {
+    padding: 10px;
+    background-color: #e5e5e5
+}
+
+.trainingcentercls {
+    flex-direction: column;
+}
+
+.sublistwrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap
+}
+
+.trainingcentercls .mat-list .mat-list-item {
+    height: auto;
+    padding: 8px 0;
+    text-transform: capitalize;
+    font-size: 16px
+}
+
+.trainingcentercls .mat-list .mat-list-item.selectedclass:first-child {
+    margin-top: 0
+}
+
+.trainingcentercls .mat-list .mat-list-item.selectedclass {
+    background-color: #c4c4c4;
+    text-transform: uppercase;
+    padding: 8px 0;
+    font-size: 16px;
+    margin-top: 8px;
+    font-weight: 600
+}
+
+.trainingcentercls .mat-list.sublistone {
+    background-color: #d0d0d0;
+    text-transform: capitalize;
+    padding: 10px
+}
+
+.trainingcentercls .matprogressbar br {
+    display: none
+}
+
+.trainingcentercls .mat-list {
+    position: relative;
+    padding-top: 0
+}
+
+.trainingcentercls .mat-list.sublist {
+    margin-bottom: 8px
+}
+
+.trainingcentercls .progresspercentage {
+    font-size: 14px;
+    font-weight: 400;
+    position: absolute;
+    right: 0px;
+    bottom: 10px
+}
+
+.trainingcentercls .trainingheadercls {
+    margin: 0;
+    padding: 0;
+    margin-bottom: 10px;
+    position: relative
+}
+
+.trainingcentercls .trainingheadercls h2 {
+    margin: 0;
+    font-size: 16px;
+    text-transform: uppercase;
+    width: 90%;
+    line-height: 28px;
+    margin-bottom: 0
+}
+
+.trainingcentercls .trainingheadercls h3 {
+    margin: 0;
+    position: absolute;
+    right: 4px;
+    bottom: 8px
+}
+
+.mat-card:not([class*=mat-elevation-z]) {
+    box-shadow: none!important
+}
+
+.rowinner .mat-expansion-panel:not([class*=mat-elevation-z]) {
+    box-shadow: none!important;
+    background-color: #e5e5e5
+}
+
+.rowinner {
+    margin-top: 10px;
+    display: inline-block;
+    width: 100%
+}
+
+.rowinner:first-child {
+    margin-top: 0
+}
+
+.rowinner .mat-expansion-panel-header {
+    padding: 10px 24px;
+    height: auto!important;
+    background-color: #c4c4c4;
+    margin-bottom: 16px
+}
+
+.paragraphcls img {
+    width: 100%
+}
+
+.imgwrappercls {
+    display: block
+}
+
+.imgwrappercls img, .paragraphwrapper p p img, .paragraphwrapper p img {
+    width: 100%;
+    height: auto;
+    margin-top: 0
+}
+
+.imgwrappercls img.mat-card-image {
+    margin: 0
+}
+
+.mat-expansion-panel-body {
+    padding: 16px 24px
+}
+
+:host ::ng-deep .paragraphcls {
+    display: block;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word
+}
+
+:host ::ng-deep .paragraphcls img {
+    margin: 0 auto;
+    width: 100%;
+    max-height: 100%;
+    max-width: 100%;
+    height: auto;
+}
+
+.videoWrapper {
+    position: relative;
+    padding-bottom: 10px;
+    height: auto
+}
+
+/* .videoWrapper iframe,.videoWrapper video,.videoWrapper object{position:absolute;top:0;left:0;width:100%;height:100%} */
+
+.audioWrapper {
+    margin: 0;
+    padding: 0;
+}
+
+.audioWrapper audio {
+    width: 100%
+}
+
+.trainingheadercls {
+    text-transform: capitalize;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 10px;
+    border: 1px solid #bcbdbf;
+}
+
+.trainingheadercls h2 {
+    flex: 1;
+    margin: 0;
+}
+
+.trainingheadercls .mat-progress-bar {
+    flex: 1;
+    margin: 0;
+}
+
+.modalclslibrary h1.mat-dialog-title {
+    margin: 0;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.modalclslibrary h3 {
+    margin: 0;
+    text-transform: capitalize;
+    margin-bottom: 5px;
+}
+
+.modalclslibrary .mat-dialog-content {
+    margin-top: 5px;
+}
+
+.modalclslibrary button, .modalclslibrary button.childButton {
+    margin-right: 5px;
+    background: #5c5f61;
+    color: #fff;
+    margin-top: 5px;
+    width: 100%;
+}
+
+.modalclslibrary .matcheckboxcls {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.videocls {
+    margin-right: 38px;
+}
+
+.videocls p {
+    background-color: cyan;
+    height: 20px;
+    padding: 7px;
+    font-size: large;
+    margin-top: -4px;
+    height: auto;
+}
+
+.video_iconcls {
+    height: 107px;
+    width: 107px;
+    position: absolute;
+    bottom: 189px;
+    display: block;
+    margin-left: 180px !important;
+    cursor: pointer;
+    align-items: center;
+}
+
+/* Skin Theme 2 */
+
+.trainingcenterclsnew {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding-top: 0;
+}
+
+.trainingcenterclsnew .trainingCategoryList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    height: auto;
+}
+
+.trainingcenterclsnew .trainingCategoryList:nth-child(3n) {
+    margin-right: 0!important
+}
+
+.trainingcenterclsnew .trainingCategoryList .selectedclass {
+    height: 100%;
+    padding: 6px 5px;
+    box-sizing: border-box;
+    margin: 10px 10px 0 0;
+    width: calc(1/3*100% - (1 - 1/3)*10px);
+}
+
+.trainingcenterclsnew .trainingCategoryList .selectedclass .progressbarcls {
+    flex: 1 1 100%
+}
+
+.countcls {
+    flex: 1 1 100%;
+    display: flex;
+    cursor: pointer;
+}
+
+.trainingcenterclsnew .trainingCategoryList .selectedclass .categoryname {
+    flex: 1 1 100%;
+    padding: 10px
+}
+
+.trainingcenterclsnew .trainingCategoryList .selectedclass .mat-list-item-content {
+    padding: 0;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    flex-direction: row
+}
+
+.trainingcenterclsnew .lessondatadiv {
+    padding: 10px;
+    border: 1px solid #bcbdbf;
+    height: auto;
+}
+
+.trainingcenterclsnew .paragraphwrapper .paragraphcls h1 {
+    margin: 0;
+    padding: 0;
+}
+
+.trainingcenterclsnew .paragraphwrapper .paragraphcls h2 {
+    margin: 0;
+    padding: 0;
+}
+
+.trainingcenterclsnew .paragraphwrapper .paragraphcls p {
+    margin: 5px 0;
+    padding: 0;
+}
+
+.trainingcenterclsupdate {
+    margin-top: 20px;
+}
+
+.trainingcenterclsupdate .rowinner {
+    padding: 5px;
+    display: inherit;
+    width: inherit;
+    background-color: #dfdfdf;
+    margin-top: 3px;
+    cursor: pointer;
+    margin: 5px 0px 5px 0px;
+    display: flex;
+}
+
+.lessondatadiv {
+    margin: 20px 0;
+    border: 1px solid #bcbdbf;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.lessondatadiv .lessondatabuttoncls {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.lessondatadiv .lessondatabuttoncls .submitbtn {
+    margin-top: 0;
+}
+
+.video_arraycls {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.trainingcenterclsnew .mentortitle {
+    display: block;
+    padding: 5px;
+    background-color: cyan;
+    text-transform: uppercase;
+}
+
+.banner1cls {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: #d4d0d0;
+    border-radius: 0;
+    margin-top: 20px;
+}
+
+.banner1cls .submitbtngroup {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.banner1cls .submitbtngroup .submitbtn {
+    margin-right: 10px;
+}
+
+.lessontitlecls {
+    margin-top: 10px;
+}
+
+.banner1cls .mat-card-content, .banner2cls {
+    background: #1095e7;
+    border-radius: 8px;
+    padding: 25px;
+}
+
+.bannercls {
+    padding: 5px;
+    margin: 0 0 10px;
+    font-size: large;
+}
+
+/* .active > .class1{background-color: #bcbce6 !important;}
+.active > .class2{background-color: #bcbce6 !important;}
+.active > .class3{background-color: #bcbce6 !important;}
+.active > .class4{background-color: #bcbce6 !important;}
+.active > .class5{background-color: #bcbce6 !important;}
+.active > .class6{background-color: #bcbce6 !important;} */
+
+.active1 {
+    background-color: rgb(136, 95, 148) !important
+}
+
+.classnotdone {
+    background-color: rgb(240, 116, 102);
+}
+
+.classongoing {
+    background-color: rgb(48, 62, 187);
+}
+
+.classdone {
+    background-color: rgb(59, 182, 89);
+}
+
+/* .active > .class1{background-color: #34343a !important;} */
+
+.classlessonnotdone {
+    background-color: rgb(240, 116, 102);
+    width: 100%;
+    text-align: left;
+    padding: 6px;
+    text-transform: capitalize;
+}
+
+.classlessonongoing {
+    background-color: rgb(48, 62, 187);
+    width: 100%;
+    text-align: left;
+    padding: 6px;
+    text-transform: capitalize;
+}
+
+.classlessondone {
+    background-color: rgb(59, 182, 89);
+    width: 100%;
+    text-align: left;
+    padding: 6px;
+    text-transform: capitalize;
+}
+
+.trainingCategoryList .itemnamecls {
+    display: block !important;
+    width: 100%;
+}
+
+.mentortitle {
+    display: block;
+    padding: 5px;
+    background-color: cyan;
+    text-transform: uppercase;
+}
+
+.lessontitleclass, .lessoncontent {
+    display: none;
+}
+
+.lessontitleclass_0, .lessoncontent0 {
+    display: block;
+}
+
+.btncancelcls {
+    position: absolute;
+    right: -20px;
+    top: -17px;
+    padding: 4px;
+    background: #0eadff!important;
+    line-height: inherit;
+    min-width: inherit;
+    border-radius: 100px;
+    outline: none;
+}
+
+.lowerlessoncls {
+    padding: 5px;
+    display: inherit;
+    width: inherit;
+    background-color: #dfdfdf;
+    margin-top: 3px;
+    cursor: pointer;
+    margin: 5px 0px 5px 0px;
+}
+
+.example-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+}
+
+.example-radio-button {
+    margin: 5px;
+}
+
+.Audio_arraycls {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.Audiocls {
+    margin-right: 38px;
+}
+
+.Audiocls p {
+    background-color: cyan;
+    height: 20px;
+    padding: 7px;
+    font-size: large;
+    margin-top: -4px;
+    height: auto;
+}
+
+.File_arraycls {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.Filecls {
+    margin-right: 38px;
+}
+
+.Filecls p {
+    background-color: cyan;
+    height: 20px;
+    padding: 7px;
+    font-size: large;
+    margin-top: -4px;
+    height: auto;
+}
+
+.training_mainwrappercon {
+    margin: 5px 0;
+    position: relative;
+}
+
+.training_mainwrappercon .mat-card-image {
+    width: 100%;
+    margin: 0px!important;
+}
+
+.videomainwrapper {
+    width: 100%;
+    background: #000;
+    position: relative;
+}
+
+.videomainwrapper .videoimg {
+    width: 100%;
+    opacity: 0.5;
+}
+
+.videoplayimg {
+    position: absolute;
+    width: 20%;
+    left: 40%;
+    top: 40%;
+}
+
+.lessondatadiv .mat-card-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.lessondatadiv .mat-card-content .trainingcentercls_newcls {
+    width: 49%;
+    display: block;
+}
+
+.lessondatadiv .mat-card-content .trainingcentercls_newcls:first-of-type {
+    width: 100%;
+}
+
+.readmore {
+    cursor: pointer;
+}
+
+.content_div_cls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.content_div_cls .training_mainwrappercon {
+    width: 49%;
+}
+
+.audioprogresscls {
+    display: none;
+}
+
+.audioprocls {
+    margin-bottom: 3px;
+    cursor: pointer;
+}
+
+.mandetorycls {
+    color: rgb(180, 62, 62);
+}
+
+.skip_cls {
+    height: 37px;
+    margin-right: 5px;
+    cursor: pointer
+}
+
+.audiocontrolcls {
+    font-size: 35px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.audioseccls {
+    background-size: 100%;
+    height: 287px;
+}
+
+.audioseccls_slider {
+    background-color: #8fef8d;
+}
+
+/* .audioseccls_timer{
+    padding: 8px !important;
+} */
+
+mat-slider {
+    width: 436px;
+}
+
+/* .mat-accent .mat-slider-thumb {
+    background-color: #d67a56!important;
+} */
+
+.mat-slider-thumb {
+    border-color: rgba(0, 0, 0, .26);
+    background: none!important;
+}
+
+.audiodescendtime {
+    bottom: 0px;
+    right: 78px;
+    columns: #000000;
+}
+
+.audiotitle_STARTtime {
+    /* top: 29px; */
+    left: 87px;
+    bottom: 0;
+    columns: #000000;
+}
+
+.audiocntrlbtn_card {
+    background: none!important;
+}
+
+.audiocntrlbtn {
+    display: flex;
+    padding: 8px;
+}
+
+.audiocntrlbtn p {
+    margin-right: 5px;
+}
+
+.File_descriptioncls {
+    cursor: pointer;
+}
+
+.image_filetype {
+    cursor: pointer;
+}
+
+.filetype_pptx {
+    cursor: pointer;
+}
+
+.filetype_ppt {
+    cursor: pointer;
+}
+
+.filetype_docx {
+    cursor: pointer;
+}
+.filetype_doc{
+    cursor: pointer;
+}
+.donetikcls{
+    width: 100%;
+}
+.doneimgcls{
+    width: 28px;
+    margin: -9px;
+    left: 419px;
+    position: absolute;
+}

@@ -215,7 +215,7 @@ export class TrainingCenterDnaComponent implements OnInit {
     }
     // console.log(this.trainingCategoryList, 'trainingCategoryList')
     this.orders_button = true;
-    this.preview_button = true;
+    this.preview_button = true;Input
     this.schedule_button = false;
     this.next_button_access = false;
     this.quizflag = false;

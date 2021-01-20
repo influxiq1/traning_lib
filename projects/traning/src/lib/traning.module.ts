@@ -35,6 +35,7 @@ import { ListQuizComponent } from './manage-quiz/list-quiz/list-quiz.component';
 import { AddEditQuizComponent } from './manage-quiz/add-edit-quiz/add-edit-quiz.component';
 import { AudioServiceService } from './audio-service.service';
 import {  DetailsPipe } from './pipe/details.pipe';
+import { TrainingCentreBetoParedesComponent } from './training-centre-beto-paredes/training-centre-beto-paredes.component';
 
 
 
@@ -71,7 +72,8 @@ import {  DetailsPipe } from './pipe/details.pipe';
     AddAudioVideoFileDialogComponent,
     AudioVideoFileDialogComponent,
     PreviewContentDialog,
-    DetailsPipe
+    DetailsPipe,
+    TrainingCentreBetoParedesComponent
   ],
   imports: [
     HttpClientModule,
@@ -88,7 +90,7 @@ import {  DetailsPipe } from './pipe/details.pipe';
     CKEditorModule,
     NgxYoutubePlayerModule.forRoot()
   ],
-  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest,TrainingreportComponent,CategoryWiseReportComponent,TrainingCenterDnaComponent,LessonPlanMaterialComponent,ListQuizComponent,AddEditQuizComponent
+  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest,TrainingreportComponent,CategoryWiseReportComponent,TrainingCenterDnaComponent,LessonPlanMaterialComponent,ListQuizComponent,AddEditQuizComponent,TrainingCentreBetoParedesComponent
   ],
   
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],

@@ -20,8 +20,11 @@ import { TrainingCenterDnaComponent } from './training-center-dna/training-cente
 import { LessonPlanMaterialComponent } from './lesson-plan-material/lesson-plan-material.component';
 import { ListQuizComponent } from './manage-quiz/list-quiz/list-quiz.component';
 import { AddEditQuizComponent } from './manage-quiz/add-edit-quiz/add-edit-quiz.component';
+import { TrainingCentreBetoParedesComponent } from './training-centre-beto-paredes/training-centre-beto-paredes.component';
 
 const appRoutes: Routes = [
+
+    //for dna
     {
         path: 'training-center-dna/:associated_training/:_id', component: TrainingCenterDnaComponent,
         resolve: { trainingdata: ResolveService },
@@ -29,6 +32,19 @@ const appRoutes: Routes = [
     },
     {
         path: 'training-center-dna/:associated_training', component: TrainingCenterDnaComponent,
+        resolve: { trainingdata: ResolveService },
+        data: { requestcondition: { source: '', condition: {} }, endpoint: 'gettrainingcenterlist' }
+    },
+
+// for beto paredes
+
+    {
+        path: 'training-center-beto-paredes/:associated_training/:_id', component: TrainingCentreBetoParedesComponent,
+        resolve: { trainingdata: ResolveService },
+        data: { requestcondition: { source: '', condition: {} }, endpoint: 'gettrainingcenterlist' }
+    },
+    {
+        path: 'training-center-beto-paredes/:associated_training', component: TrainingCentreBetoParedesComponent,
         resolve: { trainingdata: ResolveService },
         data: { requestcondition: { source: '', condition: {} }, endpoint: 'gettrainingcenterlist' }
     },
