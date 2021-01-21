@@ -70,7 +70,7 @@ export class TraningComponent implements OnInit {
   public editorconfig: any = {};
   public uploadConfigData: any = '';
   public cancelBtnRoute: any;
-  public htmType: any;
+  public htmType: any = '';
   public title: any;
   public description: any;
   public images_array: any = [];
@@ -343,7 +343,9 @@ export class TraningComponent implements OnInit {
       }
       console.log(this.dnaFlag, 'dnaFlag+++++++++++++++gvhbkjnlk')
 
-      if (this.route.snapshot.url[0].path == "manage-lesson") {
+      // if (this.route.snapshot.url[0].path == "manage-lesson" ) {
+
+      if (this.htmType != null && this.htmType != '') {
         data.data['typeHtml'] = this.htmType;
       }
 
@@ -807,7 +809,10 @@ export class TraningComponent implements OnInit {
             let fileserverName: any;
             this.fileArray = res.res[0].fileType;
             // console.log("dingle data", res.res[0]);
-            this.htmType = res.res[0].typeHtml;
+            if (res.res[0].typeHtml != null && res.res[0].typeHtml != '') {
+
+              this.htmType = res.res[0].typeHtml;
+            }
             // this.hasLessonVal=res.res[0].has_lessonplan;
             this.chkboxval = res.res[0].has_lessonplan;
 

@@ -35,7 +35,7 @@ import { ListQuizComponent } from './manage-quiz/list-quiz/list-quiz.component';
 import { AddEditQuizComponent } from './manage-quiz/add-edit-quiz/add-edit-quiz.component';
 import { AudioServiceService } from './audio-service.service';
 import {  DetailsPipe } from './pipe/details.pipe';
-import { TrainingCentreBetoParedesComponent } from './training-centre-beto-paredes/training-centre-beto-paredes.component';
+import { TrainingCentreBetoParedesComponent ,PreviewContentDialogBeto} from './training-centre-beto-paredes/training-centre-beto-paredes.component';
 
 
 
@@ -73,7 +73,8 @@ import { TrainingCentreBetoParedesComponent } from './training-centre-beto-pared
     AudioVideoFileDialogComponent,
     PreviewContentDialog,
     DetailsPipe,
-    TrainingCentreBetoParedesComponent
+    TrainingCentreBetoParedesComponent,
+    PreviewContentDialogBeto
   ],
   imports: [
     HttpClientModule,
@@ -95,6 +96,6 @@ import { TrainingCentreBetoParedesComponent } from './training-centre-beto-pared
   
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [CookieService, ApiService,DatePipe,AudioServiceService],
-  entryComponents:[DialogBoxComponent,Dialogtest,PurchaseModalComponent,ReviewLessonPlanComponent,ScheduleModalComponent,questionDataModalComponent,UnlockLessonModalComponent,videoDialogComponent,LessonVideoModalComponent,LessonQuizModalComponent,AddAudioVideoFileDialogComponent,AudioVideoFileDialogComponent,PreviewContentDialog,]
+  entryComponents:[DialogBoxComponent,Dialogtest,PurchaseModalComponent,ReviewLessonPlanComponent,ScheduleModalComponent,questionDataModalComponent,UnlockLessonModalComponent,videoDialogComponent,LessonVideoModalComponent,LessonQuizModalComponent,AddAudioVideoFileDialogComponent,AudioVideoFileDialogComponent,PreviewContentDialog,PreviewContentDialogBeto]
 })
 export class TraningModule { }

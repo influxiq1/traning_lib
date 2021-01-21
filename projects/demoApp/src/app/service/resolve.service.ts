@@ -63,8 +63,18 @@ export class ResolveService implements Resolve<any> {
       // requestData.condition['type'] = "admin";
     }
 
+    
+
 
     if (route.url[0].path == "training-center-dna") {
+      requestData.condition['associated_training'] = route.params.associated_training;
+      requestData['user_id'] = this.userId;
+      requestData['type'] = this.userType;
+      //    requestData['type'] = "mentor";
+      requestData['associated_training'] = route.params.associated_training;
+
+    }
+    if (route.url[0].path == "training-center-beto-paredes") {
       requestData.condition['associated_training'] = route.params.associated_training;
       requestData['user_id'] = this.userId;
       requestData['type'] = this.userType;

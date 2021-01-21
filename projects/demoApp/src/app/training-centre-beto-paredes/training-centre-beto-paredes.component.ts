@@ -20,7 +20,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     "answerSourceName":"quiz_answer"
   };
   public serverDetails: any = {
-    "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/",
+    "serverUrl": "https://e4bmztjfw8.execute-api.us-east-1.amazonaws.com/dev/api1/",
     "jwttoken": ""
   };
   public trainingcatParamid=this.activatedRoute.snapshot.params.associated_training;
@@ -31,7 +31,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     "source":'manage_lession_view',
     "markedSourceName":"done_training_lesson",
     "endpoint": "addorupdatedata",
-    "addMarkendpoint":"addmarkdata",
+    "addMarkendpoint":"addmarkeddata",
     "showEndpoint":"getquestionanswerlistbylessonid",
     "formTitleName": 'Training Center',
     "getUpdatedTrainingPercentageByUserEndpoint":"getupdatedtrainingpercentagebyuserid",
@@ -52,6 +52,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.data.forEach(data => {
+      console.log(data,'data')
       this.trainingName = data.trainingdata.trainingname;  
       console.log(data,"gettrainingcenterlist data",this.trainingName);
       let result: any;

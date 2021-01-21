@@ -572,12 +572,12 @@
 }
 
 .lessontitleclass, .lessoncontent {
-    display: none;
+    /* display: none; */
 }
 
-.lessontitleclass_0, .lessoncontent0 {
+/* .lessontitleclass_0, .lessoncontent0 {
     display: block;
-}
+} */
 
 .btncancelcls {
     position: absolute;

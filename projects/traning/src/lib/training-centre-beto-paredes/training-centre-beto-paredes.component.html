@@ -1,132 +1,196 @@
 <mat-card>
-    <span fxLayout="column" class="column" class="rightside">
-        <!-- <div class="trainingheadercls">
+  <span fxLayout="column" class="column" class="rightside">
+    <div class="trainingheadercls">
             <h2>You Have Completed {{ dividend }}/{{divisor}} Lessons</h2>
-            <mat-progress-bar *ngIf="percentageprogressLoader" mode="determinate" value="{{ reportPercentage }}">
+            <mat-progress-bar *ngIf="percentageprogressLoader" mode="determinate" value=" reportPercentage ">
             </mat-progress-bar>
             <h3>{{ reportPercentage }}%</h3>
-        </div> -->
+        </div>
 
-        <mat-list class="trainingcentercls trainingcenterclsnew">
-            <mat-list-item class="trainingCategoryList">
-                <div class="selectedclass" *ngFor="let item of trainingCategoryData;let
+    <mat-list class="trainingcentercls trainingcenterclsnew">
+      <mat-list-item class="trainingCategoryList">
+        <div class="selectedclass" *ngFor="let item of trainingCategoryData;let
                 i= index">
-                    <!-- {{item|json}} -->
-                    <!-- <mat-list-item>{{item.catagory_name}}</mat-list-item> -->
-                    <mat-list-item (click)="clicktrcataining(item._id,item.catagory_name)" [ngClass]="paramsTrainingId == item._id ? 'classongoing':
+          <!-- {{item|json}} -->
+          <!-- <mat-list-item>{{item.catagory_name}}</mat-list-item> -->
+          <mat-list-item (click)="clicktrcataining(item._id,item.catagory_name)" [ngClass]="paramsTrainingId == item._id ? 'classongoing':
                   ( item.percentage >= 100 ? 'classdone' : 'classnotdone')">
-                        <div class="categoryname">
-                            {{item.catagory_name}}
-                            <span class="countcls">
-                                (0/{{item.count}})
-                            </span>
-
-                        </div>
-                        <!-- <div class="progressbarcls">
-      
-                    <mat-progress-bar *ngIf="percentageprogressLoader" mode="determinate"
-                      value="{{((item.done/item.count)*100) }}">
-                    </mat-progress-bar>
-                    <span class="progresspercentage">{{((item.done/parentcount[i]))|
-                      percent }}
-                    </span>
-      
-                  </div> -->
-                    </mat-list-item>
-                    <br>
-
-                </div>
-            </mat-list-item>
-        </mat-list>
-
-        <mat-progress-bar mode="indeterminate" *ngIf="progress_bar == 1"></mat-progress-bar>
-        <mat-card-content class="trainingcentercls trainingcenterclsupdate">
-            <mat-card-title class="mentortitle" id="lessonData">{{training_cat_name}}</mat-card-title>
-            <div (click)="nochildclick(item,'click')" fxLayout="row" class="rowinner" *ngFor="let item of trainingLessonData
-          ; let i=index;">
-
-                <div   [ngClass]="paramslessonId == item._id
-            ? 'classlessonongoing':
-            ( item.is_done == true ? 'classlessondone' : 'classlessonnotdone')">{{item.lession_title}}1
-                    <!-- <span>{{item | json}}</span> -->
-                </div>
+            <div class="categoryname">
+              {{item.catagory_name}}
+              <span class="countcls">
+                ({{done_lesson}}/{{item.count}})
+              </span>
 
             </div>
-        </mat-card-content>
+            <div class="progressbarcls">
 
-        <div class="lessondatadiv">
-            <span class="lessondatabuttoncls" id="lessonContentData">
-              <div class="btnclsprev">
-                <ng-container class="prevbtn" >
-                  <button mat-button type="button" class="submitbtn" color="primary" (click)="nextbutton('prev')">
-                    <mat-icon>keyboard_arrow_left</mat-icon> Previous
-                  </button>
-                </ng-container>
-              </div>
-              <!-- *ngIf="lastIndex != Index" -->
-              <!-- next_button_access
+              <mat-progress-bar *ngIf="percentageprogressLoader" mode="determinate"
+                value="{{((item.done/item.count)*100) }}">
+              </mat-progress-bar>
+              <span class="progresspercentage">{{((done_lesson/item.count))|
+                percent }}
+              </span>
+
+            </div>
+          </mat-list-item>
+          <br>
+
+        </div>
+      </mat-list-item>
+    </mat-list>
+
+    <mat-progress-bar mode="indeterminate" *ngIf="progress_bar == 1"></mat-progress-bar>
+    <mat-card-content class="trainingcentercls trainingcenterclsupdate">
+      <mat-card-title class="mentortitle" id="lessonData">{{training_cat_name}}</mat-card-title>
+      <div (click)="nochildclick(item,'click')" fxLayout="row" class="rowinner" *ngFor="let item of trainingLessonData
+          ; let i=index;">
+
+        <div [ngClass]="paramslessonId == item._id
+            ? 'classlessonongoing':
+            (is_done[item._id] == true ? 'classlessondone' : 'classlessonnotdone')">{{item.lession_title}}
+          <!-- <span>{{item | json}}</span> -->
+        </div>
+
+      </div>
+    </mat-card-content>
+
+    <div class="lessondatadiv">
+      <span class="lessondatabuttoncls" id="lessonContentData">
+        <div class="btnclsprev">
+          <ng-container class="prevbtn">
+            <button mat-button type="button" class="submitbtn" color="primary" (click)="nextbutton('prev')">
+              <mat-icon>keyboard_arrow_left</mat-icon> Previous
+            </button>
+          </ng-container>
+        </div>
+        <!-- *ngIf="lastIndex != Index" -->
+        <!-- next_button_access
               
               {{ next_button_access }}\\quizflag{{quizflag}} -->
-              <div class="btnclsnext" >
-                <ng-container class="nextbtn">
-                  <button mat-button type="button" class="submitbtn" color="primary" (click)="nextbutton('next')">Next
-                    <mat-icon>keyboard_arrow_right</mat-icon>
-                  </button>
-                </ng-container>
+        <div class="btnclsnext">
+          <ng-container class="nextbtn">
+            <button mat-button type="button" class="submitbtn" color="primary" (click)="nextbutton('next')">Next
+              <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+          </ng-container>
+        </div>
+      </span>
+
+
+      <mat-card-content>
+        <span fxLayout="row" class="trainingcentercls_newcls">
+
+          <ng-container *ngIf="lessonDataList!=null">
+            <div class="content_div_cls">
+              <!-- {{lessonContentData | json}} -->
+
+              <div class="lessoncontent">
+                <div class="paragraphwrapper">
+                  <p [innerHtml]="lessonContentData.typeHtml" class="paragraphcls"></p>
+                </div>
               </div>
-            </span>
+
+              <!-- file video audio content -->
+              <div *ngFor="let item of lessonContentData.lesson_attachements;let a=index"
+                class="training_mainwrappercon">
+                <div class="video_div afvmaindiv" *ngIf="item.type=='video' &&
+                item.type!=null && item.type!=undefined">
+                <div class="videomainwrapper">
+                  <img src="https://img.youtube.com/vi/{{item.video_url}}/0.jpg" class="videoimg">
+                  <img (click)="openLessonVideo(item)"
+                    src="https://awsbackend-dev-patient-files-test.s3.amazonaws.com/icon-videoplay.png"
+                    class="videoplayimg">
+
+                </div>
+                <p class="videotitlecls">{{item.video_title}}</p>
+                <p class="videoDescls"> {{item.video_description}} </p>
+                <span class="mandetorycls" *ngIf="item.video_skippable!=true">*This is a mandetory video to
+                  complete this lession
+                  <span  class="donetikcls">
+                    <img class="doneimgcls"
+                      src="https://all-frontend-assets.s3.amazonaws.com/dna-frontend-new/assets/images/Trainninglibary_right_icon.jpg"
+                      alt="">
+                  </span>
+                </span>
+              </div>
+              </div>
+
+            </div>
+
+          </ng-container>
+        </span>
+      </mat-card-content>
+
+
+      <span class="lessondatabuttoncls">
+        <div class="btnclsprev">
+          <ng-container class="prevbtn">
+            <button mat-button type="button" class="submitbtn" color="primary" (click)="nextbutton('prev')">
+              <mat-icon>keyboard_arrow_left</mat-icon> Previous
+            </button>
+          </ng-container>
+        </div>
+        <!-- *ngIf="lastIndex != Index" -->
+        <div class="btnclsnext">
+          <ng-container class="nextbtn">
+            <button mat-button type="button" class="submitbtn" color="primary" (click)="nextbutton('next')">Next
+              <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+          </ng-container>
+        </div>
+      </span>
+
+    </div>
+
+
+
+    <mat-card-content class="trainingcentercls trainingcenterclsupdate">
+      <!-- start content for lesson data -->
+      <div (click)="nochildclick(item,'click')" fxLayout="row" class="rowinner" *ngFor="let item of trainingLessonData
+              ; let i=index;">
+
+        <div [ngClass]="paramslessonId == item._id
+                ? 'classlessonongoing':
+                ( item.is_done == true ? 'classlessondone' : 'classlessonnotdone')">{{item.lession_title}}
+          <!-- <span>{{item  | json}}</span> -->
+
 
         </div>
 
 
-      
-        <mat-card-content class="trainingcentercls trainingcenterclsupdate">
-            <!-- start content for lesson data -->
-            <div (click)="nochildclick(item,'click')" fxLayout="row" class="rowinner" *ngFor="let item of trainingLessonData
-              ; let i=index;">
+      </div>
+    </mat-card-content>
 
-                <div  [ngClass]="paramslessonId == item._id
-                ? 'classlessonongoing':
-                ( item.is_done == true ? 'classlessondone' : 'classlessonnotdone')">{{item.lession_title}}
-                    <!-- <span>{{item  | json}}</span> -->
-
-
-                </div>
-
-
-            </div>
-        </mat-card-content>
-
-        <mat-list class="trainingcentercls trainingcenterclsnew">
-            <mat-list-item class="trainingCategoryList">
-                <div class="selectedclass" *ngFor="let item of trainingCategoryData;let
+    <mat-list class="trainingcentercls trainingcenterclsnew">
+      <mat-list-item class="trainingCategoryList">
+        <div class="selectedclass" *ngFor="let item of trainingCategoryData;let
                 i= index" (click)="activatedclass(item)">
-                    <!-- <mat-list-item>{{item.catagory_name}}</mat-list-item> -->
-                    <!-- parent section -->
-                    <mat-list-item [ngClass]="paramsTrainingId == item._id ?
+          <!-- <mat-list-item>{{item.catagory_name}}</mat-list-item> -->
+          <!-- parent section -->
+          <mat-list-item [ngClass]="paramsTrainingId == item._id ?
                   'classongoing':
                   ( item.percentage >=100 ? 'classdone' : 'classnotdone')" *ngIf="item.childcat.length==0"
-                        (click)="clicktrcataining(item._id,item.catagory_name)">
-                        <div class="categoryname">
-                            {{item.catagory_name}}
-                            <span class="countcls">
-                                (0/{{item.count}})
-                            </span>
-                        </div>
+            (click)="clicktrcataining(item._id,item.catagory_name)">
+            <div class="categoryname">
+              {{item.catagory_name}}
+              <span class="countcls">
+                (0/{{item.count}})
+              </span>
+            </div>
 
 
-                        <div class="progressbarcls">
-                            <!-- <mat-progress-bar *ngIf="percentageprogressLoader" mode="determinate"
+            <div class="progressbarcls">
+              <!-- <mat-progress-bar *ngIf="percentageprogressLoader" mode="determinate"
                                 value="{{((item.done/item.count)*100) }}">
                             </mat-progress-bar> -->
-                            <span class="progresspercentage">{{(item.done/item.count)| percent
-                                }}
-                            </span>
-                        </div>
-                    </mat-list-item>
-                </div>
-            </mat-list-item>
-        </mat-list>
-    </span>
+              <span class="progresspercentage">{{(item.done/item.count)| percent
+                }}
+              </span>
+            </div>
+          </mat-list-item>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </span>
 
 </mat-card>
