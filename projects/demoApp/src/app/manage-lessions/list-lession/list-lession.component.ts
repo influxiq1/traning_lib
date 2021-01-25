@@ -87,37 +87,38 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./list-lession.component.css']
 })
 export class ListLessionComponent implements OnInit {
-  public manageLessonList : any=[];
-  public isitdna:any=false;
-  public manageTrainingList : any = [];
-  public editPageRoute : any="/manage-lesson/edit/";
-  public addPageRoute : any="/manage-lesson/add";
-  public manageQuizRoute:any="/manage-quiz/list/";
-  public QuizPageRoute:any='/quiz/list/';
+  public manageLessonList: any = [];
+  // public isitdna:any=false;
+  public isitBetoparedes = true;
+  public manageTrainingList: any = [];
+  public editPageRoute: any = "/manage-lesson/edit/";
+  public addPageRoute: any = "/manage-lesson/add";
+  public manageQuizRoute: any = "/manage-quiz/list/";
+  public QuizPageRoute: any = '/quiz/list/';
   public bucket_url: any = {
     url: 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/'
-   };
-   public preview_url:any = 'https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/'
-   public preview_endpoint= 'api1/lesson-preview-data'
+  };
+  public preview_url: any = 'https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/'
+  public preview_endpoint = 'api1/lesson-preview-data'
   public serverDetails: any = {
     "serverUrl": 'https://e4bmztjfw8.execute-api.us-east-1.amazonaws.com/dev/',
     "jwttoken": ""
   };
   public formSource: any = {
-    "source":'manage_lession',
+    "source": 'manage_lession',
     "endpoint": "api1/lessondelete",
-    "deleteManyEndpoint":"api1/lessondelete",
-    "searchEndpoint":"api1/getlessondata",
-    "associatedTrainingSourceName":"training_category_management",
-    "statusUpdateEndpoint":"api1/lessonstatusupdate",
-    "statusUpdateManyEndpoint":"api1/lessonstatusupdate",
-    "statusUpdateSourceName":"manage_lession",
-    "trashDataSource":"manage_lession_view",
-    "retriveTrashDataEndpoint":"api1/lessonrestoredata",
-    "retriveTrashDataSourceName":"manage_lession",
-    "trainingCountEndpoint" : "api1/trainingcounts"
+    "deleteManyEndpoint": "api1/lessondelete",
+    "searchEndpoint": "api1/getlessondata",
+    "associatedTrainingSourceName": "training_category_management",
+    "statusUpdateEndpoint": "api1/lessonstatusupdate",
+    "statusUpdateManyEndpoint": "api1/lessonstatusupdate",
+    "statusUpdateSourceName": "manage_lession",
+    "trashDataSource": "manage_lession_view",
+    "retriveTrashDataEndpoint": "api1/lessonrestoredata",
+    "retriveTrashDataSourceName": "manage_lession",
+    "trainingCountEndpoint": "api1/trainingcounts"
   }
-  
+
   // public formSource: any = {
   //   source: 'manage_lession',
   //   endpoint: 'singledeletetrainingdata',
@@ -132,22 +133,22 @@ export class ListLessionComponent implements OnInit {
   //   retriveTrashDataSourceName: 'manage_lession',
   //   trainingCountEndpoint : 'trainingcounts'
   // };
-  public jwtToken:any;
-  public searchSourceName :any="manage_lession_view";
-    constructor(public activatedRoute : ActivatedRoute,public cookie:CookieService) { 
-      this.jwtToken = cookie.get('jwtToken');
-      this.serverDetails.jwttoken=this.jwtToken;
-    }
-  
-    ngOnInit() {
-      this.activatedRoute.data.forEach(data => {
-        console.log(data)
-        let result: any;
-        result = data.lessionData.res;
-        this.manageLessonList = result;      
-      })
-    }
-  
+  public jwtToken: any;
+  public searchSourceName: any = "manage_lession_view";
+  constructor(public activatedRoute: ActivatedRoute, public cookie: CookieService) {
+    this.jwtToken = cookie.get('jwtToken');
+    this.serverDetails.jwttoken = this.jwtToken;
+  }
+
+  ngOnInit() {
+    this.activatedRoute.data.forEach(data => {
+      console.log(data)
+      let result: any;
+      result = data.lessionData.res;
+      this.manageLessonList = result;
+    })
+  }
+
 
 }
 

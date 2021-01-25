@@ -81,6 +81,7 @@ export class TraningComponent implements OnInit {
   public audioVideoFlag: boolean = true;
   public hasLessonVal: any;
   public dnaFlag: any;
+  public betoparedesFlag: any;
   public lessonplanValue: any;
   public has_test_lesson: any = false;
   public video_array: any = [];
@@ -92,7 +93,6 @@ export class TraningComponent implements OnInit {
   public vid_desc: any = '';
   public lesson_attachment_flag_val: any;
   public test_percentage: any = 80;
-
   public imgflag: boolean = false;
   public type: any;
   public videoflag: boolean = false;
@@ -142,6 +142,11 @@ export class TraningComponent implements OnInit {
     console.log(val);
     this.dnaFlag = val;
   }
+  @Input()
+  set IsitBetoparedes(val: any) {
+    this.betoparedesFlag = val;
+  }
+
 
   @Input()
   set BuketUrl(BuketUrl: any) {
@@ -251,7 +256,7 @@ export class TraningComponent implements OnInit {
 
     if (this.lesson_attachment_flag_val == true) {
 
-      // console.log(this.video_array, "video_array", this.videoflag);
+      console.log(this.video_array, "video_array", this.videoflag);
       // console.log(this.audio_array, "audioarray", this.audioflag);
       // console.log(this.file_array, "filearray", this.fileflag);
 
@@ -340,6 +345,16 @@ export class TraningComponent implements OnInit {
         } else {
           data.data['has_test_lesson'] = 0;
         }
+      }
+      // for betoparedes backend quiz 
+      if (this.betoparedesFlag == true) {
+        if (this.has_test_lesson == true) {
+          data.data['has_test_lesson'] = 1;
+          data.data['test_percentage'] = this.test_percentage;
+        } else {
+          data.data['has_test_lesson'] = 0;
+        }
+
       }
       console.log(this.dnaFlag, 'dnaFlag+++++++++++++++gvhbkjnlk')
 
@@ -452,7 +467,7 @@ export class TraningComponent implements OnInit {
   }
 
   openTrainingType(val) {
-    console.log(val)
+    console.log(val, '++++++++++++++++')
     this.mediaTypeValue = val.selectname;
     // val.flagButton = true;
     // let index = 0;
@@ -800,7 +815,7 @@ export class TraningComponent implements OnInit {
       if (res.status == 'error') {
 
       } else {
-        // console.log("edited data", res);
+        console.log("edited data", res);
         if (this.route.snapshot.url[0].path == "manage-lesson") {
           if (this.route.snapshot.url[1].path == "edit") {
             this.getMediaTypeVal(res.res[0].associated_training, 'associated_training');

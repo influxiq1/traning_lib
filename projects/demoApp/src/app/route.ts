@@ -101,15 +101,15 @@ const appRoutes: Routes = [
     /**Quiz Management**/
 
     {
-        path: 'manage-quiz/list/:lesson_id_object', component: ManageQuizComponent,
+        path: 'manage-quiz/list/:lesson_id', component: ManageQuizComponent,
         resolve: { trainingdata: ResolveService },
-        data: { requestcondition: { source: 'manage_quiz_question', condition: {} }, endpoint: 'datalistwithouttoken' }
+        data: { requestcondition: { source: 'manage_quiz_question', condition: {} }, endpoint: 'getlessonquestiondata' }
     },
     {
         path: 'manage-quiz/add/:id', component: AddEditComponent
     },
     {
-        path: 'manage-quiz/edit/:_id/:lesson_id_object', component: AddEditComponent,
+        path: 'manage-quiz/edit/:_id/:lesson_id', component: AddEditComponent,
         resolve: { quizQuestionData: ResolveService },
         data: { requestcondition: { source: 'manage_quiz_question', condition: {} }, endpoint: 'datalistwithouttoken' }
     },
@@ -122,19 +122,19 @@ const appRoutes: Routes = [
 
     //new quiz section
     {
-        path: 'quiz/list/:lesson_id_object', component: ListQuizComponent,
+        path: 'quiz/list/:lesson_id', component: ListQuizComponent,
         resolve: { quizData: ResolveService },
-        data: { requestcondition: { source: 'manage_quiz', condition: {} }, endpoint: 'datalistwithouttoken' }
+        data: { requestcondition: { source: 'manage_quiz', condition: {} }, endpoint: 'getlessonquestiondata' }
+    },
+    // lesson_id_object for dna quiz  
+    {
+        path: 'quiz/add/:lesson_id', component: AddEditQuizComponent
     },
 
     {
-        path: 'quiz/add/:lesson_id_object', component: AddEditQuizComponent
-    },
-
-    {
-        path: 'quiz/edit/:_id/:lesson_id_object', component: AddEditQuizComponent,
+        path: 'quiz/edit/:_id/:lesson_id', component: AddEditQuizComponent,
         resolve: { quizData: ResolveService },
-        data: { requestcondition: { source: 'manage_quiz', condition: {} }, endpoint: 'datalistwithouttoken' }
+        data: { requestcondition: { source: 'manage_quiz', condition: {} }, endpoint: 'getlessonquestiondatabyid' }
     },
 
 
@@ -145,13 +145,13 @@ const appRoutes: Routes = [
     {
         path: 'quiz/edit-answer/:_id/:lessonid', component: AddUpdateAnswerComponent,
         resolve: { quizQuestionData: ResolveService },
-        data: { requestcondition: { source: 'quiz_answer', condition: {} }, endpoint: 'datalistwithouttoken' }
+        data: { requestcondition: { source: 'quiz_answer', condition: {} }, endpoint: 'addorupdatelessonanswer' }
     },
 
     {
         path: 'quiz/update-answer/:questionId/:lessonid', component: UpdateAnswerComponent,
         resolve: { quizQuestionData: ResolveService },
-        data: { requestcondition: { source: 'quiz_answer_view', condition: {} }, endpoint: 'getquizanswerdatabyquestionid' }
+        data: { requestcondition: { source: 'quiz_answer_view', condition: {} }, endpoint: 'getlessonanswerdata' }
     },
 
 

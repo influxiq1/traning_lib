@@ -12,12 +12,13 @@ public paramsId:any;
 public lessonId:any;
 public listingPageRoute:any="/quiz/list/";
 public serverDetails: any = {
-  "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/",
+  // "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/",
+  "serverUrl": 'https://e4bmztjfw8.execute-api.us-east-1.amazonaws.com/dev/api1/',
   "jwttoken": ""
 };
 public formSource: any = {
   "source":'quiz_answer',
-  "endpoint": "addorupdatedata",
+  "endpoint": "addorupdatelessonanswer",
   "showEndpoint":"datalist",
   "AddheaderText": "Add Training",
   "EditheaderText": "Edit Training",

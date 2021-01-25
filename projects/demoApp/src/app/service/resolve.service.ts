@@ -70,7 +70,7 @@ export class ResolveService implements Resolve<any> {
       requestData.condition['associated_training'] = route.params.associated_training;
       requestData['user_id'] = this.userId;
       requestData['type'] = this.userType;
-      //    requestData['type'] = "mentor";
+        //  requestData['type'] = "mentor";
       requestData['associated_training'] = route.params.associated_training;
 
     }
@@ -78,7 +78,6 @@ export class ResolveService implements Resolve<any> {
       requestData.condition['associated_training'] = route.params.associated_training;
       requestData['user_id'] = this.userId;
       requestData['type'] = this.userType;
-      //    requestData['type'] = "mentor";
       requestData['associated_training'] = route.params.associated_training;
 
     }

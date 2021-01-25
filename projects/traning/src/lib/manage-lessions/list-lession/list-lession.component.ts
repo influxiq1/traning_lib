@@ -77,6 +77,7 @@ export class ListLessionComponent implements OnInit {
   public allTrashData: any = [];
   public trashFlag: any = 0;
   public dnaFlag: any;
+  public betoparedesFlag: any;
   public bucket_url: any;
   public preview_endpoint: any;
   public trashButtonText: any = "View Trash";
@@ -111,8 +112,8 @@ export class ListLessionComponent implements OnInit {
     this.listingData = val;
     this.dataSource = new MatTableDataSource(this.listingData);
     console.log(
-      this.dataSource,'dataSource'
-      )
+      this.dataSource, 'dataSource'
+    )
 
   }
   @Input()
@@ -150,6 +151,13 @@ export class ListLessionComponent implements OnInit {
     this.dnaFlag = val;
     // console.log("dna flag",this.dnaFlag);  
   }
+  // for betoparedes flag 
+  @Input()
+  set IsItBetopredes(val: any) {
+    this.betoparedesFlag = val;
+
+  }
+
   @Input()
   set BuketUrl(val: any) {
     this.bucket_url = (val) || '<no name set>';
@@ -188,8 +196,8 @@ export class ListLessionComponent implements OnInit {
     this.getAllLessonData();
     if (this.dnaFlag == true) {
       this.displayedColumns.push('select', 'no', 'lession_title', 'description', 'associated_training', 'prerequisite_lession', 'has_lessonplan', 'lessonplan_value', 'has_test_lesson', 'test_percentage', 'status', 'deleteRecord');
-    } else {
-      this.displayedColumns.push('select', 'no', 'lession_title', 'description', 'associated_training', 'prerequisite_lession', 'status', 'deleteRecord');
+    } if (this.betoparedesFlag == true) {
+      this.displayedColumns.push('select', 'no', 'lession_title', 'description', 'associated_training', 'prerequisite_lession' ,'has_test_lesson','test_percentage', 'status', 'deleteRecord', );
     }
 
   }
@@ -301,6 +309,11 @@ export class ListLessionComponent implements OnInit {
         searchval["has_test_lesson"] = parseInt(this.searchjson.has_test_lesson);
       }
     }
+    if (this.betoparedesFlag == true) {
+      if (this.searchjson.has_test_lesson != null && this.searchjson.has_test_lesson != '') {
+        searchval["has_test_lesson"] = parseInt(this.searchjson.has_test_lesson);
+      }
+    }
 
 
     searchval["lession_title_search"] = { $regex: this.searchjson.lession_title_search_regex.toLowerCase() }
@@ -338,7 +351,7 @@ export class ListLessionComponent implements OnInit {
 
   //for go To Manage Quiz Page
   goToManageQuizPage(id: any) {
-    // console.log(id,this.quizPageRoute)
+    console.log(id,this.quizPageRoute)
     this.router.navigateByUrl(this.quizPageRoute + id);
   }
 
@@ -642,9 +655,10 @@ export class ListLessionComponent implements OnInit {
           lesson_id: data._id
         }
         this.apiService.postDatawithoutToken(link, cond).subscribe((response: any) => {
+          console.log(response,'response')
           // let result: any;
           if (response.status = 'success') {
-            this.previewData = response.results;
+            this.previewData = response.res;
             console.log(this.previewData, 'response')
             const dialogRef = this.dialog.open(AudioVideoFileDialogComponent, {
               panelClass: 'lesson_videomodal',
@@ -670,7 +684,7 @@ export class ListLessionComponent implements OnInit {
       })
       dialogRef.disableClose = true;
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result,'ResolveResolve')
+        console.log(result, 'ResolveResolve')
 
       })
     }
@@ -718,7 +732,7 @@ export class AudioVideoFileDialogComponent {
             this.previewData[i].lesson_attachements[j].safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.video_base_url + this.previewData[i].lesson_attachements[j].video_url + '?rel=0&modestbranding=1&autoplay=0&showinfo=0&listType=playlist');
           }
         }
-        console.log(this.previewData)
+        console.log(this.previewData,'gggggggggggggggggg')
       }
     }
     console.log(data.bucket_url.url, 'data.bucket_url')
@@ -745,7 +759,7 @@ export class AudioVideoFileDialogComponent {
         data.data_array[i].safe_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         this.video_arr.push(data.data_array[i])
       }
-
+      console.log(this.video_arr, 'hhhhhhhhhhhhh')
     }
 
 

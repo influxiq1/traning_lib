@@ -24,10 +24,10 @@ export class AddUpdateAnswerComponent implements OnInit {
   set formSource(formSource: any) {
     this.formSourceVal = (formSource) || '<no name set>';
   }
-  @Input()
-  set DnaFlag(flag: any) {
-    this.dnaFlag = flag;
-  }
+  // @Input()
+  // set DnaFlag(flag: any) {
+  //   this.dnaFlag = flag;
+  // }
   @Input()
   set ListingPageRoute(val: any) {
     this.listingPageRoute = (val) || '<no name set>';

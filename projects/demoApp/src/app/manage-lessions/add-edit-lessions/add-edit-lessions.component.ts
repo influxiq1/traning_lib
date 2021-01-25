@@ -113,8 +113,8 @@ import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-add-edit-lessions',
-    templateUrl: './add-edit-lessions.component.html',
-    styleUrls: ['./add-edit-lessions.component.css']
+  templateUrl: './add-edit-lessions.component.html',
+  styleUrls: ['./add-edit-lessions.component.css']
 })
 export class AddEditLessionsComponent implements OnInit {
 
@@ -123,14 +123,14 @@ export class AddEditLessionsComponent implements OnInit {
   public recid: any;
   public listingPageRoute: any = "/manage-lesson/list";
   public pageName: any = "Manage Lesson";
-  public isitdna: any = true;
-
+  // public isitdna: any = true;
+  public isitBetoparedes: any = true;
   public bucket_url: any = {
-   url: 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/'
+    url: 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/'
   }
 
   public serverDetails: any = {
-    "serverUrl":'https://e4bmztjfw8.execute-api.us-east-1.amazonaws.com/dev/',
+    "serverUrl": 'https://e4bmztjfw8.execute-api.us-east-1.amazonaws.com/dev/',
     "jwttoken": ""
   };
   // public formSource: any = {
@@ -159,7 +159,7 @@ export class AddEditLessionsComponent implements OnInit {
     baseUrl: "https://fileupload.influxhostserver.com/",
     endpoint: "uploads",
     size: "51200", // kb
-    format: ["jpg", "jpeg", "png", "bmp", "zip", 'html', 'mp3','mp4','txt', 'mpeg', 'doc', 'ppt', 'pptx', 'pdf', 'docx','xlsx','ods','csv'], // use all small font
+    format: ["jpg", "jpeg", "png", "bmp", "zip", 'html', 'mp3', 'mp4', 'txt', 'mpeg', 'doc', 'ppt', 'pptx', 'pdf', 'docx', 'xlsx', 'ods', 'csv'], // use all small font
     type: "lesson-file",
     path: "lesson-files",
     prefix: "lesson_file_",
@@ -167,7 +167,7 @@ export class AddEditLessionsComponent implements OnInit {
     conversionNeeded: 1,
     bucketName: "training-centre-bucket",
   }
-  public lesson_attachment_flag:boolean=true;
+  public lesson_attachment_flag: boolean = true;
 
 
   public jwtToken: any;

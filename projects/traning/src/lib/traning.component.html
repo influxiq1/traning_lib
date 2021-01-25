@@ -8,7 +8,7 @@
     </span>
     <form novalidate (ngSubmit)="formsubmit()" class="formclass">
         <ng-container [formGroup]="dataForm" *ngFor="let item of formdataval; let i=index;">
-
+            <!-- {{item|json}} -->
             <div *ngIf="item.inputtype == 'text'">
                 <mat-label *ngIf="item.inputtype == 'text'">{{item.label}} : </mat-label>
 
@@ -132,7 +132,7 @@
             <!-- <button type="button" mat-raised-button color="primary" (click)="addfile()">add
                file by modal </button> -->
 
-            <div *ngIf="fileflag == true && file_array.length > 0" class='fromClass'>
+            <div *ngIf="file_array!=null && fileflag == true && file_array.length > 0" class='fromClass'>
                 <div class="addfilecls">
                     <mat-label><b> Files : </b></mat-label>
                     <span class="adddeletecls">
@@ -199,7 +199,7 @@
                 </div>
             </div>
 
-            <div *ngIf="audioflag == true && audio_array.length > 0" class="fromClass">
+            <div *ngIf="audio_array!=null && audioflag == true && audio_array.length > 0" class="fromClass">
                 <mat-label><b> Audio : </b></mat-label>
                 <!-- <span class="adddeletecls">
                     <i class="material-icons addbtn" (click)="addAudio()">add_box</i>
@@ -252,7 +252,7 @@
                 </div>
             </div>
 
-            <div *ngIf="videoflag == true && video_array.length > 0" class="fromClass">
+            <div *ngIf="video_array!=null && videoflag == true && video_array.length > 0" class="fromClass">
                 <div class="addvideocls">
                     <mat-label><b> Videos : </b></mat-label>
                     <span class="adddeletecls">
@@ -300,7 +300,7 @@
 
 
 
-            <ng-container >
+            <ng-container>
 
                 <div>
                     <mat-label><b> HTML Content : </b></mat-label>
@@ -324,7 +324,7 @@
                     </span>
                 </div>
 
-                <div>
+                <div *ngIf="betoparedesFlag!=true">
                     <span>
                         <mat-checkbox (change)="getchkboxval($event.checked)" [(ngModel)]="chkboxval"
                             [ngModelOptions]="{standalone: true}">Has Lesson plan?</mat-checkbox>

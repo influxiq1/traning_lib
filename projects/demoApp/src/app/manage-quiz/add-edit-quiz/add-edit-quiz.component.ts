@@ -12,12 +12,13 @@ export class AddEditQuizComponent implements OnInit {
   public quizQuestionSingleDataList:any=[];
   public lessonId:any
   public serverDetails: any = {
-    "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/",
+    // "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/",
+    "serverUrl": "https://e4bmztjfw8.execute-api.us-east-1.amazonaws.com/dev/api1/",
     "jwttoken": ""
   };
   public formSource: any = {
     "source":"manage_quiz",
-    "endpoint": "addorupdatedata",
+    "endpoint": "addorupdatelessonquestion",
     "showEndpoint":"datalist",
     "formTitleName": 'Training'
   }
@@ -26,8 +27,8 @@ export class AddEditQuizComponent implements OnInit {
   public jwtToken:any
   constructor(public activatedRoute : ActivatedRoute,public cookie:CookieService) { 
     console.log(this.activatedRoute.snapshot.params.lesson_id_object);
-    this.lessonIdInedit=this.activatedRoute.snapshot.params.lesson_id_object;
-    this.lessonId = this.activatedRoute.snapshot.params.lesson_id_object;
+    this.lessonIdInedit=this.activatedRoute.snapshot.params.lesson_id;
+    this.lessonId = this.activatedRoute.snapshot.params.lesson_id;
     this.jwtToken = cookie.get('jwtToken');
     this.serverDetails.jwttoken=this.jwtToken;
   }
