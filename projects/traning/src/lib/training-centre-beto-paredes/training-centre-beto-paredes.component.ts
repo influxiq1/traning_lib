@@ -20,6 +20,14 @@ export interface DialogData6 {
   data: any;
   flag: any;
 }
+export interface DialogData5 {
+  data: any;
+  flag: any;
+  quiz_data: any;
+  lesson_data: any;
+  server_url: any;
+  user_id: any;
+}
 @Component({
   selector: 'lib-training-centre-beto-paredes',
   templateUrl: './training-centre-beto-paredes.component.html',
@@ -55,7 +63,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
   public trainingCategoryList: any = [];
   public AllTrainingData: any = [];
   public previewimages: any;
-  public bucket_url: any = 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/'
+  public bucket_url: any = 'https://beto-paredes-training-centre.s3.amazonaws.com/lesson-files/'
   public userType: any;
   public done_lesson: any;
   public lession_atachment_dataarray: any = [];
@@ -68,10 +76,25 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
   public percentageprogressLoader: boolean = true;
   public video_data: any = [];
   public next_button_access: any = false;
-  public quizflag: boolean = false;
+  public quizflag: boolean = true;
   public complete_fileflag: any = [];
   public complete_audioflag: any = [];
   public complete_videoflag: any = [];
+  public audio_duration: any = [];
+  public audio_currenttime: any = [];
+  public newaudio_currenttime: any = [];
+  public audio_progress: any = [];
+  public modelval: any = [];
+  public disabled = [];
+  public audio_end_time: any = [];
+  public audio_time: any = [];
+  public play_flag: any = [];
+  public pause_flag: any = [];
+  public lesson_title: any;
+  public questionId: any;
+  public questionindex: any = 0;
+  public questionArray: any = [];
+  public quizQuestion: any;
 
 
 
@@ -130,10 +153,10 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
   }
   @Input()
   set TrainingCentreData(val) {
-    console.log(val, 'val',this.trainingLessonData)
+    console.log(val, 'val', this.trainingLessonData)
     this.paramsTrainingId = this.activatedRoute.snapshot.params.associated_training;
 
-    
+
 
     this.trainingCentreData = val;
     // // console.log(this.trainingCentreData.lesson_content[0].lesson_attachements, 'librery')
@@ -146,7 +169,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
       this.paramslessonId = val.lesson_content[0]._id;
 
     }
-    console.log(this.paramslessonId,'_______________')
+    console.log(this.paramslessonId, '_______________')
 
     this.lessonDataList = val.alllessondata
 
@@ -205,7 +228,6 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
       }
     }
 
-    // console.log(this.trainingCentreData, 'trainingCategoryData')
 
   }
 
@@ -221,17 +243,30 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
   }
 
 
-  clicktrcataining(id: any, catagory_name: any) {
-    // console.log(id, '+++', this.trainingCenterRoute)
-    setTimeout(() => {
-      this.progress_bar = 1;
-    }, 100);
-    this.router.navigateByUrl(this.trainingCenterRoute + id);
-    this.training_cat_name = catagory_name;
-    setTimeout(() => {
-      document.getElementById("lessonData").scrollIntoView();
-      this.progress_bar = 0;
-    }, 1000);
+  clicktrcataining(val, catagory_name: any) {
+    console.log(val, '+++', this.trainingCenterRoute)
+    console.log(this.trainingCategoryData[0], 'trainingCategoryData')
+
+   
+      if (this.trainingCategoryData[0].done == this.trainingCategoryData[0].count || this.trainingCategoryData[0]._id==val._id) {
+        setTimeout(() => {
+          this.progress_bar = 1;
+        }, 100);
+        this.router.navigateByUrl(this.trainingCenterRoute + val._id);
+        this.training_cat_name = catagory_name;
+        setTimeout(() => {
+          document.getElementById("lessonData").scrollIntoView();
+          this.progress_bar = 0;
+        }, 1000);
+      }
+    
+
+    else {
+      this.snakBar.open("You can't access this training", 'Ok', {
+        duration: 1000
+      });
+    }
+
   }
 
   nochildclick(val: any, flag) {
@@ -240,7 +275,88 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
   }
 
+  playbtn(val: any, flag: any) {
+    // console.log(val, '000000796e++', flag)
+    let audioId: any = document.getElementById("audioPlayer_" + val);
+    this.play_flag[val] = false;
+    this.pause_flag[val] = true;
+    audioId.play();
+    // console.log(audioId, 'audioId')
+  }
 
+  pausebtn(val: any, flag: any) {
+    let audioId: any = document.getElementById("audioPlayer_" + val);
+    audioId.pause();
+    this.play_flag[val] = true;
+    this.pause_flag[val] = false;
+    // console.log(audioId, '+++++++++++++')
+  }
+
+  replay(val) {
+    var audioId: any = document.getElementById("audioPlayer_" + val);
+
+    audioId.currentTime = 0;
+    this.audio_currenttime[val] = audioId.currentTime;
+    var sec_num = parseInt(audioId.currentTime, 10);
+    var hours: any = Math.floor(sec_num / 3600);
+    var minutes: any = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds: any = sec_num - (hours * 3600) - (minutes * 60);
+    this.audio_time[val] = hours + ':' + minutes + ':' + seconds;
+    this.audio_progress[val] = Math.floor((this.audio_currenttime[val] / this.audio_duration[val]) * 100);
+    // console.log(this.audio_currenttime[val], 'audioId.currentTime')
+  }
+//skip ten sec (next and previous)
+  skipTensec(val, item, flag) {
+    // console.log(item, '+++++++++++====', flag)
+    if (item.audio_skippable == false) {
+      this.snakBar.open("You can't skip this audio", 'Ok', {
+        duration: 1000
+      });
+    }
+    else {
+      if (flag == 'previos') {
+        var audioId: any = document.getElementById("audioPlayer_" + val);
+        audioId.currentTime = audioId.currentTime - Math.floor(10);
+        // console.log(audioId.currentTime, 'previos')
+
+      }
+      if (flag == 'next') {
+        var audioId: any = document.getElementById("audioPlayer_" + val);
+        audioId.currentTime = audioId.currentTime + 10;
+        // console.log(audioId.currentTime, 'next')
+
+      }
+    }
+
+
+  }
+  progressbtn(val, fullval) {
+
+    if (fullval.audio_skippable == true) {
+
+      this.audio_progress[val] = this.modelval[val];
+
+      this.audio_currenttime[val] = (this.modelval[val] * this.audio_duration[val]) / 100;
+
+      var sec_num = parseInt(this.audio_currenttime[val], 10);
+      var hours: any = Math.floor(sec_num / 3600);
+      var minutes: any = Math.floor((sec_num - (hours * 3600)) / 60);
+      var seconds: any = sec_num - (hours * 3600) - (minutes * 60);
+      this.audio_time[val] = hours + ':' + minutes + ':' + seconds;
+      // console.log(this.audio_currenttime[val], 'audio_currenttime');
+      let audioId: any = document.getElementById("audioPlayer_" + val);
+      audioId.currentTime = this.audio_currenttime[val];
+
+      // console.log(this.audio_currenttime, 'audio_currenttime progressbtn fst__--------')
+      // console.log(this.audio_progress[val], 'audio_progress progressbtn fst__--------')
+    }
+    else {
+      this.snakBar.open("You can't skip this audio", 'Ok', {
+        duration: 1000
+      });
+    }
+    // this.audio_progress[id]=5
+  }
   nextbutton(value: any) {
     // console.log(this.lessonContentData, 'value', this.lessonDataList)
 
@@ -347,37 +463,232 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
   }
   lessonQuiz(val: any) {
-    if (this.AllTrainingData != null && typeof (this.AllTrainingData.quiz_data) != 'undefined') {
+    console.log(val,'kkkkkkkkkkkkkkbeto')
+    if (val != null && typeof (val.quiz_data) != 'undefined') {
       // // console.log(val, '++', this.AllTrainingData.quiz_data)
       var server_url: any = this.serverDetailsVal.serverUrl + 'addlessonquizdata';
 
-      // const dialogRef = this.dialog.open(LessonQuizModalComponent, {
-      //   panelClass: 'schedule_modal',
-      //   width: '900px',
-      //   height: 'auto',
-      //   data: { quiz_data: this.AllTrainingData.quiz_data, lesson_data: val, user_id: this.userId, server_url: server_url }
-      // });
+      const dialogRef = this.dialog.open(LessonQuizBetoparedesModalComponent, {
+        panelClass: 'schedule_modal',
+        width: '900px',
+        height: 'auto',
+        data: { quiz_data: val.quiz_data, lesson_data: this.lessonContentData, user_id: this.userId, server_url: server_url }
+      });
       // dialogRef.disableClose = true;
-      // dialogRef.afterClosed().subscribe((result: any) => {
-      //   // // console.log(result, 'result')
-      //   if (result == 'yes') {
-      //     this.next_button_access = true;
+      dialogRef.afterClosed().subscribe((result: any) => {
+        // // console.log(result, 'result')
+        if (result == 'yes') {
+          this.next_button_access = true;
 
-      //     // if (this.lesson_content.is_done == null) {
-      //     //   this.addMarkedData(this.lessonDataList[0]._id, this.paramsId, this.nextdata, this.lesson_content.lession_title, this.nextlessondata);
-      //     // }
-      //     this.getTrainingCenterlistFunctionwithLessonId(this.paramsId, this.userType, this.userId, this.paramslessonId)
-      //     this.quizflag = false;
-      //     if (this.quizflag == false) {
-      //       this.next_button_access = true;
-      //     }
-      //     else {
-      //       this.next_button_access = false;
-      //     }
-      //   }
-      // }
-      // )
+          // if (this.lesson_content.is_done == null) {
+          //   this.addMarkedData(this.lessonDataList[0]._id, this.paramsId, this.nextdata, this.lesson_content.lession_title, this.nextlessondata);
+          // }
+          this.getTrainingCenterlistFunctionwithLessonId(this.paramsId, this.userType, this.userId, this.paramslessonId)
+          this.quizflag = false;
+          if (this.quizflag == false) {
+            this.next_button_access = true;
+          }
+          else {
+            this.next_button_access = false;
+          }
+        }
+      }
+      )
     }
+  }
+
+
+
+  onprocess(val, fullval) {
+
+    var audioId: any = document.getElementById("audioPlayer_" + val); // audio id
+
+    this.audio_duration[val] = audioId.duration; //audio duration
+
+
+    this.audio_currenttime[val] = audioId.currentTime;
+    this.audio_progress[val] = (this.audio_currenttime[val] / this.audio_duration[val]) * 100; // audio progress based on current time 
+
+    this.modelval[val] = 0;
+    this.modelval[val] = this.audio_progress[val];
+
+    this.audio_currenttime[val] = (this.modelval[val] * this.audio_duration[val]) / 100; // audio current val
+    this.newaudio_currenttime[val] = this.audio_currenttime[val]
+
+
+    if (fullval.audio_skippable == false) {
+      // console.log('true')
+      this.disabled[val] = true;
+    }
+    // this.startEndTimeCalculation(val);
+    //start time calculation
+
+    var sec_num = parseInt(this.audio_currenttime[val], 10);
+    var hours: any = Math.floor(sec_num / 3600);
+    var minutes: any = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds: any = sec_num - (hours * 3600) - (minutes * 60);
+    this.audio_time[val] = hours + ':' + minutes + ':' + seconds;
+
+    //end time calculation
+    var sec_duration_num = parseInt(this.audio_duration[val], 10);
+    var duration_hours: any = Math.floor(sec_duration_num / 3600);
+    var duration_minutes: any = Math.floor((sec_duration_num - (duration_hours * 3600)) / 60);
+    var duration_seconds: any = sec_duration_num - (duration_hours * 3600) - (duration_minutes * 60);
+    // console.log(val, 'audio_duration')
+    this.audio_end_time[val] = duration_hours + ':' + duration_minutes + ':' + duration_seconds;
+
+  }
+
+  //load to start the audio
+  loadstart(fullval, val) {
+    setTimeout(() => {
+      // audioId.duration find audio duration 
+      var audioId: any = document.getElementById("audioPlayer_" + val);
+      if (audioId.duration != null && audioId.duration != '') {
+        this.audio_duration[val] = audioId.duration;
+      }
+      //audioId.currentTime for current audio time 
+      this.audio_currenttime[val] = audioId.currentTime;
+      this.audio_progress[val] = Math.floor((this.audio_currenttime[val] / this.audio_duration[val]) * 100);
+
+      //start time calculation
+      var sec_num = parseInt(this.audio_currenttime[val], 10);
+      var hours: any = Math.floor(sec_num / 3600);
+      var minutes: any = Math.floor((sec_num - (hours * 3600)) / 60);
+      var seconds: any = sec_num - (hours * 3600) - (minutes * 60);
+      // convert start time to hours minutes sec format
+      this.audio_time[val] = hours + ':' + minutes + ':' + seconds;
+
+      //end time calculation
+      var sec_duration_num = parseInt(this.audio_duration[val], 10);
+      var duration_hours: any = Math.floor(sec_duration_num / 3600);
+      var duration_minutes: any = Math.floor((sec_duration_num - (duration_hours * 3600)) / 60);
+      var duration_seconds: any = sec_duration_num - (duration_hours * 3600) - (duration_minutes * 60);
+      // convert end time to min hour sec format
+      this.audio_end_time[val] = duration_hours + ':' + duration_minutes + ':' + duration_seconds;
+      this.play_flag[val] = true;
+      this.pause_flag[val] = false;
+
+      if (fullval.audio_skippable == false) {
+        // console.log('true')
+        this.disabled[val] = true
+      }
+
+      this.modelval[val] = 0;
+      // console.log(this.modelval[val], 'ghjgh+++++++++');
+      this.modelval[val] = this.audio_progress[val];
+
+      this.audio_currenttime[val] = (this.modelval[val] * this.audio_duration[val]) / 100;
+      this.newaudio_currenttime[val] = this.audio_currenttime[val]
+
+      // console.log(this.audio_duration[val], 'audio_currenttime')
+
+
+    }, 1500);
+
+  }
+  audioended(item: any, i: any, j) {
+    console.log(item, 'dcnjmkxdcvf')
+    if (item.test_associate_training == 'Yes') {
+      this.questionDetails(item._id, i, j);
+    } else {
+      // this.addMarkedData(item._id, this.paramsId, i, this.lesson_title, this.nextlessondata);
+    }
+    if (j == 1) {
+      setTimeout(() => {
+        this.getTrainingCenterlistFunctionwithLessonId(this.paramsId, this.userType, this.userId, this.paramslessonId)
+      }, 500);
+
+      let audioendpoint = this.serverDetailsVal.serverUrl + 'updateusercompletelessonaudio'
+
+      let audio_data = {
+        user_id: this.userId,
+        training_id: this.paramsTrainingId,
+        lesson_id: this.paramslessonId,
+        audio_type: item.audio.file_type,
+        audio_id: item.audio._id,
+        audio_name: item.audio.fileservername,
+      }
+      if (item.audio_skippable != true) {
+        this.apiService.postDatawithoutToken(audioendpoint, audio_data).subscribe(res => {
+          console.log(res)
+          let result: any = res;
+
+          // console.log(result, '+++++++')
+          if (result.status == 'success') {
+            console.log(item, 'dcnjmkxdcvf')
+            this.complete_audioflag[item.audio._id] = true
+            // this.next_button_access=true;
+            this.snakBar.open('Successfully Completed This Lesson Audio', 'ok', {
+              duration: 3000
+            });
+          }
+        })
+      }
+
+
+
+    }
+  }
+  questionDetails(id: any, i: any, lesson_title: any) {
+    // console.log(this.allLessonDataList.length, 'this.allLessonDataList.length', i)
+    this.lesson_title = lesson_title
+    this.progressLoader = true;
+    this.questionId = id;
+    this.questionindex = 0;
+    const link = this.serverDetailsVal.serverUrl + this.formSourceVal.showEndpoint;
+    let data: any = {
+      source: this.quizQuestionSource.questionSourceName,
+      // token:this.serverDetailsVal.jwttoken,
+      condition: {
+        lesson_id: id
+      }
+    }
+    this.apiService.getData(link, data)
+      .subscribe((response): any => {
+        let result: any = response;
+        this.questionArray = result.results.questionanswerlist;
+        if (this.questionArray.length == 0) {
+          // this.addMarkedData(this.currentlesson, this.paramsId, id, this.lesson_title, this.nextlessondata);
+          this.questionArray.expanded = true;
+        }
+
+        if (i < this.trainingLessonData.length) {
+          if (i < this.trainingLessonData.length) {
+
+            if (this.trainingLessonData[i + 1] != null) {
+              this.trainingLessonData[i].expanded = false;
+              this.trainingLessonData[i + 1].expanded = true;
+              this.trainingLessonData[i + 1].is_done = true;
+            } else {
+              let message: any = "You Have Successfully Completed The Training";
+              let action: any = "Ok";
+              this.snakBar.open(message, action, {
+                duration: 3000
+              });
+              setTimeout(() => {
+                // this.lastOpenDialog('lessoncompletedmoal'); 
+              }, 4000);
+
+            }
+
+          }
+        }
+        if (this.questionArray.length > 0) {
+          this.progressLoader = false;
+          let lesson_name: any = lesson_title;
+          this.quizQuestion = this.questionArray[this.questionindex];
+          // this.openDialog(this.quizQuestion,i,this.lesson_title);
+        } else {
+          this.progressLoader = false;
+          let message: any = "This Lesson Doesn't Have Any Questions";
+          let action: any = "Ok";
+          this.snakBar.open(message, action, {
+            duration: 3000
+          })
+        }
+
+      });
   }
   previewpdf(val, flag) {
     // console.log(val, 'val');
@@ -625,7 +936,7 @@ export class PreviewContentDialogBeto {
   public image: any = '';
   public indeximg = 0;
   public page = 1;
-  public bucket_url: any = 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/';
+  public bucket_url: any = 'https://beto-paredes-training-centre.s3.amazonaws.com/lesson-files/';
   public nextflg: any = 'disabled';
   public prevflag: any = 'disabled';
   public pos: any;
@@ -772,5 +1083,123 @@ export class BetoparedesLessonVideoModalComponent {
 
     }
 
+  }
+}
+@Component({
+  selector: 'lessonquiz',
+  templateUrl: './lesson_betoparedes_quiz.html'
+})
+export class LessonQuizBetoparedesModalComponent {
+  public quizData: any = '';
+  public CheckedAnswer: any = [];
+  public lessonData: any;
+  public quizVal: any = '';
+  public correctQuizVal: any = [];
+  public resultVal: any;
+  public resultStatus: any = 'Failed';
+  public indexVal: any = 1;
+
+  constructor(public dialogRef: MatDialogRef<LessonQuizBetoparedesModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData5, public snakBar: MatSnackBar, public apiService: ApiService, public router: Router) {
+    console.log(data, 'data')
+    this.quizData = data.quiz_data[0];
+    this.lessonData = data.lesson_data;
+    this.indexVal = 1;
+    // console.log(this.quizData, '++')
+  }
+  closedModal() {
+    this.data.flag = 'no';
+    this.dialogRef.close(this.data.flag);
+
+    if (this.data.quiz_data.length > 0) {
+      this.snakBar.open(' Your Lesson Quiz is Incomplete..!', 'OK', {
+        duration: 5000
+      })
+    }
+
+  }
+
+
+
+  //next quiz 
+  nextQuizRecord(val: any) {
+    this.indexVal = this.indexVal + 1;
+    // console.log(this.CheckedAnswer, 'CheckedAnswer', this.quizVal)
+    if (this.quizVal != '') {
+      this.CheckedAnswer.push(this.quizVal)
+      this.quizVal = '';
+    }
+
+    let ind: any = 0;
+
+    for (let i in this.data.quiz_data) {
+      if (this.data.quiz_data[i]._id == val._id) {
+        ind = (parseInt(i) + 1);
+        if (this.data.quiz_data[ind] != null && typeof (this.data.quiz_data[ind]) != 'undefined') {
+          this.quizData = this.data.quiz_data[ind];
+          // this.indexVal = ind;
+
+        } else {
+          this.quizData = '';
+
+          // console.log(this.CheckedAnswer, '++== else ')
+          if (this.CheckedAnswer.length > 0) {
+            for (let i in this.CheckedAnswer) {
+              if (this.CheckedAnswer[i].isCorrect == 1) {
+                // console.log(this.CheckedAnswer[i], '????chk')
+                this.correctQuizVal.push(this.CheckedAnswer[i]);
+              }
+            }
+          }
+
+          if (this.correctQuizVal.length > 0) {
+            var result = (this.correctQuizVal.length / this.data.quiz_data.length) * 100
+            this.resultVal = parseFloat(result.toFixed(2));
+            if (this.resultVal >= this.data.lesson_data.test_percentage) {
+              this.resultStatus = 'Success';
+            } else {
+              this.resultStatus = 'Failed';
+            }
+          } else {
+            this.resultVal = 0;
+            this.resultStatus = 'Failed';
+          }
+        }
+      }
+    }
+  }
+
+  saveQuizRecord(val) {
+    // console.log(this.resultVal, 'resultVal')
+
+    let user_result: any = {
+      resultVal: this.resultVal,
+      CheckedAnswer: this.CheckedAnswer,
+      resultStatus: this.resultStatus,
+      target_percentage: this.data.lesson_data.test_percentage,
+      user_id: this.data.user_id,
+      lesson_id: this.lessonData._id
+    }
+    // console.log(user_result, 'user_result')
+    this.apiService.postDatawithoutToken(this.data.server_url, user_result).subscribe(res => {
+      let result: any = res;
+      if (result.status == 'success') {
+        this.data.flag = 'yes';
+        this.dialogRef.close(this.data.flag);
+        this.snakBar.open('Successfully Completed Your Lesson Quiz..!', 'OK', {
+          duration: 5000
+        })
+      }
+    })
+  }
+
+  startQuizAgain(val) {
+    this.CheckedAnswer = [];
+    this.correctQuizVal = [];
+    this.resultVal = 0
+    this.resultStatus = 'Failed';
+    this.quizData = '';
+    this.quizData = this.data.quiz_data[0];
+    this.indexVal = 1;
   }
 }

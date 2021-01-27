@@ -126,7 +126,7 @@ export class AddEditLessionsComponent implements OnInit {
   // public isitdna: any = true;
   public isitBetoparedes: any = true;
   public bucket_url: any = {
-    url: 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/'
+    url: 'https://beto-paredes-training-centre.s3.amazonaws.com/lesson-files/'
   }
 
   public serverDetails: any = {
@@ -165,7 +165,7 @@ export class AddEditLessionsComponent implements OnInit {
     prefix: "lesson_file_",
     formSubmit: false,
     conversionNeeded: 1,
-    bucketName: "training-centre-bucket",
+    bucketName: "beto-paredes-training-centre",
   }
   public lesson_attachment_flag: boolean = true;
 
