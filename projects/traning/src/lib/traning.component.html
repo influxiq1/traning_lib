@@ -6,11 +6,12 @@
             </span>
         </span>
     </span>
+
     <form novalidate (ngSubmit)="formsubmit()" class="formclass">
         <ng-container [formGroup]="dataForm" *ngFor="let item of formdataval; let i=index;">
             <!-- {{item|json}} -->
             <div *ngIf="item.inputtype == 'text'">
-                <mat-label *ngIf="item.inputtype == 'text'">{{item.label}} : </mat-label>
+                <!-- <mat-label *ngIf="item.inputtype == 'text'">{{item.label}} : </mat-label> -->
 
                 <mat-form-field *ngIf="item.inputtype == 'text' || item.inputtype == 'password'">
                     <input matInput [type]="item.inputtype" [placeholder]="item.placeholder"
@@ -25,7 +26,7 @@
             </div>
 
             <div *ngIf="item.inputtype == 'textarea'">
-                <mat-label *ngIf="item.inputtype == 'textarea'">{{item.label}} : </mat-label>
+                <!-- <mat-label *ngIf="item.inputtype == 'textarea'">{{item.label}} : </mat-label> -->
 
                 <mat-form-field *ngIf="item.inputtype == 'textarea'">
                     <textarea matInput [placeholder]="item.placeholder" [formControlName]="[item.name]"
@@ -66,9 +67,18 @@
 
             <div class="checkboxnew" *ngIf="item.inputtype =='checkbox'">
                 <mat-label *ngIf="item.inputtype =='checkbox'">{{item.label}}:</mat-label>
+                <!-- <mat-checkbox *ngIf="item.inputtype == 'checkbox' " [ngClass]="item.class"
+                    [formControlName]="[item.name]" (keyup)="issubmit=0" [(ngModel)]="checked"></mat-checkbox> -->
                 <mat-checkbox *ngIf="item.inputtype == 'checkbox'" [ngClass]="item.class"
                     [formControlName]="[item.name]" (keyup)="issubmit=0" [(ngModel)]="checked"></mat-checkbox>
             </div><br>
+
+            <!-- <div class="checkboxnew" *ngIf="item.inputtype =='checkbox'&& item.value !=null">
+                <mat-label *ngIf="item.inputtype =='checkbox'">{{item.label}}:</mat-label>
+                <mat-checkbox *ngFor="let val of item.value" [ngClass]="item.class"
+                    [formControlName]="[item.name]" (keyup)="issubmit=0" [(ngModel)]="checked">{{val}} {{item.valuelabel}}</mat-checkbox>
+
+            </div><br> -->
 
 
 
@@ -113,11 +123,10 @@
 
             </div>
 
-
-            <div *ngIf="item.inputtype == 'button' && item.buttonflag == true" style="display: inline;">
-                <div *ngFor="let i of item.sourceval">
-                    <div class="typebtncls">
-                        <button type="button" mat-raised-button color="primary" (click)="openTrainingType(i)">Add
+            <div class="main_buttoncls" *ngIf="item.inputtype == 'button' && item.buttonflag == true" style="display: inline;">
+                <div class="filebuttoncls" *ngFor="let i of item.sourceval;let ind=index">
+                    <div class="typebtncls_{{ind}}">
+                        <button matTooltip="Add {{i.name}}" type="button" mat-raised-button color="primary" (click)="openTrainingType(i)">Add
                             {{i.name}} </button>
                     </div>
                 </div>
@@ -127,6 +136,7 @@
             <mat-progress-bar *ngIf="progressLoader && item.name =='associated_training'" mode="indeterminate">
             </mat-progress-bar>
         </ng-container>
+
         <div>
 
             <!-- <button type="button" mat-raised-button color="primary" (click)="addfile()">add
@@ -300,21 +310,21 @@
 
 
 
-            <ng-container>
+
+            <ng-container *ngIf='showfieldflag==true '>
 
                 <div>
-                    <mat-label><b> HTML Content : </b></mat-label>
+                    <mat-label><b> Description : </b></mat-label>
                     <ck-editor [config]="editorconfig" [(ngModel)]="htmType" [ngModelOptions]="{standalone: true}">
                     </ck-editor>
                 </div>
 
                 <div>
                     <span>
-                        <mat-checkbox [(ngModel)]="has_test_lesson" [ngModelOptions]="{standalone: true}">Has Test
-                            Lesson ?
+                        <mat-checkbox class="quizcls" [(ngModel)]="has_test_lesson" [ngModelOptions]="{standalone: true}">Has Quiz ?
                         </mat-checkbox>
 
-                        <div *ngIf="has_test_lesson == true">
+                        <div class="quiz_checkboxnew" *ngIf="has_test_lesson == true">
                             <mat-form-field>
                                 <input type="number" matInput placeholder="Enter Complete Test Percentage (%)"
                                     [(ngModel)]="test_percentage" [ngModelOptions]="{standalone: true}">
@@ -343,7 +353,30 @@
 
 
             </ng-container>
+            <div *ngIf="traingtypeflag!=null && traingtypeflag==true" class="traing_for">
+                <mat-label>Training accessible to:</mat-label>
+                <span class="example-list-section" *ngFor="let val of trainingacessable">
+                    <mat-checkbox [(ngModel)]="val.completed" (change)="checkCheckBoxvalue($event,val)"
+                        [ngModelOptions]="{standalone: true}">
+                        {{val.name}}
+                    </mat-checkbox>
 
+
+                </span>
+            </div>
+            <div>
+
+                <mat-label><b>Priority</b>
+                </mat-label>
+
+                <div>
+                    <mat-form-field>
+                        <input type="number" matInput placeholder="Enter priority" [(ngModel)]="priority"
+                            [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                </div>
+
+            </div>
             <div class="btncls">
                 <button class="trainingsubbtn" mat-raised-button color="primary" type="submit">{{ buttonText }}
                 </button>
@@ -352,5 +385,6 @@
             </div>
 
         </div>
+
     </form>
 </mat-card>

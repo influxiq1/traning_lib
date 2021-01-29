@@ -86,7 +86,7 @@ const appRoutes: Routes = [
     {
         path: 'manage-training/list', component: ListingTrainingComponent,
         resolve: { trainingdata: ResolveService },
-        data: { requestcondition: { source: 'training_category_management_view', condition: { 'is_trash': { $ne: 1 } } }, endpoint: 'datalist' }
+        data: { requestcondition: { source: 'training_category_management_view', condition: { 'is_trash': { $ne: 1 } } }, endpoint: 'getalltrainingdata' }
     },
 
     { path: 'manage-training/edit/:id', component: AddEditTrainingComponent },

@@ -26,7 +26,7 @@
 
 
   <div class="questioncls" *ngIf="quizAnswerData != '' && quizAnswerData != null">
-    <h2 > Question : {{ quizAnswerData[0]?.question}}</h2>
+    <h2> Questions : {{ quizAnswerData[0]?.question}}</h2>
   </div>
 
   <div class="mat-elevation-z8" *ngIf="quizAnswerData != '' && quizAnswerData != null">
@@ -65,7 +65,14 @@
           <span class="cursor">
             <i class="material-icons" (click)="delete(element._id,i)">delete</i>
           </span>
+          <span class="isCorrect">
+            <button mat-button (click)="isCorrect(element,i)">
+              <span  matTooltip="Change Answer Status" class="material-icons">
+                toggle_on
+                </span>
+            </button>
 
+          </span>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

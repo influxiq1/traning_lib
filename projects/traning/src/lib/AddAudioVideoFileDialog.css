@@ -15,7 +15,9 @@
   word-break: break-all;
 }
   
-
+.mandetorycls {
+  color: rgb(180, 62, 62);
+}
 .closecard {
   position: absolute;
   top: -10px;

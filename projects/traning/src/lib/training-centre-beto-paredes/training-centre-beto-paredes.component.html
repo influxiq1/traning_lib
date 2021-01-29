@@ -68,7 +68,7 @@
               
               {{ next_button_access }}\\quizflag{{quizflag}} -->
         <div class="btnclsnext">
-          <ng-container class="nextbtn">
+          <ng-container *ngIf="next_button_access==true" class="nextbtn">
             <button mat-button type="button" class="submitbtn" color="primary" (click)="nextbutton('next')">Next
               <mat-icon>keyboard_arrow_right</mat-icon>
             </button>
@@ -79,11 +79,11 @@
 
       <mat-card-content>
         <span fxLayout="row" class="trainingcentercls_newcls">
+          {{quizflag}}
 
           <ng-container *ngIf="lessonDataList!=null">
             <div>
-              <mat-card class="banner1cls">
-
+              <mat-card class="banner1cls" *ngIf="quizflag==true">
                 <div class="bannerclassmentor">
                   <div class='reviewcls'>
                     Review Quiz

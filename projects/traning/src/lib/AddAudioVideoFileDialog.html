@@ -9,10 +9,14 @@
 
     </div>
 
+    <button (click)="onNoClick()" class="Lesson_Videos_Modalclodse"><span class="material-icons">
+        clear
+    </span></button>
     <div class="modalcomponent">
 
         <!-- for file  -->
         <div class="videocontainer" *ngIf="data.type_flag != null && data.type_flag == 'file'">
+            <p class="mandetorycls">*Please upload Single Audio</p>
 
             <lib-file-upload [config]='uploadConfigData'></lib-file-upload>
 
@@ -67,7 +71,7 @@
         <!-- for Audio  -->
 
         <div *ngIf="data.type_flag != null && data.type_flag == 'audio'" class="Lesson_Videos_Modal">
-
+            <p class="mandetorycls">*Please upload Single Audio</p>
             <lib-file-upload [config]='uploadConfigData'></lib-file-upload>
 
             <mat-card class="example-card imgcard"
@@ -126,8 +130,7 @@
             </mat-form-field>
 
             <mat-form-field>
-                <textarea matInput placeholder=" Description"
-                    [(ngModel)]="videoFields.video_description"></textarea>
+                <textarea matInput placeholder=" Description" [(ngModel)]="videoFields.video_description"></textarea>
             </mat-form-field>
 
             <mat-form-field>
@@ -135,7 +138,7 @@
             </mat-form-field>
 
             <section class="example-section">
-                <mat-checkbox matInput [(ngModel)]="videoFields.video_skippable">Skippable  ?
+                <mat-checkbox matInput [(ngModel)]="videoFields.video_skippable">Skippable ?
                 </mat-checkbox>
             </section>
 

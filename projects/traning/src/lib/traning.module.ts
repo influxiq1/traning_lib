@@ -19,7 +19,7 @@ import { ListComponent,Dialogtest } from './training-center/list/list.component'
 import { ManageQuizComponent, questionDataModalComponent } from './manage-quiz/manage-quiz.component';
 import { AddEditComponent } from './manage-quiz/add-edit/add-edit.component';
 import { AddUpdateAnswerComponent } from './manage-quiz/add-update-answer/add-update-answer.component';
-import { UpdateAnswerComponent } from './manage-quiz/update-answer/update-answer.component';
+import { AnswerchangeconfromDialog, UpdateAnswerComponent } from './manage-quiz/update-answer/update-answer.component';
 // import { LoginComponent } from './login/login.component';
 import { LoginfortrainingComponent } from './loginfortraining/loginfortraining.component';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
@@ -76,7 +76,8 @@ import { TrainingCentreBetoParedesComponent ,PreviewContentDialogBeto, Betopared
     TrainingCentreBetoParedesComponent,
     PreviewContentDialogBeto,
     BetoparedesLessonVideoModalComponent,
-    LessonQuizBetoparedesModalComponent
+    LessonQuizBetoparedesModalComponent,
+    AnswerchangeconfromDialog
   ],
   imports: [
     HttpClientModule,
@@ -98,6 +99,6 @@ import { TrainingCentreBetoParedesComponent ,PreviewContentDialogBeto, Betopared
   
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [CookieService, ApiService,DatePipe,AudioServiceService],
-  entryComponents:[DialogBoxComponent,Dialogtest,PurchaseModalComponent,ReviewLessonPlanComponent,ScheduleModalComponent,questionDataModalComponent,UnlockLessonModalComponent,videoDialogComponent,LessonVideoModalComponent,LessonQuizModalComponent,AddAudioVideoFileDialogComponent,AudioVideoFileDialogComponent,PreviewContentDialog,PreviewContentDialogBeto,BetoparedesLessonVideoModalComponent,LessonQuizBetoparedesModalComponent]
+  entryComponents:[DialogBoxComponent,Dialogtest,PurchaseModalComponent,ReviewLessonPlanComponent,ScheduleModalComponent,questionDataModalComponent,UnlockLessonModalComponent,videoDialogComponent,LessonVideoModalComponent,LessonQuizModalComponent,AddAudioVideoFileDialogComponent,AudioVideoFileDialogComponent,PreviewContentDialog,PreviewContentDialogBeto,BetoparedesLessonVideoModalComponent,LessonQuizBetoparedesModalComponent,AnswerchangeconfromDialog]
 })
 export class TraningModule { }

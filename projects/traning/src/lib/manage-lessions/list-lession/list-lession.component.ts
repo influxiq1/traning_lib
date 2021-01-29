@@ -12,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Action } from 'rxjs/internal/scheduler/Action';
 import { DomSanitizer } from '@angular/platform-browser';
+import { FormControl } from '@angular/forms';
 
 
 
@@ -99,7 +100,11 @@ export class ListLessionComponent implements OnInit {
     "has_lessonplan_regex": "",
     "lessonplan_value_regex": ""
   }
+  public myControl = new FormControl();
+  public myControl1 = new FormControl();
+  public category_search: any = [];
   public previewData: any = [];
+  public lesson_search: any = [];
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   selection = new SelectionModel<PeriodicElement>(true, []);
@@ -112,7 +117,7 @@ export class ListLessionComponent implements OnInit {
     this.listingData = val;
     this.dataSource = new MatTableDataSource(this.listingData);
     console.log(
-      this.dataSource, 'dataSource'
+      this.dataSource, 'dataSource',
     )
 
   }
@@ -168,7 +173,11 @@ export class ListLessionComponent implements OnInit {
     this.preview_endpoint = (val) || '<no name set>';
     this.preview_endpoint = val;
   }
+
   constructor(public dialog: MatDialog, public apiService: ApiService, public router: Router, public snakBar: MatSnackBar, public sanitizer: DomSanitizer) {
+    console.log(this.listingData, 'listingData')
+
+
     setTimeout(() => {
       this.trainingCount();
 
@@ -195,13 +204,103 @@ export class ListLessionComponent implements OnInit {
 
     this.getAllLessonData();
     if (this.dnaFlag == true) {
-      this.displayedColumns.push('select', 'no', 'lession_title', 'description', 'associated_training', 'prerequisite_lession', 'has_lessonplan', 'lessonplan_value', 'has_test_lesson', 'test_percentage', 'status', 'deleteRecord');
+      this.displayedColumns.push('select', 'no', 'associated_training', 'lession_title', 'description', 'prerequisite_lession', 'has_lessonplan', 'lessonplan_value', 'has_test_lesson', 'test_percentage', 'status', 'deleteRecord');
     } if (this.betoparedesFlag == true) {
-      this.displayedColumns.push('select', 'no', 'lession_title', 'description', 'associated_training', 'prerequisite_lession' ,'has_test_lesson','test_percentage', 'status', 'deleteRecord', );
+      this.displayedColumns.push('select', 'no', 'associated_training', 'lession_title', 'description', 'prerequisite_lession', 'has_test_lesson', 'test_percentage', 'priority', 'status', 'deleteRecord',);
     }
 
   }
 
+  onKeypressEvent(event: any, flagval) {
+    console.log(event.target.value, 'onKeypressEvent', flagval);
+    let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
+    let data: any = {};
+    if (flagval == 'prequisite') {
+      data = {
+        "source": this.formSourceVal.source,
+        // "id": recordId,
+        "token": this.serverDetailsVal.jwttoken,
+        // "lesson_id": recordId,
+        condition: {
+          prerequisite_lession_search: { $regex: event.target.value.trim() },
+        }
+      }
+      this.apiService.postData(link, data).subscribe((res: any) => {
+        if (res.status = "success") {
+          this.category_search=[];
+          console.log(this.category_search, 'category_searchkkkkkkkkkkkkkk')
+          let arr = []
+          // 
+          if (res.res.length > 0) {
+            for (const key in res.res) {
+              if (res.res[key].prerequisite_lession_search != '') {
+                this.category_search.push({prerequisite_lession_search:res.res[key].prerequisite_lession_search});
+
+                arr.push(res.res[key].prerequisite_lession_search)
+
+                
+              }
+            }
+            let uniqueCardArr = arr.filter(function (item, pos) {
+              return arr.indexOf(item) == pos;
+            });
+            console.log(uniqueCardArr,'uniqueCardArr')
+
+          }
+         
+        }
+
+      })
+    }
+
+
+    if (flagval == 'lesson') {
+      data = {
+        "source": this.formSourceVal.source,
+        // "id": recordId,
+        "token": this.serverDetailsVal.jwttoken,
+        // "lesson_id": recordId,
+        condition: {
+          lession_title_search: { $regex: event.target.value.trim() },
+        }
+      }
+      this.apiService.postData(link, data).subscribe((res: any) => {
+        if (res.status = "success") {
+          this.lesson_search = [];
+          // let lessonSearchData=[];
+          this.lesson_search = res.res;
+
+
+
+
+          console.log(this.lesson_search, 'category_search++++')
+        }
+
+      })
+    }
+
+
+  }
+  // onKeypressEventforlession(event: any){
+  //   let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
+  //   let data: any = {
+  //     "source": this.formSourceVal.source,
+  //     // "id": recordId,
+  //     "token": this.serverDetailsVal.jwttoken,
+  //     // "lesson_id": recordId,
+  //     condition:{
+  //       lession_title_search :{$regex:event.target.value.trim()},
+  //     }
+  //   }
+  //   this.apiService.postData(link, data).subscribe((res: any) => {
+  //     if (res.status = "success") {
+  //       this.lession_search=[];
+  //       this.lession_search=res.res;
+  //       // console.log(this.category_search,'category_search')
+  //     }
+
+  //   })
+  // }
   trainingCount() {
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.trainingCountEndpoint;
     this.apiService.postDatawithoutTokenReportCount(link).subscribe((response: any) => {
@@ -317,6 +416,7 @@ export class ListLessionComponent implements OnInit {
 
 
     searchval["lession_title_search"] = { $regex: this.searchjson.lession_title_search_regex.toLowerCase() }
+    searchval["lession_title_search"] = { $regex: this.searchjson.lession_title_search_regex.toLowerCase() }
     searchval["prerequisite_lession_search"] = { $regex: this.searchjson.prerequisite_lession_search_regex.toLowerCase() }
 
     searchval["associated_training_search"] = { $regex: this.searchjson.associated_training_search_regex.toLowerCase() }
@@ -351,7 +451,7 @@ export class ListLessionComponent implements OnInit {
 
   //for go To Manage Quiz Page
   goToManageQuizPage(id: any) {
-    console.log(id,this.quizPageRoute)
+    console.log(id, this.quizPageRoute)
     this.router.navigateByUrl(this.quizPageRoute + id);
   }
 
@@ -655,7 +755,7 @@ export class ListLessionComponent implements OnInit {
           lesson_id: data._id
         }
         this.apiService.postDatawithoutToken(link, cond).subscribe((response: any) => {
-          console.log(response,'response')
+          console.log(response, 'response')
           // let result: any;
           if (response.status = 'success') {
             this.previewData = response.res;
@@ -732,7 +832,7 @@ export class AudioVideoFileDialogComponent {
             this.previewData[i].lesson_attachements[j].safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.video_base_url + this.previewData[i].lesson_attachements[j].video_url + '?rel=0&modestbranding=1&autoplay=0&showinfo=0&listType=playlist');
           }
         }
-        console.log(this.previewData,'gggggggggggggggggg')
+        console.log(this.previewData, 'gggggggggggggggggg')
       }
     }
     console.log(data.bucket_url.url, 'data.bucket_url')

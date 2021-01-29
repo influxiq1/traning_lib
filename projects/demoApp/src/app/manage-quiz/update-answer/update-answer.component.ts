@@ -14,6 +14,7 @@ public serverDetails: any = {
   "serverUrl": 'https://e4bmztjfw8.execute-api.us-east-1.amazonaws.com/dev/api1/',
   "jwttoken": ""
 };
+public answerupdateEndpoint:any='setcorrectans'
 public formSource: any = {
   "source":"quiz_answer",
   "endpoint": "addorupdatelessonanswer",

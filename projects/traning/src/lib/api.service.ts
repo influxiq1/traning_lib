@@ -87,6 +87,8 @@ export class ApiService {
     var result = this._http.post(this.getEndpointUrl(endpoint), JSON.stringify(data), httpOptions).pipe(map(res => res));
     return result;
   }
+
+
   postDatawithoutToken(link:any, data:any ) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -96,6 +98,8 @@ export class ApiService {
     var result = this._http.post(link, JSON.stringify(data), httpOptions).pipe(map(res => res));
     return result;
   }
+
+  
   postDatawithoutTokenReportCount(link:any) {
     const httpOptions = {
       headers: new HttpHeaders({

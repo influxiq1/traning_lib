@@ -128,11 +128,13 @@ export class AddEditLessionsComponent implements OnInit {
   public bucket_url: any = {
     url: 'https://beto-paredes-training-centre.s3.amazonaws.com/lesson-files/'
   }
-
+  public showfieldflag : boolean= true;
+  public traingaccessflag : boolean=false;
   public serverDetails: any = {
     "serverUrl": 'https://e4bmztjfw8.execute-api.us-east-1.amazonaws.com/dev/',
     "jwttoken": ""
   };
+  public from_type:any='lesson';
   // public formSource: any = {
   //   "source": 'manage_lession',
   //   "endpoint": "addorupdatelessondata",
@@ -148,7 +150,8 @@ export class AddEditLessionsComponent implements OnInit {
     showEndpoint: 'api1/getlessondatabyid',
     AddheaderText: 'Add Lesson',
     EditheaderText: 'Edit Lesson',
-    lessonDataEndpoint: 'api1/getlessondatabytrainingid'
+    lessonDataEndpoint: 'api1/getlessondatabytrainingid',
+    
   };
   public additionalData: any = {
     objectId: 'associated_training',
@@ -200,6 +203,7 @@ export class AddEditLessionsComponent implements OnInit {
       { inputtype: 'checkbox', name: 'status', label: 'Active', placeholder: 'Enter Status', validationrule: { required: true }, validationerrormsg: 'is required' },
 
       { inputtype: 'button', name: 'mediaType', label: 'Training Type', defaultchoice: 'Choose Training Type', sourceview: 'assets/mediaType.json', sourcetype: 'static', selectvalue: 'name', selectid: 'selectname', validationrule: { required: true }, validationerrormsg: 'is required', buttonflag: true },
+      // { inputtype: 'number', name: 'priority', label: 'Priority', placeholder: 'Enter Priority', validationrule: { required: true }, validationerrormsg: 'is required' },
     ];
 
 

@@ -7,7 +7,7 @@
     <span class="searchblockwrapper">
       <span>
         <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
-          <h2 class="headerSpan">List Of Training Management</h2>
+          <h2 class="headerSpan">Training Management</h2>
         </mat-toolbar>
 
         <mat-card-content class="countSection">
@@ -52,6 +52,13 @@
 
     <mat-form-field class="searchdiv">
       <input matInput placeholder="Search by Parent Category" [(ngModel)]="searchjson.parent_catagory_search_regex">
+    </mat-form-field>
+    
+    <mat-form-field  appearance="fill">
+      <mat-label>Search by Product </mat-label>
+      <mat-select disableRipple [(ngModel)]="searchjson.product_name_serach">
+        <mat-option *ngFor="let item of product_name_serach" [value]='item.productname'>{{item.productname}}</mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field class="searchdiv">
@@ -105,8 +112,14 @@
         <th mat-header-cell *matHeaderCellDef> No. </th>
         <td mat-cell *matCellDef="let row; let i = index;" title="No"> {{ i + 1 }} </td>
       </ng-container>
+
+      <ng-container matColumnDef="parent_catagory">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Parent Catagory </th>
+        <td mat-cell *matCellDef="let row" title="Parent Catagory"> {{row.parent_catagory}} </td>
+      </ng-container>
+
       <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Training For </th>
         <td mat-cell *matCellDef="let row" title="type"> {{row.type}} </td>
       </ng-container>
       <!-- Progress Column -->
@@ -114,7 +127,13 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
         <td mat-cell *matCellDef="let row" title="Description"> {{row.description}} </td>
       </ng-container>
-
+      <ng-container matColumnDef="product_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Name </th>
+        <td mat-cell *matCellDef="let row" title="Product Name"> 
+        <span *ngIf="row.product_name==null || row.product_name=='undefined'">None</span>
+        <span *ngIf="row.product_name!=null && row.product_name!='undefined'">{{row.product_name}}</span>
+      </td>
+      </ng-container>
       <!-- Name Column -->
       <ng-container matColumnDef="priority">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Priority </th>
@@ -122,10 +141,7 @@
       </ng-container>
 
       <!-- Color Column -->
-      <ng-container matColumnDef="parent_catagory">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Parent Catagory </th>
-        <td mat-cell *matCellDef="let row" title="Parent Catagory"> {{row.parent_catagory}} </td>
-      </ng-container>
+
 
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef>Status </th>

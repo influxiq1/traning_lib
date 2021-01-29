@@ -8,6 +8,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSnackBar } from "@angular/
 import { ApiService } from '../../api.service';
 import { DialogBoxComponent } from '../../common/dialog-box/dialog-box.component';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 
 export interface PeriodicElement {
@@ -33,8 +34,8 @@ export interface DialogData {
 })
 
 export class ListingTrainingComponent implements OnInit {
-  displayedColumns: string[] = ['select', 'no', 'catagory_name', 'type', 'description', 'priority',
-    'parent_catagory', 'status', 'deleteRecord'];
+  displayedColumns: string[] = ['select', 'no', 'parent_catagory','catagory_name','description','priority','product_name', 'type',  
+  'status', 'deleteRecord'];
   public dataSource: any;
   public listingData: any = [];
   public dialogRef: any;
@@ -54,6 +55,7 @@ export class ListingTrainingComponent implements OnInit {
   public allTrashData: any = [];
   public trashFlag: any = 0;
   public status_search_regex: any;
+  public product_name_serach:any=[];
   public trashButtonText: any = "View Trash";
   public trainingCounts: any = {
     "activatedtrainingcount": "",
@@ -96,7 +98,7 @@ export class ListingTrainingComponent implements OnInit {
   set allDataList(val: any) {
     this.listingData = (val) || '<no name set>';
     this.listingData = val;
-    // console.log(this.listingData);
+    console.log(this.listingData);
     this.dataSource = new MatTableDataSource(this.listingData);
     // this.dataSource.paginator = this.paginator;
   }
@@ -124,7 +126,7 @@ export class ListingTrainingComponent implements OnInit {
     this.searchSourceName = (val) || '<no name set>';
   }
 
-  constructor(public dialog: MatDialog, public apiService: ApiService, public router: Router, public snakBar: MatSnackBar) {
+  constructor(public dialog: MatDialog, public apiService: ApiService, public router: Router, public snakBar: MatSnackBar,public cookiesService: CookieService) {
     setTimeout(() => {
       this.trainingCount();
     }, 500);
@@ -135,7 +137,7 @@ export class ListingTrainingComponent implements OnInit {
     setTimeout(() => {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-
+      this.productListData();
     }, 100);
   }
   trainingCount() {
@@ -175,6 +177,7 @@ export class ListingTrainingComponent implements OnInit {
     });
 
   }
+
   deleteFunction(recordId: any, index: number) {
     // console.log("single delete fUNCTION", recordId, index);
 
@@ -193,6 +196,34 @@ export class ListingTrainingComponent implements OnInit {
         this.listingData.splice(index, 1);
         let allData: PeriodicElement[] = this.listingData;
         this.dataSource = new MatTableDataSource(allData);
+      }
+    })
+
+  }
+
+  productListData(){
+    let link = this.serverDetailsVal.serverUrl + 'api1/productlist';
+    let data: any = {
+      source: "training_category_management",
+      condition: {
+          "is_trash": {
+              "$ne": 1
+          }
+      },
+      token: this.serverDetailsVal.jwttoken,
+    }
+    // console.log("singledel link and data", data, link);
+
+    this.apiService.postData(link, data).subscribe((res: any) => {
+      console.log("delete response", res);
+      if (res.status = "success") {
+          this.product_name_serach=res.res;
+
+        // for (const iterator of res.res) {
+        //   this.product_name_serach=iterator.productname
+          console.log(this.product_name_serach,'product_name_serach')
+        // }
+        
       }
 
     })
@@ -227,6 +258,7 @@ export class ListingTrainingComponent implements OnInit {
 
     searchval["catagory_name_search"] = { $regex: this.searchjson.catagory_name_search_regex.toLowerCase() }
     searchval["parent_catagory_search"] = { $regex: this.searchjson.parent_catagory_search_regex.toLowerCase() }
+    searchval["product_name_serach"]={$regex: this.searchjson.product_name_serach.toLowerCase()}
 
 
 

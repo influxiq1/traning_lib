@@ -39,6 +39,7 @@ export class ListQuizComponent implements OnInit {
 
   @Input()           //getting all data from application
   set allDataList(val: any) {
+    console.log(val,'quiz')
     this.listingData = (val) || 'no name set';
     this.listingData = val;
     this.dataSource = new MatTableDataSource(this.listingData);

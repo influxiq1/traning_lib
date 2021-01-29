@@ -99,9 +99,13 @@ export class TraningComponent implements OnInit {
   public fileflag: boolean = false;
   public audioflag: boolean = false;
   public htmlflag: boolean = false;
-
+  public showfieldflag: boolean = true;
+  public priority: any;
+  public traingtypeflag: any = false;
+  public trainingacessable: any;
   public bucket_url: any;//  = 'https://training-centre-bucket.s3.amazonaws.com/lesson-files/';
-
+  public trainingAccessData: any = [];
+  public from_type: any;
 
   public
   @Input()
@@ -146,8 +150,15 @@ export class TraningComponent implements OnInit {
   set IsitBetoparedes(val: any) {
     this.betoparedesFlag = val;
   }
+  @Input()
+  set TraingAccessFlag(val: any) {
+    this.traingtypeflag = val;
+  }
 
-
+  @Input()
+  set TrainingAccessable(val: any) {
+    this.trainingacessable = val;
+  }
   @Input()
   set BuketUrl(BuketUrl: any) {
     this.bucket_url = (BuketUrl) || '<no name set>';
@@ -157,6 +168,14 @@ export class TraningComponent implements OnInit {
   set Lesson_attachment_flag(val: any) {
     this.lesson_attachment_flag_val = (val) || '<no name set>';
     this.lesson_attachment_flag_val = val;
+  }
+  @Input()
+  set Showfields(val: boolean) {
+    this.showfieldflag = (val);
+  }
+  @Input()
+  set FromType(val: any) {
+    this.from_type = val;
   }
 
 
@@ -366,6 +385,29 @@ export class TraningComponent implements OnInit {
 
       data.data.id = this.recid;
 
+      data.data.priority = this.priority;
+
+
+      if (this.traingtypeflag != null && this.traingtypeflag == true) {
+
+        for (const it in this.trainingacessable) {
+          if (this.trainingacessable[it].completed == true) {
+            this.trainingAccessData.push(this.trainingacessable[it].val)
+            console.log(this.trainingacessable[it], 'trainingacessabletrainingacessable===');
+          }
+        }
+        data.data.type = this.trainingAccessData
+      }
+
+      if (this.showfieldflag == false) {
+        delete data.data.typeHtml;
+        delete data.data.lessonplan_value;
+        delete data.data.has_lessonplan;
+        delete data.data.test_percentage;
+        delete data.data.has_test_lesson;
+      }
+
+
       this.apiService.postData(link, data).subscribe((res: any) => {
 
         if (res.status = "success") {
@@ -374,6 +416,32 @@ export class TraningComponent implements OnInit {
       })
     }
   }
+
+  checkCheckBoxvalue(event: any, value) {
+    console.log(value, 'subtask', event)
+
+    if (value.val == 'all' && value.completed == true) {
+      for (const it in this.trainingacessable) {
+        if (this.trainingacessable[it].val != 'all') {
+          this.trainingacessable[it].completed = false;
+        }
+      }
+      console.log(this.trainingacessable, 'trainingacessable')
+
+    }
+
+    if (value.val != 'all') {
+      for (const it in this.trainingacessable) {
+        if (this.trainingacessable[it].val == 'all') {
+          this.trainingacessable[it].completed = false;
+        }
+      }
+      console.log(this.trainingacessable, 'trainingacessable')
+
+    }
+
+  }
+
 
   equalToPass(fieldname): ValidatorFn {                                 //password match custom function
     return (control: AbstractControl): { [key: string]: any } => {      ///abstractcontrol function call here with key string any type
@@ -446,8 +514,6 @@ export class TraningComponent implements OnInit {
             this.formdataval[key].sourceval = this.allLessonData;
           }
         }
-
-
       })
     }
   }
@@ -816,53 +882,70 @@ export class TraningComponent implements OnInit {
 
       } else {
         console.log("edited data", res);
-        if (this.route.snapshot.url[0].path == "manage-lesson") {
-          if (this.route.snapshot.url[1].path == "edit") {
-            this.getMediaTypeVal(res.res[0].associated_training, 'associated_training');
-            this.getMediaTypeVal(res.res[0].mediaType, 'mediaType');
-            let imageBasepath: any;
-            let fileserverName: any;
-            this.fileArray = res.res[0].fileType;
-            // console.log("dingle data", res.res[0]);
-            if (res.res[0].typeHtml != null && res.res[0].typeHtml != '') {
+        if (this.from_type != null && this.from_type == 'lesson') {
+          this.getMediaTypeVal(res.res[0].associated_training, 'associated_training');
+          // this.getMediaTypeVal(res.res[0].mediaType, 'mediaType');
+          let imageBasepath: any;
+          let fileserverName: any;
+          this.fileArray = res.res[0].fileType;
+          // console.log("dingle data", res.res[0]);
+          if (res.res[0].typeHtml != null && res.res[0].typeHtml != '') {
 
-              this.htmType = res.res[0].typeHtml;
-            }
-            // this.hasLessonVal=res.res[0].has_lessonplan;
-            this.chkboxval = res.res[0].has_lessonplan;
-
-            if (res.res[0] != null && res.res[0].has_test_lesson != null && res.res[0].has_test_lesson != 'undefined') {
-              // console.log(res.res[0].has_test_lesson, 'res.res[0].has_test_lesson')
-              this.has_test_lesson = res.res[0].has_test_lesson;
-              this.test_percentage = res.res[0].test_percentage
-            }
-
-            if (res.res[0].videoflag != null && typeof (res.res[0].videoflag) != 'undefined') {
-              this.videoflag = true;
-              this.video_array = res.res[0].video_array;
-            }
-            if (res.res[0].audioflag != null && typeof (res.res[0].audioflag) != 'undefined') {
-              this.audioflag = true;
-              this.audio_array = res.res[0].audio_array;
-            }
-            if (res.res[0].fileflag != null && typeof (res.res[0].fileflag) != 'undefined') {
-              this.fileflag = true;
-              this.file_array = res.res[0].file_array;
-              // console.log(this.file_array, 'zesdxfghjwaesr')
-            }
-            console.log(this.audioflag, "audio")
-            console.log(this.videoflag, "video")
-            console.log(this.fileflag, "file")
-
-            this.getchkboxval(this.chkboxval);
-            this.lessonplanValue = res.res[0].lessonplan_value;
+            this.htmType = res.res[0].typeHtml;
           }
+          // this.hasLessonVal=res.res[0].has_lessonplan;
+          this.chkboxval = res.res[0].has_lessonplan;
+
+          if (res.res[0] != null && res.res[0].has_test_lesson != null && res.res[0].has_test_lesson != 'undefined') {
+            // console.log(res.res[0].has_test_lesson, 'res.res[0].has_test_lesson')
+            this.has_test_lesson = res.res[0].has_test_lesson;
+            this.test_percentage = res.res[0].test_percentage
+          }
+
+          if (res.res[0].videoflag != null && typeof (res.res[0].videoflag) != 'undefined') {
+            this.videoflag = true;
+            this.video_array = res.res[0].video_array;
+          }
+          if (res.res[0].audioflag != null && typeof (res.res[0].audioflag) != 'undefined') {
+            this.audioflag = true;
+            this.audio_array = res.res[0].audio_array;
+          }
+          if (res.res[0].fileflag != null && typeof (res.res[0].fileflag) != 'undefined') {
+            this.fileflag = true;
+            this.file_array = res.res[0].file_array;
+            // console.log(this.file_array, 'zesdxfghjwaesr')
+          }
+          console.log(this.audioflag, "audio")
+          console.log(this.videoflag, "video")
+          console.log(this.fileflag, "file")
+
+          this.getchkboxval(this.chkboxval);
+          this.lessonplanValue = res.res[0].lessonplan_value;
+          console.log(this.trainingacessable, '7777')
+
         }
+        if (res.res[0].priority != null && typeof (res.res[0].priority) != 'undefined') {
+          this.priority = res.res[0].priority;
+        }
+        if (this.from_type != null && this.from_type == 'training') {
+if (this.trainingacessable.length>0) {
+  for (const key in this.trainingacessable) {
+    for (const i in res.res[0].type) {
+      if (this.trainingacessable[key].val==res.res[0].type[i]) {
+        console.log(res.res[0].type[i],'type',this.trainingacessable[key].val)
+        this.trainingacessable[key].completed=true;
+
+      }
+    }
+  }
+}
+        }
+
 
         let folder: any = '';
 
         for (let c in this.dataForm.controls) {
-
+          console.log(this.dataForm.controls, 'trash', res)
           this.dataForm.controls[c].patchValue(res.res[0][c]);
           for (let j in this.formdataval) {
 

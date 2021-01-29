@@ -76,7 +76,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
   public percentageprogressLoader: boolean = true;
   public video_data: any = [];
   public next_button_access: any = false;
-  public quizflag: boolean = true;
+  public quizflag: boolean = false;
   public complete_fileflag: any = [];
   public complete_audioflag: any = [];
   public complete_videoflag: any = [];
@@ -227,6 +227,22 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
         this.trainingCategoryData[key].done = 0;
       }
     }
+    if (this.lessonContentData.has_test_lesson != null && this.lessonContentData.has_test_lesson != 1) {
+      this.quizflag = false;
+      this.next_button_access = true;
+    } 
+    for (const key in this.trainingLessonData.complete_lesson_quiz) {
+    if (this.lessonContentData.has_test_lesson != null && this.lessonContentData.has_test_lesson == 1 &&this.lessonContentData._id != this.trainingLessonData.complete_lesson_quiz[key].lesson_id) {
+      this.quizflag = true;
+      this.next_button_access = false;
+      console.log('quizflag', 'true')
+    }
+   
+      if (this.lessonContentData._id == this.trainingLessonData.complete_lesson_quiz[key].lesson_id) {
+        this.quizflag = false;
+        this.next_button_access = true;
+      }
+    }
 
 
   }
@@ -247,22 +263,22 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     console.log(val, '+++', this.trainingCenterRoute)
     console.log(this.trainingCategoryData[0], 'trainingCategoryData')
 
-   
-      if (this.trainingCategoryData[0].done == this.trainingCategoryData[0].count || this.trainingCategoryData[0]._id==val._id) {
-        setTimeout(() => {
-          this.progress_bar = 1;
-        }, 100);
-        this.router.navigateByUrl(this.trainingCenterRoute + val._id);
-        this.training_cat_name = catagory_name;
-        setTimeout(() => {
-          document.getElementById("lessonData").scrollIntoView();
-          this.progress_bar = 0;
-        }, 1000);
-      }
-    
+
+    if (this.trainingCategoryData[0].done == this.trainingCategoryData[0].count || this.trainingCategoryData[0]._id == val._id) {
+      setTimeout(() => {
+        this.progress_bar = 1;
+      }, 100);
+      this.router.navigateByUrl(this.trainingCenterRoute + val._id);
+      this.training_cat_name = catagory_name;
+      setTimeout(() => {
+        document.getElementById("lessonData").scrollIntoView();
+        this.progress_bar = 0;
+      }, 1000);
+    }
+
 
     else {
-      this.snakBar.open("You can't access this training", 'Ok', {
+      this.snakBar.open("Sorry, You cannot access this training unless you complete the first training ", 'Ok', {
         duration: 1000
       });
     }
@@ -305,7 +321,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     this.audio_progress[val] = Math.floor((this.audio_currenttime[val] / this.audio_duration[val]) * 100);
     // console.log(this.audio_currenttime[val], 'audioId.currentTime')
   }
-//skip ten sec (next and previous)
+  //skip ten sec (next and previous)
   skipTensec(val, item, flag) {
     // console.log(item, '+++++++++++====', flag)
     if (item.audio_skippable == false) {
@@ -463,7 +479,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
   }
   lessonQuiz(val: any) {
-    console.log(val,'kkkkkkkkkkkkkkbeto')
+    console.log(val, 'kkkkkkkkkkkkkkbeto')
     if (val != null && typeof (val.quiz_data) != 'undefined') {
       // // console.log(val, '++', this.AllTrainingData.quiz_data)
       var server_url: any = this.serverDetailsVal.serverUrl + 'addlessonquizdata';
@@ -854,11 +870,12 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
       //   }
 
       // });
-      // if (this.quizflag != true) {
-      //   this.next_button_access = true;
-      // }
-      // else {
-      //   this.next_button_access = false;
+      if (this.quizflag != true) {
+        this.next_button_access = true;
+      }
+      else {
+        this.next_button_access = false;
+      }
     });
 
   }
@@ -893,18 +910,18 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
         // }, 2000);
 
         setTimeout(() => {
-          if (this.AllTrainingData.complete_lesson_video.length != null &&
-            this.AllTrainingData.complete_lesson_video.length == this.video_data.length) {
+          if (this.trainingCentreData.complete_lesson_video.length != null &&
+            this.trainingCentreData.complete_lesson_video.length == this.video_data.length) {
             // // console.log(this.AllTrainingData.complete_lesson_video, 'has_lessonplan ++')
             this.next_button_access = true;
 
-            if (this.AllTrainingData.quiz_data.length != 0) {
+            if (this.trainingCentreData.quiz_data.length != 0) {
               this.quizflag = true;
               this.next_button_access = false;
             }
 
-            if (this.AllTrainingData.complete_lesson_quiz != null && this.AllTrainingData.complete_lesson_quiz[0] != null) {
-              if (this.AllTrainingData.complete_lesson_quiz[0].lesson_id == this.AllTrainingData.lesson_content[0]._id) {
+            if (this.trainingCentreData.complete_lesson_quiz != null && this.trainingCentreData.complete_lesson_quiz[0] != null) {
+              if (this.trainingCentreData.complete_lesson_quiz[0].lesson_id == this.trainingCentreData.lesson_content[0]._id) {
                 this.next_button_access = true;
                 this.quizflag = false;
               }
