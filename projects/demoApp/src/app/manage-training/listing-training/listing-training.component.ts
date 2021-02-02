@@ -30,7 +30,7 @@ public formSource: Object = {
   "retriveTrashDataSourceName":"training_category_management",
   "trainingCountEndpoint" : "trainingcounts"
 }
-
+public productlistEndpoint='productlist'
   constructor(public activatedRoute : ActivatedRoute,public cookie:CookieService) { 
     this.jwtToken = cookie.get('jwtToken');
     this.serverDetails.jwttoken=this.jwtToken;

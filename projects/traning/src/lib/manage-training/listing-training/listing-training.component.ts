@@ -57,6 +57,7 @@ export class ListingTrainingComponent implements OnInit {
   public status_search_regex: any;
   public product_name_serach:any=[];
   public trashButtonText: any = "View Trash";
+  public productEndpoint:any
   public trainingCounts: any = {
     "activatedtrainingcount": "",
     "activatedlessoncount": "",
@@ -124,6 +125,10 @@ export class ListingTrainingComponent implements OnInit {
   @Input()
   set SearchSourceName(val: any) {
     this.searchSourceName = (val) || '<no name set>';
+  }
+  @Input()
+  set ProductnameEndpoint(val:any){
+    this.productEndpoint=val
   }
 
   constructor(public dialog: MatDialog, public apiService: ApiService, public router: Router, public snakBar: MatSnackBar,public cookiesService: CookieService) {
@@ -202,7 +207,7 @@ export class ListingTrainingComponent implements OnInit {
   }
 
   productListData(){
-    let link = this.serverDetailsVal.serverUrl + 'api1/productlist';
+    let link = this.serverDetailsVal.serverUrl + this.productEndpoint;
     let data: any = {
       source: "training_category_management",
       condition: {
