@@ -177,6 +177,10 @@
     bottom: 10px
 }
 
+.trainingcentercls .progresspercentagecls{
+    float: right;
+}
+
 .trainingcentercls .trainingheadercls {
     margin: 0;
     padding: 0;
@@ -545,15 +549,15 @@
 
 .classlessonongoing {
     background-color: rgb(48, 62, 187);
-    width: 100%;
+     
     text-align: left;
     padding: 6px;
-    text-transform: capitalize;
+    text-transform: capitalize; width: auto;
 }
 
 .classlessondone {
     background-color: rgb(59, 182, 89);
-    width: 100%;
+    width: auto;
     text-align: left;
     padding: 6px;
     text-transform: capitalize;
@@ -802,15 +806,64 @@ mat-slider {
 .filetype_docx {
     cursor: pointer;
 }
-.filetype_doc{
+
+.filetype_doc {
     cursor: pointer;
 }
-.donetikcls{
+
+.donetikcls {
     width: 100%;
 }
-.doneimgcls{
+
+.doneimgcls {
     width: 28px;
     margin: -9px;
     left: 419px;
     position: absolute;
 }
+
+/* new css   */
+
+.maincartcls {
+    width: 100%;
+    height: auto;
+}
+
+.alltrainingcls {
+    float: right;
+    width: 20%;
+    padding: 5px;
+}
+
+.alllession_cls {
+    float: left;
+    width: 69%;
+    padding: 16px;
+}
+
+
+.rowinner_block{ display: block; padding: 5px; 
+    width: inherit;
+    background-color: #dfdfdf;  cursor: pointer;
+    margin: 5px 0px 5px 0px;}
+
+
+  .maincartcls_row{ display: flex; flex-wrap: wrap; justify-content: space-between;}
+
+
+  .maincartcls_row .alllession_cls{ width:68%; padding: 0;}
+
+  .maincartcls_row .alltrainingcls{ width:30%; padding: 0; background-color: #c3c4c1; text-transform: inherit;}
+
+  .trainingcentercls_group{ border-bottom: solid 10px #fff;}
+
+  .trainingcentercls_group:last-of-type{ border:none}
+
+  .trainingcentercls_group h2{ margin:0; padding:15px;     background: #000000;
+    color: #fff;}
+
+  .trainingcentercls_box .mat-list-item{ padding:15px; display: block;}
+
+  .trainingcentercls_box .classongoing{ background:#8fef8d;}
+  .markbtncls{left: 816px;
+    position: relative;}

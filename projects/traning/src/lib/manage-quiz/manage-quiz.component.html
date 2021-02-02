@@ -107,13 +107,13 @@
 
                         <span *ngIf="element.question_type == 'multiple_selection'">
 
-                            <button mat-raised-button type="button" color="primary"
+                            <button mat-raised-button type="button" class="viewanscls" color="primary"
                                 (click)="viewAnswerData(element,1)">View
                                 Answer</button>
                         </span>
 
                         <span *ngIf="element.question_type == 'pick_picture'">
-                            <button mat-raised-button type="button" color="primary" (click)="viewImages(element,2)">View
+                            <button mat-raised-button type="button" color="primary" class="viewimgcls" (click)="viewImages(element,2)">View
                                 Images</button>
                         </span>
 

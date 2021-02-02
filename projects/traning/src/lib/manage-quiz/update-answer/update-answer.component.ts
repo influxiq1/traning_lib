@@ -33,7 +33,7 @@ export class UpdateAnswerComponent implements OnInit {
   public formSourceVal: any;
   public listingPageRoute: any;
   public lessonId: any;
-  public ansapdateendpoint : any;
+  public ansapdateendpoint: any;
 
   displayedColumns: string[] = ['No', 'answers', 'Correct', 'action'];
   dataSource: MatTableDataSource<PeriodicElement>;
@@ -54,7 +54,7 @@ export class UpdateAnswerComponent implements OnInit {
     this.quizAnswerData = (val) || '<no name set>';
     // this.dataSource = this.quizAnswerData;
     this.dataSource = new MatTableDataSource(this.quizAnswerData);
-
+console.log(val,'val')
   }
   @Input()
   set ListingPageRoute(val: any) {
@@ -64,10 +64,10 @@ export class UpdateAnswerComponent implements OnInit {
   set LessonId(val: any) {
     this.lessonId = (val) || '<no name set>';
   }
-@Input()
-set AnsUpdateEndpoint (val:any){
-  this.ansapdateendpoint=val
-}
+  @Input()
+  set AnsUpdateEndpoint(val: any) {
+    this.ansapdateendpoint = val
+  }
 
   constructor(public dialog: MatDialog, public apiService: ApiService, public router: Router) {
 
@@ -83,57 +83,40 @@ set AnsUpdateEndpoint (val:any){
 
 
   isCorrect(val, i) {
-    console.log(val, 'kkkkk', i);
-    const dialogRef = this.dialog.open(AnswerchangeconfromDialog, {
-      width: '500px',
-      data: val
-    });
+    console.log(val.isCorrect, 'kkkkk', i);
+    let link = this.serverDetailsVal.serverUrl + this.ansapdateendpoint;
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
-
-      if (result.flag != null && result.flag == true) {
-        // this.updatequizdata(result)
-        let link = this.serverDetailsVal.serverUrl + this.ansapdateendpoint;
-
-        let dataquiz: any = {
-          _id: result._id,
-          token: this.serverDetailsVal.jwttoken,
-          isCorrect: result.isCorrect
-        }
-        console.log(dataquiz, 'The dialog was closed+++++++++++++++++++++++++++++', result);
-
-        this.apiService.postData(link, dataquiz).subscribe((res: any) => {
-          if (res.status == 'success') {
-            this.quizAnswerData[i].isCorrect = result.isCorrect
-            let allData: PeriodicElement[] = this.quizAnswerData;
-            this.dataSource = new MatTableDataSource(allData);
-          }
-
-
-
-        })
+    if (i == 0) {
+      val.isCorrect = 1
+      let dataquiz: any = {
+        _id: val._id,
+        token: this.serverDetailsVal.jwttoken,
+        isCorrect: val.isCorrect
       }
-    });
+      this.apiService.postData(link, dataquiz).subscribe((res: any) => {
+        if (res.status == 'success') {
+          this.quizAnswerData[i].isCorrect = val.isCorrect
+          let allData: PeriodicElement[] = this.quizAnswerData;
+          this.dataSource = new MatTableDataSource(allData);
+        }
+      })
+    } if (i == 1) {
+      val.isCorrect = 0;
+      let dataquiz: any = {
+        _id: val._id,
+        token: this.serverDetailsVal.jwttoken,
+        isCorrect: val.isCorrect
+      }
+      this.apiService.postData(link, dataquiz).subscribe((res: any) => {
+        if (res.status == 'success') {
+          this.quizAnswerData[i].isCorrect = val.isCorrect
+          let allData: PeriodicElement[] = this.quizAnswerData;
+          this.dataSource = new MatTableDataSource(allData);
+        }
+      })
+    }
+
   }
-
-
-  // updatequizdata(result) {
-  //   let link = this.serverDetailsVal.serverUrl + 'api1/setcorrectans';
-
-  //   let dataquiz: any = {
-  //     _id: result._id,
-  //     isCorrect: result.isCorrect
-  //   }
-  //   console.log('The dialog was closed+++++++++++++++++++++++++++++', result);
-
-  //     this.apiService.postData(link,dataquiz ).subscribe((res: any) => {
-  //     if (res.status = "success") {
-  //       let allData: PeriodicElement[] = this.quizAnswerData;
-  //       this.dataSource = new MatTableDataSource(allData);
-  //     }
-  //   })
-  // }
 
 
   goToquizList() {

@@ -25,7 +25,12 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
   };
   public trainingcatParamid = this.activatedRoute.snapshot.params.associated_training;
   public lessonParamId = '';
+ public lessionFileEndpoint:any={
+   file_endpoint:'updateusercompletelessonfiles',
+   video_endpoint:'updateusercompletelessonvideo',
+   audio_endpoint:'updateusercompletelessonaudio'
 
+ }
 
   public formSource: any = {
     "source": 'manage_lession_view',
@@ -36,12 +41,13 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     "formTitleName": 'Training Center',
     "getUpdatedTrainingPercentageByUserEndpoint": "getupdatedtrainingpercentagebyuserid",
     "trainingCompletEmailEndpoint": "trainingcompletemail",
-    "trainingcatcompletemailendpoint": "trainingcatcompletemail"
+    "trainingcatcompletemailendpoint": "trainingcatcompletemail",
+    gettrainingcenterlistendpoint:'gettrainingcenterlist'
   }
   public trainingCenterRoute: any = "/training-center-beto-paredes/";
   public lessonplanmaterialRoute: any = "/lesson-plan-material/";
   public jwtToken: any;
-  public googleScheduleRoute: any = '/manage-appointment/mentee/book-appointment/';
+  public googleScheduleRoute: any = '/calendar-management/manage-appointment/game-plan/book-appointment/';
 
   constructor(public activatedRoute: ActivatedRoute, public cookie: CookieService) {
     this.paramsId = this.activatedRoute.snapshot.params.associated_training;

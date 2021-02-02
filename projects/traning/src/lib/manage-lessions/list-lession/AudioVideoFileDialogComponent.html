@@ -103,10 +103,10 @@
 
     <div *ngIf="data.type_flag=='preview'">
         <div *ngFor="let item of previewData ;let i=index">
-            <p>{{item?.lession_title}}</p>
+            <h2 class="listheader">{{item?.lession_title}}</h2>
             <!-- <p>{{item | json}}</p> -->
-            <div class="allpreviwe">
-                <mat-card *ngIf="item.typeHtml!=null && item.typeHtml!=undefined && item.typeHtml!=''">
+            <div class="Lesson_Videos_Modal" > <div class="allpreviwe">
+                <mat-card class="previewhtmlcls" *ngIf="item.typeHtml!=null && item.typeHtml!=undefined && item.typeHtml!=''">
                     <p [innerHtml]="item.typeHtml" class="ptagimg"></p>
                 </mat-card>
                 <ng-container *ngFor="let val of item?.lesson_attachements">
@@ -180,7 +180,8 @@
 
 
 
-            </div>
+            </div></div>
+           
         </div>
     </div>
 </div>

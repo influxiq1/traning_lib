@@ -18,7 +18,7 @@
                         </i>Back To
                         Lesson List</button>
 
-                    <button class="singleButton" mat-raised-button color="primary" (click)="addButton()">
+                    <button class="singleButton" class="addquizcls" mat-raised-button color="primary" (click)="addButton()">
                         <i class="material-icons">add</i> Add Quiz</button>
                 </mat-toolbar>
             </span>
@@ -100,10 +100,10 @@
 
                         <span class="singleButton">
 
-                            <button mat-raised-button type="button" color="primary" (click)="goToAnswerPage 
+                            <button mat-raised-button type="button" class="addanscls" matTooltip="Add Answer" color="primary" (click)="goToAnswerPage 
                             (element._id)">Add Answer</button>
 
-                            <button mat-raised-button type="button" color="primary"
+                            <button mat-raised-button type="button" matTooltip="View Answer" class="viewanscls" color="primary"
                                 (click)="goToUpdateAnswerPage(element._id)">View Answer</button>
 
                         </span>

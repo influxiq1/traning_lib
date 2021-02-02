@@ -20,7 +20,7 @@ export class AddEditTrainingComponent implements OnInit {
 
 
   public trainingaccessable :any=[ {name: 'Admin',val:'admin', completed: false, },
-  {name: 'sales',val:'sales', completed: false, },
+  {name: 'sales',val:'sales-person', completed: false, },
   {name: 'All', val:'all',completed: false, }]                    
   
   public serverDetails: any = {
