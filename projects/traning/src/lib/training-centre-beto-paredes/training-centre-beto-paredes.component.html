@@ -369,7 +369,12 @@
 
 
 
-
+<div class="trainingheadercls">
+  <h2>You Have Completed {{ dividend }}/{{divisor}} Lessons</h2>
+  <mat-progress-bar *ngIf="percentageprogressLoader" mode="determinate" value="{{((dividend/divisor)*100)}}">
+  </mat-progress-bar>
+  <h3>{{ reportPercentage }}%</h3>
+</div>
 
 
 <!-- new design -->

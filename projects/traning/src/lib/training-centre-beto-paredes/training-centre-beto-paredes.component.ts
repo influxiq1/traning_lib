@@ -126,7 +126,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
   @Input()
   set LessionFileEndpoint(val: any) {
     this.lessionFileEndpoint = val;
-    console.log(this.lessionFileEndpoint,'lessionFileEndpoint')
+    console.log(this.lessionFileEndpoint, 'lessionFileEndpoint')
   }
 
 
@@ -208,7 +208,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     if (val.done_lesson_by_user.length != 0 && val.done_lesson_by_user[0].lessonsdone != '' && typeof (val.done_lesson_by_user[0].lessonsdone) != 'undefined') {
       this.dividend = val.done_lesson_by_user[0].lessonsdone;
     }
-    this.divisor = val.total_lesson[0].count;
+    this.divisor = val.total_lesson;
 
     this.reportPercentage = Math.floor(this.dividend / this.divisor * 100);
 
@@ -554,7 +554,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
         //   // // console.log(this.lesson_content.has_lessonplan, 'has_lessonplan')
         //   this.addMarkedData(this.lessonDataList[0]._id, this.paramsId, this.nextdata, this.lesson_content.lession_title, this.nextlessondata);
         // }
-        this.addMarkedData(this.lessonDataList[0]._id, this.paramsId, this.nextdata, this.lesson_content.lession_title, this.nextlessondata);
+        this.addMarkedData(this.lessonDataList[0]._id, this.paramsId, this.nextdata, this.lessonContentData.lession_title, this.nextlessondata);
 
         let ind: any = 0;
         setTimeout(() => {
@@ -619,6 +619,11 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
 
   addMarkedData(lessonId: any, associated_training: any, i: any, lession_title: any, nextlessondata: any) {
+    for (var j = 0; j < this.trainingLessonData.length; j++) {
+      if (this.trainingLessonData[j]._id === lessonId) {
+console.log(this.trainingLessonData[j+1])
+      }
+    }
     const link = this.serverDetailsVal.serverUrl + this.formSourceVal.addMarkendpoint;
     if (this.trainingCategoryName == null || this.trainingCategoryName == '') { }
     let data: any = {
@@ -634,7 +639,6 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
       "token": this.serverDetailsVal.jwttoken
     }
 
-    // // console.log('post data', data);
 
     this.apiService.postData(link, data).subscribe((response: any) => {
       // // console.log(response, 'respoese453')
@@ -643,9 +647,11 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
         let data: any = {
           "user_id": this.userId
         }
-
+        console.log(this.reportPercentage, 'post data', data);
       }
     })
+
+    console.log(this.reportPercentage, 'post+++++++++++++++============== data', data);
 
   }
   lessonQuiz(val: any) {
