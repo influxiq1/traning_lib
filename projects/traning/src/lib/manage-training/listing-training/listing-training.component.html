@@ -46,12 +46,41 @@
     </span>
   </span>
   <span class="searchbar">
+    
     <mat-form-field class="searchdiv">
-      <input matInput placeholder="Search by Training Name" [(ngModel)]="searchjson.catagory_name_search_regex">
+      <mat-label>Search by Training Name</mat-label>
+      <input (keyup)="onKeypressEvent($event,'training')" type="text"
+             placeholder="Search by Training Name"
+             aria-label="Number"
+             matInput
+             [formControl]="myControl"
+             [matAutocomplete]="auto"
+             [(ngModel)]="searchjson.catagory_name_search_regex">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let items of category_search" [value]="items.catagory_name_search">{{items.catagory_name_search}}
+  
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
-
+<!-- 
     <mat-form-field class="searchdiv">
       <input matInput placeholder="Search by Parent Category" [(ngModel)]="searchjson.parent_catagory_search_regex">
+    </mat-form-field> -->
+
+    <mat-form-field class="searchdiv">
+      <mat-label>Search by Parent Category</mat-label>
+      <input (keyup)="onKeypressEvent($event,'parent_catagory')" type="text"
+             placeholder="Search by Parent Category"
+             aria-label="Number"
+             matInput
+             [formControl]="myControl1"
+             [matAutocomplete]="auto1"
+             [(ngModel)]="searchjson.parent_catagory_search_regex">
+      <mat-autocomplete #auto1="matAutocomplete">
+        <mat-option *ngFor="let items of uniqueCardArr" [value]="items">{{items}}
+  
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
     
     <mat-form-field  appearance="fill">

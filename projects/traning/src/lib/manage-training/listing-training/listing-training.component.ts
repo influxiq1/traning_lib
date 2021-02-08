@@ -9,6 +9,7 @@ import { ApiService } from '../../api.service';
 import { DialogBoxComponent } from '../../common/dialog-box/dialog-box.component';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { FormControl } from '@angular/forms';
 
 
 export interface PeriodicElement {
@@ -34,8 +35,8 @@ export interface DialogData {
 })
 
 export class ListingTrainingComponent implements OnInit {
-  displayedColumns: string[] = ['select', 'no', 'parent_catagory','catagory_name','description','priority','product_name', 'type',  
-  'status', 'deleteRecord'];
+  displayedColumns: string[] = ['select', 'no', 'parent_catagory', 'catagory_name', 'description', 'priority', 'product_name', 'type',
+    'status', 'deleteRecord'];
   public dataSource: any;
   public listingData: any = [];
   public dialogRef: any;
@@ -55,9 +56,14 @@ export class ListingTrainingComponent implements OnInit {
   public allTrashData: any = [];
   public trashFlag: any = 0;
   public status_search_regex: any;
-  public product_name_serach:any=[];
+  public product_name_serach: any = [];
   public trashButtonText: any = "View Trash";
-  public productEndpoint:any
+  public productEndpoint: any;
+  public category_search: any = [];
+  public parent_catagory_search: any = [];
+  public myControl = new FormControl();
+  public myControl1 = new FormControl();
+  public uniqueCardArr: any = [];
   public trainingCounts: any = {
     "activatedtrainingcount": "",
     "activatedlessoncount": "",
@@ -110,7 +116,7 @@ export class ListingTrainingComponent implements OnInit {
   @Input()
   set formSource(formSource: any) {
     this.formSourceVal = (formSource) || '<no name set>';
-    // console.log("formsourceval", this.formSourceVal);
+    console.log("formsourceval", this.formSourceVal);
   }
   @Input()
   set EditPageRoute(val: any) {
@@ -127,11 +133,11 @@ export class ListingTrainingComponent implements OnInit {
     this.searchSourceName = (val) || '<no name set>';
   }
   @Input()
-  set ProductnameEndpoint(val:any){
-    this.productEndpoint=val
+  set ProductnameEndpoint(val: any) {
+    this.productEndpoint = val
   }
 
-  constructor(public dialog: MatDialog, public apiService: ApiService, public router: Router, public snakBar: MatSnackBar,public cookiesService: CookieService) {
+  constructor(public dialog: MatDialog, public apiService: ApiService, public router: Router, public snakBar: MatSnackBar, public cookiesService: CookieService) {
     setTimeout(() => {
       this.trainingCount();
     }, 500);
@@ -206,14 +212,14 @@ export class ListingTrainingComponent implements OnInit {
 
   }
 
-  productListData(){
+  productListData() {
     let link = this.serverDetailsVal.serverUrl + this.productEndpoint;
     let data: any = {
       source: "training_category_management",
       condition: {
-          "is_trash": {
-              "$ne": 1
-          }
+        "is_trash": {
+          "$ne": 1
+        }
       },
       token: this.serverDetailsVal.jwttoken,
     }
@@ -222,13 +228,13 @@ export class ListingTrainingComponent implements OnInit {
     this.apiService.postData(link, data).subscribe((res: any) => {
       console.log("delete response", res);
       if (res.status = "success") {
-          this.product_name_serach=res.res;
+        this.product_name_serach = res.res;
 
         // for (const iterator of res.res) {
         //   this.product_name_serach=iterator.productname
-          console.log(this.product_name_serach,'product_name_serach')
+        console.log(this.product_name_serach, 'product_name_serach')
         // }
-        
+
       }
 
     })
@@ -263,7 +269,7 @@ export class ListingTrainingComponent implements OnInit {
 
     searchval["catagory_name_search"] = { $regex: this.searchjson.catagory_name_search_regex.toLowerCase() }
     searchval["parent_catagory_search"] = { $regex: this.searchjson.parent_catagory_search_regex.toLowerCase() }
-    searchval["product_name_serach"]={$regex: this.searchjson.product_name_serach.toLowerCase()}
+    // searchval["product_name_serach"]={$regex: this.searchjson.product_name_serach.toLowerCase()} 
 
 
 
@@ -297,6 +303,62 @@ export class ListingTrainingComponent implements OnInit {
     }
     this.dataSource = new MatTableDataSource(this.listingData);
 
+  }
+  onKeypressEvent(event: any, val) {
+    console.log(event, 'traing', val);
+    let link1 = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
+    if (val == 'training') {
+      let data = {
+        token: this.serverDetailsVal.jwttoken,
+        source: this.formSourceVal.source,
+        condition: {
+          catagory_name_search: { $regex: event.target.value.trim() },
+        }
+      }
+      this.apiService.postData(link1, data).subscribe((res: any) => {
+        if (res.status = "success") {
+          console.log(res)
+          // this.category_search
+          this.category_search = [];
+
+          for (const iterator of res.res) {
+            console.log(iterator.catagory_name_search)
+            this.category_search.push({ catagory_name_search: iterator.catagory_name_search })
+          }
+        }
+      })
+
+    }
+    if (val == 'parent_catagory') {
+      let data2 = {
+        token: this.serverDetailsVal.jwttoken,
+        source: this.formSourceVal.source,
+        condition: {
+          parent_catagory_search: { $regex: event.target.value.trim() },
+        }
+      }
+      let arr = []
+      this.apiService.postData(link1, data2).subscribe((res: any) => {
+        if (res.status = "success") {
+          console.log(res)
+          // this.category_search
+          this.parent_catagory_search = [];
+          for (const iter in res.res) {
+            console.log(res.res[iter].parent_catagory_search)
+            this.parent_catagory_search.push({ parent_catagory_search: res.res[iter].parent_catagory_search });
+            console.log(this.parent_catagory_search)
+            arr.push(res.res[iter].parent_catagory_search)
+
+          }
+          this.uniqueCardArr = arr.filter(function (item, pos) {
+            return arr.indexOf(item) == pos;
+          });
+          console.log(this.uniqueCardArr, 'uniqueCardArr', arr)
+
+        }
+      })
+
+    }
   }
   statusUpdateModal(id: any, index: any) {
     let modalData: any = {
