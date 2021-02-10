@@ -593,6 +593,13 @@
                   </div>
                 </div>
               </mat-card>
+              <mat-card class="banner1cls" *ngIf="quizReportflag==true">
+                <div class="bannerclassmentor">
+                  <div class='reviewcls accurecycls' >
+                    Quiz is complete with {{completeQuizData.quiz_percentage}}%  Accuracy   
+                  </div>
+                </div>
+              </mat-card>
             </div>
 
             <button *ngIf="next_button_access==true" button mat-raised-button color="accent" type="button"

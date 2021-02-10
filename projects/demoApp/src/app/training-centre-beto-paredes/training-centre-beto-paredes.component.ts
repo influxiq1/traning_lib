@@ -25,14 +25,13 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
   };
   public trainingcatParamid = this.activatedRoute.snapshot.params.associated_training;
   public lessonParamId = '';
- public lessionFileEndpoint:any={
-   file_endpoint:'updateusercompletelessonfiles',
-   video_endpoint:'updateusercompletelessonvideo',
-   audio_endpoint:'updateusercompletelessonaudio'
+  public lessionFileEndpoint: any = {
+    file_endpoint: 'updateusercompletelessonfiles',
+    video_endpoint: 'updateusercompletelessonvideo',
+    audio_endpoint: 'updateusercompletelessonaudio'
 
- }
- public lessonquizendpoint ='addlessonquizdata'
-
+  }
+  public lessonquizendpoint = 'addlessonquizdata'
   public formSource: any = {
     "source": 'manage_lession_view',
     "markedSourceName": "done_training_lesson",
@@ -43,7 +42,9 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     "getUpdatedTrainingPercentageByUserEndpoint": "getupdatedtrainingpercentagebyuserid",
     "trainingCompletEmailEndpoint": "trainingcompletemail",
     "trainingcatcompletemailendpoint": "trainingcatcompletemail",
-    gettrainingcenterlistendpoint:'gettrainingcenterlist'
+    gettrainingcenterlistendpoint: 'gettrainingcenterlist',
+    traingupdateendpoint: 'update-training-percentage'
+
   }
   public trainingCenterRoute: any = "/training-center-beto-paredes/";
   public lessonplanmaterialRoute: any = "/lesson-plan-material/";
@@ -54,14 +55,14 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     this.paramsId = this.activatedRoute.snapshot.params.associated_training;
     this.jwtToken = cookie.get('jwtToken');
     this.serverDetails.jwttoken = this.jwtToken;
-    console.log(this.activatedRoute.snapshot.params)
+    // console.log(this.activatedRoute.snapshot.params)
   }
 
   ngOnInit() {
     this.activatedRoute.data.forEach(data => {
-      console.log(data, 'data')
+      // console.log(data, 'data')
       this.trainingName = data.trainingdata.trainingname;
-      console.log(data, "gettrainingcenterlist data", this.trainingName);
+      // console.log(data, "gettrainingcenterlist data", this.trainingName);
       let result: any;
       result = data.trainingdata.results;
       this.totalData = result;
@@ -71,7 +72,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
     })
 
-    // console.log(this.activatedRoute.snapshot.params._id,'____app___________')
+    // // console.log(this.activatedRoute.snapshot.params._id,'____app___________')
     // this.activatedRoute.snapshot.params._id='6006cf8b1dc1570009fe3bbf'
     // if (this.activatedRoute.snapshot.params._id != null) {
     //   this.lessonParamId = this.activatedRoute.snapshot.params._id
@@ -90,11 +91,11 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
     //       break;
 
-       
-    //   }
-    //   console.log(this.lessonParamId, '____app___________')
 
-    //   console.log('null')
+    //   }
+    //   // console.log(this.lessonParamId, '____app___________')
+
+    //   // console.log('null')
 
     // }
 
