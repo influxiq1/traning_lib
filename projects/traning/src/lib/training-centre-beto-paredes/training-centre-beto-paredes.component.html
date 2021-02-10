@@ -396,20 +396,7 @@
         <div class="" *ngIf="item._id==paramslessonId">
 
           <div class="lessoncontent">
-            <mat-card class="banner1cls" *ngIf="quizflag==true">
-              <div class="bannerclassmentor">
-                <div class='reviewcls'>
-                  Review Quiz
-                </div>
-                <mat-card-content>
-                  Please review the Lesson Quiz for this Lesson.
-                </mat-card-content>
-                <div class="submitbtngroup">
-                  <button mat-button type="button" class="submitbtn
-                      reviewlesson" color="primary" (click)="lessonQuiz(trainingCentreData)">Take Quiz</button>
-                </div>
-              </div>
-            </mat-card>
+            
             <div class="paragraphwrapper">
               <p [innerHtml]="lessonContentData?.typeHtml" class="paragraphcls"></p>
             </div>
@@ -591,7 +578,23 @@
                 </div>
 
               </div>
+              <mat-card class="banner1cls" *ngIf="quizflag==true">
+                <div class="bannerclassmentor">
+                  <div class='reviewcls'>
+                    Review Quiz
+                  </div>
+                  <mat-card-content>
+                    Please review the Lesson Quiz for this Lesson.
+                  </mat-card-content>
+                  <div class="submitbtngroup">
+                    <button mat-button type="button" class="submitbtn
+                        reviewlesson" color="primary" (click)="lessonQuiz(trainingCentreData)">Take Quiz
+                      </button>
+                  </div>
+                </div>
+              </mat-card>
             </div>
+
             <button *ngIf="next_button_access==true" button mat-raised-button color="accent" type="button"
               class="markbtncls" (click)="nextbutton('next')">Mark
               As Done
@@ -609,7 +612,7 @@
       <div class="trainingcentercls_group">
         <h2>Incompleted Lession</h2>
         <div class="trainingcentercls_box" *ngFor="let item of trainingCategoryData;let
-          i= index" (click)="activatedclass(item)">
+          i= index" >
 
           <div *ngIf="item.count !=item.done">
             <mat-list-item [ngClass]="paramsTrainingId == item._id ?
@@ -645,7 +648,7 @@
       <div class="trainingcentercls_group">
         <h2>Completed Lession</h2>
         <div class="trainingcentercls_box" *ngFor="let item of trainingCategoryData;let
-          i= index" (click)="activatedclass(item)">
+          i= index" >
 
           <div *ngIf="item.count ==item.done">
             <mat-list-item [ngClass]="paramsTrainingId == item._id ?

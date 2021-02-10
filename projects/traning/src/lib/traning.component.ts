@@ -375,7 +375,7 @@ export class TraningComponent implements OnInit {
         }
 
       }
-      console.log(this.dnaFlag, 'dnaFlag+++++++++++++++gvhbkjnlk')
+      // console.log(this.dnaFlag, 'dnaFlag+++++++++++++++gvhbkjnlk')
 
       // if (this.route.snapshot.url[0].path == "manage-lesson" ) {
 
@@ -928,17 +928,17 @@ export class TraningComponent implements OnInit {
           this.priority = res.res[0].priority;
         }
         if (this.from_type != null && this.from_type == 'training') {
-if (this.trainingacessable.length>0) {
-  for (const key in this.trainingacessable) {
-    for (const i in res.res[0].type) {
-      if (this.trainingacessable[key].val==res.res[0].type[i]) {
-        console.log(res.res[0].type[i],'type',this.trainingacessable[key].val)
-        this.trainingacessable[key].completed=true;
+          if (this.trainingacessable.length > 0) {
+            for (const key in this.trainingacessable) {
+              for (const i in res.res[0].type) {
+                if (this.trainingacessable[key].val == res.res[0].type[i]) {
+                  console.log(res.res[0].type[i], 'type', this.trainingacessable[key].val)
+                  this.trainingacessable[key].completed = true;
 
-      }
-    }
-  }
-}
+                }
+              }
+            }
+          }
         }
 
 

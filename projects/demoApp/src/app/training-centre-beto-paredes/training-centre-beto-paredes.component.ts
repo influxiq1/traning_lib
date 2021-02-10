@@ -31,6 +31,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
    audio_endpoint:'updateusercompletelessonaudio'
 
  }
+ public lessonquizendpoint ='addlessonquizdata'
 
   public formSource: any = {
     "source": 'manage_lession_view',
