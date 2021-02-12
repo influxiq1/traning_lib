@@ -21,12 +21,12 @@ export interface PeriodicElement {
   _id: string;
   select: string;
   no: number;
-  lession_title: string;
+  lesson_title: string;
   description: string;
   test_associate_training: string;
   mediaType: string;
   associated_training: string;
-  prerequisite_lession: string;
+  prerequisite_lesson: string;
   status: string;
   deleteRecord: any;
 }
@@ -47,11 +47,11 @@ export interface DialogData4 {
 
 }
 @Component({
-  selector: 'lib-list-lession',
-  templateUrl: './list-lession.component.html',
-  styleUrls: ['./list-lession.component.css']
+  selector: 'lib-list-lesson',
+  templateUrl: './list-lesson.component.html',
+  styleUrls: ['./list-lesson.component.css']
 })
-export class ListLessionComponent implements OnInit {
+export class ListlessonComponent implements OnInit {
   displayedColumns: string[] = [];
   // dataSource: MatTableDataSource<PeriodicElement>;
 
@@ -93,8 +93,8 @@ export class ListLessionComponent implements OnInit {
   public training_data_Counts: any;
   public status_search_regex: any;
   public searchjson: any = {
-    "lession_title_search_regex": "",
-    "prerequisite_lession_search_regex": "",
+    "lesson_title_search_regex": "",
+    "prerequisite_lesson_search_regex": "",
     "has_test_lesson": "",
     "associated_training_search_regex": "",
     "has_lessonplan_regex": "",
@@ -116,9 +116,9 @@ export class ListLessionComponent implements OnInit {
     this.listingData = (val) || 'no name set';
     this.listingData = val;
     this.dataSource = new MatTableDataSource(this.listingData);
-    console.log(
-      this.dataSource, 'dataSource',
-    )
+    // // console.log(
+    //   this.dataSource, 'dataSource',
+    // )
 
   }
   @Input()
@@ -154,7 +154,7 @@ export class ListLessionComponent implements OnInit {
   @Input()
   set IsItDna(val: any) {
     this.dnaFlag = val;
-    // console.log("dna flag",this.dnaFlag);  
+    // // console.log("dna flag",this.dnaFlag);  
   }
   // for betoparedes flag 
   @Input()
@@ -175,7 +175,7 @@ export class ListLessionComponent implements OnInit {
   }
 
   constructor(public dialog: MatDialog, public apiService: ApiService, public router: Router, public snakBar: MatSnackBar, public sanitizer: DomSanitizer) {
-    console.log(this.listingData, 'listingData')
+    // console.log(this.listingData, 'listingData')
 
 
     setTimeout(() => {
@@ -184,7 +184,7 @@ export class ListLessionComponent implements OnInit {
     }, 500);
   }
   // detailslen(val) {
-  //   console.log(val, 'detailslen')
+  //   // console.log(val, 'detailslen')
   //   const dialogRef = this.dialog.open(detailslen, {
   //     panelClass: 'lesson_videomodal',
   //     width: '1000px',
@@ -204,15 +204,15 @@ export class ListLessionComponent implements OnInit {
 
     this.getAllLessonData();
     if (this.dnaFlag == true) {
-      this.displayedColumns.push('select', 'no', 'associated_training', 'lession_title', 'description', 'prerequisite_lession', 'has_lessonplan', 'lessonplan_value', 'has_test_lesson', 'test_percentage', 'status', 'deleteRecord');
+      this.displayedColumns.push('select', 'no', 'associated_training', 'lesson_title', 'description', 'prerequisite_lesson', 'has_lessonplan', 'lessonplan_value', 'has_test_lesson', 'test_percentage', 'status', 'deleteRecord');
     } if (this.betoparedesFlag == true) {
-      this.displayedColumns.push('select', 'no', 'associated_training', 'lession_title', 'description', 'prerequisite_lession', 'has_test_lesson', 'test_percentage', 'priority', 'status', 'deleteRecord',);
+      this.displayedColumns.push('select', 'no', 'associated_training', 'lesson_title', 'description', 'prerequisite_lesson', 'has_test_lesson', 'test_percentage', 'priority', 'status', 'deleteRecord',);
     }
 
   }
 
   onKeypressEvent(event: any, flagval) {
-    console.log(event.target.value, 'onKeypressEvent', flagval);
+    // console.log(event.target.value, 'onKeypressEvent', flagval);
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
     let data: any = {};
     if (flagval == 'prequisite') {
@@ -222,21 +222,21 @@ export class ListLessionComponent implements OnInit {
         "token": this.serverDetailsVal.jwttoken,
         // "lesson_id": recordId,
         condition: {
-          prerequisite_lession_search: { $regex: event.target.value.trim() },
+          prerequisite_lesson_search: { $regex: event.target.value.trim() },
         }
       }
       this.apiService.postData(link, data).subscribe((res: any) => {
         if (res.status = "success") {
           this.category_search=[];
-          console.log(this.category_search, 'category_searchkkkkkkkkkkkkkk')
+          // console.log(this.category_search, 'category_searchkkkkkkkkkkkkkk')
           let arr = []
           // 
           if (res.res.length > 0) {
             for (const key in res.res) {
-              if (res.res[key].prerequisite_lession_search != '') {
-                this.category_search.push({prerequisite_lession_search:res.res[key].prerequisite_lession_search});
+              if (res.res[key].prerequisite_lesson_search != '') {
+                this.category_search.push({prerequisite_lesson_search:res.res[key].prerequisite_lesson_search});
 
-                arr.push(res.res[key].prerequisite_lession_search)
+                arr.push(res.res[key].prerequisite_lesson_search)
 
                 
               }
@@ -244,7 +244,7 @@ export class ListLessionComponent implements OnInit {
             let uniqueCardArr = arr.filter(function (item, pos) {
               return arr.indexOf(item) == pos;
             });
-            console.log(uniqueCardArr,'uniqueCardArr')
+            // console.log(uniqueCardArr,'uniqueCardArr')
 
           }
          
@@ -261,7 +261,7 @@ export class ListLessionComponent implements OnInit {
         "token": this.serverDetailsVal.jwttoken,
         // "lesson_id": recordId,
         condition: {
-          lession_title_search: { $regex: event.target.value.trim() },
+          lesson_title_search: { $regex: event.target.value.trim() },
         }
       }
       this.apiService.postData(link, data).subscribe((res: any) => {
@@ -273,7 +273,7 @@ export class ListLessionComponent implements OnInit {
 
 
 
-          console.log(this.lesson_search, 'category_search++++')
+          // console.log(this.lesson_search, 'category_search++++')
         }
 
       })
@@ -281,7 +281,7 @@ export class ListLessionComponent implements OnInit {
 
 
   }
-  // onKeypressEventforlession(event: any){
+  // onKeypressEventforlesson(event: any){
   //   let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
   //   let data: any = {
   //     "source": this.formSourceVal.source,
@@ -289,14 +289,14 @@ export class ListLessionComponent implements OnInit {
   //     "token": this.serverDetailsVal.jwttoken,
   //     // "lesson_id": recordId,
   //     condition:{
-  //       lession_title_search :{$regex:event.target.value.trim()},
+  //       lesson_title_search :{$regex:event.target.value.trim()},
   //     }
   //   }
   //   this.apiService.postData(link, data).subscribe((res: any) => {
   //     if (res.status = "success") {
-  //       this.lession_search=[];
-  //       this.lession_search=res.res;
-  //       // console.log(this.category_search,'category_search')
+  //       this.lesson_search=[];
+  //       this.lesson_search=res.res;
+  //       // // console.log(this.category_search,'category_search')
   //     }
 
   //   })
@@ -304,7 +304,7 @@ export class ListLessionComponent implements OnInit {
   trainingCount() {
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.trainingCountEndpoint;
     this.apiService.postDatawithoutTokenReportCount(link).subscribe((response: any) => {
-      // console.log(response,'response')
+      // // console.log(response,'response')
 
       this.trainingCounts.activatedtrainingcount = response.results.activatedtrainingcount;
       this.trainingCounts.activatedlessoncount = response.results.activatedlessoncount;
@@ -391,7 +391,7 @@ export class ListLessionComponent implements OnInit {
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
     let searchval: any = {};
 
-    //  console.log(this.status_search_regex,this.trashFlag)
+    //  // console.log(this.status_search_regex,this.trashFlag)
 
     if (typeof (this.status_search_regex) != 'undefined') {
       searchval["status_search"] = this.status_search_regex;
@@ -415,9 +415,9 @@ export class ListLessionComponent implements OnInit {
     }
 
 
-    searchval["lession_title_search"] = { $regex: this.searchjson.lession_title_search_regex.toLowerCase() }
-    searchval["lession_title_search"] = { $regex: this.searchjson.lession_title_search_regex.toLowerCase() }
-    searchval["prerequisite_lession_search"] = { $regex: this.searchjson.prerequisite_lession_search_regex.toLowerCase() }
+    searchval["lesson_title_search"] = { $regex: this.searchjson.lesson_title_search_regex.toLowerCase() }
+    searchval["lesson_title_search"] = { $regex: this.searchjson.lesson_title_search_regex.toLowerCase() }
+    searchval["prerequisite_lesson_search"] = { $regex: this.searchjson.prerequisite_lesson_search_regex.toLowerCase() }
 
     searchval["associated_training_search"] = { $regex: this.searchjson.associated_training_search_regex.toLowerCase() }
 
@@ -451,7 +451,7 @@ export class ListLessionComponent implements OnInit {
 
   //for go To Manage Quiz Page
   goToManageQuizPage(id: any) {
-    console.log(id, this.quizPageRoute)
+    // console.log(id, this.quizPageRoute)
     this.router.navigateByUrl(this.quizPageRoute + id);
   }
 
@@ -487,8 +487,8 @@ export class ListLessionComponent implements OnInit {
 
   resetSearch() {
     this.searchjson = {
-      "lession_title_search_regex": "",
-      "prerequisite_lession_search_regex": "",
+      "lesson_title_search_regex": "",
+      "prerequisite_lesson_search_regex": "",
       "has_test_lesson": "",
       "associated_training_search_regex": "",
       "has_lessonplan_regex": "",
@@ -649,15 +649,15 @@ export class ListLessionComponent implements OnInit {
           for (let c in this.selection.selected) {
             for (let b in this.listingData) {
               if (this.selection.selected[c]._id == this.listingData[b]._id) {
-                // console.log(this.selection.selected[c],result, '>>', this.listingData[b])
+                // // console.log(this.selection.selected[c],result, '>>', this.listingData[b])
 
                 if (result == 1) {
                   this.listingData[b].status = 1;
-                  // console.log(this.listingData[b].status, '??')
+                  // // console.log(this.listingData[b].status, '??')
                 }
                 if (result == 0) {
                   this.listingData[b].status = 0;
-                  // console.log(this.listingData[b].status, '?_?')
+                  // // console.log(this.listingData[b].status, '?_?')
 
                 }
               }
@@ -730,12 +730,12 @@ export class ListLessionComponent implements OnInit {
     })
   }
   openModalForAudioVideoFile(flag, data) {
-    console.log(flag, "======element", data, 'data');
+    // console.log(flag, "======element", data, 'data');
     let data_array: any = [];
     let val: any = data.video_url;
     let video_base_url: any;
-    let lession_title = data.lession_title;
-    console.log(data, 'fgthyjkl;')
+    let lesson_title = data.lesson_title;
+    // console.log(data, 'fgthyjkl;')
 
     switch (flag) {
       case 'audioflag':
@@ -748,18 +748,18 @@ export class ListLessionComponent implements OnInit {
         data_array = data.video_array;
         break;
       case 'preview':
-        console.log(this.preview_endpoint, this.serverDetailsVal, '????')
+        // console.log(this.preview_endpoint, this.serverDetailsVal, '????')
 
         let link = this.serverDetailsVal.serverUrl + this.preview_endpoint
         let cond = {
           lesson_id: data._id
         }
         this.apiService.postDatawithoutToken(link, cond).subscribe((response: any) => {
-          console.log(response, 'response')
+          // console.log(response, 'response')
           // let result: any;
           if (response.status = 'success') {
             this.previewData = response.res;
-            console.log(this.previewData, 'response')
+            // console.log(this.previewData, 'response')
             const dialogRef = this.dialog.open(AudioVideoFileDialogComponent, {
               panelClass: 'lesson_videomodal',
               width: '1000px',
@@ -774,7 +774,7 @@ export class ListLessionComponent implements OnInit {
 
         break;
     }
-    console.log(data, 'data_array ++')
+    // console.log(data, 'data_array ++')
 
     if (flag == 'audioflag' || flag == 'fileflag' || flag == 'videoflag') {
       const dialogRef = this.dialog.open(AudioVideoFileDialogComponent, {
@@ -784,7 +784,7 @@ export class ListLessionComponent implements OnInit {
       })
       dialogRef.disableClose = true;
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result, 'ResolveResolve')
+        // console.log(result, 'ResolveResolve')
 
       })
     }
@@ -818,10 +818,10 @@ export class AudioVideoFileDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<AudioVideoFileDialogComponent>, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: AudioVideoDialog, public sanitizer: DomSanitizer) {
 
-    console.log(data, 'dtfbgnhjmk+++++++++++++++++++')
+    // console.log(data, 'dtfbgnhjmk+++++++++++++++++++')
 
     this.previewData = data.previewData;
-    console.log(this.previewData, 'zwrxyhbinujkmxetrvu===============')
+    // console.log(this.previewData, 'zwrxyhbinujkmxetrvu===============')
 
     if (data.type_flag == 'preview') {
       for (const i in this.previewData) {
@@ -832,14 +832,14 @@ export class AudioVideoFileDialogComponent {
             this.previewData[i].lesson_attachements[j].safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.video_base_url + this.previewData[i].lesson_attachements[j].video_url + '?rel=0&modestbranding=1&autoplay=0&showinfo=0&listType=playlist');
           }
         }
-        console.log(this.previewData, 'gggggggggggggggggg')
+        // console.log(this.previewData, 'gggggggggggggggggg')
       }
     }
-    console.log(data.bucket_url.url, 'data.bucket_url')
+    // console.log(data.bucket_url.url, 'data.bucket_url')
 
     if (data.type_flag == 'preview' && data.bucket_url != null && typeof (data.bucket_url) != 'undefined') {
       this.previewData[0].bucket_url = data.bucket_url;
-      console.log(this.previewData[0].video_safe_url, 'dtfbgnhjmk__________________')
+      // console.log(this.previewData[0].video_safe_url, 'dtfbgnhjmk__________________')
     }
 
 
@@ -850,16 +850,16 @@ export class AudioVideoFileDialogComponent {
     if (data.type_flag == 'videoflag') {
 
       for (let i in data.data_array) {
-        console.log(data.data_array[i])
+        // console.log(data.data_array[i])
 
         var url = this.video_base_url + data.data_array[i].video_url + '?rel=0&modestbranding=1&autoplay=0';
 
-        // console.log(url, 'url')
+        // // console.log(url, 'url')
 
         data.data_array[i].safe_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         this.video_arr.push(data.data_array[i])
       }
-      console.log(this.video_arr, 'hhhhhhhhhhhhh')
+      // console.log(this.video_arr, 'hhhhhhhhhhhhh')
     }
 
 
@@ -881,7 +881,7 @@ export class AudioVideoFileDialogComponent {
 // export class detailslen {
 
 //   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData4) {
-//     console.log(data, 'detailslen')
+//     // console.log(data, 'detailslen')
 //   }
 
 // }

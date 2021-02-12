@@ -1,0 +1,24 @@
+<div>
+    <mat-card-content class="quizanscls">
+        <h2 class="example-h2" style="text-align: center;">Quiz Result</h2>
+
+        <span>
+            <h2 class="quiz_data">Total Question : {{data.data.QuizReportData.total_question}}</h2>
+            <h2 class="CheckedAnswer">Attempt Question : {{data.data.QuizReportData.attempt_question}}</h2>
+            <h2 class="correctQuizVal">Correct Answer : {{data.data.QuizReportData.correct_answer}}</h2>
+            <h2 class="lesson_data">Target Percentage : {{data.data.QuizReportData.target_percentage}}%</h2>
+            <h2 class="resultVal">Your Score : {{data.data.QuizReportData.score}}%</h2>
+            <h2 class="resultStatus">
+                Status : <span style="color: forestgreen;"> Success
+                </span>
+            </h2>
+
+        </span>
+    </mat-card-content>
+    <mat-dialog-actions class="modalbtncls">
+        <button class="btncancelcls" mat-raised-button color="accent" (click)="closedModals()"><span
+                class="material-icons">
+                clear
+            </span></button>
+    </mat-dialog-actions>
+</div>

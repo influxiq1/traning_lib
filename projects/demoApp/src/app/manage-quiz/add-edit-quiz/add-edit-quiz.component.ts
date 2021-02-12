@@ -26,7 +26,7 @@ export class AddEditQuizComponent implements OnInit {
   public listingPageRoute : any="/quiz/list/";
   public jwtToken:any
   constructor(public activatedRoute : ActivatedRoute,public cookie:CookieService) { 
-    console.log(this.activatedRoute.snapshot.params.lesson_id_object);
+    // console.log(this.activatedRoute.snapshot.params.lesson_id_object);
     this.lessonIdInedit=this.activatedRoute.snapshot.params.lesson_id;
     this.lessonId = this.activatedRoute.snapshot.params.lesson_id;
     this.jwtToken = cookie.get('jwtToken');

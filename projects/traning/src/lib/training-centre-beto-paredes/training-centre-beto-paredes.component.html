@@ -396,7 +396,7 @@
         <div class="" *ngIf="item._id==paramslessonId">
 
           <div class="lessoncontent">
-            
+
             <div class="paragraphwrapper">
               <p [innerHtml]="lessonContentData?.typeHtml" class="paragraphcls"></p>
             </div>
@@ -415,7 +415,7 @@
                   <p class="videotitlecls">{{item.video_title}}</p>
                   <p class="videoDescls"> {{item.video_description}} </p>
                   <span class="mandetorycls" *ngIf="item.video_skippable!=true">*This is a mandetory video to
-                    complete this lession
+                    complete this lesson
                     <span *ngIf="complete_videoflag[item.video_url]==true" class="donetikcls">
                       <img class="doneimgcls"
                         src="https://all-frontend-assets.s3.amazonaws.com/dna-frontend-new/assets/images/Trainninglibary_right_icon.jpg"
@@ -491,7 +491,7 @@
                     <p>{{ item.audio_description }}</p>
                   </div>
                   <span class="mandetorycls" *ngIf="item.audio_skippable!=true">*This is a mandetory audio to
-                    complete this lession
+                    complete this lesson
                     <span *ngIf="complete_audioflag[item.audio._id]==true" class="donetikcls">
                       <img class="doneimgcls"
                         src="https://all-frontend-assets.s3.amazonaws.com/dna-frontend-new/assets/images/Trainninglibary_right_icon.jpg"
@@ -519,7 +519,7 @@
 
                     </p>
                     <span class="mandetorycls" *ngIf="item.file_skippable!=true">*This is a mandetory image to
-                      complete this lession (after download)
+                      complete this lesson (after download)
 
                       <span *ngIf="complete_fileflag[item.file._id]==true" class="donetikcls">
                         <img class="doneimgcls"
@@ -565,7 +565,7 @@
 
                     </p>
                     <span class="mandetorycls" *ngIf="item.file_skippable!=true">*This is a mandetory file to
-                      complete this lession (after
+                      complete this lesson (after
                       download)
                       <span *ngIf="complete_fileflag[item.file._id]==true" class="donetikcls">
                         <img class="doneimgcls"
@@ -589,22 +589,34 @@
                   <div class="submitbtngroup">
                     <button mat-button type="button" class="submitbtn
                         reviewlesson" color="primary" (click)="lessonQuiz(trainingCentreData)">Take Quiz
-                      </button>
+                    </button>
                   </div>
                 </div>
               </mat-card>
               <mat-card class="banner1cls" *ngIf="quizReportflag==true">
                 <div class="bannerclassmentor">
-                  <div class='reviewcls accurecycls' >
-                    Quiz is complete with {{completeQuizData.quiz_percentage}}%  Accuracy   
+                  <div class='reviewcls accurecycls'>
+                    Quiz is complete with <b style="color: forestgreen;">{{completeQuizData.quiz_percentage}}%</b>
+                    Accuracy
+                  </div>
+                  <div class='red_Eye'>
+                    <span class="material-icons" (click)="viewQuizResult(completeQuizData)">
+                      visibility
+                    </span>
                   </div>
                 </div>
               </mat-card>
             </div>
+            <span *ngIf="item.is_done!=true">
+              <button *ngIf="next_button_access==true" button mat-raised-button color="accent" type="button"
+                class="markbtncls" (click)="nextbutton('next')">Mark
+                As Done
+              </button>
+            </span>
 
-            <button *ngIf="next_button_access==true" button mat-raised-button color="accent" type="button"
-              class="markbtncls" (click)="nextbutton('next')">Mark
-              As Done
+            <button *ngIf="item.is_done==true" button mat-raised-button color="accent" type="button" class="markbtncls"
+              (click)="nextbutton('next')">
+              Next
             </button>
           </div>
 
@@ -617,9 +629,9 @@
   <mat-card class="alltrainingcls">
     <mat-card-content class="trainingcentercls trainingcenterclsupdate">
       <div class="trainingcentercls_group">
-        <h2>Incompleted Lession</h2>
+        <h2>Incompleted lesson</h2>
         <div class="trainingcentercls_box" *ngFor="let item of trainingCategoryData;let
-          i= index" >
+          i= index">
 
           <div *ngIf="item.count !=item.done">
             <mat-list-item [ngClass]="paramsTrainingId == item._id ?
@@ -653,9 +665,9 @@
 
 
       <div class="trainingcentercls_group">
-        <h2>Completed Lession</h2>
+        <h2>Completed lesson</h2>
         <div class="trainingcentercls_box" *ngFor="let item of trainingCategoryData;let
-          i= index" >
+          i= index">
 
           <div *ngIf="item.count ==item.done">
             <mat-list-item [ngClass]="paramsTrainingId == item._id ?

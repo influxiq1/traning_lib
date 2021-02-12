@@ -38,7 +38,7 @@ export class ListQuizComponent implements OnInit {
   constructor(public activatedRoute: ActivatedRoute, public cookie: CookieService) {
     this.paramsId = this.activatedRoute.snapshot.params.id;
     this.lessonId = this.activatedRoute.snapshot.params.lesson_id;
-    console.log(this.paramsId,"lesson id", this.lessonId);
+    // console.log(this.paramsId,"lesson id", this.lessonId);
     this.jwtToken = cookie.get('jwtToken');
     this.serverDetails.jwttoken = this.jwtToken;
   }

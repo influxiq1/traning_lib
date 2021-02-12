@@ -105,7 +105,7 @@ export class ListingTrainingComponent implements OnInit {
   set allDataList(val: any) {
     this.listingData = (val) || '<no name set>';
     this.listingData = val;
-    console.log(this.listingData);
+    // console.log(this.listingData);
     this.dataSource = new MatTableDataSource(this.listingData);
     // this.dataSource.paginator = this.paginator;
   }
@@ -116,7 +116,7 @@ export class ListingTrainingComponent implements OnInit {
   @Input()
   set formSource(formSource: any) {
     this.formSourceVal = (formSource) || '<no name set>';
-    console.log("formsourceval", this.formSourceVal);
+    // console.log("formsourceval", this.formSourceVal);
   }
   @Input()
   set EditPageRoute(val: any) {
@@ -190,7 +190,7 @@ export class ListingTrainingComponent implements OnInit {
   }
 
   deleteFunction(recordId: any, index: number) {
-    // console.log("single delete fUNCTION", recordId, index);
+    // // console.log("single delete fUNCTION", recordId, index);
 
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.endpoint;
     let data: any = {
@@ -199,10 +199,10 @@ export class ListingTrainingComponent implements OnInit {
       "token": this.serverDetailsVal.jwttoken,
       "associated_training": recordId
     }
-    // console.log("singledel link and data", data, link);
+    // // console.log("singledel link and data", data, link);
 
     this.apiService.postData(link, data).subscribe((res: any) => {
-      // console.log("delete response", res);
+      // // console.log("delete response", res);
       if (res.status = "success") {
         this.listingData.splice(index, 1);
         let allData: PeriodicElement[] = this.listingData;
@@ -223,16 +223,16 @@ export class ListingTrainingComponent implements OnInit {
       },
       token: this.serverDetailsVal.jwttoken,
     }
-    // console.log("singledel link and data", data, link);
+    // // console.log("singledel link and data", data, link);
 
     this.apiService.postData(link, data).subscribe((res: any) => {
-      console.log("delete response", res);
+      // console.log("delete response", res);
       if (res.status = "success") {
         this.product_name_serach = res.res;
 
         // for (const iterator of res.res) {
         //   this.product_name_serach=iterator.productname
-        console.log(this.product_name_serach, 'product_name_serach')
+        // console.log(this.product_name_serach, 'product_name_serach')
         // }
 
       }
@@ -249,11 +249,11 @@ export class ListingTrainingComponent implements OnInit {
   }
 
   filterByTrainingName() {
-    // console.log(this.searchjson);
+    // // console.log(this.searchjson);
     let searchval: any = {};
 
     // if (this.searchjson.status_search_regex != "") {
-    //   // console.log("hitted")
+    //   // // console.log("hitted")
     //   searchval["status_search"] = this.searchjson.status_search_regex;
     // }else if(this.searchjson.catagory_name_search_regex != "" ){   
     //    searchval["catagory_name_search"] = { $regex: this.searchjson.catagory_name_search_regex.toLowerCase() }
@@ -305,7 +305,7 @@ export class ListingTrainingComponent implements OnInit {
 
   }
   onKeypressEvent(event: any, val) {
-    console.log(event, 'traing', val);
+    // console.log(event, 'traing', val);
     let link1 = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
     if (val == 'training') {
       let data = {
@@ -317,12 +317,12 @@ export class ListingTrainingComponent implements OnInit {
       }
       this.apiService.postData(link1, data).subscribe((res: any) => {
         if (res.status = "success") {
-          console.log(res)
+          // console.log(res)
           // this.category_search
           this.category_search = [];
 
           for (const iterator of res.res) {
-            console.log(iterator.catagory_name_search)
+            // console.log(iterator.catagory_name_search)
             this.category_search.push({ catagory_name_search: iterator.catagory_name_search })
           }
         }
@@ -340,20 +340,20 @@ export class ListingTrainingComponent implements OnInit {
       let arr = []
       this.apiService.postData(link1, data2).subscribe((res: any) => {
         if (res.status = "success") {
-          console.log(res)
+          // console.log(res)
           // this.category_search
           this.parent_catagory_search = [];
           for (const iter in res.res) {
-            console.log(res.res[iter].parent_catagory_search)
+            // console.log(res.res[iter].parent_catagory_search)
             this.parent_catagory_search.push({ parent_catagory_search: res.res[iter].parent_catagory_search });
-            console.log(this.parent_catagory_search)
+            // console.log(this.parent_catagory_search)
             arr.push(res.res[iter].parent_catagory_search)
 
           }
           this.uniqueCardArr = arr.filter(function (item, pos) {
             return arr.indexOf(item) == pos;
           });
-          console.log(this.uniqueCardArr, 'uniqueCardArr', arr)
+          // console.log(this.uniqueCardArr, 'uniqueCardArr', arr)
 
         }
       })
@@ -494,7 +494,7 @@ export class ListingTrainingComponent implements OnInit {
     }
     this.dialogRef = this.dialog.open(DialogBoxComponent, modalData);
     this.dialogRef.afterClosed().subscribe(result => {
-      // console.log('>>', result)
+      // // console.log('>>', result)
 
       var resval = result;
       if (result == "Active") {
@@ -520,15 +520,15 @@ export class ListingTrainingComponent implements OnInit {
           for (let c in this.selection.selected) {
             for (let b in this.listingData) {
               if (this.selection.selected[c]._id == this.listingData[b]._id) {
-                // console.log(this.selection.selected[c],result, '>>', this.listingData[b])
+                // // console.log(this.selection.selected[c],result, '>>', this.listingData[b])
 
                 if (result == 1) {
                   this.listingData[b].status = 1;
-                  // console.log(this.listingData[b].status, '??')
+                  // // console.log(this.listingData[b].status, '??')
                 }
                 if (result == 0) {
                   this.listingData[b].status = 0;
-                  // console.log(this.listingData[b].status, '?_?')
+                  // // console.log(this.listingData[b].status, '?_?')
 
                 }
               }

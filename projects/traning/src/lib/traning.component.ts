@@ -143,7 +143,7 @@ export class TraningComponent implements OnInit {
   }
   @Input()
   set IsItDna(val: any) {
-    console.log(val);
+    // // console.log(val);
     this.dnaFlag = val;
   }
   @Input()
@@ -265,7 +265,7 @@ export class TraningComponent implements OnInit {
 
 
   formsubmit() {
-    console.log("data value", this.dataForm.value);
+    // // console.log("data value", this.dataForm.value);
     // return;
     this.issubmit = 1;
     for (let y in this.dataForm.controls) {
@@ -275,9 +275,9 @@ export class TraningComponent implements OnInit {
 
     if (this.lesson_attachment_flag_val == true) {
 
-      console.log(this.video_array, "video_array", this.videoflag);
-      // console.log(this.audio_array, "audioarray", this.audioflag);
-      // console.log(this.file_array, "filearray", this.fileflag);
+      // // console.log(this.video_array, "video_array", this.videoflag);
+      // // // console.log(this.audio_array, "audioarray", this.audioflag);
+      // // // console.log(this.file_array, "filearray", this.fileflag);
 
       if (this.videoflag == true || this.videoflag == false) {
         this.dataForm.value.videoflag = this.videoflag;
@@ -344,7 +344,7 @@ export class TraningComponent implements OnInit {
         token: this.serverDetailsVal.jwttoken
       }
 
-      console.log(data, 'data++')
+      // // console.log(data, 'data++')
 
       if (this.dnaFlag == true) {
         if (this.hasLessonVal == true) {
@@ -375,7 +375,7 @@ export class TraningComponent implements OnInit {
         }
 
       }
-      // console.log(this.dnaFlag, 'dnaFlag+++++++++++++++gvhbkjnlk')
+      // // // console.log(this.dnaFlag, 'dnaFlag+++++++++++++++gvhbkjnlk')
 
       // if (this.route.snapshot.url[0].path == "manage-lesson" ) {
 
@@ -393,7 +393,7 @@ export class TraningComponent implements OnInit {
         for (const it in this.trainingacessable) {
           if (this.trainingacessable[it].completed == true) {
             this.trainingAccessData.push(this.trainingacessable[it].val)
-            console.log(this.trainingacessable[it], 'trainingacessabletrainingacessable===');
+            // // console.log(this.trainingacessable[it], 'trainingacessabletrainingacessable===');
           }
         }
         data.data.type = this.trainingAccessData
@@ -418,7 +418,7 @@ export class TraningComponent implements OnInit {
   }
 
   checkCheckBoxvalue(event: any, value) {
-    console.log(value, 'subtask', event)
+    // // console.log(value, 'subtask', event)
 
     if (value.val == 'all' && value.completed == true) {
       for (const it in this.trainingacessable) {
@@ -426,7 +426,7 @@ export class TraningComponent implements OnInit {
           this.trainingacessable[it].completed = false;
         }
       }
-      console.log(this.trainingacessable, 'trainingacessable')
+      // // console.log(this.trainingacessable, 'trainingacessable')
 
     }
 
@@ -436,7 +436,7 @@ export class TraningComponent implements OnInit {
           this.trainingacessable[it].completed = false;
         }
       }
-      console.log(this.trainingacessable, 'trainingacessable')
+      // // console.log(this.trainingacessable, 'trainingacessable')
 
     }
 
@@ -467,10 +467,10 @@ export class TraningComponent implements OnInit {
 
       this.apiService.getData(link, data)
         .subscribe((res: any) => {
-          // console.log("souresh test", res);
+          // // // console.log("souresh test", res);
           let result;
           result = res.res;
-          // console.log("drop down", result);
+          // // // console.log("drop down", result);
           if (res.status == 'error') {
             // this.router.navigate(['/']);
           } else {
@@ -533,7 +533,7 @@ export class TraningComponent implements OnInit {
   }
 
   openTrainingType(val) {
-    console.log(val, '++++++++++++++++')
+    // // console.log(val, '++++++++++++++++')
     this.mediaTypeValue = val.selectname;
     // val.flagButton = true;
     // let index = 0;
@@ -585,7 +585,7 @@ export class TraningComponent implements OnInit {
     }
     dataObj.type = 'video';
 
-    console.log(dataObj, 'dataObj')
+    // // console.log(dataObj, 'dataObj')
 
     const dialogRef = this.dialog.open(AddAudioVideoFileDialogComponent, {
       panelClass: 'lesson_videomodal',
@@ -598,7 +598,7 @@ export class TraningComponent implements OnInit {
 
     //for subscribe modal data
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result, '++++sub')
+      // // console.log(result, '++++sub')
 
       if (result.flag == 'yes') {
         // this.video_array[i] = result.videoFields
@@ -613,7 +613,7 @@ export class TraningComponent implements OnInit {
         }
       }
 
-      console.log(this.video_array, 'video_array')
+      // // console.log(this.video_array, 'video_array')
 
     })
 
@@ -622,7 +622,7 @@ export class TraningComponent implements OnInit {
 
   addflie(key, i, item) {
 
-    console.log(key, i, item)
+    // // console.log(key, i, item)
     // this.file_array.push({
     //   file: {},
     //   file_description: '',
@@ -656,7 +656,7 @@ export class TraningComponent implements OnInit {
     }
     dataObj.type = 'file';
 
-    console.log(dataObj, 'dataObj')
+    // // console.log(dataObj, 'dataObj')
 
 
 
@@ -671,7 +671,7 @@ export class TraningComponent implements OnInit {
 
     //for subscribe modal data
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result, '=>>>>>', i, key);
+      // // console.log(result, '=>>>>>', i, key);
       if (result.flag == 'yes') {
 
         if (key == 'add') {
@@ -682,7 +682,7 @@ export class TraningComponent implements OnInit {
           // this.file_array.push(result.fileFields);
           this.file_array[i] = result.fileFields
         }
-        console.log(this.file_array, 'this.file_array')
+        // // console.log(this.file_array, 'this.file_array')
       }
     })
 
@@ -723,13 +723,13 @@ export class TraningComponent implements OnInit {
 
     //for subscribe modal data
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result, '++++++++++.>>>>>>>>')
+      // // console.log(result, '++++++++++.>>>>>>>>')
       if (result.flag == 'yes') {
         // this.audio_array[i] = result.audioFields
 
         if (result.dataObj.audio != null && key == 'add' && result.dataObj.audio != '') {
           this.audio_array.push(result.audioFields);
-          console.log(this.audio_array, 'audio_array')
+          // // console.log(this.audio_array, 'audio_array')
         }
 
         if (key == 'edit') {
@@ -743,8 +743,8 @@ export class TraningComponent implements OnInit {
 
 
   doneFileUpload(arrayName, index) {
-    console.log(arrayName, index)
-    // console.log(this.uploadConfigData.files[0].upload.data.data, 'this.uploadConfigData.files');
+    // // console.log(arrayName, index)
+    // // // console.log(this.uploadConfigData.files[0].upload.data.data, 'this.uploadConfigData.files');
 
     var errormsg = '';
     if (this.uploadConfigData.files != null && this.uploadConfigData.files[0] != null) {
@@ -760,14 +760,14 @@ export class TraningComponent implements OnInit {
 
         file_name_str = file_name_str.substring(file_name_str.indexOf(file_name_str) + str_no);
 
-        // console.log(str_no, 'type++', file_name_str)
+        // // // console.log(str_no, 'type++', file_name_str)
 
         this.uploadConfigData.files[0].upload.data.data.file_type = file_name_str;
 
         this.file_array[index].file = this.uploadConfigData.files[0].upload.data.data;
       }
 
-      console.log(this.file_array, 'file_array')
+      // // console.log(this.file_array, 'file_array')
     } else {
       this.snackBar.open('Please Upload Single file ...!', 'OK', {
         duration: 3000
@@ -779,12 +779,12 @@ export class TraningComponent implements OnInit {
 
 
   doneAudioupload(arrayName, index) {
-    console.log(arrayName, index)
-    // console.log(this.uploadConfigData.files[0].upload.data.data, 'this.uploadConfigData.files');    
+    // // console.log(arrayName, index)
+    // // // console.log(this.uploadConfigData.files[0].upload.data.data, 'this.uploadConfigData.files');    
     if (arrayName == 'audio_array') {
       this.audio_array[index].audio = this.uploadConfigData.files[0].upload.data.data;
     }
-    console.log(this.audio_array, 'audio_array')
+    // // console.log(this.audio_array, 'audio_array')
 
   }
 
@@ -799,7 +799,7 @@ export class TraningComponent implements OnInit {
   //   if (arrayName == 'audio_array') {
   //     this.audio_array[index].audio = {};
   //   }
-  //   console.log(this.file_array, 'file_array')
+  //   // // console.log(this.file_array, 'file_array')
   // }
 
 
@@ -809,7 +809,7 @@ export class TraningComponent implements OnInit {
     if (this.video_array.length == 0) {
       this.videoflag = false;
     }
-    console.log(this.videoflag, 'this.videoflag')
+    // // console.log(this.videoflag, 'this.videoflag')
   }
 
 
@@ -818,19 +818,19 @@ export class TraningComponent implements OnInit {
     if (this.file_array.length == 0) {
       this.fileflag = false;
     }
-    console.log(this.fileflag, 'this.fileflag')
+    // // console.log(this.fileflag, 'this.fileflag')
 
   }
 
   removeaudio(index) {
-    console.log(index, 'removeaudio')
-    console.log(this.audio_array, 'audioarray')
+    // // console.log(index, 'removeaudio')
+    // // console.log(this.audio_array, 'audioarray')
 
     this.audio_array.splice(index, 1);
     if (this.audio_array.length == 0) {
       this.audioflag = false;
     }
-    console.log(this.audioflag, 'audioflag')
+    // // console.log(this.audioflag, 'audioflag')
 
   }
 
@@ -845,9 +845,9 @@ export class TraningComponent implements OnInit {
       const safe_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
 
 
-      console.log(safe_url, '>>>>', val)
+      // // console.log(safe_url, '>>>>', val)
 
-      console.log('???===>', url)
+      // // console.log('???===>', url)
 
 
       const dialogRef = this.dialog.open(videoDialogComponent, {
@@ -881,14 +881,14 @@ export class TraningComponent implements OnInit {
       if (res.status == 'error') {
 
       } else {
-        console.log("edited data", res);
+        // // console.log("edited data", res);
         if (this.from_type != null && this.from_type == 'lesson') {
           this.getMediaTypeVal(res.res[0].associated_training, 'associated_training');
           // this.getMediaTypeVal(res.res[0].mediaType, 'mediaType');
           let imageBasepath: any;
           let fileserverName: any;
           this.fileArray = res.res[0].fileType;
-          // console.log("dingle data", res.res[0]);
+          // // // console.log("dingle data", res.res[0]);
           if (res.res[0].typeHtml != null && res.res[0].typeHtml != '') {
 
             this.htmType = res.res[0].typeHtml;
@@ -897,7 +897,7 @@ export class TraningComponent implements OnInit {
           this.chkboxval = res.res[0].has_lessonplan;
 
           if (res.res[0] != null && res.res[0].has_test_lesson != null && res.res[0].has_test_lesson != 'undefined') {
-            // console.log(res.res[0].has_test_lesson, 'res.res[0].has_test_lesson')
+            // // // console.log(res.res[0].has_test_lesson, 'res.res[0].has_test_lesson')
             this.has_test_lesson = res.res[0].has_test_lesson;
             this.test_percentage = res.res[0].test_percentage
           }
@@ -913,15 +913,15 @@ export class TraningComponent implements OnInit {
           if (res.res[0].fileflag != null && typeof (res.res[0].fileflag) != 'undefined') {
             this.fileflag = true;
             this.file_array = res.res[0].file_array;
-            // console.log(this.file_array, 'zesdxfghjwaesr')
+            // // // console.log(this.file_array, 'zesdxfghjwaesr')
           }
-          console.log(this.audioflag, "audio")
-          console.log(this.videoflag, "video")
-          console.log(this.fileflag, "file")
+          // // console.log(this.audioflag, "audio")
+          // // console.log(this.videoflag, "video")
+          // // console.log(this.fileflag, "file")
 
           this.getchkboxval(this.chkboxval);
           this.lessonplanValue = res.res[0].lessonplan_value;
-          console.log(this.trainingacessable, '7777')
+          // // console.log(this.trainingacessable, '7777')
 
         }
         if (res.res[0].priority != null && typeof (res.res[0].priority) != 'undefined') {
@@ -932,7 +932,7 @@ export class TraningComponent implements OnInit {
             for (const key in this.trainingacessable) {
               for (const i in res.res[0].type) {
                 if (this.trainingacessable[key].val == res.res[0].type[i]) {
-                  console.log(res.res[0].type[i], 'type', this.trainingacessable[key].val)
+                  // // console.log(res.res[0].type[i], 'type', this.trainingacessable[key].val)
                   this.trainingacessable[key].completed = true;
 
                 }
@@ -945,7 +945,7 @@ export class TraningComponent implements OnInit {
         let folder: any = '';
 
         for (let c in this.dataForm.controls) {
-          console.log(this.dataForm.controls, 'trash', res)
+          // // console.log(this.dataForm.controls, 'trash', res)
           this.dataForm.controls[c].patchValue(res.res[0][c]);
           for (let j in this.formdataval) {
 
@@ -1005,17 +1005,17 @@ export class AddAudioVideoFileDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<AddAudioVideoFileDialogComponent>, public sanitizer: DomSanitizer, public snackBar: MatSnackBar, public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: DialogData1) {
-    console.log(this.data.keyVal, 'jhgkj')
+    // // console.log(this.data.keyVal, 'jhgkj')
 
     if (this.data.type_flag == 'audio' || this.data.type_flag == 'file') {
       this.uploadConfigData = data.configFileUpload;
       this.bucket_url = data.bucket_url;
     }
 
-    // console.log(data, 'data++')
+    // // // console.log(data, 'data++')
 
     if (this.data.type_flag == 'video') {
-      console.log(data, 'data++ cond')
+      // // console.log(data, 'data++ cond')
 
       this.videoFields = this.data.dataObj;
     }
@@ -1026,7 +1026,7 @@ export class AddAudioVideoFileDialogComponent {
     if (this.data.type_flag == 'file') {
       this.fileFields = this.data.dataObj;
 
-      console.log(data, '>++++++', this.fileFields, ">============")
+      // // console.log(data, '>++++++', this.fileFields, ">============")
     }
 
   }
@@ -1041,15 +1041,15 @@ export class AddAudioVideoFileDialogComponent {
   addvideo(arrayName) {
     this.data.flag = 'yes';
     this.data.videoFields = this.videoFields;
-    // console.log(this.uploadConfigData, 'this.uploadConfigData++', arrayName)
-    console.log(this.videoFields, 'videoFields')
+    // // // console.log(this.uploadConfigData, 'this.uploadConfigData++', arrayName)
+    // // console.log(this.videoFields, 'videoFields')
     this.dialogRef.close(this.data);
 
   }
 
   addaudio(arrayName, name) {
 
-    // console.log(arrayName, 'arrayName 11++++==', name)
+    // // // console.log(arrayName, 'arrayName 11++++==', name)
 
     var checkCond = false;
 
@@ -1064,8 +1064,8 @@ export class AddAudioVideoFileDialogComponent {
     if (checkCond == true) {
       if (arrayName == 'audio_array' && this.uploadConfigData.files != null) {
 
-        // console.log(arrayName, 'arrayName 22++')
-        console.log(this.uploadConfigData, 'drftgyujikl')
+        // // // console.log(arrayName, 'arrayName 22++')
+        // // console.log(this.uploadConfigData, 'drftgyujikl')
 
         var file_name_str = this.uploadConfigData.files[0].upload.data.data.filelocalname;
 
@@ -1075,18 +1075,18 @@ export class AddAudioVideoFileDialogComponent {
 
         file_name_str = file_name_str.substring(file_name_str.indexOf(file_name_str) + str_no);
 
-        console.log(str_no, 'type++', file_name_str)
+        // // console.log(str_no, 'type++', file_name_str)
 
         this.uploadConfigData.files[0].upload.data.data.file_type = file_name_str;
 
         this.audioFields.audio = this.uploadConfigData.files[0].upload.data.data;
       }
 
-      console.log(this.audioFields, 'audio_array ++')
+      // // console.log(this.audioFields, 'audio_array ++')
       this.data.flag = 'yes';
       this.data.audioFields = this.audioFields;
-      // console.log(this.uploadConfigData, 'this.uploadConfigData++', arrayName)
-      console.log(this.audioFields, 'audiofields')
+      // // // console.log(this.uploadConfigData, 'this.uploadConfigData++', arrayName)
+      // // console.log(this.audioFields, 'audiofields')
       this.dialogRef.close(this.data);
 
     }
@@ -1112,20 +1112,20 @@ export class AddAudioVideoFileDialogComponent {
 
         file_name_str = file_name_str.substring(file_name_str.indexOf(file_name_str) + str_no);
 
-        // console.log(str_no, 'type++', file_name_str)
+        // // // console.log(str_no, 'type++', file_name_str)
 
         this.uploadConfigData.files[0].upload.data.data.file_type = file_name_str;
 
         this.fileFields.file = this.uploadConfigData.files[0].upload.data.data;
       }
 
-      console.log(this.fileFields, 'file_array')
+      // // console.log(this.fileFields, 'file_array')
     }
 
 
     this.data.flag = 'yes';
     this.data.fileFields = this.fileFields;
-    console.log(this.fileFields, 'filefields++++++')
+    // // console.log(this.fileFields, 'filefields++++++')
     this.dialogRef.close(this.data);
   }
 
@@ -1153,7 +1153,7 @@ export class videoDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<videoDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-    // console.log(data)
+    // // // console.log(data)
   }
 
   onNoClick(): void {

@@ -12,7 +12,7 @@ import { AddEditLessionsComponent } from './manage-lessions/add-edit-lessions/ad
 import { AddEditCenterComponent } from './training-center/add-edit-center/add-edit-center.component';
 import { ListingTrainingComponent } from './manage-training/listing-training/listing-training.component';
 import { DialogBoxComponent } from './common/dialog-box/dialog-box.component';
-import { AudioVideoFileDialogComponent, ListLessionComponent } from './manage-lessions/list-lession/list-lession.component';
+import { AudioVideoFileDialogComponent, ListlessonComponent } from './manage-lessions/list-lession/list-lesson.component';
 import { CKEditorModule } from 'ngx-ckeditor';
 import { FileUploadModule} from 'file-upload-lib-influxiq';
 import { ListComponent,Dialogtest } from './training-center/list/list.component';
@@ -35,7 +35,7 @@ import { ListQuizComponent } from './manage-quiz/list-quiz/list-quiz.component';
 import { AddEditQuizComponent } from './manage-quiz/add-edit-quiz/add-edit-quiz.component';
 import { AudioServiceService } from './audio-service.service';
 import {  DetailsPipe } from './pipe/details.pipe';
-import { TrainingCentreBetoParedesComponent ,PreviewContentDialogBeto, BetoparedesLessonVideoModalComponent, LessonQuizBetoparedesModalComponent, GapmeplanModalComponent} from './training-centre-beto-paredes/training-centre-beto-paredes.component';
+import { TrainingCentreBetoParedesComponent ,PreviewContentDialogBeto, BetoparedesLessonVideoModalComponent, LessonQuizBetoparedesModalComponent, GapmeplanModalComponent, QuizReportmodal} from './training-centre-beto-paredes/training-centre-beto-paredes.component';
 
 
 
@@ -46,7 +46,7 @@ import { TrainingCentreBetoParedesComponent ,PreviewContentDialogBeto, Betopared
     AddEditCenterComponent,
     ListingTrainingComponent,
     DialogBoxComponent,
-    ListLessionComponent,
+    ListlessonComponent,
     ListComponent,
     Dialogtest,
     ManageQuizComponent,
@@ -78,7 +78,8 @@ import { TrainingCentreBetoParedesComponent ,PreviewContentDialogBeto, Betopared
     BetoparedesLessonVideoModalComponent,
     LessonQuizBetoparedesModalComponent,
     AnswerchangeconfromDialog,
-    GapmeplanModalComponent
+    GapmeplanModalComponent,
+    QuizReportmodal
   ],
   imports: [
     HttpClientModule,
@@ -95,11 +96,11 @@ import { TrainingCentreBetoParedesComponent ,PreviewContentDialogBeto, Betopared
     CKEditorModule,
     NgxYoutubePlayerModule.forRoot()
   ],
-  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListLessionComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest,TrainingreportComponent,CategoryWiseReportComponent,TrainingCenterDnaComponent,LessonPlanMaterialComponent,ListQuizComponent,AddEditQuizComponent,TrainingCentreBetoParedesComponent
+  exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListlessonComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest,TrainingreportComponent,CategoryWiseReportComponent,TrainingCenterDnaComponent,LessonPlanMaterialComponent,ListQuizComponent,AddEditQuizComponent,TrainingCentreBetoParedesComponent
   ],
   
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [CookieService, ApiService,DatePipe,AudioServiceService],
-  entryComponents:[DialogBoxComponent,Dialogtest,PurchaseModalComponent,ReviewLessonPlanComponent,ScheduleModalComponent,questionDataModalComponent,UnlockLessonModalComponent,videoDialogComponent,LessonVideoModalComponent,LessonQuizModalComponent,AddAudioVideoFileDialogComponent,AudioVideoFileDialogComponent,PreviewContentDialog,PreviewContentDialogBeto,BetoparedesLessonVideoModalComponent,LessonQuizBetoparedesModalComponent,AnswerchangeconfromDialog,GapmeplanModalComponent]
+  entryComponents:[DialogBoxComponent,Dialogtest,PurchaseModalComponent,ReviewLessonPlanComponent,ScheduleModalComponent,questionDataModalComponent,UnlockLessonModalComponent,videoDialogComponent,LessonVideoModalComponent,LessonQuizModalComponent,AddAudioVideoFileDialogComponent,AudioVideoFileDialogComponent,PreviewContentDialog,PreviewContentDialogBeto,BetoparedesLessonVideoModalComponent,LessonQuizBetoparedesModalComponent,AnswerchangeconfromDialog,GapmeplanModalComponent,QuizReportmodal]
 })
 export class TraningModule { }

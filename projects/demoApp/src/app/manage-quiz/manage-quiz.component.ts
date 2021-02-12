@@ -33,7 +33,7 @@ export class ManageQuizComponent implements OnInit {
 
   constructor(public activatedRoute: ActivatedRoute,public cookie:CookieService) { 
     this.paramsId = this.activatedRoute.snapshot.params.lesson_id_object;
-    console.log("lesson id",this.paramsId);
+    // console.log("lesson id",this.paramsId);
     this.jwtToken = cookie.get('jwtToken');
     this.serverDetails.jwttoken=this.jwtToken;
   }
