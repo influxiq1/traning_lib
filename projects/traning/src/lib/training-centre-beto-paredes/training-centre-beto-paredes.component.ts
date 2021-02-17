@@ -1,10 +1,9 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit, Output, EventEmitter, AfterViewChecked, ElementRef } from '@angular/core';
 import { MatDialog, MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { ApiService } from '../api.service';
-
 export interface DialogData7 {
   data: any;
   lesson_id: any;
@@ -117,6 +116,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
   public quizReportflag: boolean = false;
   public completeQuizData: any = [];
 
+  @Output() trainingDataListener = new EventEmitter<any>();
 
 
 
@@ -300,6 +300,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     this.trainingupdate();
   }
 
+
   constructor(public router: Router, public snakBar: MatSnackBar, public activatedRoute: ActivatedRoute, public apiService: ApiService, public cookieService: CookieService, public dialog: MatDialog, public sanitizer: DomSanitizer) {
     this.userId = JSON.parse(this.cookieService.get('userid'));
     this.userType = JSON.parse(this.cookieService.get('type'));
@@ -330,7 +331,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     if ((training_access_flag == true && this.trainingCentreData.calendar_booking_data.length > 0) || this.trainingCategoryData[0]._id == val) {
       this.router.navigateByUrl(this.trainingCenterRoute + val);
       this.training_cat_name = catagory_name;
-    }else{
+    } else {
       this.snakBar.open("Sorry, You cannot access this training unless you complete the first training ", 'Ok', {
         duration: 4000
       });
@@ -889,8 +890,15 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
         // console.log(data, '+++++++++++++')
       }
     }
+    let t_percent:any={}
+    t_percent.associated_training = this.paramsTrainingId;
+    t_percent.percentage =;
 
     this.apiService.postDatawithoutToken(link, data).subscribe(res => {
+      console.log(res,'trainingupdate');
+      if(res){
+        this.trainingDataListener.emit({action:'update-success',result:data,training_percentage:t_percent})
+      }
 
     })
   }
