@@ -142,7 +142,7 @@ export class ListLessionComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.data.forEach(data => {
-      // console.log(data)
+      console.log(data)
       let result: any;
       result = data.lessionData.res;
       this.manageLessonList = result;

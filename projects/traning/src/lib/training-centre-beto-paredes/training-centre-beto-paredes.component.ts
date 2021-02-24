@@ -41,6 +41,12 @@ export interface DialogData5 {
   styleUrls: ['./training-centre-beto-paredes.component.css']
 })
 export class TrainingCentreBetoParedesComponent implements OnInit {
+  public progressSpinner: any = {
+    mode: 'indeterminate',
+    loading: false,
+    bookingStatus: 'Sending request'
+  };
+  public count = 0;
   public lessonplanmaterialroute: any;
   public googlescheduleroute: any;
   public serverDetailsVal: any;
@@ -216,8 +222,23 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
     this.lessonContentData = this.trainingCentreData.lesson_content[0];
     // this.lession_atachment_dataarray=this.trainingCentreData.lesson_content[0].lesson_attachements;
+    for (const key in this.trainingCategoryData) {
+      for (const d of val.done_lesson_by_cat_by_user) {
+        // 
+        if (this.trainingCategoryData[key]._id == d.associated_training) {
+          this.trainingCategoryData[key].done = d.lessonsdone;
+          this.trainingCategoryData[key].percentage = Math.floor((this.trainingCategoryData[key].done / this.trainingCategoryData[key].count) * 100);
+          this.percentage = this.trainingCategoryData[key].percentage
+        }
+      }
 
-    // // // console.log(this.lession_atachment_dataarray)
+      if (this.trainingCategoryData[key].done == null) {
+        this.trainingCategoryData[key].done = 0;
+      }
+    }
+
+    console.log(this.percentage, ' this.percentage__________________')
+
     for (let i in this.trainingCategoryData) {
       if (this.paramsTrainingId == this.trainingCategoryData[i]._id) {
         // // // // console.log(this.trainingCategoryData[i]._id, 'this.trainingCentreData[i]._id')
@@ -235,7 +256,8 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
       this.percentage = (this.trainingCategoryData[key].done / this.trainingCategoryData[key].count) * 100
     }
 
-    // // console.log(this.reportPercentage,this.trainingCategoryData)
+    console.log(this.percentage, 'percentage')
+
     for (const key in this.trainingLessonData) {
       // // // // console.log(this.trainingLessonData[key], 'raju')
       for (const iterator of this.trainingCentreData.donetraininglessondata) {
@@ -252,22 +274,10 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
       }
     }
 
-    // // // console.log(this.trainingLessonData,'kkkkkkkkkkkk',this.trainingCentreData.donetraininglessondata)
+    console.log(this.trainingCategoryData, 'kkkkkkkkkkkk')
 
-    for (const key in this.trainingCategoryData) {
-      for (const d of val.done_lesson_by_cat_by_user) {
-        // 
-        if (this.trainingCategoryData[key]._id == d.associated_training) {
-          this.trainingCategoryData[key].done = d.lessonsdone;
-          this.trainingCategoryData[key].percentage = Math.floor((this.trainingCategoryData[key].done / this.trainingCategoryData[key].count) * 100);
-          this.percentage = this.trainingCategoryData[key].percentage
-        }
-      }
 
-      if (this.trainingCategoryData[key].done == null) {
-        this.trainingCategoryData[key].done = 0;
-      }
-    }
+
     this.getMarkDataButton(val);
 
     if (this.lessonContentData.lesson_attachements != null && this.lessonContentData.lesson_attachements.length > 0 && this.trainingCentreData.complete_lesson_videos.length > 0 && this.quizflag == false) {
@@ -298,21 +308,32 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
       }
     }
     this.trainingupdate();
+    this.progressSpinner = {
+      mode: 'indeterminate',
+      loading: false,
+      bookingStatus: 'Sending request'
+    };
+
   }
 
 
   constructor(public router: Router, public snakBar: MatSnackBar, public activatedRoute: ActivatedRoute, public apiService: ApiService, public cookieService: CookieService, public dialog: MatDialog, public sanitizer: DomSanitizer) {
     this.userId = JSON.parse(this.cookieService.get('userid'));
     this.userType = JSON.parse(this.cookieService.get('type'));
+   
 
   }
 
   ngOnInit() {
+    if (this.trainingCategoryData[0].count == this.trainingCategoryData[0].done && this.trainingCentreData.calendar_booking_data.length == 0) {
+      this.gamePlanModal(this.paramslessonId, this.paramsTrainingId);
+    }
   }
 
 
   clicktrcataining(val, catagory_name: any) {
-    // // console.log(val, '+++',)
+    console.log(catagory_name, '++--------+',)
+    this.progressSpinner.loading = true;
     // // console.log(this.trainingCategoryData[0], 'trainingCategoryData')
     let training_access_flag: boolean = false;
     if ((this.trainingCategoryData[0].done == this.trainingCategoryData[0].count || this.trainingCategoryData[0]._id == val)) {
@@ -328,11 +349,17 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
       }, 1000);
     }
 
-    if ((training_access_flag == true && this.trainingCentreData.calendar_booking_data.length > 0) || this.trainingCategoryData[0]._id == val) {
+    if (training_access_flag == true || this.trainingCategoryData[0]._id == val) {
       this.router.navigateByUrl(this.trainingCenterRoute + val);
+      // if (this.trainingCategoryData[0].count == this.trainingCategoryData[0].done && this.trainingCentreData.calendar_booking_data.length == 0) {
+      //   this.gamePlanModal(this.paramslessonId, this.paramsTrainingId);
+      // }
+
       this.training_cat_name = catagory_name;
     } else {
-      this.snakBar.open("Sorry, You cannot access this training unless you complete the first training ", 'Ok', {
+      this.progressSpinner.loading = false;
+
+      this.snakBar.open("Sorry, You cannot access this training unless you complete the" + this.trainingCategoryData[0].catagory_name, 'Ok', {
         duration: 4000
       });
     }
@@ -431,7 +458,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
   // game Plan Modal
   gamePlanModal(lessonid, trainingid,) {
 
-    const dialogRef = this.dialog.open(GapmeplanModalComponent, {
+    const dialogRef = this.dialog.open(GameplanModalComponent, {
       panelClass: 'schedule_modal',
       width: '900px',
       height: 'auto',
@@ -449,6 +476,11 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
   }
   nextbutton(value: any) {
     // console.log(value, 'value', this.lessonDataList)
+    this.progressSpinner = {
+      mode: 'indeterminate',
+      loading: true,
+      bookingStatus: 'Sending request'
+    };
 
     switch (value) {
       case 'next':
@@ -483,6 +515,11 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
                 // // // // console.log('-->>>>', this.trainingCategoryList[n + 1])
 
                 this.router.navigateByUrl(this.trainingCenterRoute + this.trainingCategoryData[n + 1]._id);
+                // this.progressSpinner = {
+                //   mode: 'indeterminate',
+                //   loading: false,
+                //   bookingStatus: 'Sending request'
+                // };
               }
               else {
                 // // // // console.log('++>>>>', this.trainingCategoryList[n]._id, this.trainingCategoryList[n + 1]._id,)
@@ -620,7 +657,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
           this.getTrainingCenterlistFunctionwithLessonId(this.paramsId, this.userType, this.userId, this.paramslessonId)
           this.quizflag = false;
           if (this.quizflag == false) {
-            this.next_button_access = true;
+            // this.next_button_access = true;
             // // console.log("next_button_access true")
 
           }
@@ -887,18 +924,23 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
           }
         }
 
-        // console.log(data, '+++++++++++++')
+        console.log(this.trainingCategoryData, '++======+++++++++++++')
       }
     }
-    let t_percent:any={}
+    let t_percent: any = {}
     t_percent.associated_training = this.paramsTrainingId;
-    t_percent.percentage =;
+    if (this.trainingCategoryData[0].done != null && this.trainingCategoryData[0].done != '') {
+      t_percent.percentage = ((this.trainingCategoryData[0].done / this.trainingCategoryData[0].count) * 100);
+    }
 
     this.apiService.postDatawithoutToken(link, data).subscribe(res => {
-      console.log(res,'trainingupdate');
-      if(res){
-        this.trainingDataListener.emit({action:'update-success',result:data,training_percentage:t_percent})
+      console.log(res, 'trainingupdate');
+      for (const key in this.trainingCategoryData) {
+        if (this.trainingCategoryData[key]._id == this.paramsTrainingId && ((this.trainingCategoryData[key].done / this.trainingCategoryData[key].count) * 100) == 100) {
+          this.trainingDataListener.emit({ action: 'update-success', result: data, training_percentage: t_percent })
+        }
       }
+
 
     })
   }
@@ -976,6 +1018,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
   getTrainingCenterlistFunctionwithLessonId(associated_training: any, type: any, user_id: any, _id: any) {
     // // // // console.log('associated_training', associated_training, 'type', type, 'user_id', user_id, '_id', _id)
+    console.log("mahitosh")
     const link = this.serverDetailsVal.serverUrl + this.formSourceVal.gettrainingcenterlistendpoint;
     let data: any = {
       "condition": {
@@ -987,11 +1030,19 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
       "type": type,
       "associated_training": associated_training
     }
+    this.progressSpinner.loading = true
     // // // console.log(this.userId, 'this.userId')
     this.apiService.postDatawithoutToken(link, data).subscribe((response: any) => {
 
-      // // console.log("next_button_access true", response);
+      console.log("next_button_access true", response);
       this.getMarkDataButton(response.results);
+      if (response.status == "success") {
+        // this.progressSpinner = {
+        //   mode: 'indeterminate',
+        //   loading: false,
+        //   bookingStatus: 'Sending request'
+        // };
+      }
 
 
 
@@ -1056,15 +1107,15 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
       gamePlanFlag = true;
     }
 
-    if (val.calendar_booking_data != null && val.calendar_booking_data.length > 0) {
+    if (val.calendar_booking_data != null) {
       gamePlanFlag = false;
     }
 
     // console.log(gamePlanFlag, 'gamePlanFlag======++++++')
 
-    if (gamePlanFlag == true) {
-      this.gamePlanModal(this.paramslessonId, this.paramsTrainingId);
-    }
+    // if (gamePlanFlag == true) {
+    //   this.gamePlanModal(this.paramslessonId, this.paramsTrainingId);
+    // }
 
   }
 
@@ -1112,7 +1163,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
             this.trainingCentreData.complete_lesson_videos.length == this.video_data.length) {
 
             if (this.trainingCentreData.quiz_data.length != 0) {
-              this.quizflag = true;
+              // this.quizflag = true;
               this.next_button_access = false;
               // // console.log("next_button_access false")
 
@@ -1433,9 +1484,9 @@ export class LessonQuizBetoparedesModalComponent {
   styleUrls: ['game-plan-dialog.css']
 
 })
-export class GapmeplanModalComponent {
+export class GameplanModalComponent {
   public traingname: any;
-  constructor(public dialogRef: MatDialogRef<GapmeplanModalComponent>,
+  constructor(public dialogRef: MatDialogRef<GameplanModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData7, public snakBar: MatSnackBar, public apiService: ApiService, public router: Router) {
     this.traingname = data.data[0].catagory_name
     // // console.log(data, this.traingname)
@@ -1444,6 +1495,9 @@ export class GapmeplanModalComponent {
   onNoClick(): void {
     this.data.flag = false;
     this.dialogRef.close(this.data);
+    this.snakBar.open(' Your Game Plan Meeting Booking is not Done', 'OK', {
+      duration: 5000
+    })
   }
   gameplay(val) {
     this.data.flag = true;
@@ -1457,7 +1511,7 @@ export class GapmeplanModalComponent {
 })
 export class QuizReportmodal {
   public traingname: any;
-  constructor(public dialogRef: MatDialogRef<GapmeplanModalComponent>,
+  constructor(public dialogRef: MatDialogRef<QuizReportmodal>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData8, public snakBar: MatSnackBar, public apiService: ApiService, public router: Router) {
     // console.log(data)
     // // console.log(data, this.traingname)
