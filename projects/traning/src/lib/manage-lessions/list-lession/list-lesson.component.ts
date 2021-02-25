@@ -375,6 +375,8 @@ export class ListlessonComponent implements OnInit {
         this.listingData.splice(index, 1);
         let allData: PeriodicElement[] = this.listingData;
         this.dataSource = new MatTableDataSource(allData);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       }
 
     })
@@ -543,8 +545,30 @@ export class ListlessonComponent implements OnInit {
         //   this.listingData[index].status = "Active"
 
         // }
-        let allData: PeriodicElement[] = this.listingData;
+        // let allData: PeriodicElement[] = this.listingData;
+        // this.dataSource = new MatTableDataSource(allData);
+        // // this.dataSource.paginator = this.paginator;
+        // // this.dataSource.sort = this.sort;
+        this.getLessonData()
+      }
+
+    })
+  }
+
+  getLessonData(){
+    let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
+    let data: any = {
+      "source": this.formSourceVal.associatedTrainingSourceName,
+      "token": this.serverDetailsVal.jwttoken
+    }
+    this.apiService.postData(link, data).subscribe((response: any) => {
+      let result: any;
+      if (response.status = "success") {
+        result = response.res;
+        let allData: PeriodicElement[] = result;
         this.dataSource = new MatTableDataSource(allData);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       }
 
     })
@@ -598,11 +622,12 @@ export class ListlessonComponent implements OnInit {
             let tval: any = temparr[i] - parseInt(i);
             this.listingData.splice(tval, 1);
           }
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
+          
           this.selection.clear();
           let allData: PeriodicElement[] = this.listingData;
           this.dataSource = new MatTableDataSource(allData);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
         }, 1000);
       }
 
@@ -678,7 +703,7 @@ export class ListlessonComponent implements OnInit {
   }
   viewTrash() {
     switch (this.trashButtonText) {
-      case 'View Trash':
+      case 'View Deleted':
         this.trashFlag = 1 - this.trashFlag;
         let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
         let data: any = {
@@ -697,7 +722,7 @@ export class ListlessonComponent implements OnInit {
 
         })
         break;
-      case 'Hide Trash':
+      case 'Return to Active list':
         this.trashButtonText = "View Trash";
         this.dataSource = new MatTableDataSource(this.listingData);
         this.dataSource.paginator = this.paginator;
