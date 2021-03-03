@@ -639,7 +639,6 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
       const dialogRef = this.dialog.open(LessonQuizBetoparedesModalComponent, {
         panelClass: 'schedule_modal',
-        width: '900px',
         height: 'auto',
         data: { quiz_data: val.quiz_data, lesson_data: this.lessonContentData, user_id: this.userId, server_url: server_url }
       });
@@ -1123,7 +1122,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
   viewQuizResult(val) {
     // console.log(val, 'completeQuizData')
     const dialogRef = this.dialog.open(QuizReportmodal, {
-      panelClass: '',
+      panelClass: 'quiz_resultcls',
       width: '900px',
       height: 'auto',
       data: { data: val }

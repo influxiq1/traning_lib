@@ -57,7 +57,7 @@ export class ListingTrainingComponent implements OnInit {
   public trashFlag: any = 0;
   public status_search_regex: any;
   public product_name_serach: any = [];
-  public trashButtonText: any = "View Trash";
+  public trashButtonText: any = "View Deleted";
   public productEndpoint: any;
   public category_search: any = [];
   public parent_catagory_search: any = [];
@@ -549,7 +549,7 @@ export class ListingTrainingComponent implements OnInit {
   }
   viewTrash() {
     switch (this.trashButtonText) {
-      case 'View Trash':
+      case 'View Deleted':
         this.trashFlag = 1 - this.trashFlag;
         let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
         let data: any = {
@@ -560,7 +560,7 @@ export class ListingTrainingComponent implements OnInit {
           }
         }
         this.apiService.postData(link, data).subscribe((response: any) => {
-          this.trashButtonText = "Hide Trash";
+          this.trashButtonText = "Return to Active list";
           this.trashFlag = 1 - this.trashFlag;
           this.allTrashData = response.res;
           this.dataSource = new MatTableDataSource(this.allTrashData);
@@ -569,8 +569,8 @@ export class ListingTrainingComponent implements OnInit {
 
         })
         break;
-      case 'Hide Trash':
-        this.trashButtonText = "View Trash";
+      case 'Return to Active list':
+        this.trashButtonText = "View Deleted";
         this.dataSource = new MatTableDataSource(this.listingData);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
