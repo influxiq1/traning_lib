@@ -320,7 +320,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
   constructor(public router: Router, public snakBar: MatSnackBar, public activatedRoute: ActivatedRoute, public apiService: ApiService, public cookieService: CookieService, public dialog: MatDialog, public sanitizer: DomSanitizer) {
     this.userId = JSON.parse(this.cookieService.get('userid'));
     this.userType = JSON.parse(this.cookieService.get('type'));
-   
+
 
   }
 
@@ -332,7 +332,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
 
   clicktrcataining(val, catagory_name: any) {
-    console.log(catagory_name, '++--------+',)
+    console.log(catagory_name, '++--------+',val)
     this.progressSpinner.loading = true;
     // // console.log(this.trainingCategoryData[0], 'trainingCategoryData')
     let training_access_flag: boolean = false;
@@ -1051,13 +1051,14 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
 
   getMarkDataButton(val) {
-    // console.log(val, '+++++++++');
+    console.log(val, '+++bgggggggggggggggggg++++++');
     this.next_button_access = false;
     this.quizReportflag = false;
 
     let mandetoryLessonFile = [];
     let completeLessonFile = [];
     this.completeQuizData = [];
+
     if (val.lesson_content[0].lesson_attachements != null && val.lesson_content[0].lesson_attachements.length > 0) {
       this.next_button_access = false;
       // console.log("if____block  1")
@@ -1065,8 +1066,9 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
         if (val.lesson_content[0].lesson_attachements[key].file_skippable == false || val.lesson_content[0].lesson_attachements[key].audio_skippable == false || val.lesson_content[0].lesson_attachements[key].video_skippable == false) {
           mandetoryLessonFile.push(val.lesson_content[0].lesson_attachements[key])
         }
+        
       }
-      // console.log(mandetoryLessonFile, 'mandetoryLessonFile')
+
       completeLessonFile = completeLessonFile.concat(val.complete_lesson_files, val.complete_lesson_audio, val.complete_lesson_videos);
 
       // console.log(completeLessonFile, 'completeLessonFile')
@@ -1097,6 +1099,22 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     else {
       this.next_button_access = true;
     }
+    console.log(mandetoryLessonFile, 'mandetoryLessonFile')
+    if (mandetoryLessonFile.length == 0 && val.quiz_data.length != 0) {
+      this.quizflag = true;
+      this.next_button_access = false;
+    }
+    if (val.complete_lesson_quiz != null && typeof (val.complete_lesson_quiz) != undefined && val.complete_lesson_quiz.length != 0) {
+      for (const key in val.quiz_data) {
+        for (const i in val.complete_lesson_quiz) {
+          if (val.complete_lesson_quiz[i].lesson_id == val.quiz_data[key].lesson_id) {
+            this.quizflag = false;
+            this.next_button_access = true;
+          }
+        }
+      }
+
+    }
 
     let gamePlanFlag: boolean = false;
 
@@ -1115,6 +1133,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     // if (gamePlanFlag == true) {
     //   this.gamePlanModal(this.paramslessonId, this.paramsTrainingId);
     // }
+    console.log(mandetoryLessonFile, 'hgftvy', completeLessonFile, 'lllllllllll')
 
   }
 
@@ -1162,8 +1181,8 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
             this.trainingCentreData.complete_lesson_videos.length == this.video_data.length) {
 
             if (this.trainingCentreData.quiz_data.length != 0) {
-              // this.quizflag = true;
-              this.next_button_access = false;
+              this.quizflag = true;
+              // this.next_button_access = false;
               // // console.log("next_button_access false")
 
             }
@@ -1173,7 +1192,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
                 // this.next_button_access = true;
                 // // console.log("next_button_access true")
 
-                this.quizflag = false;
+                // this.quizflag = false;
               }
             }
             this.complete_videoflag[val.video_url] = true

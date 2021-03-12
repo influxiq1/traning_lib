@@ -54,6 +54,11 @@ export interface DialogData4 {
 export class ListlessonComponent implements OnInit {
   displayedColumns: string[] = [];
   // dataSource: MatTableDataSource<PeriodicElement>;
+  public progressSpinner: any = {
+    mode: 'indeterminate',
+    loading: false,
+    bookingStatus: 'Sending request'
+  };
 
   public dataSource: any;
   public listingData: any = [];
@@ -227,27 +232,27 @@ export class ListlessonComponent implements OnInit {
       }
       this.apiService.postData(link, data).subscribe((res: any) => {
         if (res.status = "success") {
-          this.category_search=[];
+          this.category_search = [];
           console.log(this.category_search, 'category_searchkkkkkkkkkkkkkk')
           let arr = []
           // 
           if (res.res.length > 0) {
             for (const key in res.res) {
               if (res.res[key].prerequisite_lession_search != '') {
-                this.category_search.push({prerequisite_lession_search:res.res[key].prerequisite_lession_search});
+                this.category_search.push({ prerequisite_lession_search: res.res[key].prerequisite_lession_search });
 
                 arr.push(res.res[key].prerequisite_lession_search)
 
-                
+
               }
             }
             let uniqueCardArr = arr.filter(function (item, pos) {
               return arr.indexOf(item) == pos;
             });
-            console.log(uniqueCardArr,'uniqueCardArr')
+            console.log(uniqueCardArr, 'uniqueCardArr')
 
           }
-         
+
         }
 
       })
@@ -390,6 +395,7 @@ export class ListlessonComponent implements OnInit {
 
   }
   filter() {
+    this.progressSpinner.loading = true;
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
     let searchval: any = {};
 
@@ -439,6 +445,8 @@ export class ListlessonComponent implements OnInit {
       this.dataSource = result.res;
       let allData: PeriodicElement[] = this.dataSource;
       this.dataSource = new MatTableDataSource(allData);
+      this.progressSpinner.loading = false;
+
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
@@ -555,7 +563,7 @@ export class ListlessonComponent implements OnInit {
     })
   }
 
-  getLessonData(){
+  getLessonData() {
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
     let data: any = {
       "source": this.formSourceVal.associatedTrainingSourceName,
@@ -622,7 +630,7 @@ export class ListlessonComponent implements OnInit {
             let tval: any = temparr[i] - parseInt(i);
             this.listingData.splice(tval, 1);
           }
-          
+
           this.selection.clear();
           let allData: PeriodicElement[] = this.listingData;
           this.dataSource = new MatTableDataSource(allData);
@@ -702,6 +710,7 @@ export class ListlessonComponent implements OnInit {
 
   }
   viewTrash() {
+    this.progressSpinner.loading = true;
     switch (this.trashButtonText) {
       case 'View Deleted':
         this.trashFlag = 1 - this.trashFlag;
@@ -714,6 +723,8 @@ export class ListlessonComponent implements OnInit {
           }
         }
         this.apiService.postData(link, data).subscribe((response: any) => {
+          this.progressSpinner.loading = false;
+
           this.trashButtonText = "Return to Active list";
           this.allTrashData = response.res;
           this.dataSource = new MatTableDataSource(this.allTrashData);
@@ -723,7 +734,9 @@ export class ListlessonComponent implements OnInit {
         })
         break;
       case 'Return to Active list':
-        this.trashButtonText = "View Trash";
+        this.progressSpinner.loading = false;
+
+        this.trashButtonText = "View Deleted";
         this.dataSource = new MatTableDataSource(this.listingData);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

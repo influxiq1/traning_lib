@@ -8,6 +8,8 @@
         <mat-toolbar color="primary" style="justify-content: center; align-items: center;">
           <h2 class="headerSpan">Lesson Management</h2>
         </mat-toolbar>
+
+<mat-progress-bar mode="indeterminate" *ngIf="progressSpinner.loading "></mat-progress-bar>
         <!-- <mat-card-content class="countSection">
           <h2>{{trainingCounts.totaltrainingcount}}</h2>
           <span>Total Number Of <br>Training</span>

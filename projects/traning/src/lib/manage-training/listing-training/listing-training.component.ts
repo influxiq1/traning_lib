@@ -37,6 +37,13 @@ export interface DialogData {
 export class ListingTrainingComponent implements OnInit {
   displayedColumns: string[] = ['select', 'no', 'parent_catagory', 'catagory_name', 'description', 'priority', 'product_name', 'type',
     'status', 'deleteRecord'];
+
+  public progressSpinner: any = {
+    mode: 'indeterminate',
+    loading: false,
+    bookingStatus: 'Sending request'
+  };
+
   public dataSource: any;
   public listingData: any = [];
   public dialogRef: any;
@@ -251,6 +258,7 @@ export class ListingTrainingComponent implements OnInit {
   filterByTrainingName() {
     // // console.log(this.searchjson);
     let searchval: any = {};
+    this.progressSpinner.loading = true;
 
     // if (this.searchjson.status_search_regex != "") {
     //   // // console.log("hitted")
@@ -285,6 +293,8 @@ export class ListingTrainingComponent implements OnInit {
       data.condition['is_trash'] = { $ne: 1 }
     }
     this.apiService.postData(link, data).subscribe(response => {
+      this.progressSpinner.loading = false;
+
       let result: any = response;
       this.dataSource = result.res;
       let allData: PeriodicElement[] = this.dataSource;
@@ -548,6 +558,7 @@ export class ListingTrainingComponent implements OnInit {
 
   }
   viewTrash() {
+    this.progressSpinner.loading = true;
     switch (this.trashButtonText) {
       case 'View Deleted':
         this.trashFlag = 1 - this.trashFlag;
@@ -560,6 +571,8 @@ export class ListingTrainingComponent implements OnInit {
           }
         }
         this.apiService.postData(link, data).subscribe((response: any) => {
+          this.progressSpinner.loading = false;
+
           this.trashButtonText = "Return to Active list";
           this.trashFlag = 1 - this.trashFlag;
           this.allTrashData = response.res;
@@ -571,6 +584,8 @@ export class ListingTrainingComponent implements OnInit {
         break;
       case 'Return to Active list':
         this.trashButtonText = "View Deleted";
+        this.progressSpinner.loading = false;
+
         this.dataSource = new MatTableDataSource(this.listingData);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

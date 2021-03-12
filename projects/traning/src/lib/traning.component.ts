@@ -992,7 +992,8 @@ export class TraningComponent implements OnInit {
 })
 export class AddAudioVideoFileDialogComponent {
 
-  public uploadConfigData: any = {};
+  public uploadConfigData: any = {
+  };
   public video_array: any = [];
   public video_base_url: any = 'https://www.youtube.com/embed/';
   public videoflag;
