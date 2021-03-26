@@ -177,7 +177,7 @@
     bottom: 10px
 }
 
-.trainingcentercls .progresspercentagecls{
+.trainingcentercls .progresspercentagecls {
     float: right;
 }
 
@@ -549,10 +549,10 @@
 
 .classlessonongoing {
     background-color: rgb(48, 62, 187);
-     
     text-align: left;
     padding: 6px;
-    text-transform: capitalize; width: auto;
+    text-transform: capitalize;
+    width: auto;
 }
 
 .classlessondone {
@@ -841,29 +841,81 @@ mat-slider {
     padding: 16px;
 }
 
-
-.rowinner_block{ display: block; padding: 5px; 
+.rowinner_block {
+    display: block;
+    padding: 5px;
     width: inherit;
-    background-color: #dfdfdf;  cursor: pointer;
-    margin: 5px 0px 5px 0px;}
+    background-color: #dfdfdf;
+    cursor: pointer;
+    margin: 5px 0px 5px 0px;
+}
 
+.maincartcls_row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
 
-  .maincartcls_row{ display: flex; flex-wrap: wrap; justify-content: space-between;}
+.maincartcls_row .alllession_cls {
+    width: 68%;
+    padding: 0;
+}
 
+.maincartcls_row .alltrainingcls {
+    width: 30%;
+    padding: 0;
+    background-color: #c3c4c1;
+    text-transform: inherit;
+}
 
-  .maincartcls_row .alllession_cls{ width:68%; padding: 0;}
+.trainingcentercls_group {
+    border-bottom: solid 10px #fff;
+}
 
-  .maincartcls_row .alltrainingcls{ width:30%; padding: 0; background-color: #c3c4c1; text-transform: inherit;}
+.trainingcentercls_group:last-of-type {
+    border: none
+}
 
-  .trainingcentercls_group{ border-bottom: solid 10px #fff;}
+.trainingcentercls_group h2 {
+    margin: 0;
+    padding: 15px;
+    background: #000000;
+    color: #fff;
+}
 
-  .trainingcentercls_group:last-of-type{ border:none}
+.trainingcentercls_box .mat-list-item {
+    padding: 15px;
+    display: block;
+}
 
-  .trainingcentercls_group h2{ margin:0; padding:15px;     background: #000000;
-    color: #fff;}
+.trainingcentercls_box .classongoing {
+    background: #234dd8;
+}
 
-  .trainingcentercls_box .mat-list-item{ padding:15px; display: block;}
+.markbtncls {
+    left: 816px;
+    position: relative;
+}
 
-  .trainingcentercls_box .classongoing{ background:#234dd8;}
-  .markbtncls{left: 816px;
-    position: relative;}
+lib-training-centre-beto-paredes {
+    position: relative;
+}
+
+.lodercls {
+    position: fixed;
+    z-index: 99;
+    width: 100%;
+    overflow: hidden;
+    top: 0;
+}
+
+.shwmrcls {}
+
+.shwlesscls {
+    /* position: absolute;
+    top: 248px; */
+}
+.greatercls{
+    /* position: absolute;
+    top: 132px; */
+}

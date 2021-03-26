@@ -25,6 +25,9 @@
             </mat-card-content>
 
             <mat-card-content *ngIf="quizData == ''" class="quizanscls">
+                <div class="quizloadercls">
+                    <mat-progress-bar mode="indeterminate" *ngIf="progressSpinner.loading"></mat-progress-bar>
+                </div>
                 <h2 class="example-h2" style="text-align: center;">Quiz Result</h2>
 
                 <span>

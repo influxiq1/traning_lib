@@ -4,7 +4,10 @@
   </mat-progress-bar>
   <h3>{{ reportPercentage }}%</h3>
 </div>
-<mat-progress-bar mode="indeterminate" *ngIf="progressSpinner.loading "></mat-progress-bar>
+<div class='lodercls'>
+  <mat-progress-bar mode="indeterminate" *ngIf="progressSpinner.loading"></mat-progress-bar>
+
+</div>
 
 <!-- new design -->
 <mat-card class="maincartcls_row">
@@ -12,10 +15,10 @@
   <mat-card class="alllession_cls">
     <mat-card-content class="trainingcentercls trainingcenterclsupdate">
       <mat-card-title class="mentortitle" id="lessonData">{{training_cat_name}}</mat-card-title>
-      <div (click)="nochildclick(item,'click')" fxLayout="row" class="rowinner_block" *ngFor="let item of trainingLessonData
+      <div fxLayout="row" class="rowinner_block" *ngFor="let item of trainingLessonData
           ; let i=index;">
 
-        <div [ngClass]="paramslessonId == item._id
+        <div (click)="nochildclick(item,'click')" [ngClass]="paramslessonId == item._id
             ? 'classlessonongoing':
             (item.is_done == true ? 'classlessondone' : 'classlessonnotdone')">{{item.lession_title}}
           <!-- <span>{{item | json}}</span> -->
@@ -42,7 +45,22 @@
 
                   </div>
                   <p class="videotitlecls">{{item.video_title}}</p>
-                  <p class="videoDescls"> {{item.video_description}} </p>
+                  <p *ngIf='item.video_description.length > 120 && shwmorevideoflg==true'>{{ item.video_description }}</p>
+                  <p *ngIf='item.video_description.length > 120 && shwmorevideoflg==false'>{{ item.video_description |
+                    slice:0:120}}</p>
+                  <p class='greatercls' *ngIf='item.video_description.length > 120 && shwmorevideoflg==true'>{{ item.video_description }}</p>
+                  <p *ngIf='item.video_description.length < 120'>{{ item.video_description }}</p>
+                  <span class="shwmrcls" *ngIf='item.video_description.length > 120 && shwmorevideoflg==false'>
+                    <button mat-raised-button (click)="shwmorevideoflg=true">
+                      Show More ..
+                    </button>
+                  </span>
+                  <span class='shwlesscls' *ngIf='item.video_description.length > 120 && shwmorevideoflg==true'>
+                    <button mat-raised-button (click)="shwmorevideoflg=false">
+                      Show Less ..
+                    </button>
+                  </span>
+
                   <span class="mandetorycls" *ngIf="item.video_skippable!=true">*This is a mandetory video to
                     complete this lesson
                     <span *ngIf="complete_videoflag[item.video_url]==true" class="donetikcls">
@@ -117,7 +135,20 @@
                       <p class="audiodescendtime">{{audio_end_time[item.audio._id]}}</p>
                     </div>
 
-                    <p>{{ item.audio_description }}</p>
+                    <p *ngIf='item.audio_description.length > 120 && shwmoreflg==false'>{{ item.audio_description |
+                      slice:0:120}}</p>
+                    <p class='greatercls' *ngIf='item.audio_description.length > 120 && shwmoreflg==true'>{{ item.audio_description }}</p>
+                    <p *ngIf='item.audio_description.length < 120'>{{ item.audio_description }}</p>
+                    <span class="shwmrcls" *ngIf='item.audio_description.length > 120 && shwmoreflg==false'>
+                      <button mat-raised-button (click)="shwmoreflg=true">
+                        Show More ..
+                      </button>
+                    </span>
+                    <span class='shwlesscls' *ngIf='item.audio_description.length > 120 && shwmoreflg==true'>
+                      <button mat-raised-button (click)="shwmoreflg=false">
+                        Show Less ..
+                      </button>
+                    </span>
                   </div>
                   <span class="mandetorycls" *ngIf="item.audio_skippable!=true">*This is a mandetory audio to
                     complete this lesson
@@ -136,18 +167,31 @@
                   'png' || item.file.file_type == 'jpg'" class="image_filetype">
                     <img (click)="previewpdf(item,'img')" mat-card-image
                       [attr.src]="bucket_url +item.file.fileservername">
-                      <p class="File_titlecls">{{ item.file_title }}</p>
+                    <p class="File_titlecls">{{ item.file_title }}</p>
 
-                      <p class="File_descriptioncls">{{ item.file_description }}
-  
-                      </p>
-                    <button mat-raised-button (click)="previewpdf(item,'img')">
+                    
+                    <p *ngIf='item.file_description.length > 120 && shwmorefileflg==false'>{{ item.file_description |
+                      slice:0:120}}yyy</p>
+                    
+                    <p class='greatercls' *ngIf='item.file_description.length > 120 && shwmorefileflg==true'>{{ item.file_description }}</p>
+                    <p *ngIf='item.file_description.length < 120'>{{ item.file_description }}</p>
+                    <span class="shwmrcls" *ngIf='item.file_description.length > 120 && shwmorefileflg==false'>
+                      <button mat-raised-button (click)="shwmorefileflg=true">
+                        Show More ..
+                      </button>
+                    </span>
+                    <span class='shwlesscls' *ngIf='item.file_description.length > 120 && shwmorefileflg==true'>
+                      <button mat-raised-button (click)="shwmorefileflg=false">
+                        Show Less ..
+                      </button>
+                    </span>
+                    <button class="previewbtncls" matTooltip="Preview"mat-raised-button (click)="previewpdf(item,'img')">
                       Preview
                     </button>
-                    <button mat-raised-button (click)="downloadPdf(item,1)">
+                    <button class="downloadbtncls" matTooltip="Download" mat-raised-button (click)="downloadPdf(item,1)">
                       Download
                     </button>
-                   
+
                     <span class="mandetorycls" *ngIf="item.file_skippable!=true">*This is a mandetory image to
                       complete this lesson (after download)
 
@@ -182,13 +226,31 @@
                         picture_as_pdf
                       </span>
                     </ng-template>
+                  
+
                     <p class="File_titlecls">{{ item.file_title }}</p>
 
-                    <p class="File_descriptioncls">{{ item.file_description |details}} </p>
-                    <button mat-raised-button (click)="previewpdf(item,'pdf')">
+                    <!-- <p class="File_descriptioncls">{{ item.file_description }} </p> -->
+                    <p *ngIf='item.file_description.length > 120 && shwmorefileflg==false'>{{ item.file_description |
+                      slice:0:120}}</p>
+                    
+                    <p class='greatercls' *ngIf='item.file_description.length > 120 && shwmorefileflg==true'>{{ item.file_description }}</p>
+                    <p *ngIf='item.file_description.length < 120'>{{ item.file_description }}</p>
+                    <span class="shwmrcls" *ngIf='item.file_description.length > 120 && shwmorefileflg==false'>
+                      <button mat-raised-button (click)="shwmorefileflg=true">
+                        Show More ..
+                      </button>
+                    </span>
+                    <span class='shwlesscls' *ngIf='item.file_description.length > 120 && shwmorefileflg==true'>
+                      <button mat-raised-button (click)="shwmorefileflg=false">
+                        Show Less ..
+                      </button>
+                    </span>
+                    <button class="previewbtncls" matTooltip="Preview" mat-raised-button (click)="previewpdf(item,'pdf')">
                       Preview
                     </button>
-                    <button mat-raised-button (click)="downloadPdf(item,1)">
+                  
+                    <button matTooltip="Download" class="downloadbtncls" mat-raised-button (click)="downloadPdf(item,1)">
                       Download
                     </button>
 
@@ -208,13 +270,13 @@
                 </div>
 
               </div>
-              <mat-card class="banner1cls" *ngIf="quizflag==true">
+
+              <mat-card class="banner1cls" *ngIf="quizflag">
+
                 <div class="bannerclassmentor">
-                  <div class='reviewcls'>
-                    Review Quiz
-                  </div>
+
                   <mat-card-content>
-                    Please review the Lesson Quiz for this Lesson.
+                    Please complete the Quiz to proceed with the your Training.
                   </mat-card-content>
                   <div class="submitbtngroup">
                     <button mat-button type="button" class="submitbtn
@@ -223,6 +285,7 @@
                   </div>
                 </div>
               </mat-card>
+
               <mat-card class="banner1cls" *ngIf="quizReportflag==true">
                 <div class="bannerclassmentor">
                   <div class='reviewcls accurecycls'>
