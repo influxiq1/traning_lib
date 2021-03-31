@@ -58,7 +58,7 @@
              [matAutocomplete]="auto"
              [(ngModel)]="searchjson.catagory_name_search_regex">
       <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let items of category_search" [value]="items.catagory_name_search">{{items.catagory_name_search}}
+        <mat-option *ngFor="let items of category_search" [value]="items.catagory_name_search | titlecase">{{items.catagory_name_search | titlecase}}
   
         </mat-option>
       </mat-autocomplete>
@@ -78,7 +78,7 @@
              [matAutocomplete]="auto1"
              [(ngModel)]="searchjson.parent_catagory_search_regex">
       <mat-autocomplete #auto1="matAutocomplete">
-        <mat-option *ngFor="let items of uniqueCardArr" [value]="items">{{items}}
+        <mat-option *ngFor="let items of uniqueCardArr" [value]="items | titlecase ">{{items | titlecase }}
   
         </mat-option>
       </mat-autocomplete>

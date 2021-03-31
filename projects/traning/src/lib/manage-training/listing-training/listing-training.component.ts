@@ -62,7 +62,7 @@ export class ListingTrainingComponent implements OnInit {
   public idArray: any = [];
   public allTrashData: any = [];
   public trashFlag: any = 0;
-  public status_search_regex: any;
+  public status_search_regex: any = '';
   public product_name_serach: any = [];
   public trashButtonText: any = "View Deleted";
   public productEndpoint: any;
@@ -259,27 +259,41 @@ export class ListingTrainingComponent implements OnInit {
     // // console.log(this.searchjson);
     let searchval: any = {};
     this.progressSpinner.loading = true;
+    console.log(this.status_search_regex, 'this.status_search_regex')
 
-    // if (this.searchjson.status_search_regex != "") {
-    //   // // console.log("hitted")
-    //   searchval["status_search"] = this.searchjson.status_search_regex;
-    // }else if(this.searchjson.catagory_name_search_regex != "" ){   
-    //    searchval["catagory_name_search"] = { $regex: this.searchjson.catagory_name_search_regex.toLowerCase() }
-    // }else if(this.searchjson.parent_catagory_search_regex!=""){
-    //   searchval["parent_catagory_search"] = { $regex: this.searchjson.parent_catagory_search_regex.toLowerCase() }
-    // }
-
-    if (typeof (this.status_search_regex) != 'undefined') {
+    if (typeof (this.status_search_regex) != undefined && this.status_search_regex != null) {
       searchval["status_search"] = this.status_search_regex;
     } else {
       searchval["status_search"] = 1;
     }
 
-    searchval["catagory_name_search"] = { $regex: this.searchjson.catagory_name_search_regex.toLowerCase() }
-    searchval["parent_catagory_search"] = { $regex: this.searchjson.parent_catagory_search_regex.toLowerCase() }
-    // searchval["product_name_serach"]={$regex: this.searchjson.product_name_serach.toLowerCase()} 
+    console.log(this.searchjson, 'this.status_search_regex')
+    if (this.searchjson.catagory_name_search_regex != null && typeof (this.searchjson.catagory_name_search_regex != 'undefined')) {
+      searchval["catagory_name_search"] = { $regex: this.searchjson.catagory_name_search_regex.toLowerCase() }
+    }
+    if (this.searchjson.parent_catagory_search_regex != null && typeof (this.searchjson.parent_catagory_search_regex != 'undefined')) {
+      searchval["parent_catagory_search"] = { $regex: this.searchjson.parent_catagory_search_regex.toLowerCase() }
+    }
+    if (this.searchjson.product_name_serach != null && typeof (this.searchjson.product_name_serach != 'undefined')) {
+      searchval["product_name_serach"] = { $regex: this.searchjson.product_name_serach.toLowerCase() }
 
+    }
+    console.log(searchval, 'searchval')
+    if (searchval.catagory_name_search.$regex == '') {
+      
+      delete searchval.catagory_name_search;
+    }
+    if (searchval.parent_catagory_search.$regex == '') {
+     
+      delete searchval.parent_catagory_search;
+    }
+    console.log(searchval.status_search , 'searchval458963')
 
+    if (this.status_search_regex == '') {
+    
+      delete searchval.status_search;
+    }
+    console.log(searchval.status_search , 'searchval458963')
 
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
     var data = {
