@@ -131,7 +131,7 @@ export class AddEditLessionsComponent implements OnInit {
   public showfieldflag : boolean= true;
   public traingaccessflag : boolean=false;
   public serverDetails: any = {
-    "serverUrl": 'https://e4bmztjfw8.execute-api.us-east-1.amazonaws.com/dev/',
+    "serverUrl": 'https://z2oo2a8oq9.execute-api.us-east-1.amazonaws.com/dev/',
     "jwttoken": ""
   };
   public from_type:any='lesson';

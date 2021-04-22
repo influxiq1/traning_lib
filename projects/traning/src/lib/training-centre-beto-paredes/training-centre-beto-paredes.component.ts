@@ -47,9 +47,9 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     bookingStatus: 'Sending request'
   };
   public count = 0;
-  public shwmoreflg:boolean = false;
-  public shwmorefileflg:boolean = false;
-  public shwmorevideoflg:boolean = false;
+  public shwmoreflg: boolean = false;
+  public shwmorefileflg: boolean = false;
+  public shwmorevideoflg: boolean = false;
   public lessonplanmaterialroute: any;
   public googlescheduleroute: any;
   public serverDetailsVal: any;
@@ -124,6 +124,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
   public traingupdateendpoint: any;
   public quizReportflag: boolean = false;
   public completeQuizData: any = [];
+  public complete_data: any;
 
   @Output() trainingDataListener = new EventEmitter<any>();
 
@@ -197,7 +198,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
   @Input()
   set TrainingCentreData(val) {
 
-
+    this.complete_data = val.done_lesson_by_cat_by_user;
     this.paramsTrainingId = this.activatedRoute.snapshot.params.associated_training;
 
     this.audio_data = [];
@@ -324,7 +325,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
   constructor(public router: Router, public snakBar: MatSnackBar, public activatedRoute: ActivatedRoute, public apiService: ApiService, public cookieService: CookieService, public dialog: MatDialog, public sanitizer: DomSanitizer) {
     this.userId = JSON.parse(this.cookieService.get('userid'));
     this.userType = JSON.parse(this.cookieService.get('type'));
-    
+
 
   }
 
@@ -332,6 +333,22 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     if (this.trainingCategoryData[0].count == this.trainingCategoryData[0].done && this.trainingCentreData.calendar_booking_data.length == 0) {
       this.gamePlanModal(this.paramslessonId, this.paramsTrainingId);
     }
+    let associated_id;
+    console.log("||||||||||||||||\\\\\\\\\\\\\\\\\\\\\\\\\\", this.trainingCategoryData);
+    for (const key of this.trainingCategoryData) {
+      for (const it in this.complete_data) {
+        console.log(this.trainingCategoryData)
+        if (key._id == this.complete_data[it].associated_training) {
+          if (key.count == key.done) {
+            console.log(this.complete_data[this.complete_data.length - 1].associated_training, 'complete_data', this.complete_data.length - 1);
+            associated_id = this.complete_data[this.complete_data.length - 1].associated_training;
+          }
+
+        }
+      }
+
+    }
+    console.log(associated_id, 'associated_id')
   }
 
 
@@ -1490,7 +1507,7 @@ export class LessonQuizBetoparedesModalComponent {
       let result: any = res;
       if (result.status == 'success') {
         this.data.flag = 'yes';
-        
+
         this.progressSpinner.loading = false;
         this.dialogRef.close(this.data.flag);
         this.snakBar.open('Successfully Completed Your Lesson Quiz..!', 'OK', {

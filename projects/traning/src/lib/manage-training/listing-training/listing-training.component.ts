@@ -280,20 +280,20 @@ export class ListingTrainingComponent implements OnInit {
     }
     console.log(searchval, 'searchval')
     if (searchval.catagory_name_search.$regex == '') {
-      
+
       delete searchval.catagory_name_search;
     }
     if (searchval.parent_catagory_search.$regex == '') {
-     
+
       delete searchval.parent_catagory_search;
     }
-    console.log(searchval.status_search , 'searchval458963')
+    console.log(searchval.status_search, 'searchval458963')
 
-    if (this.status_search_regex == '') {
-    
+    if (this.status_search_regex == '' && this.status_search_regex != 0) {
+
       delete searchval.status_search;
     }
-    console.log(searchval.status_search , 'searchval458963')
+    console.log(searchval.status_search, 'searchval458963')
 
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.searchEndpoint;
     var data = {

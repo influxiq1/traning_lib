@@ -18,7 +18,7 @@ export class HttpService {
   public accesstoken: any = "";
   public fileservername: any = [];
   //  public serverUrl: any = 'https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/';//for dna  backend server url
-   public serverUrl: any = 'https://e4bmztjfw8.execute-api.us-east-1.amazonaws.com/dev/api1/';//for beto paredes backend server url
+   public serverUrl: any = 'https://z2oo2a8oq9.execute-api.us-east-1.amazonaws.com/dev/api1/';//for beto paredes backend server url
   public addendpointUrl: any;
   public updateendpointUrl: any;
   public deletesingle_endpointUrl: any;

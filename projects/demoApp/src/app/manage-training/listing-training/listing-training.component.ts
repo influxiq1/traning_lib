@@ -14,7 +14,7 @@ public editPageRoute : any="/manage-training/edit/";
 public addPageRoute : any="/manage-training/add";
 public searchSourceName : any="training_category_management_view";
 public serverDetails: any = {
-  "serverUrl": "https://e4bmztjfw8.execute-api.us-east-1.amazonaws.com/dev/api1/",
+  "serverUrl": "https://z2oo2a8oq9.execute-api.us-east-1.amazonaws.com/dev/api1/",
   "jwttoken": ""
 };
 public formSource: Object = {

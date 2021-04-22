@@ -24,7 +24,7 @@ export class AddEditTrainingComponent implements OnInit {
   {name: 'All', val:'all',completed: false, }]                    
   
   public serverDetails: any = {
-    "serverUrl": "https://e4bmztjfw8.execute-api.us-east-1.amazonaws.com/dev/",
+    "serverUrl": "https://z2oo2a8oq9.execute-api.us-east-1.amazonaws.com/dev/",
     "jwttoken": ""
   };
   public formSource: any = {

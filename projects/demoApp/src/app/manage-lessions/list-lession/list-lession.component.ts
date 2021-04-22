@@ -101,7 +101,7 @@ export class ListLessionComponent implements OnInit {
   public preview_url: any = 'https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/'
   public preview_endpoint = 'api1/lesson-preview-data'
   public serverDetails: any = {
-    "serverUrl": 'https://e4bmztjfw8.execute-api.us-east-1.amazonaws.com/dev/',
+    "serverUrl": 'https://z2oo2a8oq9.execute-api.us-east-1.amazonaws.com/dev/',
     "jwttoken": ""
   };
   public formSource: any = {
