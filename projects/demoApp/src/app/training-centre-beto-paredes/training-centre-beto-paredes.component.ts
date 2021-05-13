@@ -42,10 +42,12 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     "getUpdatedTrainingPercentageByUserEndpoint": "getupdatedtrainingpercentagebyuserid",
     "trainingCompletEmailEndpoint": "trainingcompletemail",
     "trainingcatcompletemailendpoint": "trainingcatcompletemail",
+    "complete_traing_data":"complete-traing-data",
     gettrainingcenterlistendpoint: 'gettrainingcenterlist',
     traingupdateendpoint: 'update-training-percentage'
 
   }
+  public traingupdateendpoint: any = 'done-training-sort-data'
   public trainingCenterRoute: any = "/training-center-beto-paredes/";
   public lessonplanmaterialRoute: any = "/lesson-plan-material/";
   public jwtToken: any;
@@ -102,8 +104,8 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
   }
 
-  trainingDataListener(val){
-    console.log(val,'++++++++++++++++')
+  trainingDataListener(val) {
+    console.log(val, '+++++++++++-----------------------+++++')
   }
 
 }
