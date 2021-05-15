@@ -304,7 +304,11 @@
                       <span class="mandetorycls" *ngIf="item.file_skippable!=true">*This is a mandetory image to
                         complete this lession (after download)
 
-
+                        <span *ngIf="complete_fileflag[item.file._id]==true" class="donetikcls">
+                          <img class="doneimgcls"
+                            src="https://all-frontend-assets.s3.amazonaws.com/dna-frontend-new/assets/images/Trainninglibary_right_icon.jpg"
+                            alt="">
+                        </span>
 
                       </span>
 

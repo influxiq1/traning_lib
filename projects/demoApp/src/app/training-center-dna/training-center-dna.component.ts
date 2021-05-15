@@ -22,7 +22,7 @@ public serverDetails: any = {
   "jwttoken": ""
 };
 
-public DnaServerUrl:any='https://x4gcdrxvbh.execute-api.us-east-1.amazonaws.com/dev/';
+public DnaServerUrl:any='https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production';
 
 public formSource: any = {
   "source":'manage_lession_view',
