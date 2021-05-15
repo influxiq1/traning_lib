@@ -1566,7 +1566,7 @@ export class TrainingCenterDnaComponent implements OnInit {
   nextbutton(value: any) {
     // console.log(value, 'value')
     window.scrollTo({
-      top: 647,
+      top: 1100,
       left: 0,
       behavior: 'smooth'
     });
