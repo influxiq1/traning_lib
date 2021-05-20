@@ -231,7 +231,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     // this.lession_atachment_dataarray=this.trainingCentreData.lesson_content[0].lesson_attachements;
     for (const key in this.trainingCategoryData) {
       for (const d of val.done_lesson_by_cat_by_user) {
-        // 
+        //
         if (this.trainingCategoryData[key]._id == d.associated_training) {
           this.trainingCategoryData[key].done = d.lessonsdone;
           this.trainingCategoryData[key].percentage = Math.floor((this.trainingCategoryData[key].done / this.trainingCategoryData[key].count) * 100);
@@ -574,7 +574,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
 
   addMarkedData(value) {
-    // // console.log(value, ';;;;;;;;;;;+++++++++++++');
+
 
     let ind;
 
@@ -595,6 +595,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
         previous_lesson_name: '',
         previous_lesson_id: '',
+        use_type:JSON.parse(this.cookieService.get('type'))
 
       },
       "sourceobj": ["user_id", "lesson_id", "associated_training"],
@@ -743,7 +744,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
 
     this.audio_currenttime[val] = audioId.currentTime;
-    this.audio_progress[val] = (this.audio_currenttime[val] / this.audio_duration[val]) * 100; // audio progress based on current time 
+    this.audio_progress[val] = (this.audio_currenttime[val] / this.audio_duration[val]) * 100; // audio progress based on current time
 
     this.modelval[val] = 0;
     this.modelval[val] = this.audio_progress[val];
@@ -778,12 +779,12 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
   //load to start the audio
   loadstart(fullval, val) {
     setTimeout(() => {
-      // audioId.duration find audio duration 
+      // audioId.duration find audio duration
       var audioId: any = document.getElementById("audioPlayer_" + val);
       if (audioId.duration != null && audioId.duration != '') {
         this.audio_duration[val] = audioId.duration;
       }
-      //audioId.currentTime for current audio time 
+      //audioId.currentTime for current audio time
       this.audio_currenttime[val] = audioId.currentTime;
       this.audio_progress[val] = Math.floor((this.audio_currenttime[val] / this.audio_duration[val]) * 100);
 
@@ -907,7 +908,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
                 duration: 3000
               });
               setTimeout(() => {
-                // this.lastOpenDialog('lessoncompletedmoal'); 
+                // this.lastOpenDialog('lessoncompletedmoal');
               }, 4000);
 
             }
@@ -1315,7 +1316,7 @@ export class PreviewContentDialogBeto {
     }
     // // // // // // console.log(this.quizData, '++')
   }
-  close(val) {                 //FOR MODAL CLOSE 
+  close(val) {                 //FOR MODAL CLOSE
     this.snakBar.open(' Your Lesson  is Complete After Download This File ..!', 'OK', {
       duration: 5000
     })
@@ -1324,7 +1325,7 @@ export class PreviewContentDialogBeto {
   nextprevbtn(flag) {
     // // // // // console.log(flag, 'nextbtn',)
     switch (flag) {
-      case 'prev': // for prevous case 
+      case 'prev': // for prevous case
         if (this.indeximg == 0 || this.indeximg < 0) {
           // // // // // console.log(flag, '++++++++++++ if')
 
@@ -1336,7 +1337,7 @@ export class PreviewContentDialogBeto {
           // // // // // console.log('index+++++++', this.indeximg, this.previewImg.length)
         }
         break;
-      case 'next': // for next case 
+      case 'next': // for next case
 
         if (this.previewImg.length == this.indeximg + 1) {
           // // // // // console.log(flag, '++++++++++++ if')
@@ -1482,7 +1483,7 @@ export class LessonQuizBetoparedesModalComponent {
 
 
 
-  //next quiz 
+  //next quiz
   nextQuizRecord(val: any) {
     this.indexVal = this.indexVal + 1;
     // // // // console.log(this.CheckedAnswer, 'CheckedAnswer', this.quizVal)
