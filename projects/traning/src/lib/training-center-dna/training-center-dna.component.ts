@@ -121,7 +121,6 @@ export class TrainingCenterDnaComponent implements OnInit {
   public audio_currenttime: any = [];
   public newaudio_currenttime: any = [];
   public audio_end_time: any = [];
-
   public audio_progress: any = [];
 
   public disabled = [];
@@ -1180,6 +1179,7 @@ export class TrainingCenterDnaComponent implements OnInit {
     });
   }
   ngOnInit() {
+   
     // console.log(this.userId.length, 'userId')
 
     if (
@@ -1575,12 +1575,11 @@ export class TrainingCenterDnaComponent implements OnInit {
       });
   }
 
-  getTrainingCenterlistFunctionwithLessonId(
-    associated_training: any,
-    type: any,
-    user_id: any,
-    _id: any
-  ) {
+
+
+
+  getTrainingCenterlistFunctionwithLessonId(associated_training: any, type: any, user_id: any, _id: any) {
+   
     // console.log('associated_training', associated_training, 'type', type, 'user_id', user_id, '_id', _id)
     const link = this.serverDetailsVal.serverUrl + "gettrainingcenterlist";
     let data: any = {
@@ -1721,7 +1720,11 @@ export class TrainingCenterDnaComponent implements OnInit {
 
   nextbutton(value: any) {
     // console.log(value, 'value')
-
+    window.scrollTo({
+      top: 1100,
+      left: 0,
+      behavior: 'smooth'
+    });
     switch (value) {
       case "next":
         // this.lessonDataList[this.Index].lession_title

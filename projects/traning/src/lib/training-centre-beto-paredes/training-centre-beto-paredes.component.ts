@@ -159,6 +159,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
   @Input()
   set formSource(formSource: any) {
     this.formSourceVal = (formSource) || '<no name set>';
+    console.log(this.formSourceVal.complete_traing_data);
   }
 
   @Input()
@@ -182,6 +183,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
   @Input()
   set TraingUpdateEndpoint(val: any) {
     this.traingupdateendpoint = (val);
+    console.log(this.traingupdateendpoint);
   }
   @Input()
   set LessonParamId(lessid: any) {
@@ -229,7 +231,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     // this.lession_atachment_dataarray=this.trainingCentreData.lesson_content[0].lesson_attachements;
     for (const key in this.trainingCategoryData) {
       for (const d of val.done_lesson_by_cat_by_user) {
-        // 
+        //
         if (this.trainingCategoryData[key]._id == d.associated_training) {
           this.trainingCategoryData[key].done = d.lessonsdone;
           this.trainingCategoryData[key].percentage = Math.floor((this.trainingCategoryData[key].done / this.trainingCategoryData[key].count) * 100);
@@ -333,22 +335,11 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     if (this.trainingCategoryData[0].count == this.trainingCategoryData[0].done && this.trainingCentreData.calendar_booking_data.length == 0) {
       this.gamePlanModal(this.paramslessonId, this.paramsTrainingId);
     }
-    let associated_id;
-    console.log("||||||||||||||||\\\\\\\\\\\\\\\\\\\\\\\\\\", this.trainingCategoryData);
-    for (const key of this.trainingCategoryData) {
-      for (const it in this.complete_data) {
-        console.log(this.trainingCategoryData)
-        if (key._id == this.complete_data[it].associated_training) {
-          if (key.count == key.done) {
-            console.log(this.complete_data[this.complete_data.length - 1].associated_training, 'complete_data', this.complete_data.length - 1);
-            associated_id = this.complete_data[this.complete_data.length - 1].associated_training;
-          }
 
-        }
-      }
 
-    }
-    console.log(associated_id, 'associated_id')
+
+
+
   }
 
 
@@ -478,22 +469,24 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
   // game Plan Modal
   gamePlanModal(lessonid, trainingid,) {
+    if (JSON.parse(this.cookieService.get('type')) != 'admin') {
+      const dialogRef = this.dialog.open(GameplanModalComponent, {
+        panelClass: 'schedule_modal',
+        width: '900px',
+        height: 'auto',
+        data: { data: this.trainingCategoryData, lesson_id: lessonid, training_id: trainingid }
+      });
+      dialogRef.disableClose = true;
+      dialogRef.afterClosed().subscribe((result: any) => {
+        // // // console.log(result, 'result')
+        if (result.flag != null && result.flag == true) {
+          // // // console.log(result, 'gyyyyyyyyyyygygyg', this.googlescheduleroute + result.training_id + '/' + result.lesson_id);
+          this.router.navigateByUrl(this.googlescheduleroute + result.training_id + '/' + result.lesson_id);
+        }
 
-    const dialogRef = this.dialog.open(GameplanModalComponent, {
-      panelClass: 'schedule_modal',
-      width: '900px',
-      height: 'auto',
-      data: { data: this.trainingCategoryData, lesson_id: lessonid, training_id: trainingid }
-    });
-    dialogRef.disableClose = true;
-    dialogRef.afterClosed().subscribe((result: any) => {
-      // // // console.log(result, 'result')
-      if (result.flag != null && result.flag == true) {
-        // // // console.log(result, 'gyyyyyyyyyyygygyg', this.googlescheduleroute + result.training_id + '/' + result.lesson_id);
-        this.router.navigateByUrl(this.googlescheduleroute + result.training_id + '/' + result.lesson_id);
-      }
+      })
+    }
 
-    })
   }
   nextbutton(value: any) {
     // // console.log(value, 'value', this.lessonDataList)
@@ -536,11 +529,11 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
                 // // // // // console.log('-->>>>', this.trainingCategoryList[n + 1])
 
                 this.router.navigateByUrl(this.trainingCenterRoute + this.trainingCategoryData[n + 1]._id);
-                // this.progressSpinner = {
-                //   mode: 'indeterminate',
-                //   loading: false,
-                //   bookingStatus: 'Sending request'
-                // };
+                this.progressSpinner = {
+                  mode: 'indeterminate',
+                  loading: false,
+                  bookingStatus: 'Sending request'
+                };
               }
               else {
                 // // // // // console.log('++>>>>', this.trainingCategoryList[n]._id, this.trainingCategoryList[n + 1]._id,)
@@ -581,7 +574,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
 
   addMarkedData(value) {
-    // // console.log(value, ';;;;;;;;;;;+++++++++++++');
+
 
     let ind;
 
@@ -602,6 +595,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
         previous_lesson_name: '',
         previous_lesson_id: '',
+        use_type:JSON.parse(this.cookieService.get('type'))
 
       },
       "sourceobj": ["user_id", "lesson_id", "associated_training"],
@@ -640,14 +634,64 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     let link = this.serverDetailsVal.serverUrl + this.formSourceVal.addMarkendpoint;
 
     this.apiService.postData(link, data).subscribe((response: any) => {
-      // // // // // console.log(response, 'respoese453')
-      if (response.status = "success") {
-        const link = this.serverDetailsVal.serverUrl + this.formSourceVal.getUpdatedTrainingPercentageByUserEndpoint;
-        let data: any = {
-          "user_id": this.userId
+      console.log(response, 'respoese453')
+      if (response.status == "success") {
+
+        let link1 = this.serverDetailsVal.serverUrl + this.traingupdateendpoint;
+        const data1 = {
+          "user_id": JSON.parse(this.cookieService.get('userid'))
         }
+
+        this.apiService.postDatawithoutToken(link1, data1).subscribe((response: any) => {
+          // console.log(response, 'respoese453')
+
+        })
+        let associated_id;
+        let completeassociated_id;
+        for (const key of this.trainingCategoryData) {
+          for (const it in this.complete_data) {
+            console.log(this.trainingCategoryData)
+            if (key._id == this.complete_data[it].associated_training) {
+              if (key.count == key.done) {
+                // this.reloadComponent()
+                console.log(this.complete_data[this.complete_data.length - 1].associated_training, 'complete_data', this.complete_data.length - 1);
+                associated_id = this.complete_data[this.complete_data.length - 1].associated_training;
+                let data2: any = {
+                  "user_id": this.userId,
+                }
+                let link2 = this.serverDetailsVal.serverUrl + this.traingupdateendpoint;
+
+                this.apiService.postDatawithoutToken(link2, data2).subscribe((response: any) => {
+                  console.log(response, 'respoese453')
+
+                })
+              }
+
+            }
+          }
+
+        }
+        let userfullname = JSON.parse(this.cookieService.get('firstname')) + ' ' + JSON.parse(this.cookieService.get('lastname'));
+        let data2: any = {
+          "user_id": this.userId,
+          "user_name": userfullname,
+          "associated_id": associated_id,
+          "user_email": JSON.parse(this.cookieService.get('useremail'))
+
+        }
+        let link2 = this.serverDetailsVal.serverUrl + this.formSourceVal.complete_traing_data;
+
+        this.apiService.postDatawithoutToken(link2, data2).subscribe((response: any) => {
+          console.log(response, 'respoese453')
+
+        })
+        console.log(associated_id, 'associated_id');
+
+
       }
     })
+
+
   }
 
   lessonQuiz(val: any) {
@@ -700,7 +744,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
 
     this.audio_currenttime[val] = audioId.currentTime;
-    this.audio_progress[val] = (this.audio_currenttime[val] / this.audio_duration[val]) * 100; // audio progress based on current time 
+    this.audio_progress[val] = (this.audio_currenttime[val] / this.audio_duration[val]) * 100; // audio progress based on current time
 
     this.modelval[val] = 0;
     this.modelval[val] = this.audio_progress[val];
@@ -735,12 +779,12 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
   //load to start the audio
   loadstart(fullval, val) {
     setTimeout(() => {
-      // audioId.duration find audio duration 
+      // audioId.duration find audio duration
       var audioId: any = document.getElementById("audioPlayer_" + val);
       if (audioId.duration != null && audioId.duration != '') {
         this.audio_duration[val] = audioId.duration;
       }
-      //audioId.currentTime for current audio time 
+      //audioId.currentTime for current audio time
       this.audio_currenttime[val] = audioId.currentTime;
       this.audio_progress[val] = Math.floor((this.audio_currenttime[val] / this.audio_duration[val]) * 100);
 
@@ -864,7 +908,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
                 duration: 3000
               });
               setTimeout(() => {
-                // this.lastOpenDialog('lessoncompletedmoal'); 
+                // this.lastOpenDialog('lessoncompletedmoal');
               }, 4000);
 
             }
@@ -1057,11 +1101,11 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
         this.getMarkDataButton(response.results);
 
         // console.log("next_button_access true", response);
-        // this.progressSpinner = {
-        //   mode: 'indeterminate',
-        //   loading: false,
-        //   bookingStatus: 'Sending request'
-        // };
+        this.progressSpinner = {
+          mode: 'indeterminate',
+          loading: false,
+          bookingStatus: 'Sending request'
+        };
       }
     });
 
@@ -1229,6 +1273,12 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     })
 
   }
+  reloadComponent() {
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
+  }
 
 }
 
@@ -1266,7 +1316,7 @@ export class PreviewContentDialogBeto {
     }
     // // // // // // console.log(this.quizData, '++')
   }
-  close(val) {                 //FOR MODAL CLOSE 
+  close(val) {                 //FOR MODAL CLOSE
     this.snakBar.open(' Your Lesson  is Complete After Download This File ..!', 'OK', {
       duration: 5000
     })
@@ -1275,7 +1325,7 @@ export class PreviewContentDialogBeto {
   nextprevbtn(flag) {
     // // // // // console.log(flag, 'nextbtn',)
     switch (flag) {
-      case 'prev': // for prevous case 
+      case 'prev': // for prevous case
         if (this.indeximg == 0 || this.indeximg < 0) {
           // // // // // console.log(flag, '++++++++++++ if')
 
@@ -1287,7 +1337,7 @@ export class PreviewContentDialogBeto {
           // // // // // console.log('index+++++++', this.indeximg, this.previewImg.length)
         }
         break;
-      case 'next': // for next case 
+      case 'next': // for next case
 
         if (this.previewImg.length == this.indeximg + 1) {
           // // // // // console.log(flag, '++++++++++++ if')
@@ -1433,7 +1483,7 @@ export class LessonQuizBetoparedesModalComponent {
 
 
 
-  //next quiz 
+  //next quiz
   nextQuizRecord(val: any) {
     this.indexVal = this.indexVal + 1;
     // // // // console.log(this.CheckedAnswer, 'CheckedAnswer', this.quizVal)
