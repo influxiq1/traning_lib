@@ -2,10 +2,11 @@
   <span fxLayout="column" class="column" class="rightside">
     <div class="trainingheadercls">
       <h2>You Have Completed {{ dividend }}/{{divisor}} Lessons</h2>
-      <mat-progress-bar *ngIf="percentageprogressLoader" mode="determinate" value="{{ reportPercentage }}">
+      <mat-progress-bar *ngIf="percentageprogressLoader" mode="determinate" value="{{dividend | percentage: divisor}}">
       </mat-progress-bar>
-      <h3>{{ reportPercentage }}%</h3>
+      <h3>{{dividend | percentage: divisor}}%</h3>
       <!-- lock/unlock all session  -->
+
       <div class="togglebtncls">
         <button color="accent" type="button" *ngIf="lesson_locked_by_user == 0" (click)="UnlockLesson(1)"
           mat-raised-button matTooltip="We highly suggest you to follow the
@@ -69,16 +70,17 @@
       <div fxLayout="row" class="rowinner" *ngFor="let item of allLessonDataList
         ; let i=index;">
 
-        <div (click)="nochildclick(item,'click')" [ngClass]="paramslessonId == item._id
-          ? 'classlessonongoing':
-          ( item.is_done == true ? 'classlessondone' : 'classlessonnotdone')">{{item.lession_title}}
+        <div (click)="nochildclick(item,'click')" [ngClass]="(paramslessonId == item._id && !item.is_done)
+          ? 'classlessonongoing ':
+          ( (paramslessonId == item._id && item.is_done) ? 'classlessonongoing done' :( item.is_done == true ? 'classlessondone' : 'classlessonnotdone'))">{{item.lession_title}}
           <!-- <span>{{item  | json}}</span> -->
-          <span (click)="nochildclick(item,'click')">
+          <span (click)="nochildclick(item,'click')"  [ngClass]="item.is_done
+          ? 'donelessonimgclass': 'notdonelessonimgclass'">
             <!-- {{item.lession_title}} -->
           </span>
 
         </div>
-        <span class="material-icons" *ngIf="lesson_locked_by_user == 1">
+        <span class="material-icons" *ngIf="lesson_locked_by_user == 1 && !item.is_done">
           lock
         </span>
       </div>
@@ -591,9 +593,9 @@
       <div fxLayout="row" class="rowinner" *ngFor="let item of allLessonDataList
         ; let i=index;">
 
-        <div (click)="nochildclick(item,'click')" [ngClass]="paramslessonId == item._id
-          ? 'classlessonongoing':
-          ( item.is_done == true ? 'classlessondone' : 'classlessonnotdone')">{{item.lession_title}}
+        <div (click)="nochildclick(item,'click')"  [ngClass]="(paramslessonId == item._id && !item.is_done)
+        ? 'classlessonongoing ':
+        ( (paramslessonId == item._id && item.is_done) ? 'classlessonongoing done' :( item.is_done == true ? 'classlessondone' : 'classlessonnotdone'))">{{item.lession_title}}
           <!-- <span>{{item  | json}}</span> -->
           <span (click)="nochildclick(item,'click')">
             <!-- {{item.lession_title}} -->
@@ -602,7 +604,7 @@
         </div>
         <!-- [ngClass]="{'class5': (item._id == currentLesson),
         'class7':(item._id==completedLessons)}"  -->
-        <span class="material-icons" *ngIf="lesson_locked_by_user == 1">
+        <span class="material-icons" *ngIf="lesson_locked_by_user == 1 && !item.is_done">
           lock
         </span>
       </div>

@@ -36,6 +36,7 @@ import { AddEditQuizComponent } from './manage-quiz/add-edit-quiz/add-edit-quiz.
 import { AudioServiceService } from './audio-service.service';
 import {  DetailsPipe } from './pipe/details.pipe';
 import { TrainingCentreBetoParedesComponent ,PreviewContentDialogBeto, BetoparedesLessonVideoModalComponent, LessonQuizBetoparedesModalComponent, GameplanModalComponent, QuizReportmodal} from './training-centre-beto-paredes/training-centre-beto-paredes.component';
+import { PercentagePipe } from './pipe/percentage.pipe';
 
 
 
@@ -73,6 +74,7 @@ import { TrainingCentreBetoParedesComponent ,PreviewContentDialogBeto, Betopared
     AudioVideoFileDialogComponent,
     PreviewContentDialog,
     DetailsPipe,
+    PercentagePipe,
     TrainingCentreBetoParedesComponent,
     PreviewContentDialogBeto,
     BetoparedesLessonVideoModalComponent,
@@ -93,7 +95,6 @@ import { TrainingCentreBetoParedesComponent ,PreviewContentDialogBeto, Betopared
     FileUploadModule,
     MatCarouselModule.forRoot(),
     ListingModule,
-    CKEditorModule,
     NgxYoutubePlayerModule.forRoot()
   ],
   exports: [TraningComponent,ListingTrainingComponent,AddEditLessionsComponent,ListlessonComponent,LoginfortrainingComponent,AddEditCenterComponent,ListComponent,ManageQuizComponent,AddEditComponent,AddUpdateAnswerComponent,UpdateAnswerComponent,Dialogtest,TrainingreportComponent,CategoryWiseReportComponent,TrainingCenterDnaComponent,LessonPlanMaterialComponent,ListQuizComponent,AddEditQuizComponent,TrainingCentreBetoParedesComponent

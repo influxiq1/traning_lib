@@ -20,7 +20,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     "answerSourceName": "quiz_answer"
   };
   public serverDetails: any = {
-    "serverUrl": "https://z2oo2a8oq9.execute-api.us-east-1.amazonaws.com/dev/api1/",
+    "serverUrl": "https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/",
     "jwttoken": ""
   };
   public trainingcatParamid = this.activatedRoute.snapshot.params.associated_training;
