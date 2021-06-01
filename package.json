@@ -34,6 +34,7 @@
         "ngx-uploader": "^8.0.0",
         "ngx-youtube-player": "^9.1.0",
         "rxjs": "~6.4.0",
+        "save": "^2.4.0",
         "tslib": "^1.9.0",
         "zone.js": "~0.9.1"
     },
