@@ -220,7 +220,11 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     if (this.activatedRoute.snapshot.params._id != null) {
       this.paramslessonId = this.activatedRoute.snapshot.params._id
     } else {
-      this.paramslessonId = val.lesson_content[0]._id;
+      if (val.lesson_content.length>0) {
+        this.paramslessonId = val.lesson_content[0]._id;
+      }
+      
+     
 
     }
     // // // console.log(this.paramslessonId, '_______________')

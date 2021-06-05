@@ -17,13 +17,8 @@ export class HttpService {
   public uploaderror: any = '';
   public accesstoken: any = "";
   public fileservername: any = [];
-<<<<<<< HEAD
-  //  public serverUrl: any = 'https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/';//for dna  backend server url
-   public serverUrl: any = 'https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/';//for beto paredes backend server url
-=======
    // public serverUrl: any = 'https://obq0e0nxhk.execute-api.us-east-1.amazonaws.com/production/api/';//for dna  backend server url
    public serverUrl: any = 'https://z2oo2a8oq9.execute-api.us-east-1.amazonaws.com/dev/api1/';//for beto paredes backend server url
->>>>>>> 8d030c4353a257213e4e100ea7c447c8094e5963
   public addendpointUrl: any;
   public updateendpointUrl: any;
   public deletesingle_endpointUrl: any;
