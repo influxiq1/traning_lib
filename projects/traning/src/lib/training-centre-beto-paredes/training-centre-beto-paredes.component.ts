@@ -220,12 +220,9 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     if (this.activatedRoute.snapshot.params._id != null) {
       this.paramslessonId = this.activatedRoute.snapshot.params._id
     } else {
-      if (val.lesson_content.length>0) {
+      if (typeof (val.lesson_content) != 'undefined' && val.lesson_content.length > 0) {
         this.paramslessonId = val.lesson_content[0]._id;
       }
-      
-     
-
     }
     // // // console.log(this.paramslessonId, '_______________')
 
@@ -291,7 +288,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
     this.getMarkDataButton(val);
 
-    if (this.lessonContentData.lesson_attachements != null && this.lessonContentData.lesson_attachements.length > 0 && this.trainingCentreData.complete_lesson_videos.length > 0 && this.quizflag == false) {
+    if (typeof (this.lessonContentData) != 'undefined' && this.lessonContentData.legth > 0 && this.lessonContentData.lesson_attachements != null && this.lessonContentData.lesson_attachements.length > 0 && this.trainingCentreData.complete_lesson_videos.length > 0 && this.quizflag == false) {
       for (const key in this.lessonContentData.lesson_attachements) {
         for (const iterator of this.trainingCentreData.complete_lesson_videos) {
           if (this.lessonContentData.lesson_attachements[key].type == 'video' && this.lessonContentData.lesson_attachements[key].video_skippable == false && this.lessonContentData.lesson_attachements[key].video_url == iterator.video_id) {
@@ -300,7 +297,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
         }
       }
     }
-    if (this.lessonContentData.lesson_attachements != null && this.lessonContentData.lesson_attachements.length > 0 && this.trainingCentreData.complete_lesson_files.length > 0 && this.quizflag == false) {
+    if (typeof (this.lessonContentData) != 'undefined' && this.lessonContentData.legth > 0 && this.lessonContentData.lesson_attachements != null && this.lessonContentData.lesson_attachements.length > 0 && this.trainingCentreData.complete_lesson_files.length > 0 && this.quizflag == false) {
       for (const key in this.lessonContentData.lesson_attachements) {
         for (const iterator of this.trainingCentreData.complete_lesson_files) {
           if (this.lessonContentData.lesson_attachements[key].type == 'file' && this.lessonContentData.lesson_attachements[key].file_skippable == false && this.lessonContentData.lesson_attachements[key].file._id == iterator.file_id) {
@@ -309,7 +306,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
         }
       }
     }
-    if (this.lessonContentData.lesson_attachements != null && this.lessonContentData.lesson_attachements.length > 0 && this.trainingCentreData.complete_lesson_audio.length > 0 && this.quizflag == false) {
+    if (typeof (this.lessonContentData) != 'undefined' && this.lessonContentData.legth > 0 && this.lessonContentData.lesson_attachements != null && this.lessonContentData.lesson_attachements.length > 0 && this.trainingCentreData.complete_lesson_audio.length > 0 && this.quizflag == false) {
       for (const key in this.lessonContentData.lesson_attachements) {
         for (const iterator of this.trainingCentreData.complete_lesson_audio) {
           if (this.lessonContentData.lesson_attachements[key].type == 'audio' && this.lessonContentData.lesson_attachements[key].audio_skippable == false && this.lessonContentData.lesson_attachements[key].audio._id == iterator.audio_id) {
@@ -599,7 +596,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
         previous_lesson_name: '',
         previous_lesson_id: '',
-        use_type:JSON.parse(this.cookieService.get('type'))
+        use_type: JSON.parse(this.cookieService.get('type'))
 
       },
       "sourceobj": ["user_id", "lesson_id", "associated_training"],
@@ -1130,7 +1127,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     this.video_data = [];
     this.trainingCentreData = val;
 
-    if (val.lesson_content[0].lesson_attachements != null && val.lesson_content[0].lesson_attachements.length > 0) {
+    if (typeof (val.lesson_content) != 'undefined' && val.lesson_content.length > 0 && val.lesson_content[0].lesson_attachements != null && val.lesson_content[0].lesson_attachements.length > 0) {
       this.next_button_access = false;
       // // console.log("if____block  1")
       for (const key in val.lesson_content[0].lesson_attachements) {
