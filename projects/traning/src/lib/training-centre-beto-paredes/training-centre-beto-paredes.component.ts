@@ -227,8 +227,11 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
     // // // console.log(this.paramslessonId, '_______________')
 
     this.lessonDataList = val.alllessondata
+    if (this.trainingCentreData != null && typeof (this.trainingCentreData) != 'undefined' && this.trainingCentreData.lesson_content != null && typeof (this.trainingCentreData.lesson_content) != 'undefined' && this.trainingCentreData.lesson_content.length > 0) {
+      console.log(this.trainingCentreData.lesson_content)
+      this.lessonContentData = this.trainingCentreData.lesson_content[0];
+    }
 
-    this.lessonContentData = this.trainingCentreData.lesson_content[0];
     // this.lession_atachment_dataarray=this.trainingCentreData.lesson_content[0].lesson_attachements;
     for (const key in this.trainingCategoryData) {
       for (const d of val.done_lesson_by_cat_by_user) {
@@ -362,11 +365,11 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
       }, 1000);
     }
 
-    if (training_access_flag == true || this.trainingCategoryData[0]._id == val) {
+    if (training_access_flag == true || this.trainingCategoryData[0]._id == val || JSON.parse(this.cookieService.get("type")) == 'distributor' || JSON.parse(this.cookieService.get("type")) == 'admin') {
+      // console.log(JSON.parse(this.cookieService.get("type")));
+
       this.router.navigateByUrl(this.trainingCenterRoute + val);
-      // if (this.trainingCategoryData[0].count == this.trainingCategoryData[0].done && this.trainingCentreData.calendar_booking_data.length == 0) {
-      //   this.gamePlanModal(this.paramslessonId, this.paramsTrainingId);
-      // }
+
 
       this.training_cat_name = catagory_name;
     } else {
@@ -1257,7 +1260,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
             }
 
-            if (this.trainingCentreData.complete_lesson_quiz != null && this.trainingCentreData.complete_lesson_quiz[0] != null) {
+            if (this.trainingCentreData.complete_lesson_quiz != null && this.trainingCentreData.complete_lesson_quiz[0] != null && this.trainingCentreData.lesson_content.length > 0) {
               if (this.trainingCentreData.complete_lesson_quiz[0].lesson_id == this.trainingCentreData.lesson_content[0]._id) {
                 // this.next_button_access = true;
                 // // // console.log("next_button_access true")
