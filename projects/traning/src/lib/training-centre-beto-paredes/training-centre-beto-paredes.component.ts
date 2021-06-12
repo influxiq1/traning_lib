@@ -256,8 +256,9 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
         this.training_cat_name = this.trainingCategoryData[i].catagory_name;
       }
     }
-    // // // // console.log(this.userId, 'this.userId')
-    if (val.done_lesson_by_user.length != 0 && typeof (val.done_lesson_by_user[0].lessonsdone) != 'undefined') {
+    // // console.log(this.userId, 'this.userId')
+    if (val.done_lesson_by_user && val.done_lesson_by_user.length != 0 && typeof (val.done_lesson_by_user[0].lessonsdone) != 'undefined') {
+
       this.dividend = val.done_lesson_by_user[0].lessonsdone;
     }
     this.divisor = val.total_lesson;
@@ -1171,7 +1172,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
       this.next_button_access = true;
     }
     // console.log(mandetoryLessonFile, 'mandetoryLessonFile')
-    if (mandetoryLessonFile.length == 0 && val.quiz_data.length != 0) {
+    if (mandetoryLessonFile.length == 0 && val.quiz_data && val.quiz_data.length != 0) {
       this.quizflag = true;
       this.next_button_access = false;
     }
