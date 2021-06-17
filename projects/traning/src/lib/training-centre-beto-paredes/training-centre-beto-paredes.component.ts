@@ -337,14 +337,9 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.trainingCategoryData[0].count == this.trainingCategoryData[0].done && this.trainingCentreData.calendar_booking_data.length == 0) {
+    if (this.trainingCategoryData[0].count == this.trainingCategoryData[0].done && this.trainingCentreData.calendar_booking_data.length == 0 && JSON.parse(this.cookieService.get('gameplancall')) != 1) {
       this.gamePlanModal(this.paramslessonId, this.paramsTrainingId);
     }
-
-
-
-
-
   }
 
 
@@ -474,7 +469,9 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
   // game Plan Modal
   gamePlanModal(lessonid, trainingid,) {
-    if (JSON.parse(this.cookieService.get('type')) != 'admin') {
+
+
+    if (JSON.parse(this.cookieService.get('type')) != 'admin' || JSON.parse(this.cookieService.get('gameplancall')) != 1) {
       const dialogRef = this.dialog.open(GameplanModalComponent, {
         panelClass: 'schedule_modal',
         width: '900px',
