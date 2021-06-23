@@ -471,7 +471,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
   gamePlanModal(lessonid, trainingid,) {
 
 
-    if (JSON.parse(this.cookieService.get('type')) != 'admin' || JSON.parse(this.cookieService.get('gameplancall')) != 1) {
+    if (JSON.parse(this.cookieService.get('type')) != 'admin'||JSON.parse(this.cookieService.get('type')) != 'distributor' || JSON.parse(this.cookieService.get('gameplancall')) == 1) {
       const dialogRef = this.dialog.open(GameplanModalComponent, {
         panelClass: 'schedule_modal',
         width: '900px',
@@ -577,7 +577,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
   addMarkedData(value) {
 
-
+ 
     let ind;
 
     let data: any = {}
@@ -1191,7 +1191,7 @@ export class TrainingCentreBetoParedesComponent implements OnInit {
 
     // // console.log(this.reportPercentage, 'this.next_button_access===')
 
-    if (val.trainingcenterlist[0].done == val.alllessondata.length) {
+    if (val.trainingcenterlist != null && typeof (val.trainingcenterlist) != 'undefined' && val.trainingcenterlist.length > 0 && val.trainingcenterlist[0].done == val.alllessondata.length) {
       gamePlanFlag = true;
     }
 
